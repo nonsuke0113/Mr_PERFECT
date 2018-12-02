@@ -24,6 +24,7 @@ public:
     void setCharacterDirectcion(::characterDirectcion direction);
     void moveWorld(float duration, const Vec2& newPosition);
     Vec2 nextTilePosition();
+    CharacterSprite* getNextCharacter();
     int getNextTileGID();
 private:
     // ワールド座標

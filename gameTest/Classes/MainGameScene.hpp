@@ -36,9 +36,8 @@ public:
     // ボタンのタッチイベント
     void touchCrossKeyEvent(Ref *pSender, ui::Widget::TouchEventType type);
     void updatePosition(float frame);
-    void updateMob1Position(float frame);
+    void updateMobPosition(float frame);
     int checkNextTileGID();
-    bool checkNextTileMob();
 };
 
 #endif /* MainGameScene_hpp */

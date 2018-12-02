@@ -5,6 +5,7 @@
 //  Created by 健介 丹野 on 2018/10/22.
 //
 
+#include "MainGameScene.hpp"
 #include "CharacterSprite.hpp"
 
 CharacterSprite* CharacterSprite::create(const std::string& filename, const Vec2 &pos, TMXTiledMap* map)
@@ -86,8 +87,6 @@ Vec2 CharacterSprite::nextTilePosition()  {
  */
 int CharacterSprite::getNextTileGID()  {
     
-    this->m_map->getParent();
-    
     int tileGID = -1;
     Vec2 nextTilePosition = this->nextTilePosition();
     
@@ -98,4 +97,18 @@ int CharacterSprite::getNextTileGID()  {
     }
     
     return tileGID;
+}
+
+/**
+ */
+CharacterSprite* CharacterSprite::getNextCharacter()  {
+    Vec2 nextTilePosition = this->nextTilePosition();
+    MainGameScene* mainScene = (MainGameScene*)this->m_map->getParent();
+    std::vector<CharacterSprite*> charactersVector = mainScene->charactersVector;
+    for (int i=0; i<charactersVector.size(); i++) {
+        if(nextTilePosition == charactersVector[i]->worldPosition()) {
+            return charactersVector[i];
+        }
+    }
+    return nullptr;
 }

@@ -48,6 +48,7 @@ Scene* MainGameScene::createScene()
     
     // スクロール用カメラを追加
     layer->pCamera = scene->getDefaultCamera();
+    layer->pCamera->setAnchorPoint(Vec2(0.0f, 0.0f));
     Camera* camera = Camera::create();
     camera->setCameraFlag(CameraFlag::USER1);
     layer->addChild(camera);
@@ -119,14 +120,31 @@ bool MainGameScene::init()
     leftButton->addTouchEventListener(CC_CALLBACK_2(MainGameScene::touchCrossKeyEvent, this));
     
     // キャラクター
-    this->pPlayer = CharacterSprite::create("chara_test.png", Vec2(16.0f, 29.0f), this->pMap);
+    this->pPlayer = CharacterSprite::create("chara_test.png", Vec2(15.0f, 29.0f), this->pMap);
     this->pPlayer->setAnchorPoint(Vec2(0.0f, 0.0f));
     this->addChild(this->pPlayer);
+    this->charactersVector.push_back(this->pPlayer);
     
     // モブキャラクター
     this->mob1 = CharacterSprite::create("mob_test.png", Vec2(10.0f, 29.0f), this->pMap);
     this->mob1->setAnchorPoint(Vec2(0.0f, 0.0f));
     this->addChild(this->mob1);
+    this->charactersVector.push_back(this->mob1);
+    
+    CharacterSprite* mob2 = CharacterSprite::create("mob_test.png", Vec2(10.0f, 28.0f), this->pMap);
+    mob2->setAnchorPoint(Vec2(0.0f, 0.0f));
+    this->addChild(mob2);
+    this->charactersVector.push_back(mob2);
+    
+    CharacterSprite* mob3 = CharacterSprite::create("mob_test.png", Vec2(5.0f, 28.0f), this->pMap);
+    mob3->setAnchorPoint(Vec2(0.0f, 0.0f));
+    this->addChild(mob3);
+    this->charactersVector.push_back(mob3);
+    
+    CharacterSprite* mob4 = CharacterSprite::create("mob_test.png", Vec2(12.0f, 20.0f), this->pMap);
+    mob4->setAnchorPoint(Vec2(0.0f, 0.0f));
+    this->addChild(mob4);
+    this->charactersVector.push_back(mob4);
     
     // ラベル
     this->playerMapPointLabel = Label::createWithSystemFont(StringUtils::format("x : $%f, y : $%f", this->pPlayer->worldPosition().x, this->pPlayer->worldPosition().y), "ariel", 20);
@@ -138,7 +156,7 @@ bool MainGameScene::init()
     
     // 座標更新をスケジュール
     schedule(schedule_selector(MainGameScene::updatePosition), 0.1f);
-//    schedule(schedule_selector(MainGameScene::updateMob1Position), 2.0f);
+    schedule(schedule_selector(MainGameScene::updateMobPosition), 2.0f);
     
     CCLOG("player X:%f Y:%f", this->pPlayer->worldPosition().x, this->pPlayer->worldPosition().y);
     
@@ -204,7 +222,7 @@ void MainGameScene::updatePosition(float frame) {
         (this->pMap->getNumberOfRunningActions() > 0) ||
         (this->pPlayer->getNumberOfRunningActions() > 0) ||
         this->pPlayer->getNextTileGID() != 29 ||
-        checkNextTileMob()) {
+        this->pPlayer->getNextCharacter() != nullptr) {
         return;
     }
     
@@ -279,49 +297,45 @@ void MainGameScene::updatePosition(float frame) {
 
 /**
  */
-void MainGameScene::updateMob1Position(float frame) {
+void MainGameScene::updateMobPosition(float frame) {
     
-    if (this->mob1->getNumberOfRunningActions() > 0) {
-        return;
+    for (int i=1; i<this->charactersVector.size(); i++) {
+        
+        CharacterSprite* chara = this->charactersVector[i];
+        int random = rand()%4+1;
+        switch(random) {
+            case 1:
+                chara->setCharacterDirectcion(character_back);
+                break;
+            case 2:
+                chara->setCharacterDirectcion(character_right);
+                break;
+            case 3:
+                chara->setCharacterDirectcion(character_front);
+                break;
+            case 4:
+                chara->setCharacterDirectcion(character_left);
+                break;
+        }
+        
+        if (chara->getNumberOfRunningActions() > 0 ||
+            chara->getNextTileGID() != 29 ||
+            chara->getNextCharacter() != nullptr) {
+            return;
+        }
+        
+        Vec2 newCharaPoint = chara->worldPosition();
+        
+        if(random == 1) {
+            chara->moveWorld(0.1f, Vec2(newCharaPoint.x, newCharaPoint.y-1.0f));
+        } else if(random == 2) {
+            chara->moveWorld(0.1f, Vec2(newCharaPoint.x+1.0f, newCharaPoint.y));
+        } else if(random == 3) {
+            chara->moveWorld(0.1f, Vec2(newCharaPoint.x, newCharaPoint.y+1.0f));
+        } else if(random == 4) {
+            chara->moveWorld(0.1f, Vec2(newCharaPoint.x-1.0f, newCharaPoint.y));
+        }
+        
+        CCLOG("mob%d X:%f Y:%f", i, chara->worldPosition().x, chara->worldPosition().y);
     }
-    
-    Vec2 newMob1Point = this->mob1->worldPosition();
-    int random = rand()%4+1;
-    if(random == 1) {
-        this->mob1->moveWorld(0.1f, Vec2(newMob1Point.x, newMob1Point.y-1.0f));
-    } else if(random == 2) {
-        this->mob1->moveWorld(0.1f, Vec2(newMob1Point.x+1.0f, newMob1Point.y));
-    } else if(random == 3) {
-        this->mob1->moveWorld(0.1f, Vec2(newMob1Point.x, newMob1Point.y+1.0f));
-    } else if(random == 4) {
-        this->mob1->moveWorld(0.1f, Vec2(newMob1Point.x-1.0f, newMob1Point.y));
-    }
-    
-    CCLOG("mob1 X:%f Y:%f", this->mob1->worldPosition().x,this->mob1->worldPosition().y);
-}
-
-
-/**
- */
-bool MainGameScene::checkNextTileMob()  {
-    
-    Vec2 nextTilePosition = this->pPlayer->getPosition();
-    
-    if(m_playerDirectcion == player_back && this->pPlayer->worldPosition().y != 0.0f) {
-        nextTilePosition = Vec2 { nextTilePosition.x, nextTilePosition.y+PER_TILE_SIZE };
-    }
-    else if(m_playerDirectcion == player_right && this->pPlayer->worldPosition().x != MAP_TILE_WIDTH-1.0f) {
-        nextTilePosition = Vec2 { nextTilePosition.x+PER_TILE_SIZE, nextTilePosition.y };
-    }
-    else if (m_playerDirectcion == player_front && this->pPlayer->worldPosition().y != MAP_TILE_HEGHT-1.0f) {
-        nextTilePosition = Vec2 { nextTilePosition.x, nextTilePosition.y-PER_TILE_SIZE };
-    }
-    else if (m_playerDirectcion == player_left && this->pPlayer->worldPosition().x != 0.0f) {
-        nextTilePosition = Vec2 { nextTilePosition.x-PER_TILE_SIZE, nextTilePosition.y };
-    }
-    
-    if(nextTilePosition == this->mob1->getPosition()) {
-        return true;
-    }
-    return false;
 }
