@@ -11,6 +11,7 @@
 
 USING_NS_CC;
 
+#include <vector>
 #include "cocos2d.h"
 #include "ui/CocosGUI.h"
 
@@ -20,11 +21,13 @@ class MainGameScene : public Layer
 {
 public:
     
-    TMXTiledMap *pMap;
+    TMXTiledMap* pMap;
     Camera* pCamera;
-    Sprite *pPlayer;
-    CharacterSprite *mob1;
-    Point pPlayerMapPoint;
+    CharacterSprite* pPlayer;
+    CharacterSprite* mob1;
+    
+    std::vector<CharacterSprite*> charactersVector;
+    
     Label* playerMapPointLabel { nullptr };
     
     static Scene* createScene();

@@ -9,8 +9,6 @@
 #include "TitleScene.hpp"
 #include "MainGameScene.hpp"
 
-/**
- */
 Scene* TitleScene::createScene()
 {
     auto scene = Scene::create();
@@ -48,6 +46,7 @@ bool TitleScene::init()
 
 
 /**
+ スタートボタン押下時のイベント
  */
 void TitleScene::touchEvent(Ref *pSender, ui::Widget::TouchEventType type)
 {
@@ -55,6 +54,7 @@ void TitleScene::touchEvent(Ref *pSender, ui::Widget::TouchEventType type)
     {
         case ui::Widget::TouchEventType::BEGAN:
         {
+            // MainGameSceneに遷移
             Scene* mainGameScene { MainGameScene::createScene() };
             TransitionFade* fade = TransitionFade::create(1.0f, mainGameScene);
             Director::getInstance()->replaceScene(fade);

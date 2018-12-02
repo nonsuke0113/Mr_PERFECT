@@ -81,7 +81,6 @@ bool AppDelegate::applicationDidFinishLaunching() {
     // initialize director
     auto director = Director::getInstance();
     auto glview = director->getOpenGLView();
-    auto frameSize = glview->getFrameSize();
     if(!glview) {
         glview = GLViewImpl::createWithRect("HelloCpp", Rect(0, 0, 960, 640));
         director->setOpenGLView(glview);
