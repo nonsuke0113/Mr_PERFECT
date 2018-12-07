@@ -19,24 +19,25 @@ USING_NS_CC;
 
 class MainGameScene : public Layer
 {
-public:
+private:
+    void touchCrossKeyEvent(Ref *pSender, ui::Widget::TouchEventType type);
+    void touchAEvent(Ref *pSender, ui::Widget::TouchEventType type);
+    void updatePosition(float frame);
+    void updateMobPosition(float frame);
     
+public:
     TMXTiledMap* pMap;
     Camera* pCamera;
     CharacterSprite* pPlayer;
-    CharacterSprite* mob1;
-    
     std::vector<CharacterSprite*> charactersVector;
     
+    Label* aButonLabel { nullptr };
     Label* playerMapPointLabel { nullptr };
     
     static Scene* createScene();
     virtual bool init();
     CREATE_FUNC(MainGameScene);
-    // ボタンのタッチイベント
-    void touchCrossKeyEvent(Ref *pSender, ui::Widget::TouchEventType type);
-    void updatePosition(float frame);
-    void updateMobPosition(float frame);
+    
     int checkNextTileGID();
 };
 

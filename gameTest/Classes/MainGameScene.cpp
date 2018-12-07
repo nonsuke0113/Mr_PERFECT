@@ -6,12 +6,13 @@
 //
 //
 
-#include "MainGameScene.hpp"
 #include "Const.hpp"
+#include "MainGameScene.hpp"
+#include "MessageDialog.hpp"
 
 USING_NS_CC;
 
-//
+// 十字ボタン状態
 enum pushedButton {
     pushedButtonNone,
     isPushedUpButton,
@@ -19,7 +20,6 @@ enum pushedButton {
     isPushedDownButton,
     isPushedLeftButton
 };
-//
 pushedButton m_isPushedButton = pushedButtonNone;
 
 // 十字ボタンタグ
@@ -29,17 +29,6 @@ enum crossKeyTag {
     TAG_DOWN = 30,
     TAG_LEFT = 40
 };
-
-// プレイヤー向き
-enum playerDirectcion {
-    player_back,
-    player_right,
-    player_front,
-    player_left
-};
-//
-playerDirectcion m_playerDirectcion = player_front;
-
 
 Scene* MainGameScene::createScene()
 {
@@ -119,6 +108,13 @@ bool MainGameScene::init()
     this->addChild(leftButton);
     leftButton->addTouchEventListener(CC_CALLBACK_2(MainGameScene::touchCrossKeyEvent, this));
     
+    // Aボタン
+    ui::Button* aButton { ui::Button::create("a_test.png") };
+    aButton->setPosition(Vec2(880.0f, 320.0f));
+    aButton->setCameraMask((unsigned short)CameraFlag::USER1);
+    this->addChild(aButton);
+    aButton->addTouchEventListener(CC_CALLBACK_2(MainGameScene::touchAEvent, this));
+    
     // キャラクター
     this->pPlayer = CharacterSprite::create("chara_test.png", Vec2(15.0f, 29.0f), this->pMap);
     this->pPlayer->setAnchorPoint(Vec2(0.0f, 0.0f));
@@ -126,27 +122,33 @@ bool MainGameScene::init()
     this->charactersVector.push_back(this->pPlayer);
     
     // モブキャラクター
-    this->mob1 = CharacterSprite::create("mob_test.png", Vec2(10.0f, 29.0f), this->pMap);
-    this->mob1->setAnchorPoint(Vec2(0.0f, 0.0f));
-    this->addChild(this->mob1);
-    this->charactersVector.push_back(this->mob1);
+    for(int i=0; i<4; i++) {
+        float random = rand()%10+1;
+        float random2 = rand()%10+1;
+        Vec2 pos = Vec2(random+10, random2+20);
+        CharacterSprite* mob = CharacterSprite::create("mob_test.png", pos, this->pMap);
+        mob->setName(StringUtils::format("mob%d", i));
+        mob->setAnchorPoint(Vec2(0.0f, 0.0f));
+        this->addChild(mob);
+        this->charactersVector.push_back(mob);
+    }
     
-    CharacterSprite* mob2 = CharacterSprite::create("mob_test.png", Vec2(10.0f, 28.0f), this->pMap);
-    mob2->setAnchorPoint(Vec2(0.0f, 0.0f));
-    this->addChild(mob2);
-    this->charactersVector.push_back(mob2);
+    // Aボタン　ラベル
+    this->aButonLabel = Label::createWithSystemFont("aaa", "ariel", 100);
+    this->aButonLabel->setPosition(Vec2(480.0f, 100.0f));
+    this->aButonLabel->setColor(Color3B(0, 255, 0));
+    this->aButonLabel->setCameraMask((unsigned short)CameraFlag::USER1);
+    this->aButonLabel->setOpacity(100);
+    this->addChild(aButonLabel);
     
-    CharacterSprite* mob3 = CharacterSprite::create("mob_test.png", Vec2(5.0f, 28.0f), this->pMap);
-    mob3->setAnchorPoint(Vec2(0.0f, 0.0f));
-    this->addChild(mob3);
-    this->charactersVector.push_back(mob3);
+    // テスト
+    MessageDialog* messageDialog = MessageDialog::create(640, 200);
+    messageDialog->setAnchorPoint(Vec2(0,0));
+    messageDialog->setPosition(Vec2(160.0f, 0.0f));
+    messageDialog->setCameraMask((unsigned short)CameraFlag::USER1);
+    this->addChild(messageDialog);
     
-    CharacterSprite* mob4 = CharacterSprite::create("mob_test.png", Vec2(12.0f, 20.0f), this->pMap);
-    mob4->setAnchorPoint(Vec2(0.0f, 0.0f));
-    this->addChild(mob4);
-    this->charactersVector.push_back(mob4);
-    
-    // ラベル
+    // Debugラベル
     this->playerMapPointLabel = Label::createWithSystemFont(StringUtils::format("x : $%f, y : $%f", this->pPlayer->worldPosition().x, this->pPlayer->worldPosition().y), "ariel", 20);
     this->playerMapPointLabel->setAnchorPoint(Vec2(0,0));
     this->playerMapPointLabel->setPosition(Vec2(0.0f, 0.0f));
@@ -213,6 +215,33 @@ void MainGameScene::touchCrossKeyEvent(Ref *pSender, ui::Widget::TouchEventType 
 
 
 /**
+ Aボタン押下時のイベント
+ */
+void MainGameScene::touchAEvent(Ref *pSender, ui::Widget::TouchEventType type) {
+    switch (type)
+    {
+        case ui::Widget::TouchEventType::BEGAN:
+        {
+            CharacterSprite* nextChara = this->pPlayer->getNextCharacter();
+            if(nextChara != nullptr) {
+                // ラベル更新
+                this->aButonLabel->setString(StringUtils::format("人:%s", nextChara->getName().c_str()));
+            } else {
+                // ラベル更新
+                this->aButonLabel->setString(StringUtils::format("タイルID:%d", this->pPlayer->getNextTileGID()));
+            }
+            break;
+        }
+        case ui::Widget::TouchEventType::MOVED:
+        case ui::Widget::TouchEventType::ENDED:
+        case ui::Widget::TouchEventType::CANCELED:
+            break;
+
+    }
+}
+
+
+/**
  座標更新処理
  */
 void MainGameScene::updatePosition(float frame) {
@@ -229,19 +258,20 @@ void MainGameScene::updatePosition(float frame) {
     // カメラ座標
     Vec3 newCameraPosition = this->pCamera->getPosition3D();
     MoveTo* actionMove;
-    //
+    // キャラクター座標
     Vec2 newPlayerPosition = this->pPlayer->worldPosition();
     
     // 上ボタン押下中
     if (m_isPushedButton == isPushedUpButton) {
         if((newCameraPosition.y != ((PER_TILE_SIZE * MAP_TILE_HEGHT) - VIEW_HEGHT/2)) &&
         (newCameraPosition.y == this->pPlayer->getPosition().y)) {
+            // カメラを上へ移動
             newCameraPosition.y += PER_TILE_SIZE;
             actionMove = MoveTo::create(0.1f, newCameraPosition);
             this->pCamera->stopAllActions();
             this->pCamera->runAction(actionMove);
         }
-        //
+        // キャラクターを上へ移動
         this->pPlayer->moveWorld(0.1f, Vec2(newPlayerPosition.x, newPlayerPosition.y-1.0f));
     }
     
@@ -249,38 +279,41 @@ void MainGameScene::updatePosition(float frame) {
     if (m_isPushedButton == isPushedRightButton) {
         if((newCameraPosition.x != (PER_TILE_SIZE * MAP_TILE_WIDTH) - VIEW_WIDTH/2 + SIDE_BAR_WIDTH) &&
            (newCameraPosition.x == this->pPlayer->getPosition().x)) {
+            // カメラを右へ移動
             newCameraPosition.x += PER_TILE_SIZE;
             actionMove = MoveTo::create(0.1f, newCameraPosition);
             this->pCamera->stopAllActions();
             this->pCamera->runAction(actionMove);
         }
-        //
+        // キャラクターを右へ移動
         this->pPlayer->moveWorld(0.1f, Vec2(newPlayerPosition.x+1.0f, newPlayerPosition.y));
     }
     
     // 下ボタン押下中
     if (m_isPushedButton == isPushedDownButton) {
         if ((newCameraPosition.y != VIEW_HEGHT/2) &&
-            (newCameraPosition.y == this->pPlayer->getPosition().y)){
+            (newCameraPosition.y == this->pPlayer->getPosition().y)) {
+            // カメラを下へ移動
             newCameraPosition.y -= PER_TILE_SIZE;
             actionMove = MoveTo::create(0.1f, newCameraPosition);
             this->pCamera->stopAllActions();
             this->pCamera->runAction(actionMove);
         }
-        //
+        // キャラクターを下へ移動
         this->pPlayer->moveWorld(0.1f, Vec2(newPlayerPosition.x, newPlayerPosition.y+1.0f));
     }
     
     // 左ボタン押下中
     if (m_isPushedButton == isPushedLeftButton) {
         if((newCameraPosition.x != VIEW_WIDTH/2 - SIDE_BAR_WIDTH) &&
-           (newCameraPosition.x == this->pPlayer->getPosition().x)){
+           (newCameraPosition.x == this->pPlayer->getPosition().x)) {
+            // カメラを左へ移動
             newCameraPosition.x -= PER_TILE_SIZE;
             actionMove = MoveTo::create(0.1f, newCameraPosition);
             this->pCamera->stopAllActions();
             this->pCamera->runAction(actionMove);
         }
-        //
+        // キャラクターを左へ移動
         this->pPlayer->moveWorld(0.1f, Vec2(newPlayerPosition.x-1.0f, newPlayerPosition.y));
     }
     
@@ -296,6 +329,7 @@ void MainGameScene::updatePosition(float frame) {
 }
 
 /**
+ モブの座標を更新
  */
 void MainGameScene::updateMobPosition(float frame) {
     

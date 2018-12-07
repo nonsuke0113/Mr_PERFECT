@@ -17,6 +17,11 @@ USING_NS_CC;
 
 class CharacterSprite : public Sprite
 {
+private:
+    Vec2 m_worldPosition; // ワールド座標
+    TMXTiledMap* m_map; // キャラクターが配置されているマップ
+    ::characterDirectcion m_characterDirectcion; // キャラクターの向き
+    
 public:
     static CharacterSprite* create(const std::string& filename, const Vec2 &pos, TMXTiledMap* map);
     Vec2& worldPosition();
@@ -26,13 +31,6 @@ public:
     Vec2 nextTilePosition();
     CharacterSprite* getNextCharacter();
     int getNextTileGID();
-private:
-    // ワールド座標
-    Vec2 m_worldPosition;
-    //
-    TMXTiledMap* m_map;
-    //
-    ::characterDirectcion m_characterDirectcion;
 };
 
 #endif /* CharacterSprite_hpp */

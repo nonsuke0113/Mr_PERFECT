@@ -8,21 +8,23 @@
 #include "MainGameScene.hpp"
 #include "CharacterSprite.hpp"
 
-CharacterSprite* CharacterSprite::create(const std::string& filename, const Vec2 &pos, TMXTiledMap* map)
+/**
+ Sprite::createメソッドをオーバーライド
+ 
+ @param filename キャラクターの画像リソース名
+ @param pos キャラクターのワールド座標初期位置
+ @param map キャラクターが配置されているマップ
+ */
+CharacterSprite* CharacterSprite::create(const std::string& filename, const Vec2& pos, TMXTiledMap* map)
 {
     CharacterSprite *sprite = new (std::nothrow) CharacterSprite();
     if (sprite && sprite->initWithFile(filename))
     {
         sprite->autorelease();
-        
-        // ワールド座標初期化
         sprite->m_worldPosition = pos;
         sprite->setPosition(Vec2(pos.x * PER_TILE_SIZE, (MAP_TILE_HEGHT - pos.y - 1) * PER_TILE_SIZE));
-        
         sprite->m_map = map;
-        
         sprite->m_characterDirectcion = character_front;
-        
         return sprite;
     }
     CC_SAFE_DELETE(sprite);
@@ -37,12 +39,14 @@ Vec2& CharacterSprite::worldPosition() {
 }
 
 /**
+ キャラクターの向き
  */
 characterDirectcion CharacterSprite::characterDirectcion() {
     return this->m_characterDirectcion;
 }
 
 /**
+ キャラクターの向きをセットする
  */
 void CharacterSprite::setCharacterDirectcion(::characterDirectcion direction) {
     this->m_characterDirectcion = direction;
@@ -62,6 +66,9 @@ void CharacterSprite::moveWorld(float duration, const Vec2& newPosition) {
 }
 
 /**
+ キャラクターが向いている方向の次のタイルの座標を返す
+ 
+ @return Vec2 キャラクターが向いている方向の次のタイルの座標
  */
 Vec2 CharacterSprite::nextTilePosition()  {
     
@@ -84,6 +91,9 @@ Vec2 CharacterSprite::nextTilePosition()  {
 }
 
 /**
+ キャラクターが向いている方向の次のタイルのIDを返す
+ 
+ @return int 次のタイルのID
  */
 int CharacterSprite::getNextTileGID()  {
     
@@ -100,6 +110,9 @@ int CharacterSprite::getNextTileGID()  {
 }
 
 /**
+ キャラクターが向いている方向にいる別のキャラクターを返す
+ 
+ @return CharacterSprite 隣にいる別のキャラクター
  */
 CharacterSprite* CharacterSprite::getNextCharacter()  {
     Vec2 nextTilePosition = this->nextTilePosition();
