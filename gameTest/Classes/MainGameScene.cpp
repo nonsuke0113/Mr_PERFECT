@@ -63,14 +63,14 @@ bool MainGameScene::init()
     leftBgSprite->setAnchorPoint(Vec2(0.0f, 0.0f));
     leftBgSprite->setPosition(Vec2(0.0f, 0.0f));
     leftBgSprite->setCameraMask((unsigned short)CameraFlag::USER1);
-    this->addChild(leftBgSprite);
+//    this->addChild(leftBgSprite);
     
     // 右サイドバー
     Sprite* rightBgSprite { Sprite::create("side_test.png") };
     rightBgSprite->setAnchorPoint(Vec2(0.0f, 0.0f));
     rightBgSprite->setPosition(Vec2(800.0f, 0.0f));
     rightBgSprite->setCameraMask((unsigned short)CameraFlag::USER1);
-    this->addChild(rightBgSprite);
+//    this->addChild(rightBgSprite);
     
     // 上ボタン
     ui::Button* upButton { ui::Button::create("up_test.png") };
@@ -146,7 +146,9 @@ bool MainGameScene::init()
     messageDialog->setAnchorPoint(Vec2(0,0));
     messageDialog->setPosition(Vec2(160.0f, 0.0f));
     messageDialog->setCameraMask((unsigned short)CameraFlag::USER1);
+    messageDialog->start();
     this->addChild(messageDialog);
+    
     
     // Debugラベル
     this->playerMapPointLabel = Label::createWithSystemFont(StringUtils::format("x : $%f, y : $%f", this->pPlayer->worldPosition().x, this->pPlayer->worldPosition().y), "ariel", 20);

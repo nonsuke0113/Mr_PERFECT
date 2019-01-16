@@ -7,6 +7,68 @@
 
 #include "MessageDialog.hpp"
 
+/**
+ */
+void MessageDialog::prepareLabel()
+{
+    if (this->label != nullptr) {
+        this->label->removeFromParentAndCleanup(true);
+    }
+    
+    this->charIndex = 0;
+    this->messageLength = 10;
+    
+    // ラベルを作成
+    this->label = Label::createWithTTF("testaaaaaaaaaaaaa", "fonts/PixelMplus12-Regular.ttf", 40);
+    // アンチエイリアスをOFF
+    this->label->getFontAtlas()->setAliasTexParameters();
+    this->label->setAnchorPoint(Vec2(0.0f, 0.0f));
+    // 外側のフレームに合わせて位置とサイズを調整
+//    this->label->setPosition(0,
+//                             frame->getContentSize().height * frame->getScaleY() / 2);
+//    this->label->setWidth(frame->getContentSize().width - LABEL_MARGIN);
+//    this->label->setHeight(frame->getContentSize().height - LABEL_MARGIN);
+    
+    // 文字を透明に設定
+    this->label->setOpacity(0);
+    // 行の高さを設定
+//    this->label->setLineHeight(this->label->getLineHeight() * 1.5f);
+    
+    this->addChild(this->label);
+}
+
+/**
+ */
+void MessageDialog::start()
+{
+//    this->prepareLabel();
+    this->isSending = true;
+    this->scheduleUpdate();
+}
+
+/**
+ */
+void MessageDialog::update(float delta)
+{
+    this->distance += delta;
+    
+    if (this->distance > this->interval)
+    {
+        Sprite* sp = this->label->getLetter(this->charIndex);
+        sp->setOpacity(255);
+        
+        this->distance = 0;
+        this->charIndex++;
+    }
+    
+    if (this->charIndex >= this->messageLength)
+    {
+        this->isSending = false;
+        this->unscheduleUpdate();
+//        this->startArrowBlink();
+    }
+}
+
 bool MessageDialog::init(const int frameWidth, const int frameHeight)
 {
     if (!Node::init())
@@ -26,13 +88,6 @@ bool MessageDialog::init(const int frameWidth, const int frameHeight)
     this->addChild(this->frame);
     
     // 文字送り完了の矢印
-    this->finishArrow = Sprite::create("arrow.png");
-    
-    this->finishArrow->setAnchorPoint(Vec2(0,0));
-    this->finishArrow->setPosition(0, -1 * frame->getContentSize().height / 2 +
-                                   this->finishArrow->getContentSize().height + 8);
-    this->finishArrow->setOpacity(0);
-    this->addChild(this->finishArrow);
     
     return true;
 }
@@ -43,6 +98,7 @@ MessageDialog* MessageDialog::create(const int frameWidth, const int frameHeight
     if (pRet && pRet->init(frameWidth, frameHeight))
     {
         pRet->autorelease();
+        pRet->prepareLabel();
         return pRet;
     }
     else
