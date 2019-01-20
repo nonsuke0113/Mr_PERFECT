@@ -26,11 +26,15 @@ class MessageDialog : public Node
     const int LABEL_MARGIN = 30;
     bool isSending = false;
     int charIndex = 0; // 現在の文字位置
+    std::string message;
+    size_t messageIndex = 0;
     int messageLength = 1; // 現在の文字列の長さ
     float interval = 0.1f; // 文字と文字を表示する間隔
     float distance = 0; // 前の文字を表示してからの経過時間
     
     void prepareLabel();
+    
+    std::function<void()> completedAction = nullptr;
     
 public:
     MessageDialog() {};
@@ -39,6 +43,8 @@ public:
     static MessageDialog* create(const int frameWidth, const int frameHeight);
     void start();
     void update(float delta);
+    void addMessage(const std::string &message);
+    void setCompleteAction(std::function<void()> completedAction);
 };
 
 #endif /* MessageDialog_hpp */

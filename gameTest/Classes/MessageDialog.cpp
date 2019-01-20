@@ -6,6 +6,7 @@
 //
 
 #include "MessageDialog.hpp"
+#include "StringUtil.h"
 
 /**
  */
@@ -16,16 +17,21 @@ void MessageDialog::prepareLabel()
     }
     
     this->charIndex = 0;
-    this->messageLength = 10;
+    
+    // 次の表示するメッセージの選択
+    this->message = this->messageList.at(messageIndex++);
+    
+    // 長さを取得
+    this->messageLength = StringUtil::lenUtf8(this->message);
     
     // ラベルを作成
-    this->label = Label::createWithTTF("testaaaaaaaaaaaaa", "fonts/PixelMplus12-Regular.ttf", 40);
+    this->label = Label::createWithTTF(this->message, "fonts/PixelMplus12-Regular.ttf", 40);
     // アンチエイリアスをOFF
     this->label->getFontAtlas()->setAliasTexParameters();
     this->label->setAnchorPoint(Vec2(0.0f, 0.0f));
     // 外側のフレームに合わせて位置とサイズを調整
-//    this->label->setPosition(0,
-//                             frame->getContentSize().height * frame->getScaleY() / 2);
+    this->label->setPosition(LABEL_MARGIN,
+                             frame->getContentSize().height * frame->getScaleY() / 2);
 //    this->label->setWidth(frame->getContentSize().width - LABEL_MARGIN);
 //    this->label->setHeight(frame->getContentSize().height - LABEL_MARGIN);
     
@@ -34,14 +40,19 @@ void MessageDialog::prepareLabel()
     // 行の高さを設定
 //    this->label->setLineHeight(this->label->getLineHeight() * 1.5f);
     
-    this->addChild(this->label);
+    this->frame->addChild(this->label);
+}
+
+void MessageDialog::addMessage(const std::string &message)
+{
+    this->messageList.push_back(message);
 }
 
 /**
  */
 void MessageDialog::start()
 {
-//    this->prepareLabel();
+    this->prepareLabel();
     this->isSending = true;
     this->scheduleUpdate();
 }
@@ -65,6 +76,7 @@ void MessageDialog::update(float delta)
     {
         this->isSending = false;
         this->unscheduleUpdate();
+        this->completedAction();
 //        this->startArrowBlink();
     }
 }
@@ -81,7 +93,7 @@ bool MessageDialog::init(const int frameWidth, const int frameHeight)
     const Rect innerRect(7, 7, 10, 10);
     
     this->frame = ui::Scale9Sprite::create("frame.png", outerRect, innerRect);
-    this->frame->setAnchorPoint(Vec2(0,0));
+    this->frame->setAnchorPoint(Vec2(0.5f,0));
     this->frame->setContentSize(Size(frameWidth, frameHeight));
     this->frame->getTexture()->setAliasTexParameters();
     
@@ -98,7 +110,6 @@ MessageDialog* MessageDialog::create(const int frameWidth, const int frameHeight
     if (pRet && pRet->init(frameWidth, frameHeight))
     {
         pRet->autorelease();
-        pRet->prepareLabel();
         return pRet;
     }
     else
@@ -112,4 +123,9 @@ MessageDialog* MessageDialog::create(const int frameWidth, const int frameHeight
 MessageDialog::~MessageDialog()
 {
     this->removeAllChildrenWithCleanup(true);
+}
+
+void MessageDialog::setCompleteAction(std::function<void()> completedAction)
+{
+    this->completedAction = completedAction;
 }

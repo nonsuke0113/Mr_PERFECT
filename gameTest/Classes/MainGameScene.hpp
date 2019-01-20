@@ -31,7 +31,6 @@ public:
     CharacterSprite* pPlayer;
     std::vector<CharacterSprite*> charactersVector;
     
-    Label* aButonLabel { nullptr };
     Label* playerMapPointLabel { nullptr };
     
     static Scene* createScene();

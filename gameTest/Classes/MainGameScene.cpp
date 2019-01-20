@@ -63,14 +63,14 @@ bool MainGameScene::init()
     leftBgSprite->setAnchorPoint(Vec2(0.0f, 0.0f));
     leftBgSprite->setPosition(Vec2(0.0f, 0.0f));
     leftBgSprite->setCameraMask((unsigned short)CameraFlag::USER1);
-//    this->addChild(leftBgSprite);
+    this->addChild(leftBgSprite);
     
     // 右サイドバー
     Sprite* rightBgSprite { Sprite::create("side_test.png") };
     rightBgSprite->setAnchorPoint(Vec2(0.0f, 0.0f));
     rightBgSprite->setPosition(Vec2(800.0f, 0.0f));
     rightBgSprite->setCameraMask((unsigned short)CameraFlag::USER1);
-//    this->addChild(rightBgSprite);
+    this->addChild(rightBgSprite);
     
     // 上ボタン
     ui::Button* upButton { ui::Button::create("up_test.png") };
@@ -116,7 +116,7 @@ bool MainGameScene::init()
     aButton->addTouchEventListener(CC_CALLBACK_2(MainGameScene::touchAEvent, this));
     
     // キャラクター
-    this->pPlayer = CharacterSprite::create("chara_test.png", Vec2(15.0f, 29.0f), this->pMap);
+    this->pPlayer = CharacterSprite::create("apple.png", Vec2(15.0f, 29.0f), this->pMap);
     this->pPlayer->setAnchorPoint(Vec2(0.0f, 0.0f));
     this->addChild(this->pPlayer);
     this->charactersVector.push_back(this->pPlayer);
@@ -126,29 +126,12 @@ bool MainGameScene::init()
         float random = rand()%10+1;
         float random2 = rand()%10+1;
         Vec2 pos = Vec2(random+10, random2+20);
-        CharacterSprite* mob = CharacterSprite::create("mob_test.png", pos, this->pMap);
+        CharacterSprite* mob = CharacterSprite::create("rensyu.png", pos, this->pMap);
         mob->setName(StringUtils::format("mob%d", i));
         mob->setAnchorPoint(Vec2(0.0f, 0.0f));
         this->addChild(mob);
         this->charactersVector.push_back(mob);
     }
-    
-    // Aボタン　ラベル
-    this->aButonLabel = Label::createWithSystemFont("aaa", "ariel", 100);
-    this->aButonLabel->setPosition(Vec2(480.0f, 100.0f));
-    this->aButonLabel->setColor(Color3B(0, 255, 0));
-    this->aButonLabel->setCameraMask((unsigned short)CameraFlag::USER1);
-    this->aButonLabel->setOpacity(100);
-    this->addChild(aButonLabel);
-    
-    // テスト
-    MessageDialog* messageDialog = MessageDialog::create(640, 200);
-    messageDialog->setAnchorPoint(Vec2(0,0));
-    messageDialog->setPosition(Vec2(160.0f, 0.0f));
-    messageDialog->setCameraMask((unsigned short)CameraFlag::USER1);
-    messageDialog->start();
-    this->addChild(messageDialog);
-    
     
     // Debugラベル
     this->playerMapPointLabel = Label::createWithSystemFont(StringUtils::format("x : $%f, y : $%f", this->pPlayer->worldPosition().x, this->pPlayer->worldPosition().y), "ariel", 20);
@@ -224,14 +207,36 @@ void MainGameScene::touchAEvent(Ref *pSender, ui::Widget::TouchEventType type) {
     {
         case ui::Widget::TouchEventType::BEGAN:
         {
+            // Messageテスト
+            MessageDialog* messageDialog = MessageDialog::create(640, 200);
+            
             CharacterSprite* nextChara = this->pPlayer->getNextCharacter();
             if(nextChara != nullptr) {
-                // ラベル更新
-                this->aButonLabel->setString(StringUtils::format("人:%s", nextChara->getName().c_str()));
+                messageDialog->addMessage(StringUtils::format("人:%s", nextChara->getName().c_str()));
             } else {
-                // ラベル更新
-                this->aButonLabel->setString(StringUtils::format("タイルID:%d", this->pPlayer->getNextTileGID()));
+                messageDialog->addMessage(StringUtils::format("タイルID:%d", this->pPlayer->getNextTileGID()));
             }
+            
+            messageDialog->setAnchorPoint(Vec2(0.0f,0.0f));
+            messageDialog->setPosition(Vec2(480.0f, 0.0f));
+            messageDialog->setCompleteAction([messageDialog]()
+                                             {
+                                                 messageDialog->runAction(
+                                                                          Sequence::create(DelayTime::create(1),
+                                                                                           ScaleTo::create(0.1f, 0, 0.05f, 1),
+                                                                                           ScaleTo::create(0.1f, 1, 0.05f, 0.05f),
+                                                                                           RemoveSelf::create(true), nullptr)
+                                                                          );
+                                             });
+            messageDialog->start();
+            messageDialog->setScale(0.05f);
+            messageDialog->runAction(
+                                     Sequence::create(ScaleTo::create(0.1f, 0, 1, 1),
+                                                      ScaleTo::create(0.2f, 1, 1, 1), nullptr)
+                                     );
+            messageDialog->setCameraMask((unsigned short)CameraFlag::USER1);
+            this->addChild(messageDialog);
+            
             break;
         }
         case ui::Widget::TouchEventType::MOVED:
