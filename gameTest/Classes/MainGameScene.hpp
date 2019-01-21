@@ -16,10 +16,14 @@ USING_NS_CC;
 #include "ui/CocosGUI.h"
 
 #include "CharacterSprite.hpp"
+#include "MessageDialog.hpp"
 
 class MainGameScene : public Layer
 {
 private:
+    
+    MessageDialog* messageDialog { nullptr };
+    
     void touchCrossKeyEvent(Ref *pSender, ui::Widget::TouchEventType type);
     void touchAEvent(Ref *pSender, ui::Widget::TouchEventType type);
     void updatePosition(float frame);

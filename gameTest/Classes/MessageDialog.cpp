@@ -32,13 +32,13 @@ void MessageDialog::prepareLabel()
     // 外側のフレームに合わせて位置とサイズを調整
     this->label->setPosition(LABEL_MARGIN,
                              frame->getContentSize().height * frame->getScaleY() / 2);
-//    this->label->setWidth(frame->getContentSize().width - LABEL_MARGIN);
-//    this->label->setHeight(frame->getContentSize().height - LABEL_MARGIN);
+    this->label->setWidth(frame->getContentSize().width - LABEL_MARGIN);
+    this->label->setHeight(frame->getContentSize().height - LABEL_MARGIN);
     
     // 文字を透明に設定
     this->label->setOpacity(0);
     // 行の高さを設定
-//    this->label->setLineHeight(this->label->getLineHeight() * 1.5f);
+    this->label->setLineHeight(this->label->getLineHeight() * 1.5f);
     
     this->frame->addChild(this->label);
 }

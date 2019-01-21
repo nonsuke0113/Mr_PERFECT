@@ -8,7 +8,6 @@
 
 #include "Const.hpp"
 #include "MainGameScene.hpp"
-#include "MessageDialog.hpp"
 
 USING_NS_CC;
 
@@ -116,7 +115,7 @@ bool MainGameScene::init()
     aButton->addTouchEventListener(CC_CALLBACK_2(MainGameScene::touchAEvent, this));
     
     // キャラクター
-    this->pPlayer = CharacterSprite::create("apple.png", Vec2(15.0f, 29.0f), this->pMap);
+    this->pPlayer = CharacterSprite::create("chara_test.png", Vec2(15.0f, 29.0f), this->pMap);
     this->pPlayer->setAnchorPoint(Vec2(0.0f, 0.0f));
     this->addChild(this->pPlayer);
     this->charactersVector.push_back(this->pPlayer);
@@ -126,7 +125,7 @@ bool MainGameScene::init()
         float random = rand()%10+1;
         float random2 = rand()%10+1;
         Vec2 pos = Vec2(random+10, random2+20);
-        CharacterSprite* mob = CharacterSprite::create("rensyu.png", pos, this->pMap);
+        CharacterSprite* mob = CharacterSprite::create("mob_test.png", pos, this->pMap);
         mob->setName(StringUtils::format("mob%d", i));
         mob->setAnchorPoint(Vec2(0.0f, 0.0f));
         this->addChild(mob);
@@ -208,34 +207,46 @@ void MainGameScene::touchAEvent(Ref *pSender, ui::Widget::TouchEventType type) {
         case ui::Widget::TouchEventType::BEGAN:
         {
             // Messageテスト
-            MessageDialog* messageDialog = MessageDialog::create(640, 200);
-            
-            CharacterSprite* nextChara = this->pPlayer->getNextCharacter();
-            if(nextChara != nullptr) {
-                messageDialog->addMessage(StringUtils::format("人:%s", nextChara->getName().c_str()));
-            } else {
-                messageDialog->addMessage(StringUtils::format("タイルID:%d", this->pPlayer->getNextTileGID()));
+            if (this->messageDialog == nullptr)
+            {
+                this->messageDialog = MessageDialog::create(640, 200);
+                
+                CharacterSprite* nextChara = this->pPlayer->getNextCharacter();
+                if(nextChara != nullptr) {
+                    this->messageDialog->addMessage(StringUtils::format("人:%s", nextChara->getName().c_str()));
+                } else {
+                    this->messageDialog->addMessage(StringUtils::format("タイルID:%d", this->pPlayer->getNextTileGID()));
+                }
+                
+                this->messageDialog->setAnchorPoint(Vec2(0.0f,0.0f));
+                this->messageDialog->setPosition(Vec2(480.0f, 0.0f));
+                this->messageDialog->setCompleteAction([this]()
+                {
+                    this->messageDialog->runAction(
+                                                   Sequence::create(
+                                                                    DelayTime::create(1),
+                                                                    ScaleTo::create(0.1f, 0, 0.05f, 1),
+                                                                    ScaleTo::create(0.1f, 1, 0.05f, 0.05f),
+                                                                    RemoveSelf::create(true),
+                                                                    nullptr
+                                                                    )
+                                                   );
+                });
+                this->messageDialog->start();
+                this->messageDialog->setScale(0.05f);
+                this->messageDialog->runAction(
+                                         Sequence::create(
+                                                          ScaleTo::create(0.1f, 0, 1, 1),
+                                                          ScaleTo::create(0.2f, 1, 1, 1),
+                                                          nullptr
+                                                          )
+                );
+                this->messageDialog->setCameraMask((unsigned short)CameraFlag::USER1);
+                this->addChild(this->messageDialog);
             }
-            
-            messageDialog->setAnchorPoint(Vec2(0.0f,0.0f));
-            messageDialog->setPosition(Vec2(480.0f, 0.0f));
-            messageDialog->setCompleteAction([messageDialog]()
-                                             {
-                                                 messageDialog->runAction(
-                                                                          Sequence::create(DelayTime::create(1),
-                                                                                           ScaleTo::create(0.1f, 0, 0.05f, 1),
-                                                                                           ScaleTo::create(0.1f, 1, 0.05f, 0.05f),
-                                                                                           RemoveSelf::create(true), nullptr)
-                                                                          );
-                                             });
-            messageDialog->start();
-            messageDialog->setScale(0.05f);
-            messageDialog->runAction(
-                                     Sequence::create(ScaleTo::create(0.1f, 0, 1, 1),
-                                                      ScaleTo::create(0.2f, 1, 1, 1), nullptr)
-                                     );
-            messageDialog->setCameraMask((unsigned short)CameraFlag::USER1);
-            this->addChild(messageDialog);
+            else {
+                
+            }
             
             break;
         }
