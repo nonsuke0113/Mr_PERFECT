@@ -28,13 +28,12 @@ void MessageDialog::prepareLabel()
     this->label = Label::createWithTTF(this->message, "fonts/PixelMplus12-Regular.ttf", 40);
     // アンチエイリアスをOFF
     this->label->getFontAtlas()->setAliasTexParameters();
-    this->label->setAnchorPoint(Vec2(0.0f, 0.0f));
+    this->label->setAnchorPoint(Vec2(0.0f, 1.0f));
     // 外側のフレームに合わせて位置とサイズを調整
-    this->label->setPosition(LABEL_MARGIN,
-                             frame->getContentSize().height * frame->getScaleY() / 2);
-    this->label->setWidth(frame->getContentSize().width - LABEL_MARGIN);
-    this->label->setHeight(frame->getContentSize().height - LABEL_MARGIN);
-    
+    this->label->setPosition(LABEL_MARGIN, frame->getContentSize().height - LABEL_MARGIN);
+    this->label->setWidth(frame->getContentSize().width - (LABEL_MARGIN*2));
+    this->label->setHeight(frame->getContentSize().height - (LABEL_MARGIN*2));
+
     // 文字を透明に設定
     this->label->setOpacity(0);
     // 行の高さを設定
@@ -100,6 +99,13 @@ bool MessageDialog::init(const int frameWidth, const int frameHeight)
     this->addChild(this->frame);
     
     // 文字送り完了の矢印
+    this->finishArrow = Sprite::create("arrow.png");
+    
+    this->frame->setAnchorPoint(Vec2(0.5f,0));
+    this->finishArrow->setPosition(0, LABEL_MARGIN);
+    
+//    this->finishArrow->setOpacity(0); // 最初は透明にしておく
+    this->addChild(this->finishArrow);
     
     return true;
 }

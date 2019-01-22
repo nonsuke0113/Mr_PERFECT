@@ -213,9 +213,9 @@ void MainGameScene::touchAEvent(Ref *pSender, ui::Widget::TouchEventType type) {
                 
                 CharacterSprite* nextChara = this->pPlayer->getNextCharacter();
                 if(nextChara != nullptr) {
-                    this->messageDialog->addMessage(StringUtils::format("人:%s", nextChara->getName().c_str()));
+                    this->messageDialog->addMessage(StringUtils::format("ああああああああああああああ人:%s", nextChara->getName().c_str()));
                 } else {
-                    this->messageDialog->addMessage(StringUtils::format("タイルID:%d", this->pPlayer->getNextTileGID()));
+                    this->messageDialog->addMessage(StringUtils::format("ああああああああああタイルID:%d", this->pPlayer->getNextTileGID()));
                 }
                 
                 this->messageDialog->setAnchorPoint(Vec2(0.0f,0.0f));
@@ -231,6 +231,7 @@ void MainGameScene::touchAEvent(Ref *pSender, ui::Widget::TouchEventType type) {
                                                                     nullptr
                                                                     )
                                                    );
+                    this->messageDialog = nullptr;
                 });
                 this->messageDialog->start();
                 this->messageDialog->setScale(0.05f);
