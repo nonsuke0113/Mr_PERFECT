@@ -39,6 +39,7 @@ void MessageDialog::prepareLabel()
     // 行の高さを設定
     this->label->setLineHeight(this->label->getLineHeight() * 1.5f);
     
+    this->label->setCameraMask((unsigned short)CameraFlag::USER1);
     this->frame->addChild(this->label);
 }
 
@@ -75,8 +76,66 @@ void MessageDialog::update(float delta)
     {
         this->isSending = false;
         this->unscheduleUpdate();
-        this->completedAction();
-//        this->startArrowBlink();
+        this->startArrowBlink();
+    }
+}
+
+/**
+ */
+void MessageDialog::startArrowBlink()
+{
+    // 点滅用の繰り返しアニメーション
+    auto blink = Sequence::create(
+                                  DelayTime::create(0.1f),
+                                  CallFunc::create([this]() { this->finishArrow->setOpacity(255); }),
+                                  DelayTime::create(0.3f),
+                                  CallFunc::create([this]() { this->finishArrow->setOpacity(0); }),
+                                  DelayTime::create(0.2f),
+                                  nullptr);
+    
+    this->finishArrow->runAction(RepeatForever::create(blink));
+}
+
+/**
+ */
+void MessageDialog::stopAllowBlink()
+{
+    this->finishArrow->stopAllActions();
+    this->finishArrow->setOpacity(0);
+}
+
+/**
+ */
+void MessageDialog::next()
+{
+    // 最後の最後まで進んでたら終了
+    if (!this->isSending && this->messageIndex >= this->messageList.size())
+    {
+        this->startArrowBlink();
+        
+        if (this->completedAction != nullptr)
+        {
+            this->completedAction(); // ハンドラが有ったら通知
+        }
+        
+        return;
+    }
+    
+    // 文字送り中なら最後まで表示
+    if (this->isSending)
+    {
+        // ループを停止して残りを全部表示
+        this->unscheduleUpdate();
+        this->label->setOpacity(255);
+        
+        this->isSending = false;
+        
+        this->startArrowBlink();
+    }
+    else
+    {
+        this->start();
+        this->stopAllowBlink();
     }
 }
 
@@ -100,11 +159,9 @@ bool MessageDialog::init(const int frameWidth, const int frameHeight)
     
     // 文字送り完了の矢印
     this->finishArrow = Sprite::create("arrow.png");
-    
     this->frame->setAnchorPoint(Vec2(0.5f,0));
     this->finishArrow->setPosition(0, LABEL_MARGIN);
-    
-//    this->finishArrow->setOpacity(0); // 最初は透明にしておく
+    this->finishArrow->setOpacity(0);
     this->addChild(this->finishArrow);
     
     return true;

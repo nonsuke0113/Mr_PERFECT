@@ -55,6 +55,7 @@ bool MainGameScene::init()
     
     // マップ
     this->pMap = TMXTiledMap::create("desert.tmx");
+//    this->pMap->runAction(ScaleTo::create(0.1f, 2, 2, 1));
     this->addChild(this->pMap);
     
     // 左サイドバー
@@ -115,8 +116,9 @@ bool MainGameScene::init()
     aButton->addTouchEventListener(CC_CALLBACK_2(MainGameScene::touchAEvent, this));
     
     // キャラクター
-    this->pPlayer = CharacterSprite::create("chara_test.png", Vec2(15.0f, 29.0f), this->pMap);
+    this->pPlayer = CharacterSprite::create("obento.png", Vec2(15.0f, 29.0f), this->pMap);
     this->pPlayer->setAnchorPoint(Vec2(0.0f, 0.0f));
+//    this->pPlayer->runAction(ScaleTo::create(0.1f, 2, 2, 1));
     this->addChild(this->pPlayer);
     this->charactersVector.push_back(this->pPlayer);
     
@@ -125,7 +127,7 @@ bool MainGameScene::init()
         float random = rand()%10+1;
         float random2 = rand()%10+1;
         Vec2 pos = Vec2(random+10, random2+20);
-        CharacterSprite* mob = CharacterSprite::create("mob_test.png", pos, this->pMap);
+        CharacterSprite* mob = CharacterSprite::create("bilding.png", pos, this->pMap);
         mob->setName(StringUtils::format("mob%d", i));
         mob->setAnchorPoint(Vec2(0.0f, 0.0f));
         this->addChild(mob);
@@ -210,21 +212,20 @@ void MainGameScene::touchAEvent(Ref *pSender, ui::Widget::TouchEventType type) {
             if (this->messageDialog == nullptr)
             {
                 this->messageDialog = MessageDialog::create(640, 200);
-                
+                this->messageDialog->addMessage("メッセージを開始します。");
                 CharacterSprite* nextChara = this->pPlayer->getNextCharacter();
                 if(nextChara != nullptr) {
-                    this->messageDialog->addMessage(StringUtils::format("ああああああああああああああ人:%s", nextChara->getName().c_str()));
+                    this->messageDialog->addMessage(StringUtils::format("人:%s", nextChara->getName().c_str()));
                 } else {
-                    this->messageDialog->addMessage(StringUtils::format("ああああああああああタイルID:%d", this->pPlayer->getNextTileGID()));
+                    this->messageDialog->addMessage(StringUtils::format("タイルID:%d", this->pPlayer->getNextTileGID()));
                 }
-                
+                this->messageDialog->addMessage("メッセージを終了します。");
                 this->messageDialog->setAnchorPoint(Vec2(0.0f,0.0f));
                 this->messageDialog->setPosition(Vec2(480.0f, 0.0f));
                 this->messageDialog->setCompleteAction([this]()
                 {
                     this->messageDialog->runAction(
                                                    Sequence::create(
-                                                                    DelayTime::create(1),
                                                                     ScaleTo::create(0.1f, 0, 0.05f, 1),
                                                                     ScaleTo::create(0.1f, 1, 0.05f, 0.05f),
                                                                     RemoveSelf::create(true),
@@ -246,7 +247,7 @@ void MainGameScene::touchAEvent(Ref *pSender, ui::Widget::TouchEventType type) {
                 this->addChild(this->messageDialog);
             }
             else {
-                
+                this->messageDialog->next();
             }
             
             break;
@@ -389,6 +390,6 @@ void MainGameScene::updateMobPosition(float frame) {
             chara->moveWorld(0.1f, Vec2(newCharaPoint.x-1.0f, newCharaPoint.y));
         }
         
-        CCLOG("mob%d X:%f Y:%f", i, chara->worldPosition().x, chara->worldPosition().y);
+//        CCLOG("mob%d X:%f Y:%f", i, chara->worldPosition().x, chara->worldPosition().y);
     }
 }

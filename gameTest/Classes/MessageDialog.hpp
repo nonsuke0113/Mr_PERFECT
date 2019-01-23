@@ -33,6 +33,8 @@ class MessageDialog : public Node
     float distance = 0; // 前の文字を表示してからの経過時間
     
     void prepareLabel();
+    void startArrowBlink();
+    void stopAllowBlink();
     
     std::function<void()> completedAction = nullptr;
     
@@ -45,6 +47,7 @@ public:
     void update(float delta);
     void addMessage(const std::string &message);
     void setCompleteAction(std::function<void()> completedAction);
+    void next();
 };
 
 #endif /* MessageDialog_hpp */
