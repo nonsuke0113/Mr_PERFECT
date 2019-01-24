@@ -14,15 +14,17 @@ USING_NS_CC;
 #include "ui/CocosGUI.h"
 #include "ui/UIScale9Sprite.h"
 
-class MessageDialog : public Node
+class MessageDialog : public Node, public ui::EditBoxDelegate
 {
 private:
     ui::Scale9Sprite* frame = nullptr; // メッセージフレーム
     Label* label = nullptr; // 表示中のメッセージラベル
+    ui::EditBox* editBox = nullptr;
     Sprite* finishArrow; // 文字送り終了矢印
     std::vector<std::string> messageList; // 表示するメッセージのリスト
     const int LABEL_MARGIN = 30;
-    bool isSending = false; 
+    bool isSending = false;
+    bool isQuestion = false; 
     int charIndex = 0; // 現在の文字位置
     std::string message;    // 現在表示中のメッセージ
     size_t messageIndex = 0;    // 現在表示中のメッセージのインデックス
@@ -32,10 +34,13 @@ private:
     std::function<void()> completedAction = nullptr; // 文字送り完了後のハンドラ
     
     void prepareLabel();
+    void createEditBox();
     void startArrowBlink();
     void stopAllowBlink();
     
 public:
+    std::vector<std::string> answerList;
+    
     MessageDialog() {};
     ~MessageDialog();
     virtual bool init(const int frameWidth, const int frameHeight);
@@ -45,6 +50,11 @@ public:
     void update(float delta);
     void addMessage(const std::string &message);
     void setCompleteAction(std::function<void()> completedAction);
+    
+    virtual void editBoxEditingDidBegin(ui::EditBox *editBox);
+    virtual void editBoxEditingDidEnd(ui::EditBox *editBox);
+    virtual void editBoxTextChanged(ui::EditBox *editBox, const std::string& text);
+    virtual void editBoxReturn(ui::EditBox *editBox);
 };
 
 #endif /* MessageDialog_hpp */

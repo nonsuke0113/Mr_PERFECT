@@ -17,11 +17,27 @@ void MessageDialog::prepareLabel() {
     if (this->label != nullptr) {
         this->label->removeFromParentAndCleanup(true);
     }
+    if (this->editBox != nullptr) {
+        this->editBox->removeFromParentAndCleanup(true);
+    }
     
     this->charIndex = 0;
     
     // 次の表示するメッセージの選択
     this->message = this->messageList.at(messageIndex++);
+    
+    // ユーザーの回答に応じて、メッセージの内容を変換する
+    if(this->message.find("*") != -1) {
+        int replaceIndex = (int)this->message[this->message.find("*")+1] - (int)'0';
+        if(!(replaceIndex > answerList.size())) {
+            this->message.replace(this->message.find("*"), 2, answerList[replaceIndex-1]);
+        }
+    }
+    
+    // 問いかけフラグを設定
+    if(this->message.back() == '?') {
+        this->isQuestion = true;
+    }
     
     // 表示するメッセージの長さ(文字数)を取得
     this->messageLength = StringUtil::lenUtf8(this->message);
@@ -87,7 +103,45 @@ void MessageDialog::update(float delta) {
         this->isSending = false;
         this->unscheduleUpdate();
         this->startArrowBlink();
+        
+        if(this->isQuestion && this->editBox == nullptr) {
+            this->createEditBox();
+        }
     }
+}
+
+
+/**
+    EditBoxを生成する
+ */
+void MessageDialog::createEditBox() {
+    
+    this->editBox = ui::EditBox::create(Size(480, 50), ui::Scale9Sprite::create("side_test.png"));
+    this->editBox->setFont("fonts/PixelMplus12-Regular.ttf", MESSAGE_FONT_SIZE);
+    this->editBox->setAnchorPoint(Vec2(0.5f,0));
+    this->editBox->setPosition(Vec2(0.0f, LABEL_MARGIN*2));
+    this->editBox->setPlaceHolder("ここに入力してください");
+    this->editBox->setPlaceholderFontColor(Color3B::GRAY);
+    this->editBox->setPlaceholderFontSize(MESSAGE_FONT_SIZE);
+    this->editBox->setFontColor(Color3B::BLACK);
+    this->editBox->setMaxLength(10);
+    this->editBox->setReturnType(ui::EditBox::KeyboardReturnType::DONE);
+    this->editBox->setInputMode(ui::EditBox::InputMode::SINGLE_LINE);
+    this->editBox->setDelegate(this);
+    this->editBox->setCameraMask((unsigned short)CameraFlag::USER1);
+    this->addChild(this->editBox);
+}
+
+void MessageDialog::editBoxEditingDidBegin(ui::EditBox *editBox) {
+}
+
+void MessageDialog::editBoxEditingDidEnd(ui::EditBox *editBox) {
+}
+
+void MessageDialog::editBoxTextChanged(ui::EditBox *editBox, const std::string& text) {
+}
+
+void MessageDialog::editBoxReturn(ui::EditBox *editBox) {
 }
 
 
@@ -137,9 +191,23 @@ void MessageDialog::next() {
         this->label->setOpacity(255);
         this->isSending = false;
         this->startArrowBlink();
+        
+        // 問いかけメッセージの場合は、EditBoxを生成
+        if(this->isQuestion && this->editBox == nullptr) {
+            this->createEditBox();
+        }
     }
     // それ以外の場合は、次のメッセージの文字送りを開始する
     else {
+        if(this->isQuestion) {
+            // ユーザーの入力待ちの場合は、文字送りをしない
+            if(this->editBox != nullptr && strcmp(this->editBox->getText(), "") != 0) {
+                this->isQuestion = false;
+                this->answerList.push_back(editBox->getText());
+            } else {
+                return;
+            }
+        }
         this->start();
         this->stopAllowBlink();
     }

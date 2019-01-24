@@ -8,6 +8,7 @@
 
 #include "Const.hpp"
 #include "MainGameScene.hpp"
+#include "ui/UIScale9Sprite.h"
 
 USING_NS_CC;
 
@@ -201,54 +202,106 @@ void MainGameScene::touchCrossKeyEvent(Ref *pSender, ui::Widget::TouchEventType 
 void MainGameScene::touchAEvent(Ref *pSender, ui::Widget::TouchEventType type) {
     
     switch (type) {
-        case ui::Widget::TouchEventType::BEGAN:
+        case ui::Widget::TouchEventType::BEGAN: {
             // Messageテスト
             if (this->messageDialog == nullptr) {
-                this->messageDialog = MessageDialog::create(640, 200);
-                this->messageDialog->addMessage("メッセージを開始します。");
-                CharacterSprite* nextChara = this->pPlayer->getNextCharacter();
-                if(nextChara != nullptr) {
-                    this->messageDialog->addMessage(StringUtils::format("人:%s", nextChara->getName().c_str()));
-                } else {
-                    this->messageDialog->addMessage(StringUtils::format("タイルID:%d", this->pPlayer->getNextTileGID()));
-                }
-                this->messageDialog->addMessage("メッセージを終了します。");
-                this->messageDialog->setAnchorPoint(Vec2(0.0f,0.0f));
-                this->messageDialog->setPosition(Vec2(480.0f, 0.0f));
-                this->messageDialog->setCompleteAction([this]()
-                {
-                    this->messageDialog->runAction(
-                                                   Sequence::create(
-                                                                    ScaleTo::create(0.1f, 0, 0.05f, 1),
-                                                                    ScaleTo::create(0.1f, 1, 0.05f, 0.05f),
-                                                                    RemoveSelf::create(true),
-                                                                    nullptr
-                                                                    )
-                                                   );
-                    this->messageDialog = nullptr;
-                });
-                this->messageDialog->start();
-                this->messageDialog->setScale(0.05f);
-                this->messageDialog->runAction(
-                                         Sequence::create(
-                                                          ScaleTo::create(0.1f, 0, 1, 1),
-                                                          ScaleTo::create(0.2f, 1, 1, 1),
-                                                          nullptr
-                                                          )
-                );
-                this->messageDialog->setCameraMask((unsigned short)CameraFlag::USER1);
-                this->addChild(this->messageDialog);
+                this->createMessageDialog();
             }
             else {
+                // 文字送りを実行する
                 this->messageDialog->next();
             }
             break;
-        
+        }
+            
         case ui::Widget::TouchEventType::MOVED:
         case ui::Widget::TouchEventType::ENDED:
         case ui::Widget::TouchEventType::CANCELED:
             break;
     }
+}
+
+
+/**
+    メッセージダイアログを作成する
+ */
+void MainGameScene::createMessageDialog() {
+    
+    this->messageDialog = MessageDialog::create(640, 200);
+    
+    this->messageDialog->setAnchorPoint(Vec2(0.0f,0.0f));
+    this->messageDialog->setPosition(Vec2(480.0f, 0.0f));
+    
+    // メッセージを追加
+    this->createMessage();
+    
+    // メッセージ表示後のコールバックを設定
+    this->setMessageCallback();
+    
+    this->messageDialog->start();
+    this->messageDialog->setScale(0.05f);
+    this->messageDialog->runAction(
+        Sequence::create(
+            ScaleTo::create(0.1f, 0, 1, 1),
+            ScaleTo::create(0.2f, 1, 1, 1),
+            nullptr)
+    );
+    this->messageDialog->setCameraMask((unsigned short)CameraFlag::USER1);
+    this->addChild(this->messageDialog);
+}
+
+
+/**
+    メッセージダイアログに設定する本文を作成する
+ */
+void MainGameScene::createMessage() {
+    
+    // メッセージの内容を設定
+    CharacterSprite* nextChara = this->pPlayer->getNextCharacter();
+    // 人
+    if(nextChara != nullptr) {
+        // mobの動きを一時停止
+        unschedule(schedule_selector(MainGameScene::updateMobPosition));
+        
+        if(this->pPlayer->getName() != "") {
+            this->messageDialog->addMessage(StringUtils::format("こんにちは、%s", this->pPlayer->getName().c_str()));
+        } else {
+            this->messageDialog->addMessage("はじめまして。");
+            this->messageDialog->addMessage(StringUtils::format("私は%sです。", nextChara->getName().c_str()));
+            this->messageDialog->addMessage("あなたの名前は?");
+            this->messageDialog->addMessage("さようなら、*1");
+        }
+    }
+    // 人以外
+    else {
+        this->messageDialog->addMessage("メッセージを開始します。");
+        this->messageDialog->addMessage(StringUtils::format("タイルID:%d", this->pPlayer->getNextTileGID()));
+        this->messageDialog->addMessage("メッセージを終了します。");
+    }
+}
+
+
+/**
+    メッセージ表示後のコールバックを設定する
+ */
+void MainGameScene::setMessageCallback() {
+    
+    this->messageDialog->setCompleteAction([this]() {
+        // 名前を保存
+        if(this->messageDialog->answerList.size() != 0) {
+            this->pPlayer->setName(this->messageDialog->answerList[0]);
+        }
+        // ダイアログを閉じて、Remove
+        this->messageDialog->runAction(
+                                       Sequence::create(
+                                                        ScaleTo::create(0.1f, 0, 0.05f, 1),
+                                                        ScaleTo::create(0.1f, 1, 0.05f, 0.05f),
+                                                        RemoveSelf::create(true),
+                                                        nullptr)
+                                       );
+        this->messageDialog = nullptr;
+        schedule(schedule_selector(MainGameScene::updateMobPosition), 2.0f);
+    });
 }
 
 
@@ -344,7 +397,7 @@ void MainGameScene::updatePosition(float frame) {
  */
 void MainGameScene::updateMobPosition(float frame) {
     
-    for (int i=1; i<this->charactersVector.size(); i++) {
+    for (int i=2; i<this->charactersVector.size(); i++) {
         
         CharacterSprite* chara = this->charactersVector[i];
         int random = rand()%4+1;

@@ -41,6 +41,11 @@ private:
     
     void touchCrossKeyEvent(Ref *pSender, ui::Widget::TouchEventType type);
     void touchAEvent(Ref *pSender, ui::Widget::TouchEventType type);
+    
+    void createMessageDialog();
+    void createMessage();
+    void setMessageCallback();
+    
     void updatePosition(float frame);
     void updateMobPosition(float frame);
     
