@@ -18,11 +18,26 @@ USING_NS_CC;
 #include "CharacterSprite.hpp"
 #include "MessageDialog.hpp"
 
+// 十字ボタン状態
+typedef enum {
+    pushedButtonNone,
+    isPushedUpButton,
+    isPushedRightButton,
+    isPushedDownButton,
+    isPushedLeftButton
+} pushedButton;
+
+
 class MainGameScene : public Layer
 {
 private:
     
-    MessageDialog* messageDialog { nullptr };
+    TMXTiledMap* pMap;  // MAP
+    Camera* pCamera;    // スクロール用カメラ
+    CharacterSprite* pPlayer;   // 操作キャラクター
+    Label* playerMapPointLabel { nullptr }; // 操作キャラクター座標ラベル(デバッグ用)
+    MessageDialog* messageDialog { nullptr };   // メッセージダイアログ
+    pushedButton m_isPushedButton;  // 十字ボタンの状態
     
     void touchCrossKeyEvent(Ref *pSender, ui::Widget::TouchEventType type);
     void touchAEvent(Ref *pSender, ui::Widget::TouchEventType type);
@@ -30,18 +45,12 @@ private:
     void updateMobPosition(float frame);
     
 public:
-    TMXTiledMap* pMap;
-    Camera* pCamera;
-    CharacterSprite* pPlayer;
-    std::vector<CharacterSprite*> charactersVector;
     
-    Label* playerMapPointLabel { nullptr };
+    std::vector<CharacterSprite*> charactersVector; //  画面内キャラクターの動的配列
     
     static Scene* createScene();
-    virtual bool init();
     CREATE_FUNC(MainGameScene);
-    
-    int checkNextTileGID();
+    virtual bool init();
 };
 
 #endif /* MainGameScene_hpp */

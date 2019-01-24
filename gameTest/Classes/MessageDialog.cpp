@@ -7,11 +7,13 @@
 
 #include "MessageDialog.hpp"
 #include "StringUtil.h"
+#include "Const.hpp"
 
 /**
+    表示するラベルを作成
  */
-void MessageDialog::prepareLabel()
-{
+void MessageDialog::prepareLabel() {
+    
     if (this->label != nullptr) {
         this->label->removeFromParentAndCleanup(true);
     }
@@ -21,11 +23,11 @@ void MessageDialog::prepareLabel()
     // 次の表示するメッセージの選択
     this->message = this->messageList.at(messageIndex++);
     
-    // 長さを取得
+    // 表示するメッセージの長さ(文字数)を取得
     this->messageLength = StringUtil::lenUtf8(this->message);
     
     // ラベルを作成
-    this->label = Label::createWithTTF(this->message, "fonts/PixelMplus12-Regular.ttf", 40);
+    this->label = Label::createWithTTF(this->message, "fonts/PixelMplus12-Regular.ttf", MESSAGE_FONT_SIZE);
     // アンチエイリアスをOFF
     this->label->getFontAtlas()->setAliasTexParameters();
     this->label->setAnchorPoint(Vec2(0.0f, 1.0f));
@@ -43,47 +45,56 @@ void MessageDialog::prepareLabel()
     this->frame->addChild(this->label);
 }
 
-void MessageDialog::addMessage(const std::string &message)
-{
+
+/**
+    メッセージを配列に追加する
+ 
+    @param &message 追加するメッセージ
+ */
+void MessageDialog::addMessage(const std::string &message) {
     this->messageList.push_back(message);
 }
 
 /**
+    メッセージの表示を開始する
  */
-void MessageDialog::start()
-{
+void MessageDialog::start() {
     this->prepareLabel();
     this->isSending = true;
     this->scheduleUpdate();
 }
 
+
 /**
+    経過時間に応じて文字送りを実行
+ 
+    @param delta 
  */
-void MessageDialog::update(float delta)
-{
+void MessageDialog::update(float delta) {
+    
     this->distance += delta;
     
-    if (this->distance > this->interval)
-    {
+    if (this->distance > this->interval) {
+        // 1文字ずつ表示していく
         Sprite* sp = this->label->getLetter(this->charIndex);
         sp->setOpacity(255);
-        
         this->distance = 0;
         this->charIndex++;
     }
     
-    if (this->charIndex >= this->messageLength)
-    {
+    // メッセージの最後まで表示したら、文字送りを停止する
+    if (this->charIndex >= this->messageLength) {
         this->isSending = false;
         this->unscheduleUpdate();
         this->startArrowBlink();
     }
 }
 
+
 /**
+    文字送り完了矢印の点滅を開始する
  */
-void MessageDialog::startArrowBlink()
-{
+void MessageDialog::startArrowBlink() {
     // 点滅用の繰り返しアニメーション
     auto blink = Sequence::create(
                                   DelayTime::create(0.1f),
@@ -96,53 +107,54 @@ void MessageDialog::startArrowBlink()
     this->finishArrow->runAction(RepeatForever::create(blink));
 }
 
+
 /**
+    文字送り完了矢印の点滅を終了する
  */
-void MessageDialog::stopAllowBlink()
-{
+void MessageDialog::stopAllowBlink() {
     this->finishArrow->stopAllActions();
     this->finishArrow->setOpacity(0);
 }
 
+
 /**
  */
-void MessageDialog::next()
-{
-    // 最後の最後まで進んでたら終了
-    if (!this->isSending && this->messageIndex >= this->messageList.size())
-    {
+void MessageDialog::next() {
+    // 最後のメッセージまで進んでいれば終了する
+    if (!this->isSending && this->messageIndex >= this->messageList.size()) {
         this->startArrowBlink();
-        
-        if (this->completedAction != nullptr)
-        {
-            this->completedAction(); // ハンドラが有ったら通知
+        // ハンドラが有れば文字送りの完了を通知
+        if (this->completedAction != nullptr) {
+            this->completedAction();
         }
-        
         return;
     }
-    
+
     // 文字送り中なら最後まで表示
-    if (this->isSending)
-    {
-        // ループを停止して残りを全部表示
+    if (this->isSending) {
+        // 1文字づつの文字送りを停止して、残りの文字を全部表示
         this->unscheduleUpdate();
         this->label->setOpacity(255);
-        
         this->isSending = false;
-        
         this->startArrowBlink();
     }
-    else
-    {
+    // それ以外の場合は、次のメッセージの文字送りを開始する
+    else {
         this->start();
         this->stopAllowBlink();
     }
 }
 
-bool MessageDialog::init(const int frameWidth, const int frameHeight)
-{
-    if (!Node::init())
-    {
+
+/**
+    初期化処理
+ 
+    @param frameWidth
+    @param frameHeight
+ */
+bool MessageDialog::init(const int frameWidth, const int frameHeight) {
+    
+    if (!Node::init()) {
         return false;
     }
     
@@ -167,28 +179,28 @@ bool MessageDialog::init(const int frameWidth, const int frameHeight)
     return true;
 }
 
+
 MessageDialog* MessageDialog::create(const int frameWidth, const int frameHeight)
 {
     MessageDialog *pRet = new(std::nothrow) MessageDialog();
-    if (pRet && pRet->init(frameWidth, frameHeight))
-    {
+    if (pRet && pRet->init(frameWidth, frameHeight)) {
         pRet->autorelease();
         return pRet;
     }
-    else
-    {
+    else {
         delete pRet;
         pRet = nullptr;
         return nullptr;
     }
 }
 
-MessageDialog::~MessageDialog()
-{
+MessageDialog::~MessageDialog() {
     this->removeAllChildrenWithCleanup(true);
 }
 
-void MessageDialog::setCompleteAction(std::function<void()> completedAction)
-{
+/**
+    文字送り完了ハンドラをセットする
+ */
+void MessageDialog::setCompleteAction(std::function<void()> completedAction) {
     this->completedAction = completedAction;
 }

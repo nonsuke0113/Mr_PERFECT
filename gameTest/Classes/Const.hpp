@@ -17,12 +17,7 @@ constexpr float PER_TILE_SIZE { 32.0f }; // 1MAP_TILEあたりのサイズ(pixel
 constexpr int MAP_TILE_HEGHT = 40; // MAPの高さ(Tile)
 constexpr int MAP_TILE_WIDTH = 40; // MAPの幅(Tile)
 
-// 向き
-typedef enum {
-    character_back,
-    character_right,
-    character_front,
-    character_left
-} characterDirectcion;
+constexpr int MESSAGE_FONT_SIZE = 40; // メッセージフォントサイズ
+
 
 #endif /* Const_h */

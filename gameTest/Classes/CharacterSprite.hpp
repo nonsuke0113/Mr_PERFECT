@@ -15,6 +15,15 @@ USING_NS_CC;
 
 #include "Const.hpp"
 
+// キャラクターの向き
+typedef enum {
+    character_back,
+    character_right,
+    character_front,
+    character_left
+} characterDirectcion;
+
+
 class CharacterSprite : public Sprite
 {
 private:

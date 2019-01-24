@@ -19,6 +19,7 @@ Scene* TitleScene::createScene()
 
 
 /**
+    初期化処理
  */
 bool TitleScene::init()
 {
@@ -46,7 +47,7 @@ bool TitleScene::init()
 
 
 /**
- スタートボタン押下時のイベント
+    スタートボタン押下時のイベント
  */
 void TitleScene::touchEvent(Ref *pSender, ui::Widget::TouchEventType type)
 {
@@ -60,9 +61,7 @@ void TitleScene::touchEvent(Ref *pSender, ui::Widget::TouchEventType type)
             Director::getInstance()->replaceScene(fade);
             break;
         }
-            
         default:
             break;
-            
     }
 }

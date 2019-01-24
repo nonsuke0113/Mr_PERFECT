@@ -16,12 +16,15 @@ USING_NS_CC;
 
 class TitleScene : public Layer
 {
-public:
-    static Scene* createScene();
-    virtual bool init();
-    CREATE_FUNC(TitleScene);
-    // ボタンのタッチイベント
+private:
+    
     void touchEvent(Ref *pSender, cocos2d::ui::Widget::TouchEventType type);
+    
+public:
+    
+    static Scene* createScene();
+    CREATE_FUNC(TitleScene);
+    virtual bool init();
 };
 
 #endif /* TitleScene_hpp */

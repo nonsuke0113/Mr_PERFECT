@@ -94,9 +94,11 @@ bool AppDelegate::applicationDidFinishLaunching() {
     // set FPS. the default value is 1.0/60 if you don't call this
     director->setAnimationInterval(1.0 / 60);
     
+    // リソースフォルダを設定
     FileUtils::getInstance()->addSearchPath("res");
     
     // create a scene. it's an autorelease object
+    // 最初のシーンを設定
     auto scene = TitleScene::createScene();
     
     // run

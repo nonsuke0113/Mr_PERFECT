@@ -16,27 +16,24 @@ USING_NS_CC;
 
 class MessageDialog : public Node
 {
-    
+private:
     ui::Scale9Sprite* frame = nullptr; // メッセージフレーム
     Label* label = nullptr; // 表示中のメッセージラベル
     Sprite* finishArrow; // 文字送り終了矢印
-    
     std::vector<std::string> messageList; // 表示するメッセージのリスト
-    
     const int LABEL_MARGIN = 30;
-    bool isSending = false;
+    bool isSending = false; 
     int charIndex = 0; // 現在の文字位置
-    std::string message;
-    size_t messageIndex = 0;
-    int messageLength = 1; // 現在の文字列の長さ
+    std::string message;    // 現在表示中のメッセージ
+    size_t messageIndex = 0;    // 現在表示中のメッセージのインデックス
+    int messageLength = 0; // 現在の文字列の長さ
     float interval = 0.1f; // 文字と文字を表示する間隔
     float distance = 0; // 前の文字を表示してからの経過時間
+    std::function<void()> completedAction = nullptr; // 文字送り完了後のハンドラ
     
     void prepareLabel();
     void startArrowBlink();
     void stopAllowBlink();
-    
-    std::function<void()> completedAction = nullptr;
     
 public:
     MessageDialog() {};
@@ -44,10 +41,10 @@ public:
     virtual bool init(const int frameWidth, const int frameHeight);
     static MessageDialog* create(const int frameWidth, const int frameHeight);
     void start();
+    void next();
     void update(float delta);
     void addMessage(const std::string &message);
     void setCompleteAction(std::function<void()> completedAction);
-    void next();
 };
 
 #endif /* MessageDialog_hpp */
