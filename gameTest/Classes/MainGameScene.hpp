@@ -41,10 +41,14 @@ private:
     
     void touchCrossKeyEvent(Ref *pSender, ui::Widget::TouchEventType type);
     void touchAEvent(Ref *pSender, ui::Widget::TouchEventType type);
+    void touchSaveEvent(Ref *pSender, ui::Widget::TouchEventType type);
     
-    void createMessageDialog();
+    void createMessageDialog(bool isSave);
     void createMessage();
+    void createSaveMessage();
     void setMessageCallback();
+    
+    void doSave();
     
     void updatePosition(float frame);
     void updateMobPosition(float frame);

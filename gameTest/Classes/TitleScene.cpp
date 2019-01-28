@@ -42,6 +42,13 @@ bool TitleScene::init()
     this->addChild(startButton);
     startButton->addTouchEventListener(CC_CALLBACK_2(TitleScene::touchEvent, this));
     
+    // 最初からボタン(仮)
+    ui::Button* restartButton { ui::Button::create("CloseSelected.png") };
+    restartButton->setPosition(Vec2(visibleSize.width/2, 100));
+    restartButton->setTag(1);
+    this->addChild(restartButton);
+    restartButton->addTouchEventListener(CC_CALLBACK_2(TitleScene::touchEvent, this));
+    
     return true;
 }
 
@@ -51,6 +58,12 @@ bool TitleScene::init()
  */
 void TitleScene::touchEvent(Ref *pSender, ui::Widget::TouchEventType type)
 {
+    ui::Button* button = (ui::Button*)pSender;
+    if(button->getTag() == 1) {
+        UserDefault* userDefault = UserDefault::getInstance();
+        userDefault->setStringForKey("playerName", "");
+    }
+    
     switch (type)
     {
         case ui::Widget::TouchEventType::BEGAN:

@@ -37,6 +37,9 @@ void MessageDialog::prepareLabel() {
     // 問いかけフラグを設定
     if(this->message.back() == '?') {
         this->isQuestion = true;
+    } else if(this->message.back() == '$') {
+        this->message.pop_back();
+        this->isYesNo = true;
     }
     
     // 表示するメッセージの長さ(文字数)を取得
@@ -49,8 +52,8 @@ void MessageDialog::prepareLabel() {
     this->label->setAnchorPoint(Vec2(0.0f, 1.0f));
     // 外側のフレームに合わせて位置とサイズを調整
     this->label->setPosition(LABEL_MARGIN, frame->getContentSize().height - LABEL_MARGIN);
-    this->label->setWidth(frame->getContentSize().width - (LABEL_MARGIN*2));
-    this->label->setHeight(frame->getContentSize().height - (LABEL_MARGIN*2));
+    this->label->setWidth(this->frame->getContentSize().width - (LABEL_MARGIN*2));
+    this->label->setHeight(this->frame->getContentSize().height - (LABEL_MARGIN*2));
 
     // 文字を透明に設定
     this->label->setOpacity(0);
@@ -106,9 +109,65 @@ void MessageDialog::update(float delta) {
         
         if(this->isQuestion && this->editBox == nullptr) {
             this->createEditBox();
+        } else if(this->isYesNo) {
+            this->createYesNo();
         }
+        
     }
 }
+
+
+/**
+    Yes/No選択肢を生成する
+ */
+void MessageDialog::createYesNo() {
+    
+    this->isYesNo = true;
+    
+    // Yesラベルを作成
+    Label* yesLabel = Label::createWithTTF("はい", "fonts/PixelMplus12-Regular.ttf", MESSAGE_FONT_SIZE);
+    // アンチエイリアスをOFF
+    yesLabel->getFontAtlas()->setAliasTexParameters();
+    yesLabel->setAnchorPoint(Vec2(0.0f, 1.0f));
+    // 表示中のラベルに合わせて位置とサイズを調整
+    yesLabel->setPosition(LABEL_MARGIN*2, this->label->getHeight() - LABEL_MARGIN);
+    yesLabel->setCameraMask((unsigned short)CameraFlag::USER1);
+    this->frame->addChild(yesLabel);
+    
+    // Noラベルを作成
+    Label* noLabel = Label::createWithTTF("いいえ", "fonts/PixelMplus12-Regular.ttf", MESSAGE_FONT_SIZE);
+    // アンチエイリアスをOFF
+    noLabel->getFontAtlas()->setAliasTexParameters();
+    noLabel->setAnchorPoint(Vec2(0.0f, 1.0f));
+    // 表示中のラベルに合わせて位置とサイズを調整
+    noLabel->setPosition(this->frame->getContentSize().width/2 + LABEL_MARGIN, this->label->getHeight() - LABEL_MARGIN);
+    noLabel->setCameraMask((unsigned short)CameraFlag::USER1);
+    this->frame->addChild(noLabel);
+    
+    // ユーザー選択の矢印を作成
+    this->userChoiceArrow = Sprite::create("arrow.png");
+    this->userChoiceArrow->setScale(2.0f);
+    this->userChoiceArrow->setRotation(-90);
+    this->userChoiceArrow->setAnchorPoint(Vec2(0.0f, 1.0f));
+    this->userChoiceArrow->setPosition(LABEL_MARGIN, this->label->getHeight() - (LABEL_MARGIN*2));
+    this->userChoiceArrow->setCameraMask((unsigned short)CameraFlag::USER1);
+    this->frame->addChild(this->userChoiceArrow);
+}
+
+
+/**
+ */
+void MessageDialog::selectChoice(bool choice) {
+    if(choice) {
+        this->userChoice = true;
+        this->userChoiceArrow->setPosition(LABEL_MARGIN, this->label->getHeight() - (LABEL_MARGIN*2));
+    } else {
+        this->userChoice = true;
+        this->userChoiceArrow->setPosition(this->frame->getContentSize().width/2, this->label->getHeight() - (LABEL_MARGIN*2));
+    }
+    
+}
+
 
 
 /**

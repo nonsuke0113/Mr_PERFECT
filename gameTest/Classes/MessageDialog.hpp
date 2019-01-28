@@ -24,7 +24,8 @@ private:
     std::vector<std::string> messageList; // 表示するメッセージのリスト
     const int LABEL_MARGIN = 30;
     bool isSending = false;
-    bool isQuestion = false; 
+    bool isQuestion = false;
+    Sprite* userChoiceArrow; // 
     int charIndex = 0; // 現在の文字位置
     std::string message;    // 現在表示中のメッセージ
     size_t messageIndex = 0;    // 現在表示中のメッセージのインデックス
@@ -34,12 +35,15 @@ private:
     std::function<void()> completedAction = nullptr; // 文字送り完了後のハンドラ
     
     void prepareLabel();
+    void createYesNo();
     void createEditBox();
     void startArrowBlink();
     void stopAllowBlink();
     
 public:
     std::vector<std::string> answerList;
+    bool isYesNo = false;
+    bool userChoice = true;
     
     MessageDialog() {};
     ~MessageDialog();
@@ -50,6 +54,7 @@ public:
     void update(float delta);
     void addMessage(const std::string &message);
     void setCompleteAction(std::function<void()> completedAction);
+    void selectChoice(bool choice);
     
     virtual void editBoxEditingDidBegin(ui::EditBox *editBox);
     virtual void editBoxEditingDidEnd(ui::EditBox *editBox);

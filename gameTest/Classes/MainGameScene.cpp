@@ -46,6 +46,8 @@ bool MainGameScene::init() {
         return false;
     }
     
+    UserDefault* userDefault = UserDefault::getInstance();
+    
     // マップ
     this->pMap = TMXTiledMap::create("desert.tmx");
 //    this->pMap->runAction(ScaleTo::create(0.1f, 2, 2, 1));
@@ -111,10 +113,18 @@ bool MainGameScene::init() {
     this->addChild(aButton);
     aButton->addTouchEventListener(CC_CALLBACK_2(MainGameScene::touchAEvent, this));
     
+    // SAVEボタン(仮)
+    ui::Button* saveButton { ui::Button::create("CloseNormal.png") };
+    saveButton->setPosition(Vec2(880.0f, 600.0f));
+    saveButton->setCameraMask((unsigned short)CameraFlag::USER1);
+    this->addChild(saveButton);
+    saveButton->addTouchEventListener(CC_CALLBACK_2(MainGameScene::touchSaveEvent, this));
+    
     // キャラクター
     this->pPlayer = CharacterSprite::create("apple.png", Vec2(15.0f, 29.0f), this->pMap);
     this->pPlayer->setAnchorPoint(Vec2(0.0f, 0.0f));
 //    this->pPlayer->runAction(ScaleTo::create(0.1f, 2, 2, 1));
+    this->pPlayer->setName(userDefault->getStringForKey("playerName"));
     this->addChild(this->pPlayer);
     this->charactersVector.push_back(this->pPlayer);
     
@@ -140,7 +150,7 @@ bool MainGameScene::init() {
     
     // 座標更新をスケジュール
     schedule(schedule_selector(MainGameScene::updatePosition), 0.1f);
-    schedule(schedule_selector(MainGameScene::updateMobPosition), 2.0f);
+    schedule(schedule_selector(MainGameScene::updateMobPosition), 3.0f);
     
     CCLOG("player X:%f Y:%f", this->pPlayer->worldPosition().x, this->pPlayer->worldPosition().y);
     
@@ -166,16 +176,24 @@ void MainGameScene::touchCrossKeyEvent(Ref *pSender, ui::Widget::TouchEventType 
                     this->m_isPushedButton = isPushedUpButton;
                     break;
                 case TAG_RIGHT:
-                    this->pPlayer->setCharacterDirectcion(character_right);
-                    this->m_isPushedButton = isPushedRightButton;
+                    if(this->messageDialog != nullptr && this->messageDialog->isYesNo) {
+                        this->messageDialog->selectChoice(false);
+                    } else {
+                        this->pPlayer->setCharacterDirectcion(character_right);
+                        this->m_isPushedButton = isPushedRightButton;
+                    }
                     break;
                 case TAG_DOWN:
                     this->pPlayer->setCharacterDirectcion(character_front);
                     this->m_isPushedButton = isPushedDownButton;
                     break;
                 case TAG_LEFT:
-                    this->pPlayer->setCharacterDirectcion(character_left);
-                    this->m_isPushedButton = isPushedLeftButton;
+                    if(this->messageDialog != nullptr && this->messageDialog->isYesNo) {
+                        this->messageDialog->selectChoice(true);
+                    } else {
+                        this->pPlayer->setCharacterDirectcion(character_left);
+                        this->m_isPushedButton = isPushedLeftButton;
+                    }
                     break;
                 default:
                     break;
@@ -203,9 +221,16 @@ void MainGameScene::touchAEvent(Ref *pSender, ui::Widget::TouchEventType type) {
     
     switch (type) {
         case ui::Widget::TouchEventType::BEGAN: {
+            
+            if(this->messageDialog != nullptr &&
+               this->messageDialog->isYesNo &&
+               this->messageDialog->userChoice) {
+                this->doSave();
+            }
+            
             // Messageテスト
             if (this->messageDialog == nullptr) {
-                this->createMessageDialog();
+                this->createMessageDialog(false);
             }
             else {
                 // 文字送りを実行する
@@ -223,9 +248,43 @@ void MainGameScene::touchAEvent(Ref *pSender, ui::Widget::TouchEventType type) {
 
 
 /**
+ Saveボタン押下時のイベント
+ */
+void MainGameScene::touchSaveEvent(Ref *pSender, ui::Widget::TouchEventType type) {
+    
+    switch (type) {
+        case ui::Widget::TouchEventType::BEGAN: {
+            // Messageテスト
+            if (this->messageDialog == nullptr) {
+                this->createMessageDialog(true);
+            }
+            else {
+                // 文字送りを実行する
+                this->messageDialog->next();
+            }
+            break;
+        }
+            
+        case ui::Widget::TouchEventType::MOVED:
+        case ui::Widget::TouchEventType::ENDED:
+        case ui::Widget::TouchEventType::CANCELED:
+            break;
+    }
+}
+
+
+/**
+ */
+void MainGameScene::doSave() {
+    UserDefault* userDefault = UserDefault::getInstance();
+    userDefault->setStringForKey("playerName", this->pPlayer->getName());
+}
+
+
+/**
     メッセージダイアログを作成する
  */
-void MainGameScene::createMessageDialog() {
+void MainGameScene::createMessageDialog(bool isSave) {
     
     this->messageDialog = MessageDialog::create(640, 200);
     
@@ -233,7 +292,11 @@ void MainGameScene::createMessageDialog() {
     this->messageDialog->setPosition(Vec2(480.0f, 0.0f));
     
     // メッセージを追加
-    this->createMessage();
+    if(isSave) {
+        this->createSaveMessage();
+    } else {
+        this->createMessage();
+    }
     
     // メッセージ表示後のコールバックを設定
     this->setMessageCallback();
@@ -280,6 +343,13 @@ void MainGameScene::createMessage() {
     }
 }
 
+
+/**
+ メッセージダイアログに設定する本文を作成する
+ */
+void MainGameScene::createSaveMessage() {
+    this->messageDialog->addMessage("Saveしますか？$");
+}
 
 /**
     メッセージ表示後のコールバックを設定する
