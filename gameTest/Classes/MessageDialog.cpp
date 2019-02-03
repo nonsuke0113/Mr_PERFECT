@@ -105,14 +105,14 @@ void MessageDialog::update(float delta) {
     if (this->charIndex >= this->messageLength) {
         this->isSending = false;
         this->unscheduleUpdate();
-        this->startArrowBlink();
         
         if(this->isQuestion && this->editBox == nullptr) {
             this->createEditBox();
         } else if(this->isYesNo) {
             this->createYesNo();
+        } else {
+            this->startArrowBlink();
         }
-        
     }
 }
 
@@ -162,7 +162,7 @@ void MessageDialog::selectChoice(bool choice) {
         this->userChoice = true;
         this->userChoiceArrow->setPosition(LABEL_MARGIN, this->label->getHeight() - (LABEL_MARGIN*2));
     } else {
-        this->userChoice = true;
+        this->userChoice = false;
         this->userChoiceArrow->setPosition(this->frame->getContentSize().width/2, this->label->getHeight() - (LABEL_MARGIN*2));
     }
     

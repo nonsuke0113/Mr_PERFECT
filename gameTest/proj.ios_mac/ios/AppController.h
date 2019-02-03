@@ -34,5 +34,7 @@
 
 @property(nonatomic, readonly) RootViewController* viewController;
 
+- (void)launchInterstitial;
+
 @end
 

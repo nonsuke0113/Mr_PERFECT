@@ -52,6 +52,17 @@
 		D44C620E132DFF430009C878 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D44C620D132DFF430009C878 /* AVFoundation.framework */; };
 		D44C6210132DFF4E0009C878 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D44C620F132DFF4E0009C878 /* AudioToolbox.framework */; };
 		D6B0611B1803AB670077942B /* CoreMotion.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D6B0611A1803AB670077942B /* CoreMotion.framework */; };
+		E92CE83E2206796300E123FD /* AdSupport.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E92CE83D2206796300E123FD /* AdSupport.framework */; };
+		E92CE844220679B300E123FD /* CoreMedia.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E92CE843220679B300E123FD /* CoreMedia.framework */; };
+		E92CE846220679DC00E123FD /* CoreTelephony.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E92CE845220679DC00E123FD /* CoreTelephony.framework */; };
+		E92CE849220679F900E123FD /* EventKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E92CE847220679F900E123FD /* EventKit.framework */; };
+		E92CE84A220679F900E123FD /* EventKitUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E92CE848220679F900E123FD /* EventKitUI.framework */; };
+		E92CE84C22067A1800E123FD /* MessageUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E92CE84B22067A1800E123FD /* MessageUI.framework */; };
+		E92CE84E22067BE600E123FD /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E92CE84D22067BE600E123FD /* StoreKit.framework */; };
+		E92CE85022067BF700E123FD /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E92CE84F22067BF600E123FD /* SystemConfiguration.framework */; };
+		E92CE85C2206814400E123FD /* GoogleMobileAds.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E92CE85A2206814400E123FD /* GoogleMobileAds.framework */; };
+		E92CE85D2206814400E123FD /* README.txt in Resources */ = {isa = PBXBuildFile; fileRef = E92CE85B2206814400E123FD /* README.txt */; };
+		E92CE8792206A24900E123FD /* AdMobHelper.mm in Sources */ = {isa = PBXBuildFile; fileRef = E92CE8782206A24900E123FD /* AdMobHelper.mm */; };
 		E9A5210E21A90B8C00DB44EA /* TitleScene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E9A5210C21A90B8C00DB44EA /* TitleScene.cpp */; };
 		E9A5211221A90C3100DB44EA /* MainGameScene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E9A5211021A90C3100DB44EA /* MainGameScene.cpp */; };
 		E9A5211521A90C6F00DB44EA /* CharacterSprite.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E9A5211321A90C6F00DB44EA /* CharacterSprite.cpp */; };
@@ -96,6 +107,19 @@
 			remoteInfo = "cocos2dx iOS";
 		};
 /* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		E92CE85322067C5600E123FD /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
 		1A88B2631FC3D9C9005C14AE /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
@@ -142,6 +166,20 @@
 		D44C620D132DFF430009C878 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
 		D44C620F132DFF4E0009C878 /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
 		D6B0611A1803AB670077942B /* CoreMotion.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMotion.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS.sdk/System/Library/Frameworks/CoreMotion.framework; sourceTree = DEVELOPER_DIR; };
+		E92CE83D2206796300E123FD /* AdSupport.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AdSupport.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS12.0.sdk/System/Library/Frameworks/AdSupport.framework; sourceTree = DEVELOPER_DIR; };
+		E92CE83F2206797900E123FD /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS12.0.sdk/System/Library/Frameworks/AudioToolbox.framework; sourceTree = DEVELOPER_DIR; };
+		E92CE8412206798900E123FD /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS12.0.sdk/System/Library/Frameworks/AVFoundation.framework; sourceTree = DEVELOPER_DIR; };
+		E92CE843220679B300E123FD /* CoreMedia.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMedia.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS12.0.sdk/System/Library/Frameworks/CoreMedia.framework; sourceTree = DEVELOPER_DIR; };
+		E92CE845220679DC00E123FD /* CoreTelephony.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreTelephony.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS12.0.sdk/System/Library/Frameworks/CoreTelephony.framework; sourceTree = DEVELOPER_DIR; };
+		E92CE847220679F900E123FD /* EventKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = EventKit.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS12.0.sdk/System/Library/Frameworks/EventKit.framework; sourceTree = DEVELOPER_DIR; };
+		E92CE848220679F900E123FD /* EventKitUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = EventKitUI.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS12.0.sdk/System/Library/Frameworks/EventKitUI.framework; sourceTree = DEVELOPER_DIR; };
+		E92CE84B22067A1800E123FD /* MessageUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MessageUI.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS12.0.sdk/System/Library/Frameworks/MessageUI.framework; sourceTree = DEVELOPER_DIR; };
+		E92CE84D22067BE600E123FD /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS12.0.sdk/System/Library/Frameworks/StoreKit.framework; sourceTree = DEVELOPER_DIR; };
+		E92CE84F22067BF600E123FD /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS12.0.sdk/System/Library/Frameworks/SystemConfiguration.framework; sourceTree = DEVELOPER_DIR; };
+		E92CE85A2206814400E123FD /* GoogleMobileAds.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = GoogleMobileAds.framework; sourceTree = "<group>"; };
+		E92CE85B2206814400E123FD /* README.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = README.txt; sourceTree = "<group>"; };
+		E92CE8782206A24900E123FD /* AdMobHelper.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = AdMobHelper.mm; sourceTree = "<group>"; };
+		E92CE87A2206A26700E123FD /* AdMobHelper.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AdMobHelper.h; sourceTree = "<group>"; };
 		E945438E21F49F4900C11542 /* StringUtil.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = StringUtil.h; sourceTree = "<group>"; };
 		E9A5210C21A90B8C00DB44EA /* TitleScene.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = TitleScene.cpp; sourceTree = "<group>"; };
 		E9A5210D21A90B8C00DB44EA /* TitleScene.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = TitleScene.hpp; sourceTree = "<group>"; };
@@ -159,11 +197,20 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E92CE85022067BF700E123FD /* SystemConfiguration.framework in Frameworks */,
+				E92CE84E22067BE600E123FD /* StoreKit.framework in Frameworks */,
+				E92CE84C22067A1800E123FD /* MessageUI.framework in Frameworks */,
+				E92CE849220679F900E123FD /* EventKit.framework in Frameworks */,
+				E92CE84A220679F900E123FD /* EventKitUI.framework in Frameworks */,
+				E92CE846220679DC00E123FD /* CoreTelephony.framework in Frameworks */,
+				E92CE844220679B300E123FD /* CoreMedia.framework in Frameworks */,
+				E92CE83E2206796300E123FD /* AdSupport.framework in Frameworks */,
 				294D0D641D0D56D500F7F5D4 /* CoreText.framework in Frameworks */,
 				ED545A7C1B68A1F400C3958E /* libiconv.dylib in Frameworks */,
 				52B47A471A53D09C004E4C60 /* Security.framework in Frameworks */,
 				1AC6FB30180E99EB004C840B /* libcocos2d iOS.a in Frameworks */,
 				D6B0611B1803AB670077942B /* CoreMotion.framework in Frameworks */,
+				E92CE85C2206814400E123FD /* GoogleMobileAds.framework in Frameworks */,
 				1D60589F0D05DD5A006BFB54 /* Foundation.framework in Frameworks */,
 				1DF5F4E00D08C38300B7A737 /* UIKit.framework in Frameworks */,
 				288765A50DF7441C002DB57D /* CoreGraphics.framework in Frameworks */,
@@ -230,6 +277,8 @@
 				1AF87B5C1F6F77D6007BE51C /* Prefix.pch */,
 				1AF87B5D1F6F77D6007BE51C /* RootViewController.h */,
 				1AF87B5E1F6F77D6007BE51C /* RootViewController.mm */,
+				E92CE8782206A24900E123FD /* AdMobHelper.mm */,
+				E92CE87A2206A26700E123FD /* AdMobHelper.h */,
 			);
 			path = ios;
 			sourceTree = "<group>";
@@ -237,6 +286,7 @@
 		29B97314FDCFA39411CA2CEA /* CustomTemplate */ = {
 			isa = PBXGroup;
 			children = (
+				E92CE8592206814400E123FD /* GoogleMobileAdsSdkiOS-7.38.0 */,
 				46880B8319C43A87006E1F66 /* Classes */,
 				46880B7519C43A67006E1F66 /* Resources */,
 				1AC6FAE5180E9839004C840B /* cocos2d_libs.xcodeproj */,
@@ -251,6 +301,16 @@
 		29B97323FDCFA39411CA2CEA /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				E92CE84F22067BF600E123FD /* SystemConfiguration.framework */,
+				E92CE84D22067BE600E123FD /* StoreKit.framework */,
+				E92CE84B22067A1800E123FD /* MessageUI.framework */,
+				E92CE847220679F900E123FD /* EventKit.framework */,
+				E92CE848220679F900E123FD /* EventKitUI.framework */,
+				E92CE845220679DC00E123FD /* CoreTelephony.framework */,
+				E92CE843220679B300E123FD /* CoreMedia.framework */,
+				E92CE8412206798900E123FD /* AVFoundation.framework */,
+				E92CE83F2206797900E123FD /* AudioToolbox.framework */,
+				E92CE83D2206796300E123FD /* AdSupport.framework */,
 				294D0D631D0D56D500F7F5D4 /* CoreText.framework */,
 				ED545A7D1B68A1FA00C3958E /* libiconv.dylib */,
 				ED545A7B1B68A1F400C3958E /* libiconv.dylib */,
@@ -328,6 +388,15 @@
 			name = mac;
 			sourceTree = "<group>";
 		};
+		E92CE8592206814400E123FD /* GoogleMobileAdsSdkiOS-7.38.0 */ = {
+			isa = PBXGroup;
+			children = (
+				E92CE85A2206814400E123FD /* GoogleMobileAds.framework */,
+				E92CE85B2206814400E123FD /* README.txt */,
+			);
+			path = "GoogleMobileAdsSdkiOS-7.38.0";
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -338,6 +407,7 @@
 				1D60588D0D05DD3D006BFB54 /* Resources */,
 				1D60588E0D05DD3D006BFB54 /* Sources */,
 				1D60588F0D05DD3D006BFB54 /* Frameworks */,
+				E92CE85322067C5600E123FD /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
@@ -436,6 +506,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				46880B8119C43A67006E1F66 /* HelloWorld.png in Resources */,
+				E92CE85D2206814400E123FD /* README.txt in Resources */,
 				1A88B2641FC3D9C9005C14AE /* Images.xcassets in Resources */,
 				46880B7D19C43A67006E1F66 /* CloseSelected.png in Resources */,
 				521A8EA919F11F5000D177D7 /* fonts in Resources */,
@@ -471,6 +542,7 @@
 				1AF87B8B1F6F782A007BE51C /* RootViewController.mm in Sources */,
 				46880B8819C43A87006E1F66 /* AppDelegate.cpp in Sources */,
 				E9A5211221A90C3100DB44EA /* MainGameScene.cpp in Sources */,
+				E92CE8792206A24900E123FD /* AdMobHelper.mm in Sources */,
 				1AF87B8A1F6F7822007BE51C /* main.m in Sources */,
 				E9A5210E21A90B8C00DB44EA /* TitleScene.cpp in Sources */,
 				ABBA36B721BA6A3500A02928 /* MessageDialog.cpp in Sources */,
@@ -511,6 +583,10 @@
 				COMPRESS_PNG_FILES = NO;
 				DEVELOPMENT_TEAM = F7CS3J744B;
 				ENABLE_BITCODE = NO;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(SRCROOT)",
+					"$(PROJECT_DIR)/GoogleMobileAdsSdkiOS-7.38.0",
+				);
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_INLINES_ARE_PRIVATE_EXTERN = NO;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
@@ -524,6 +600,7 @@
 				HEADER_SEARCH_PATHS = "$(inherited)";
 				INFOPLIST_FILE = ios/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = "";
 				OTHER_LDFLAGS = (
 					"$(_COCOS_LIB_IOS_BEGIN)",
@@ -546,6 +623,10 @@
 				COMPRESS_PNG_FILES = NO;
 				DEVELOPMENT_TEAM = F7CS3J744B;
 				ENABLE_BITCODE = NO;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(SRCROOT)",
+					"$(PROJECT_DIR)/GoogleMobileAdsSdkiOS-7.38.0",
+				);
 				GCC_INLINES_ARE_PRIVATE_EXTERN = NO;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = ios/Prefix.pch;
@@ -558,6 +639,7 @@
 				HEADER_SEARCH_PATHS = "$(inherited)";
 				INFOPLIST_FILE = ios/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = "";
 				OTHER_LDFLAGS = (
 					"$(_COCOS_LIB_IOS_BEGIN)",

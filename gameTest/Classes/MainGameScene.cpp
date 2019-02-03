@@ -5,10 +5,13 @@
 //  Created by 健介 丹野 on 2018/08/18.
 //
 //
+// AdMob Id ca-app-pub-4909093571037310~5693701652
 
 #include "Const.hpp"
 #include "MainGameScene.hpp"
 #include "ui/UIScale9Sprite.h"
+
+#include "AdMobHelper.h"
 
 USING_NS_CC;
 
@@ -276,6 +279,10 @@ void MainGameScene::touchSaveEvent(Ref *pSender, ui::Widget::TouchEventType type
 /**
  */
 void MainGameScene::doSave() {
+    // 広告を表示
+    AdMobHelper::launchInterstitial();
+    
+    // Save
     UserDefault* userDefault = UserDefault::getInstance();
     userDefault->setStringForKey("playerName", this->pPlayer->getName());
 }

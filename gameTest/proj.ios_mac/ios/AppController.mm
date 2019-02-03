@@ -29,6 +29,14 @@
 #import "AppDelegate.h"
 #import "RootViewController.h"
 
+extern "C"{
+#import <GoogleMobileAds/GADInterstitial.h>
+};
+
+@interface AppController() <GADInterstitialDelegate>
+@property(nonatomic, strong) GADInterstitial *interstitial;
+@end
+
 @implementation AppController
 
 @synthesize window;
@@ -77,12 +85,36 @@ static AppDelegate s_sharedApplication;
     cocos2d::GLView *glview = cocos2d::GLViewImpl::createWithEAGLView((__bridge void *)_viewController.view);
     cocos2d::Director::getInstance()->setOpenGLView(glview);
     
+    // 広告の準備
+    [self loadInterstitial];
+    
     //run the cocos2d-x game scene
     app->run();
 
     return YES;
 }
 
+- (void)loadInterstitial{
+    self.interstitial = [[GADInterstitial alloc] initWithAdUnitID:@"ca-app-pub-3940256099942544/4411468910"];
+    self.interstitial.delegate = self;
+    GADRequest *request = [GADRequest request];
+    request.testDevices = @[ kGADSimulatorID ];
+    [self.interstitial loadRequest:request];
+}
+
+- (void)launchInterstitial {
+    if([self.interstitial isReady]){
+        [self.interstitial presentFromRootViewController:_viewController];
+    }
+}
+
+- (void)interstitialDidDismissScreen:(GADInterstitial *)ad{
+    [self loadInterstitial];
+}
+
+- (void)interstitial:(GADInterstitial *)ad didFailToReceiveAdWithError:(GADRequestError *)error{
+    NSLog(@"%@", error);
+}
 
 - (void)applicationWillResignActive:(UIApplication *)application {
     /*
