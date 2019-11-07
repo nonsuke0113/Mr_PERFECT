@@ -52,7 +52,7 @@ bool MainGameScene::init() {
     UserDefault* userDefault = UserDefault::getInstance();
     
     // マップ
-    this->pMap = TMXTiledMap::create("desert.tmx");
+    this->pMap = TMXTiledMap::create("map1.tmx");
 //    this->pMap->runAction(ScaleTo::create(0.1f, 2, 2, 1));
     this->addChild(this->pMap);
     
@@ -124,24 +124,23 @@ bool MainGameScene::init() {
     saveButton->addTouchEventListener(CC_CALLBACK_2(MainGameScene::touchSaveEvent, this));
     
     // キャラクター
-    this->pPlayer = CharacterSprite::create("apple.png", Vec2(15.0f, 29.0f), this->pMap);
+    this->pPlayer = CharacterSprite::create("chara.png", Vec2(7.0f, 19.0f), this->pMap);
     this->pPlayer->setAnchorPoint(Vec2(0.0f, 0.0f));
-//    this->pPlayer->runAction(ScaleTo::create(0.1f, 2, 2, 1));
     this->pPlayer->setName(userDefault->getStringForKey("playerName"));
     this->addChild(this->pPlayer);
     this->charactersVector.push_back(this->pPlayer);
-    
-    // モブキャラクター
-    for(int i=0; i<4; i++) {
-        float random = rand()%10+1;
-        float random2 = rand()%10+1;
-        Vec2 pos = Vec2(random+10, random2+20);
-        CharacterSprite* mob = CharacterSprite::create("bilding.png", pos, this->pMap);
-        mob->setName(StringUtils::format("mob%d", i));
-        mob->setAnchorPoint(Vec2(0.0f, 0.0f));
-        this->addChild(mob);
-        this->charactersVector.push_back(mob);
-    }
+//    
+//    // モブキャラクター
+//    for(int i=0; i<4; i++) {
+//        float random = rand()%10+1;
+//        float random2 = rand()%10+1;
+//        Vec2 pos = Vec2(random+10, random2+20);
+//        CharacterSprite* mob = CharacterSprite::create("bilding.png", pos, this->pMap);
+//        mob->setName(StringUtils::format("mob%d", i));
+//        mob->setAnchorPoint(Vec2(0.0f, 0.0f));
+//        this->addChild(mob);
+//        this->charactersVector.push_back(mob);
+//    }
     
     // 操作キャラクター座標ラベル(デバッグ用)
     this->playerMapPointLabel = Label::createWithSystemFont(StringUtils::format("x : $%f, y : $%f", this->pPlayer->worldPosition().x, this->pPlayer->worldPosition().y), "ariel", 20);
@@ -391,7 +390,7 @@ void MainGameScene::updatePosition(float frame) {
     if ((this->m_isPushedButton == pushedButtonNone) ||
         (this->pMap->getNumberOfRunningActions() > 0) ||
         (this->pPlayer->getNumberOfRunningActions() > 0) ||
-        this->pPlayer->getNextTileGID() != 29 ||
+        this->pPlayer->getNextTileGID() != 0 ||
         this->pPlayer->getNextCharacter() != nullptr) {
         return;
     }
@@ -462,7 +461,7 @@ void MainGameScene::updatePosition(float frame) {
     this->playerMapPointLabel->setString(StringUtils::format("x : $%f, y : $%f", this->pPlayer->worldPosition().x, this->pPlayer->worldPosition().y));
     
     // 今いるタイルを判定
-    TMXLayer* layer = this->pMap->getLayer("Ground");
+    TMXLayer* layer = this->pMap->getLayer("MAP");
     int tileGID = layer->getTileGIDAt(this->pPlayer->worldPosition());
     CCLOG("タイルID:%d", tileGID-1);
     CCLOG("player X:%f Y:%f", this->pPlayer->getPositionX(), this->pPlayer->getPositionY());

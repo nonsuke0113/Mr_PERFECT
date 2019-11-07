@@ -102,7 +102,7 @@ int CharacterSprite::getNextTileGID()  {
     
     if(nextTilePosition.x != -1.0f && nextTilePosition.x != MAP_TILE_WIDTH &&
        nextTilePosition.y != -1.0f && nextTilePosition.y != MAP_TILE_HEGHT) {
-        TMXLayer* layer = this->m_map->getLayer("Ground");
+        TMXLayer* layer = this->m_map->getLayer("MAP");
         tileGID = layer->getTileGIDAt(nextTilePosition)-1;
     }
     
