@@ -2,6 +2,8 @@
 //  MessageDialog.hpp
 //  gameTest-mobile
 //
+//  メッセージ表示するUIクラス
+//
 //  Created by agenda_tanno on 2018/12/07.
 //
 

@@ -9,6 +9,9 @@
 #include "TitleScene.hpp"
 #include "MainGameScene.hpp"
 
+/**
+    シーンの作成
+ */
 Scene* TitleScene::createScene()
 {
     auto scene = Scene::create();
@@ -44,7 +47,7 @@ bool TitleScene::init()
     
     // 最初からボタン(仮)
     ui::Button* restartButton { ui::Button::create("CloseSelected.png") };
-    restartButton->setPosition(Vec2(visibleSize.width/2, 100));
+    restartButton->setPosition(Vec2(visibleSize.width / 2, 100.0f));
     restartButton->setTag(1);
     this->addChild(restartButton);
     restartButton->addTouchEventListener(CC_CALLBACK_2(TitleScene::touchEvent, this));
@@ -53,8 +56,10 @@ bool TitleScene::init()
 }
 
 
+#pragma mark -
+#pragma mark Event
 /**
-    スタートボタン押下時のイベント
+    ボタン押下時のイベント
  */
 void TitleScene::touchEvent(Ref *pSender, ui::Widget::TouchEventType type)
 {

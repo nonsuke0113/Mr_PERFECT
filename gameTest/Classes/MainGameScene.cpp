@@ -24,6 +24,9 @@ enum crossKeyTag {
 };
 
 
+/**
+    シーンの作成
+ */
 Scene* MainGameScene::createScene() {
     auto scene = Scene::create();
     auto layer = MainGameScene::create();
@@ -53,7 +56,6 @@ bool MainGameScene::init() {
     
     // マップ
     this->pMap = TMXTiledMap::create("map1.tmx");
-//    this->pMap->runAction(ScaleTo::create(0.1f, 2, 2, 1));
     this->addChild(this->pMap);
     
     // 左サイドバー
@@ -124,23 +126,19 @@ bool MainGameScene::init() {
     saveButton->addTouchEventListener(CC_CALLBACK_2(MainGameScene::touchSaveEvent, this));
     
     // キャラクター
-    this->pPlayer = CharacterSprite::create("chara.png", Vec2(7.0f, 19.0f), this->pMap);
+    this->pPlayer = CharacterSprite::create("chara.png", Vec2(7.0f, 19.0f), this->pMap, 0.1f);
     this->pPlayer->setAnchorPoint(Vec2(0.0f, 0.0f));
     this->pPlayer->setName(userDefault->getStringForKey("playerName"));
     this->addChild(this->pPlayer);
     this->charactersVector.push_back(this->pPlayer);
-//    
-//    // モブキャラクター
-//    for(int i=0; i<4; i++) {
-//        float random = rand()%10+1;
-//        float random2 = rand()%10+1;
-//        Vec2 pos = Vec2(random+10, random2+20);
-//        CharacterSprite* mob = CharacterSprite::create("bilding.png", pos, this->pMap);
-//        mob->setName(StringUtils::format("mob%d", i));
-//        mob->setAnchorPoint(Vec2(0.0f, 0.0f));
-//        this->addChild(mob);
-//        this->charactersVector.push_back(mob);
-//    }
+    
+    // モブキャラクター
+    EnemySprite* mob = EnemySprite::create("chara.png", Vec2(4.0f, 17.0f), this->pMap, 0.3f);
+    mob->setName(StringUtils::format("mob"));
+    mob->setAnchorPoint(Vec2(0.0f, 0.0f));
+    this->addChild(mob);
+    this->charactersVector.push_back(mob);
+    mob->startPatrol();
     
     // 操作キャラクター座標ラベル(デバッグ用)
     this->playerMapPointLabel = Label::createWithSystemFont(StringUtils::format("x : $%f, y : $%f", this->pPlayer->worldPosition().x, this->pPlayer->worldPosition().y), "ariel", 20);
@@ -152,7 +150,6 @@ bool MainGameScene::init() {
     
     // 座標更新をスケジュール
     schedule(schedule_selector(MainGameScene::updatePosition), 0.1f);
-    schedule(schedule_selector(MainGameScene::updateMobPosition), 3.0f);
     
     CCLOG("player X:%f Y:%f", this->pPlayer->worldPosition().x, this->pPlayer->worldPosition().y);
     
@@ -160,6 +157,8 @@ bool MainGameScene::init() {
 }
 
 
+#pragma mark -
+#pragma mark Event
 /**
     十字キー押下時のイベント
  */
@@ -250,7 +249,7 @@ void MainGameScene::touchAEvent(Ref *pSender, ui::Widget::TouchEventType type) {
 
 
 /**
- Saveボタン押下時のイベント
+    Saveボタン押下時のイベント
  */
 void MainGameScene::touchSaveEvent(Ref *pSender, ui::Widget::TouchEventType type) {
     
@@ -273,9 +272,11 @@ void MainGameScene::touchSaveEvent(Ref *pSender, ui::Widget::TouchEventType type
             break;
     }
 }
+#pragma mark -
 
 
 /**
+    セーブを実行
  */
 void MainGameScene::doSave() {
     // 広告を表示
@@ -287,6 +288,8 @@ void MainGameScene::doSave() {
 }
 
 
+#pragma mark -
+#pragma mark Message
 /**
     メッセージダイアログを作成する
  */
@@ -326,11 +329,11 @@ void MainGameScene::createMessageDialog(bool isSave) {
 void MainGameScene::createMessage() {
     
     // メッセージの内容を設定
-    CharacterSprite* nextChara = this->pPlayer->getNextCharacter();
+    CharacterSprite* nextChara = this->pPlayer->nextCharacter();
     // 人
     if(nextChara != nullptr) {
         // mobの動きを一時停止
-        unschedule(schedule_selector(MainGameScene::updateMobPosition));
+//        unschedule(schedule_selector(MainGameScene::updateMobPosition));
         
         if(this->pPlayer->getName() != "") {
             this->messageDialog->addMessage(StringUtils::format("こんにちは、%s", this->pPlayer->getName().c_str()));
@@ -344,18 +347,19 @@ void MainGameScene::createMessage() {
     // 人以外
     else {
         this->messageDialog->addMessage("メッセージを開始します。");
-        this->messageDialog->addMessage(StringUtils::format("タイルID:%d", this->pPlayer->getNextTileGID()));
+        this->messageDialog->addMessage(StringUtils::format("タイルID:%d", this->pPlayer->nextTileGID()));
         this->messageDialog->addMessage("メッセージを終了します。");
     }
 }
 
 
 /**
- メッセージダイアログに設定する本文を作成する
+    メッセージダイアログに設定する本文を作成する
  */
 void MainGameScene::createSaveMessage() {
     this->messageDialog->addMessage("Saveしますか？$");
 }
+
 
 /**
     メッセージ表示後のコールバックを設定する
@@ -376,11 +380,13 @@ void MainGameScene::setMessageCallback() {
                                                         nullptr)
                                        );
         this->messageDialog = nullptr;
-        schedule(schedule_selector(MainGameScene::updateMobPosition), 2.0f);
+//        schedule(schedule_selector(MainGameScene::updateMobPosition), 2.0f);
     });
 }
 
 
+#pragma mark -
+#pragma mark Update
 /**
     キャラクター座標更新処理
  */
@@ -390,8 +396,8 @@ void MainGameScene::updatePosition(float frame) {
     if ((this->m_isPushedButton == pushedButtonNone) ||
         (this->pMap->getNumberOfRunningActions() > 0) ||
         (this->pPlayer->getNumberOfRunningActions() > 0) ||
-        this->pPlayer->getNextTileGID() != 0 ||
-        this->pPlayer->getNextCharacter() != nullptr) {
+        this->pPlayer->nextTileGID() != 0 ||
+        this->pPlayer->nextCharacter() != nullptr) {
         return;
     }
     
@@ -466,50 +472,4 @@ void MainGameScene::updatePosition(float frame) {
     CCLOG("タイルID:%d", tileGID-1);
     CCLOG("player X:%f Y:%f", this->pPlayer->getPositionX(), this->pPlayer->getPositionY());
     CCLOG("camera X:%f Y:%f", this->pCamera->getPositionX(), this->pCamera->getPositionY());
-}
-
-/**
- モブの座標を更新
- */
-void MainGameScene::updateMobPosition(float frame) {
-    
-    for (int i=2; i<this->charactersVector.size(); i++) {
-        
-        CharacterSprite* chara = this->charactersVector[i];
-        int random = rand()%4+1;
-        switch(random) {
-            case 1:
-                chara->setCharacterDirectcion(character_back);
-                break;
-            case 2:
-                chara->setCharacterDirectcion(character_right);
-                break;
-            case 3:
-                chara->setCharacterDirectcion(character_front);
-                break;
-            case 4:
-                chara->setCharacterDirectcion(character_left);
-                break;
-        }
-        
-        if (chara->getNumberOfRunningActions() > 0 ||
-            chara->getNextTileGID() != 29 ||
-            chara->getNextCharacter() != nullptr) {
-            return;
-        }
-        
-        Vec2 newCharaPoint = chara->worldPosition();
-        
-        if(random == 1) {
-            chara->moveWorld(0.1f, Vec2(newCharaPoint.x, newCharaPoint.y-1.0f));
-        } else if(random == 2) {
-            chara->moveWorld(0.1f, Vec2(newCharaPoint.x+1.0f, newCharaPoint.y));
-        } else if(random == 3) {
-            chara->moveWorld(0.1f, Vec2(newCharaPoint.x, newCharaPoint.y+1.0f));
-        } else if(random == 4) {
-            chara->moveWorld(0.1f, Vec2(newCharaPoint.x-1.0f, newCharaPoint.y));
-        }
-        
-//        CCLOG("mob%d X:%f Y:%f", i, chara->worldPosition().x, chara->worldPosition().y);
-    }
 }

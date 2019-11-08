@@ -2,6 +2,8 @@
 //  TitleScene.hpp
 //  tannoGame
 //
+//  タイトルシーン
+//
 //  Created by 健介 丹野 on 2018/08/18.
 //
 //

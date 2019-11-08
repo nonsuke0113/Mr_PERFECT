@@ -28,9 +28,9 @@ void MessageDialog::prepareLabel() {
     
     // ユーザーの回答に応じて、メッセージの内容を変換する
     if(this->message.find("*") != -1) {
-        int replaceIndex = (int)this->message[this->message.find("*")+1] - (int)'0';
+        int replaceIndex = (int)this->message[this->message.find("*") + 1] - (int)'0';
         if(!(replaceIndex > answerList.size())) {
-            this->message.replace(this->message.find("*"), 2, answerList[replaceIndex-1]);
+            this->message.replace(this->message.find("*"), 2, answerList[replaceIndex - 1]);
         }
     }
     
@@ -52,8 +52,8 @@ void MessageDialog::prepareLabel() {
     this->label->setAnchorPoint(Vec2(0.0f, 1.0f));
     // 外側のフレームに合わせて位置とサイズを調整
     this->label->setPosition(LABEL_MARGIN, frame->getContentSize().height - LABEL_MARGIN);
-    this->label->setWidth(this->frame->getContentSize().width - (LABEL_MARGIN*2));
-    this->label->setHeight(this->frame->getContentSize().height - (LABEL_MARGIN*2));
+    this->label->setWidth(this->frame->getContentSize().width - (LABEL_MARGIN * 2));
+    this->label->setHeight(this->frame->getContentSize().height - (LABEL_MARGIN * 2));
 
     // 文字を透明に設定
     this->label->setOpacity(0);
