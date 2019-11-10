@@ -96,7 +96,9 @@ void MessageDialog::update(float delta) {
     if (this->distance > this->interval) {
         // 1文字ずつ表示していく
         Sprite* sp = this->label->getLetter(this->charIndex);
-        sp->setOpacity(255);
+        if (sp != nullptr) {
+            sp->setOpacity(255);
+        }
         this->distance = 0;
         this->charIndex++;
     }

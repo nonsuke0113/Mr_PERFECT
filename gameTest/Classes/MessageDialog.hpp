@@ -47,6 +47,8 @@ public:
     bool isYesNo = false;
     bool userChoice = true;
     
+    int m_messageType;
+    
     MessageDialog() {};
     ~MessageDialog();
     virtual bool init(const int frameWidth, const int frameHeight);

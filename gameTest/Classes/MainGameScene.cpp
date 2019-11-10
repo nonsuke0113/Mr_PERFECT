@@ -8,6 +8,7 @@
 // AdMob Id ca-app-pub-4909093571037310~5693701652
 
 #include "Const.hpp"
+#include "TitleScene.hpp"
 #include "MainGameScene.hpp"
 #include "ui/UIScale9Sprite.h"
 
@@ -132,12 +133,13 @@ bool MainGameScene::init() {
     this->addChild(this->pPlayer);
     this->charactersVector.push_back(this->pPlayer);
     
-    // モブキャラクター
-    EnemySprite* mob = EnemySprite::create("chara.png", Vec2(4.0f, 17.0f), this->pMap, 0.3f);
+    // 敵キャラクター
+    EnemySprite* mob = EnemySprite::create("enemy.png", Vec2(4.0f, 17.0f), this->pMap, 0.3f);
     mob->setName(StringUtils::format("mob"));
     mob->setAnchorPoint(Vec2(0.0f, 0.0f));
     this->addChild(mob);
     this->charactersVector.push_back(mob);
+    this->enemysVector.push_back(mob);
     mob->startPatrol();
     
     // 操作キャラクター座標ラベル(デバッグ用)
@@ -158,7 +160,7 @@ bool MainGameScene::init() {
 
 
 #pragma mark -
-#pragma mark Event
+#pragma mark ButtonEvent
 /**
     十字キー押下時のイベント
  */
@@ -224,14 +226,28 @@ void MainGameScene::touchAEvent(Ref *pSender, ui::Widget::TouchEventType type) {
         case ui::Widget::TouchEventType::BEGAN: {
             
             if(this->messageDialog != nullptr &&
-               this->messageDialog->isYesNo &&
-               this->messageDialog->userChoice) {
-                this->doSave();
+               this->messageDialog->isYesNo) {
+                switch (this->messageDialog->m_messageType) {
+                    case messageType::save:
+                        if (this->messageDialog->userChoice) {
+                            doSave();
+                        }
+                        break;
+                    case messageType::findPlayer:
+                        if (this->messageDialog->userChoice) {
+                            doContinue();
+                        } else {
+                            gameover();
+                        }
+                        break;
+                    default:
+                        break;
+                }
             }
             
             // Messageテスト
             if (this->messageDialog == nullptr) {
-                this->createMessageDialog(false);
+                this->createMessageDialog(messageType::nomal);
             }
             else {
                 // 文字送りを実行する
@@ -257,7 +273,7 @@ void MainGameScene::touchSaveEvent(Ref *pSender, ui::Widget::TouchEventType type
         case ui::Widget::TouchEventType::BEGAN: {
             // Messageテスト
             if (this->messageDialog == nullptr) {
-                this->createMessageDialog(true);
+                this->createMessageDialog(messageType::save);
             }
             else {
                 // 文字送りを実行する
@@ -274,6 +290,16 @@ void MainGameScene::touchSaveEvent(Ref *pSender, ui::Widget::TouchEventType type
 }
 #pragma mark -
 
+/**
+    ゲームオーバー
+ */
+void MainGameScene::gameover() {
+    // タイトルに戻る
+    Scene* titleGameScene { TitleScene::createScene() };
+    TransitionFade* fade = TransitionFade::create(1.0f, titleGameScene);
+    Director::getInstance()->replaceScene(fade);
+}
+
 
 /**
     セーブを実行
@@ -288,23 +314,56 @@ void MainGameScene::doSave() {
 }
 
 
+/**
+    コンティニューを実行
+ */
+void MainGameScene::doContinue() {
+    // 広告を表示
+    AdMobHelper::launchInterstitial();
+    
+    // コンティニュー
+    Scene* mainGameScene { MainGameScene::createScene() };
+    TransitionFade* fade = TransitionFade::create(1.0f, mainGameScene);
+    Director::getInstance()->replaceScene(fade);
+}
+
+
+#pragma mark -
+#pragma mark Event
+/**
+    敵キャラクターがプレイヤーを発見した
+ */
+void MainGameScene::enemyFindPlayer() {
+    this->createMessageDialog(messageType::findPlayer);
+}
+
+
 #pragma mark -
 #pragma mark Message
 /**
     メッセージダイアログを作成する
  */
-void MainGameScene::createMessageDialog(bool isSave) {
+void MainGameScene::createMessageDialog(::messageType messageType) {
     
     this->messageDialog = MessageDialog::create(640, 200);
-    
     this->messageDialog->setAnchorPoint(Vec2(0.0f,0.0f));
     this->messageDialog->setPosition(Vec2(480.0f, 0.0f));
+    this->messageDialog->m_messageType = messageType;
     
     // メッセージを追加
-    if(isSave) {
-        this->createSaveMessage();
-    } else {
-        this->createMessage();
+    switch (messageType) {
+        case messageType::nomal:
+            
+            this->createMessage();
+            break;
+        case messageType::save:
+            this->createSaveMessage();
+            break;
+        case messageType::findPlayer:
+            this->createFindPlayerMessage();
+            break;
+        default:
+            break;
     }
     
     // メッセージ表示後のコールバックを設定
@@ -354,7 +413,18 @@ void MainGameScene::createMessage() {
 
 
 /**
-    メッセージダイアログに設定する本文を作成する
+    敵キャラクターがプレイヤーを発見した際のメッセージダイアログに設定する本文を作成する
+ */
+void MainGameScene::createFindPlayerMessage() {
+    this->messageDialog->addMessage("「何者だ！」");
+    this->messageDialog->addMessage("見つかってしまった...");
+    this->messageDialog->addMessage("GAME OVER");
+    this->messageDialog->addMessage("コンティニュー？$");
+}
+
+
+/**
+    セーブ実行時のメッセージダイアログに設定する本文を作成する
  */
 void MainGameScene::createSaveMessage() {
     this->messageDialog->addMessage("Saveしますか？$");

@@ -53,6 +53,13 @@ void EnemySprite::stopPatrol() {
     移動できなくなったら、設定された方向に回転する
  */
 void EnemySprite::rotatePatrol(float frame) {
+    
+    if (this->checkFindPlayer()) {
+        this->stopPatrol();
+        MainGameScene* mainScene = (MainGameScene*)this->m_map->getParent();
+        mainScene->enemyFindPlayer();
+    }
+    
     if (this->nextTileGID() == 0) {
         this->moveWorld(0.0, this->nextTilePosition());
     } else {
@@ -105,6 +112,9 @@ void EnemySprite::rotate() {
 
 
 /**
+    敵キャラクターが向いている方向に、プレイヤーがいるかどうかを確認する
+ 
+    @return プレイヤーを発見したかどうか
  */
 bool EnemySprite::checkFindPlayer() {
     

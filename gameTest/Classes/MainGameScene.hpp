@@ -30,6 +30,13 @@ typedef enum {
     isPushedLeftButton
 } pushedButton;
 
+// メッセージの種類
+typedef enum {
+    nomal,
+    save,
+    findPlayer
+} messageType;
+
 
 class MainGameScene : public Layer
 {
@@ -44,21 +51,27 @@ protected:
     void touchCrossKeyEvent(Ref *pSender, ui::Widget::TouchEventType type);
     void touchAEvent(Ref *pSender, ui::Widget::TouchEventType type);
     void touchSaveEvent(Ref *pSender, ui::Widget::TouchEventType type);
-    void createMessageDialog(bool isSave);
+    void createMessageDialog(::messageType messageType);
     void createMessage();
     void createSaveMessage();
+    void createFindPlayerMessage();
     void setMessageCallback();
+    void gameover();
     void doSave();
+    void doContinue();
     void updatePosition(float frame);
     
 public:
     
     CharacterSprite* pPlayer;   // 操作キャラクター
-    std::vector<CharacterSprite*> charactersVector; //  画面内キャラクターの動的配列
+    std::vector<CharacterSprite*> charactersVector; //  画面内全キャラクターの動的配列
+    std::vector<EnemySprite*> enemysVector; //  画面内敵キャラクターの動的配列
     
     static Scene* createScene();
     CREATE_FUNC(MainGameScene);
     virtual bool init();
+    
+    void enemyFindPlayer();
 };
 
 #endif /* MainGameScene_hpp */
