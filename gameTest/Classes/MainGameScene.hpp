@@ -48,6 +48,9 @@ protected:
     MessageDialog* messageDialog { nullptr };   // メッセージダイアログ
     pushedButton m_isPushedButton;  // 十字ボタンの状態
     
+    void initUI();
+    virtual void initCharactor();
+    
     void touchCrossKeyEvent(Ref *pSender, ui::Widget::TouchEventType type);
     void touchAEvent(Ref *pSender, ui::Widget::TouchEventType type);
     void touchSaveEvent(Ref *pSender, ui::Widget::TouchEventType type);
@@ -60,6 +63,7 @@ protected:
     void doSave();
     void doContinue();
     void updatePosition(float frame);
+    void updateCameraPosition();
     
 public:
     

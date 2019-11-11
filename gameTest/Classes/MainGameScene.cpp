@@ -53,7 +53,33 @@ bool MainGameScene::init() {
         return false;
     }
     
-    UserDefault* userDefault = UserDefault::getInstance();
+    // UI初期化
+    this->initUI();
+    
+    // キャラクター初期化
+    this->initCharactor();
+    
+    // 操作キャラクター座標ラベル(デバッグ用)
+    this->playerMapPointLabel = Label::createWithSystemFont(StringUtils::format("x : $%f, y : $%f", this->pPlayer->worldPosition().x, this->pPlayer->worldPosition().y), "ariel", 20);
+    this->playerMapPointLabel->setAnchorPoint(Vec2(0,0));
+    this->playerMapPointLabel->setPosition(Vec2(0.0f, 0.0f));
+    this->playerMapPointLabel->setColor(Color3B(255, 0, 0));
+    this->playerMapPointLabel->setCameraMask((unsigned short)CameraFlag::USER1);
+    this->addChild(playerMapPointLabel);
+    
+    // 座標更新をスケジュール
+    schedule(schedule_selector(MainGameScene::updatePosition), 0.1f);
+    
+    CCLOG("player X:%f Y:%f", this->pPlayer->worldPosition().x, this->pPlayer->worldPosition().y);
+    
+    return true;
+}
+
+
+/**
+    UIの初期化
+ */
+void MainGameScene::initUI() {
     
     // マップ
     this->pMap = TMXTiledMap::create("map1.tmx");
@@ -125,8 +151,17 @@ bool MainGameScene::init() {
     saveButton->setCameraMask((unsigned short)CameraFlag::USER1);
     this->addChild(saveButton);
     saveButton->addTouchEventListener(CC_CALLBACK_2(MainGameScene::touchSaveEvent, this));
+}
+
+
+/**
+    キャラクターの初期化
+ */
+void MainGameScene::initCharactor() {
     
-    // キャラクター
+    UserDefault* userDefault = UserDefault::getInstance();
+    
+    // プレイヤー
     this->pPlayer = CharacterSprite::create("chara.png", Vec2(7.0f, 19.0f), this->pMap, 0.1f);
     this->pPlayer->setAnchorPoint(Vec2(0.0f, 0.0f));
     this->pPlayer->setName(userDefault->getStringForKey("playerName"));
@@ -134,28 +169,13 @@ bool MainGameScene::init() {
     this->charactersVector.push_back(this->pPlayer);
     
     // 敵キャラクター
-    EnemySprite* mob = EnemySprite::create("enemy.png", Vec2(4.0f, 17.0f), this->pMap, 0.3f);
+    EnemySprite* mob = EnemySprite::create("enemy.png", Vec2(4.0f, 17.0f), this->pMap, 0.1f);
     mob->setName(StringUtils::format("mob"));
     mob->setAnchorPoint(Vec2(0.0f, 0.0f));
     this->addChild(mob);
     this->charactersVector.push_back(mob);
     this->enemysVector.push_back(mob);
     mob->startPatrol();
-    
-    // 操作キャラクター座標ラベル(デバッグ用)
-    this->playerMapPointLabel = Label::createWithSystemFont(StringUtils::format("x : $%f, y : $%f", this->pPlayer->worldPosition().x, this->pPlayer->worldPosition().y), "ariel", 20);
-    this->playerMapPointLabel->setAnchorPoint(Vec2(0,0));
-    this->playerMapPointLabel->setPosition(Vec2(0.0f, 0.0f));
-    this->playerMapPointLabel->setColor(Color3B(255, 0, 0));
-    this->playerMapPointLabel->setCameraMask((unsigned short)CameraFlag::USER1);
-    this->addChild(playerMapPointLabel);
-    
-    // 座標更新をスケジュール
-    schedule(schedule_selector(MainGameScene::updatePosition), 0.1f);
-    
-    CCLOG("player X:%f Y:%f", this->pPlayer->worldPosition().x, this->pPlayer->worldPosition().y);
-    
-    return true;
 }
 
 
@@ -458,7 +478,7 @@ void MainGameScene::setMessageCallback() {
 #pragma mark -
 #pragma mark Update
 /**
-    キャラクター座標更新処理
+    座標更新処理
  */
 void MainGameScene::updatePosition(float frame) {
     
@@ -471,67 +491,11 @@ void MainGameScene::updatePosition(float frame) {
         return;
     }
     
-    // カメラ座標
-    Vec3 newCameraPosition = this->pCamera->getPosition3D();
-    MoveTo* actionMove;
-    // キャラクター座標
-    Vec2 newPlayerPosition = this->pPlayer->worldPosition();
+    // カメラ座標更新
+    this->updateCameraPosition();
     
-    // 上ボタン押下中
-    if (this->m_isPushedButton == isPushedUpButton) {
-        if((newCameraPosition.y != ((PER_TILE_SIZE * MAP_TILE_HEGHT) - VIEW_HEGHT/2)) &&
-        (newCameraPosition.y == this->pPlayer->getPosition().y)) {
-            // カメラを上へ移動
-            newCameraPosition.y += PER_TILE_SIZE;
-            actionMove = MoveTo::create(0.1f, newCameraPosition);
-            this->pCamera->stopAllActions();
-            this->pCamera->runAction(actionMove);
-        }
-        // キャラクターを上へ移動
-        this->pPlayer->moveWorld(0.1f, Vec2(newPlayerPosition.x, newPlayerPosition.y-1.0f));
-    }
-    
-    // 右ボタン押下中
-    if (this->m_isPushedButton == isPushedRightButton) {
-        if((newCameraPosition.x != (PER_TILE_SIZE * MAP_TILE_WIDTH) - VIEW_WIDTH/2 + SIDE_BAR_WIDTH) &&
-           (newCameraPosition.x == this->pPlayer->getPosition().x)) {
-            // カメラを右へ移動
-            newCameraPosition.x += PER_TILE_SIZE;
-            actionMove = MoveTo::create(0.1f, newCameraPosition);
-            this->pCamera->stopAllActions();
-            this->pCamera->runAction(actionMove);
-        }
-        // キャラクターを右へ移動
-        this->pPlayer->moveWorld(0.1f, Vec2(newPlayerPosition.x+1.0f, newPlayerPosition.y));
-    }
-    
-    // 下ボタン押下中
-    if (this->m_isPushedButton == isPushedDownButton) {
-        if ((newCameraPosition.y != VIEW_HEGHT/2) &&
-            (newCameraPosition.y == this->pPlayer->getPosition().y)) {
-            // カメラを下へ移動
-            newCameraPosition.y -= PER_TILE_SIZE;
-            actionMove = MoveTo::create(0.1f, newCameraPosition);
-            this->pCamera->stopAllActions();
-            this->pCamera->runAction(actionMove);
-        }
-        // キャラクターを下へ移動
-        this->pPlayer->moveWorld(0.1f, Vec2(newPlayerPosition.x, newPlayerPosition.y+1.0f));
-    }
-    
-    // 左ボタン押下中
-    if (this->m_isPushedButton == isPushedLeftButton) {
-        if((newCameraPosition.x != VIEW_WIDTH/2 - SIDE_BAR_WIDTH) &&
-           (newCameraPosition.x == this->pPlayer->getPosition().x)) {
-            // カメラを左へ移動
-            newCameraPosition.x -= PER_TILE_SIZE;
-            actionMove = MoveTo::create(0.1f, newCameraPosition);
-            this->pCamera->stopAllActions();
-            this->pCamera->runAction(actionMove);
-        }
-        // キャラクターを左へ移動
-        this->pPlayer->moveWorld(0.1f, Vec2(newPlayerPosition.x-1.0f, newPlayerPosition.y));
-    }
+    // プレイヤーの移動
+    this->pPlayer->moveNextTile();
     
     // DEBUG:現在いる位置のラベルを更新
     this->playerMapPointLabel->setString(StringUtils::format("x : $%f, y : $%f", this->pPlayer->worldPosition().x, this->pPlayer->worldPosition().y));
@@ -542,4 +506,47 @@ void MainGameScene::updatePosition(float frame) {
     CCLOG("タイルID:%d", tileGID-1);
     CCLOG("player X:%f Y:%f", this->pPlayer->getPositionX(), this->pPlayer->getPositionY());
     CCLOG("camera X:%f Y:%f", this->pCamera->getPositionX(), this->pCamera->getPositionY());
+}
+
+
+/**
+    カメラ座標更新
+ */
+void MainGameScene::updateCameraPosition() {
+    // カメラ座標
+    Vec3 newCameraPosition = this->pCamera->getPosition3D();
+    
+    // 上ボタン押下中
+    if ((this->m_isPushedButton == isPushedUpButton) &&
+        (newCameraPosition.y != ((PER_TILE_SIZE * MAP_TILE_HEGHT) - VIEW_HEGHT / 2)) &&
+        (newCameraPosition.y == this->pPlayer->getPosition().y))
+    {
+        newCameraPosition.y += PER_TILE_SIZE;
+    }
+    // 右ボタン押下中
+    else if ((this->m_isPushedButton == isPushedRightButton) &&
+             (newCameraPosition.x != (PER_TILE_SIZE * MAP_TILE_WIDTH) - VIEW_WIDTH/2 + SIDE_BAR_WIDTH) &&
+             (newCameraPosition.x == this->pPlayer->getPosition().x))
+    {
+        newCameraPosition.x += PER_TILE_SIZE;
+    }
+    // 下ボタン押下中
+    else if ((this->m_isPushedButton == isPushedDownButton) &&
+             (newCameraPosition.y != VIEW_HEGHT / 2) &&
+             (newCameraPosition.y == this->pPlayer->getPosition().y))
+    {
+        newCameraPosition.y -= PER_TILE_SIZE;
+    }
+    // 左ボタン押下中
+    else if ((this->m_isPushedButton == isPushedLeftButton) &&
+             (newCameraPosition.x != VIEW_WIDTH / 2 - SIDE_BAR_WIDTH) &&
+             (newCameraPosition.x == this->pPlayer->getPosition().x))
+    {
+        newCameraPosition.x -= PER_TILE_SIZE;
+    }
+    
+    // カメラ移動
+    MoveTo* actionMove = MoveTo::create(0.1f, newCameraPosition);
+    this->pCamera->stopAllActions();
+    this->pCamera->runAction(actionMove);
 }

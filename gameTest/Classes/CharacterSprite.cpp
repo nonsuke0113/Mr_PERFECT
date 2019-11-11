@@ -77,9 +77,17 @@ void CharacterSprite::setCharacterDirectcion(::characterDirectcion direction) {
  */
 void CharacterSprite::moveWorld(float duration, const Vec2& newPosition) {
     this->m_worldPosition = newPosition;
-    MoveTo* actionMove = MoveTo::create(this->m_moveSpeed, Vec2(newPosition.x * PER_TILE_SIZE,  (MAP_TILE_HEGHT - newPosition.y - 1) * PER_TILE_SIZE));
+    MoveTo* actionMove = MoveTo::create(duration, Vec2(newPosition.x * PER_TILE_SIZE,  (MAP_TILE_HEGHT - newPosition.y - 1) * PER_TILE_SIZE));
     this->stopAllActions();
     this->runAction(actionMove);
+}
+
+
+/**
+    次のタイルに移動する
+ */
+void CharacterSprite::moveNextTile() {
+    this->moveWorld(this->m_moveSpeed, this->nextTilePosition());
 }
 
 

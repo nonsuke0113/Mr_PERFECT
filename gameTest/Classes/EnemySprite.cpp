@@ -61,7 +61,7 @@ void EnemySprite::rotatePatrol(float frame) {
     }
     
     if (this->nextTileGID() == 0) {
-        this->moveWorld(0.0, this->nextTilePosition());
+        this->moveNextTile();
     } else {
         this->rotate();
     }

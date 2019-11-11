@@ -36,10 +36,14 @@ protected:
     
 public:
     static CharacterSprite* create(const std::string& filename, const Vec2 &pos, TMXTiledMap* map, float moveSpeed);
+    
     Vec2& worldPosition();
     characterDirectcion characterDirectcion();
+    
     void setCharacterDirectcion(::characterDirectcion direction);
+    
     void moveWorld(float duration, const Vec2& newPosition);
+    void moveNextTile();
     Vec2 nextTilePosition();
     CharacterSprite* nextCharacter();
     int nextTileGID();
