@@ -11,6 +11,7 @@
 #define EnemySprite_hpp
 
 #include "CharacterSprite.hpp"
+#include <vector>
 
 
 // 回転方向
@@ -34,6 +35,11 @@ public:
     
     void startPatrol();
     void stopPatrol();
+    
+    void searchShortestRoute(std::vector<Vec2>& routeStack,
+                             std::vector<Vec2>& shortestRouteStack,
+                             const Vec2& currentPos,
+                             const Vec2& destinationPos);
 };
 
 #endif /* EnemySprite_hpp */

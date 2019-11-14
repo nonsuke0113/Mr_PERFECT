@@ -169,13 +169,13 @@ void MainGameScene::initCharactor() {
     this->charactersVector.push_back(this->pPlayer);
     
     // 敵キャラクター
-    EnemySprite* mob = EnemySprite::create("enemy.png", Vec2(4.0f, 17.0f), this->pMap, 0.1f);
+    EnemySprite* mob = EnemySprite::create("enemy.png", Vec2(8.0f, 11.0f), this->pMap, 0.1f);
     mob->setName(StringUtils::format("mob"));
     mob->setAnchorPoint(Vec2(0.0f, 0.0f));
     this->addChild(mob);
     this->charactersVector.push_back(mob);
     this->enemysVector.push_back(mob);
-    mob->startPatrol();
+//    mob->startPatrol();
 }
 
 
@@ -267,7 +267,13 @@ void MainGameScene::touchAEvent(Ref *pSender, ui::Widget::TouchEventType type) {
             
             // Messageテスト
             if (this->messageDialog == nullptr) {
-                this->createMessageDialog(messageType::nomal);
+//                this->createMessageDialog(messageType::nomal);
+                
+                std::vector<Vec2> routeStack;
+                std::vector<Vec2> shortestRouteStack;
+                this->enemysVector[0]->searchShortestRoute(routeStack, shortestRouteStack, this->enemysVector[0]->worldPosition(), this->pPlayer->worldPosition());
+                CCLOG("test");
+                
             }
             else {
                 // 文字送りを実行する

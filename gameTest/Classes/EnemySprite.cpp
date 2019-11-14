@@ -7,6 +7,7 @@
 
 #include "EnemySprite.hpp"
 #include "MainGameScene.hpp"
+#include <algorithm>
 
 /**
     CharacterSprite::createメソッドをオーバーライド
@@ -155,4 +156,69 @@ bool EnemySprite::checkFindPlayer() {
     }
     
     return false;
+}
+
+
+/**
+ */
+void EnemySprite::searchShortestRoute(std::vector<Vec2>& routeStack,
+                                      std::vector<Vec2>& shortestRouteStack,
+                                      const Vec2& currentPos,
+                                      const Vec2& destinationPos)
+{
+    // 現在地を経路スタックにプッシュ
+    routeStack.push_back(currentPos);
+    
+    // ゴールしているかどうか
+    if (currentPos == destinationPos) {
+        // 最短経路であれば保存する
+        if (shortestRouteStack.empty() || routeStack.size() < shortestRouteStack.size()) {
+            shortestRouteStack = routeStack;
+            routeStack.pop_back();
+            return;
+        }
+    }
+    
+    // 既に最短経路の移動数を超えている場合、何もしない
+    if (!shortestRouteStack.empty() && routeStack.size() >= shortestRouteStack.size()) {
+        routeStack.pop_back();
+        return;
+    }
+    
+    // 経路探索
+    TMXLayer* layer = this->m_map->getLayer("MAP");
+    // 上
+    Vec2 upPos = Vec2 { currentPos.x, currentPos.y - 1.0f};
+    if ((upPos.x != -1.0f && upPos.x != MAP_TILE_WIDTH &&
+         upPos.y != -1.0f && upPos.y != MAP_TILE_HEGHT) &&
+        std::find(routeStack.begin(), routeStack.end(), upPos) == routeStack.end() &&
+        layer->getTileGIDAt(upPos) - 1 == 0) {
+        this->searchShortestRoute(routeStack, shortestRouteStack, upPos, destinationPos);
+    }
+    // 右
+    Vec2 rightPos = Vec2 { currentPos.x + 1.0f, currentPos.y };
+    if ((rightPos.x != -1.0f && rightPos.x != MAP_TILE_WIDTH &&
+         rightPos.y != -1.0f && rightPos.y != MAP_TILE_HEGHT) &&
+        std::find(routeStack.begin(), routeStack.end(), rightPos) == routeStack.end() &&
+        layer->getTileGIDAt(rightPos) - 1 == 0) {
+        this->searchShortestRoute(routeStack, shortestRouteStack, rightPos, destinationPos);
+    }
+    // 下
+    Vec2 downPos = Vec2 { currentPos.x, currentPos.y + 1.0f};
+    if ((downPos.x != -1.0f && downPos.x != MAP_TILE_WIDTH &&
+         downPos.y != -1.0f && downPos.y != MAP_TILE_HEGHT) &&
+        std::find(routeStack.begin(), routeStack.end(), downPos) == routeStack.end() &&
+        layer->getTileGIDAt(downPos) - 1 == 0) {
+        this->searchShortestRoute(routeStack, shortestRouteStack, downPos, destinationPos);
+    }
+    // 左
+    Vec2 leftPos = Vec2 { currentPos.x - 1.0f, currentPos.y };
+    if ((leftPos.x != -1.0f && leftPos.x != MAP_TILE_WIDTH &&
+         leftPos.y != -1.0f && leftPos.y != MAP_TILE_HEGHT) &&
+        std::find(routeStack.begin(), routeStack.end(), leftPos) == routeStack.end() &&
+        layer->getTileGIDAt(leftPos) - 1 == 0) {
+        this->searchShortestRoute(routeStack, shortestRouteStack, leftPos, destinationPos);
+    }
+
+    routeStack.pop_back();
 }
