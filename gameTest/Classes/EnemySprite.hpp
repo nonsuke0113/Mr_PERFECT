@@ -26,9 +26,14 @@ class EnemySprite : public CharacterSprite
 protected:
     ::rotateDirectcion m_rotateDirectcion; // 巡回時の回転方向
     
+    std::vector<Vec2>* m_routeStack; // 経路
+    int m_routeStackIndex; // 経路の進捗を管理するインデックス
+    
     void rotatePatrol(float frame);
     void rotate();
     bool checkFindPlayer();
+    
+    void moveAccordingToRouteStack(float frame);
     
 public:
     static EnemySprite* create(const std::string& filename, const Vec2 &pos, TMXTiledMap* map, float moveSpeed);
@@ -40,6 +45,8 @@ public:
                              std::vector<Vec2>& shortestRouteStack,
                              const Vec2& currentPos,
                              const Vec2& destinationPos);
+    void startMoveAccordingToRouteStack(const std::vector<Vec2>& routeStack);
+    void stopMoveAccordingToRouteStack();
 };
 
 #endif /* EnemySprite_hpp */

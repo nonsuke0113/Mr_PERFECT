@@ -44,9 +44,12 @@ public:
     
     void moveWorld(float duration, const Vec2& newPosition);
     void moveNextTile();
+    void facingNextPos(Vec2& pos);
     Vec2 nextTilePosition();
     CharacterSprite* nextCharacter();
     int nextTileGID();
+    
+    bool canMovePos(Vec2& pos);
 };
 
 #endif /* CharacterSprite_hpp */

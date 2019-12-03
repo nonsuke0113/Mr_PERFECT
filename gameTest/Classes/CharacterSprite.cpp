@@ -87,26 +87,52 @@ void CharacterSprite::moveWorld(float duration, const Vec2& newPosition) {
     次のタイルに移動する
  */
 void CharacterSprite::moveNextTile() {
-    this->moveWorld(this->m_moveSpeed, this->nextTilePosition());
+    Vec2 nextTilePosition = this->nextTilePosition();
+    if (nextTilePosition != Vec2 { -1.0f, -1.0f }) {
+        this->moveWorld(this->m_moveSpeed, this->nextTilePosition());
+    }
+}
+
+
+/**
+    与えられた隣の座標の方向に向きを変える
+ 
+    @param pos 隣の座標
+ */
+void CharacterSprite::facingNextPos(Vec2& pos)
+{
+    if (this->worldPosition().x == pos.x && this->worldPosition().y - 1 == pos.y) {
+        this->setCharacterDirectcion(character_back);
+    }
+    else if (this->worldPosition().x + 1 == pos.x && this->worldPosition().y == pos.y) {
+        this->setCharacterDirectcion(character_right);
+    }
+    else if (this->worldPosition().x == pos.x && this->worldPosition().y + 1 == pos.y) {
+        this->setCharacterDirectcion(character_front);
+    }
+    else if (this->worldPosition().x - 1== pos.x && this->worldPosition().y == pos.y) {
+        this->setCharacterDirectcion(character_left);
+    }
 }
 
 
 /**
     キャラクターが向いている方向の次のタイルのワールド座標を返す
+    端にいた場合、-1,-1で返す
  
     @return Vec2 キャラクターが向いている方向の次のタイルのワールド座標
  */
 Vec2 CharacterSprite::nextTilePosition()  {
     
-    Vec2 nextTilePosition = Vec2 { this->m_worldPosition.x, this->m_worldPosition.y };
+    Vec2 nextTilePosition = Vec2 { -1, -1 };
     
-    if(this->m_characterDirectcion == character_back && this->m_worldPosition.y != 0.0f) {
+    if (this->m_characterDirectcion == character_back && this->m_worldPosition.y != 0.0f) {
         nextTilePosition = Vec2 { this->m_worldPosition.x, this->m_worldPosition.y - 1.0f };
     }
-    else if(this->m_characterDirectcion == character_right && this->m_worldPosition.x != MAP_TILE_WIDTH - 1.0f) {
+    else if(this->m_characterDirectcion == character_right && this->m_worldPosition.x + 1.0f != MAP_TILE_WIDTH) {
         nextTilePosition = Vec2 { this->m_worldPosition.x + 1.0f, this->m_worldPosition.y };
     }
-    else if (this->m_characterDirectcion == character_front && this->m_worldPosition.y != MAP_TILE_HEGHT - 1.0f) {
+    else if (this->m_characterDirectcion == character_front && this->m_worldPosition.y + 1.0f != MAP_TILE_HEGHT) {
         nextTilePosition = Vec2 { this->m_worldPosition.x, this->m_worldPosition.y + 1.0f };
     }
     else if (this->m_characterDirectcion == character_left && this->m_worldPosition.x != 0.0f) {
@@ -127,8 +153,7 @@ int CharacterSprite::nextTileGID()  {
     int tileGID = -1;
     Vec2 nextTilePosition = this->nextTilePosition();
     
-    if(nextTilePosition.x != -1.0f && nextTilePosition.x + 1.0f != MAP_TILE_WIDTH &&
-       nextTilePosition.y != -1.0f && nextTilePosition.y + 1.0f != MAP_TILE_HEGHT) {
+    if(nextTilePosition != Vec2 { -1.0f, -1.0f }) {
         TMXLayer* layer = this->m_map->getLayer("MAP");
         tileGID = layer->getTileGIDAt(nextTilePosition) - 1;
     }
@@ -142,14 +167,37 @@ int CharacterSprite::nextTileGID()  {
  
     @return CharacterSprite 隣にいる別のキャラクター
  */
-CharacterSprite* CharacterSprite::nextCharacter()  {
+CharacterSprite* CharacterSprite::nextCharacter()
+{
     Vec2 nextTilePosition = this->nextTilePosition();
+    if (nextTilePosition == Vec2 { -1.0f, -1.0f }) {
+        return nullptr;
+    }
+    
     MainGameScene* mainScene = (MainGameScene*)this->m_map->getParent();
-    std::vector<CharacterSprite*> charactersVector = mainScene->charactersVector;
-    for (int i = 0; i < charactersVector.size(); i++) {
-        if(nextTilePosition == charactersVector[i]->worldPosition()) {
-            return charactersVector[i];
+    Vector<CharacterSprite*>* charactersVector = mainScene->charactersVector;
+    for (int i = 0; i < charactersVector->size(); i++) {
+        if(nextTilePosition == charactersVector->at(i)->worldPosition()) {
+            return charactersVector->at(i);
         }
     }
     return nullptr;
+}
+
+
+/**
+    与えられた座標が移動可能かどうか
+ 
+    @param pos 対象の座標
+    @return 移動可能かどうか
+ */
+bool CharacterSprite::canMovePos(Vec2& pos)
+{
+    TMXLayer* layer = this->m_map->getLayer("MAP");
+    if (pos.x < 0.0f || pos.x >= MAP_TILE_WIDTH ||
+        pos.y < 0.0f || pos.y >= MAP_TILE_HEGHT ||
+        layer->getTileGIDAt(pos) - 1.0f != 0) {
+        return false;
+    }
+    return true;
 }

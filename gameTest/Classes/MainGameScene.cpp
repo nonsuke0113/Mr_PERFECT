@@ -161,21 +161,24 @@ void MainGameScene::initCharactor() {
     
     UserDefault* userDefault = UserDefault::getInstance();
     
+    this->charactersVector = new (std::nothrow) Vector<CharacterSprite*>;
+    this->enemysVector = new (std::nothrow) Vector<EnemySprite*>;
+    
     // プレイヤー
     this->pPlayer = CharacterSprite::create("chara.png", Vec2(7.0f, 19.0f), this->pMap, 0.1f);
     this->pPlayer->setAnchorPoint(Vec2(0.0f, 0.0f));
     this->pPlayer->setName(userDefault->getStringForKey("playerName"));
     this->addChild(this->pPlayer);
-    this->charactersVector.push_back(this->pPlayer);
+    this->charactersVector->pushBack(this->pPlayer);
     
     // 敵キャラクター
     EnemySprite* mob = EnemySprite::create("enemy.png", Vec2(8.0f, 11.0f), this->pMap, 0.1f);
     mob->setName(StringUtils::format("mob"));
     mob->setAnchorPoint(Vec2(0.0f, 0.0f));
     this->addChild(mob);
-    this->charactersVector.push_back(mob);
-    this->enemysVector.push_back(mob);
-//    mob->startPatrol();
+    this->charactersVector->pushBack(mob);
+    this->enemysVector->pushBack(mob);
+    mob->startPatrol();
 }
 
 
@@ -265,15 +268,18 @@ void MainGameScene::touchAEvent(Ref *pSender, ui::Widget::TouchEventType type) {
                 }
             }
             
-            // Messageテスト
             if (this->messageDialog == nullptr) {
-//                this->createMessageDialog(messageType::nomal);
-                
-                std::vector<Vec2> routeStack;
-                std::vector<Vec2> shortestRouteStack;
-                this->enemysVector[0]->searchShortestRoute(routeStack, shortestRouteStack, this->enemysVector[0]->worldPosition(), this->pPlayer->worldPosition());
-                CCLOG("test");
-                
+                // Messageテスト
+                if (this->pPlayer->nextTileGID() != -1) {
+                    this->createMessageDialog(messageType::nomal);
+                }
+                // 壁叩きテスト
+                else {
+                    std::vector<Vec2> routeStack;
+                    std::vector<Vec2> shortestRouteStack;
+                    this->enemysVector->at(0)->searchShortestRoute(routeStack, shortestRouteStack, this->enemysVector->at(0)->worldPosition(), this->pPlayer->worldPosition());
+                    this->enemysVector->at(0)->startMoveAccordingToRouteStack(shortestRouteStack);
+                }
             }
             else {
                 // 文字送りを実行する

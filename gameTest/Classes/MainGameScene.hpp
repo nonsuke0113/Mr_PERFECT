@@ -68,8 +68,8 @@ protected:
 public:
     
     CharacterSprite* pPlayer;   // 操作キャラクター
-    std::vector<CharacterSprite*> charactersVector; //  画面内全キャラクターの動的配列
-    std::vector<EnemySprite*> enemysVector; //  画面内敵キャラクターの動的配列
+    Vector<CharacterSprite*>* charactersVector; //  画面内全キャラクターの動的配列
+    Vector<EnemySprite*>* enemysVector; //  画面内敵キャラクターの動的配列
     
     static Scene* createScene();
     CREATE_FUNC(MainGameScene);

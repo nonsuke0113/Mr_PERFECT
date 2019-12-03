@@ -8,6 +8,7 @@
 #include "EnemySprite.hpp"
 #include "MainGameScene.hpp"
 #include <algorithm>
+#include <unistd.h>
 
 /**
     CharacterSprite::createメソッドをオーバーライド
@@ -70,7 +71,7 @@ void EnemySprite::rotatePatrol(float frame) {
 
 
 /**
-    設定された周りで、向いている方向を変える
+    設定された回転方向に応じて、向いている方向を変える
  */
 void EnemySprite::rotate() {
     
@@ -120,13 +121,10 @@ void EnemySprite::rotate() {
 bool EnemySprite::checkFindPlayer() {
     
     Vec2 checkTilePosition;
-    TMXLayer* layer = this->m_map->getLayer("MAP");
-    int tileGID = -1;
     MainGameScene* mainScene = (MainGameScene*)this->m_map->getParent();
     CharacterSprite* player = mainScene->pPlayer;
     
-    // 
-    for (int i = 1; i < 20; i++) {
+    for (int i = 1; i < std::max(MAP_TILE_HEGHT, MAP_TILE_WIDTH); i++) {
         
         switch (this->m_characterDirectcion) {
             case ::character_front:
@@ -145,8 +143,7 @@ bool EnemySprite::checkFindPlayer() {
                 break;
         }
         
-        tileGID = layer->getTileGIDAt(checkTilePosition) - 1;
-        if (tileGID != 0) {
+        if (!this->canMovePos(checkTilePosition)) {
             return false;
         }
         
@@ -160,6 +157,13 @@ bool EnemySprite::checkFindPlayer() {
 
 
 /**
+    現在地から目的地までの最短経路を探索する
+    参照渡しにて経路のスタックを書き換える
+ 
+    @param routeStack 現在の経路スタック
+    @param shortestRouteStack 現在の最短経路スタック
+    @param currentPos 現在地
+    @param destinationPos 目的地
  */
 void EnemySprite::searchShortestRoute(std::vector<Vec2>& routeStack,
                                       std::vector<Vec2>& shortestRouteStack,
@@ -186,39 +190,80 @@ void EnemySprite::searchShortestRoute(std::vector<Vec2>& routeStack,
     }
     
     // 経路探索
-    TMXLayer* layer = this->m_map->getLayer("MAP");
     // 上
     Vec2 upPos = Vec2 { currentPos.x, currentPos.y - 1.0f};
-    if ((upPos.x != -1.0f && upPos.x != MAP_TILE_WIDTH &&
-         upPos.y != -1.0f && upPos.y != MAP_TILE_HEGHT) &&
-        std::find(routeStack.begin(), routeStack.end(), upPos) == routeStack.end() &&
-        layer->getTileGIDAt(upPos) - 1 == 0) {
+    if (this->canMovePos(upPos) && std::find(routeStack.begin(), routeStack.end(), upPos) == routeStack.end()) {
         this->searchShortestRoute(routeStack, shortestRouteStack, upPos, destinationPos);
     }
     // 右
     Vec2 rightPos = Vec2 { currentPos.x + 1.0f, currentPos.y };
-    if ((rightPos.x != -1.0f && rightPos.x != MAP_TILE_WIDTH &&
-         rightPos.y != -1.0f && rightPos.y != MAP_TILE_HEGHT) &&
-        std::find(routeStack.begin(), routeStack.end(), rightPos) == routeStack.end() &&
-        layer->getTileGIDAt(rightPos) - 1 == 0) {
+    if (this->canMovePos(rightPos) && std::find(routeStack.begin(), routeStack.end(), rightPos) == routeStack.end()) {
         this->searchShortestRoute(routeStack, shortestRouteStack, rightPos, destinationPos);
     }
     // 下
     Vec2 downPos = Vec2 { currentPos.x, currentPos.y + 1.0f};
-    if ((downPos.x != -1.0f && downPos.x != MAP_TILE_WIDTH &&
-         downPos.y != -1.0f && downPos.y != MAP_TILE_HEGHT) &&
-        std::find(routeStack.begin(), routeStack.end(), downPos) == routeStack.end() &&
-        layer->getTileGIDAt(downPos) - 1 == 0) {
+    if (this->canMovePos(downPos) && std::find(routeStack.begin(), routeStack.end(), downPos) == routeStack.end()) {
         this->searchShortestRoute(routeStack, shortestRouteStack, downPos, destinationPos);
     }
     // 左
     Vec2 leftPos = Vec2 { currentPos.x - 1.0f, currentPos.y };
-    if ((leftPos.x != -1.0f && leftPos.x != MAP_TILE_WIDTH &&
-         leftPos.y != -1.0f && leftPos.y != MAP_TILE_HEGHT) &&
-        std::find(routeStack.begin(), routeStack.end(), leftPos) == routeStack.end() &&
-        layer->getTileGIDAt(leftPos) - 1 == 0) {
+       if (this->canMovePos(leftPos) && std::find(routeStack.begin(), routeStack.end(), leftPos) == routeStack.end()) {
         this->searchShortestRoute(routeStack, shortestRouteStack, leftPos, destinationPos);
     }
 
     routeStack.pop_back();
+}
+
+
+/**
+    与えられた経路で移動を開始する
+ 
+    @param routeStack 移動経路
+ */
+void EnemySprite::startMoveAccordingToRouteStack(const std::vector<Vec2>& routeStack)
+{
+    // 巡回は中断する
+    this->stopPatrol();
+    
+    this->m_routeStack = new (std::nothrow) std::vector<Vec2>(routeStack);
+    this->m_routeStackIndex = 0;
+    schedule(schedule_selector(EnemySprite::moveAccordingToRouteStack), 0.5f);
+}
+
+
+/**
+    経路に従う移動を停止する
+ */
+void EnemySprite::stopMoveAccordingToRouteStack()
+{
+    this->m_routeStackIndex = 0;
+    unschedule(schedule_selector(EnemySprite::moveAccordingToRouteStack));
+    
+    // 再度巡回する
+    this->startPatrol();
+}
+
+
+/**
+    経路に従って移動する
+ */
+void EnemySprite::moveAccordingToRouteStack(float frame)
+{
+    if (this->m_routeStack->empty() || this->m_routeStack->size() <= this->m_routeStackIndex) {
+        this->stopMoveAccordingToRouteStack();
+        return;
+    }
+    
+    Vec2 nextPos = this->m_routeStack->at(this->m_routeStackIndex);
+    this->facingNextPos(nextPos);
+    
+    if (this->checkFindPlayer()) {
+        this->stopMoveAccordingToRouteStack();
+        MainGameScene* mainScene = (MainGameScene*)this->m_map->getParent();
+        mainScene->enemyFindPlayer();
+        return;
+    }
+    
+    this->moveWorld(this->m_moveSpeed, nextPos);
+    this->m_routeStackIndex++;
 }
