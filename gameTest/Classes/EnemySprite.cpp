@@ -76,35 +76,35 @@ void EnemySprite::rotatePatrol(float frame) {
 void EnemySprite::rotate() {
     
     if (this->m_rotateDirectcion == ::turn_right) {
-        switch (this->m_characterDirectcion) {
-            case ::character_front:
-                this->setCharacterDirectcion(::character_right);
+        switch (this->m_directcion) {
+            case ::front:
+                this->setDirectcion(::right);
                 break;
-            case ::character_right:
-                this->setCharacterDirectcion(::character_back);
+            case ::right:
+                this->setDirectcion(::back);
                 break;
-            case ::character_back:
-                this->setCharacterDirectcion(::character_left);
+            case ::back:
+                this->setDirectcion(::left);
                 break;
-            case ::character_left:
-                this->setCharacterDirectcion(::character_front);
+            case ::left:
+                this->setDirectcion(::front);
                 break;
             default:
                 break;
         }
     } else {
-        switch (this->m_characterDirectcion) {
-            case ::character_front:
-                this->setCharacterDirectcion(::character_left);
+        switch (this->m_directcion) {
+            case ::front:
+                this->setDirectcion(::left);
                 break;
-            case ::character_right:
-                this->setCharacterDirectcion(::character_front);
+            case ::right:
+                this->setDirectcion(::front);
                 break;
-            case ::character_back:
-                this->setCharacterDirectcion(::character_right);
+            case ::back:
+                this->setDirectcion(::right);
                 break;
-            case ::character_left:
-                this->setCharacterDirectcion(::character_back);
+            case ::left:
+                this->setDirectcion(::back);
                 break;
             default:
                 break;
@@ -126,17 +126,17 @@ bool EnemySprite::checkFindPlayer() {
     
     for (int i = 1; i < std::max(MAP_TILE_HEGHT, MAP_TILE_WIDTH); i++) {
         
-        switch (this->m_characterDirectcion) {
-            case ::character_front:
+        switch (this->m_directcion) {
+            case ::front:
                 checkTilePosition = Vec2 { this->m_worldPosition.x, this->m_worldPosition.y + i };
                 break;
-            case ::character_right:
+            case ::right:
                 checkTilePosition = Vec2 { this->m_worldPosition.x + i, this->m_worldPosition.y };
                 break;
-            case ::character_back:
+            case ::back:
                 checkTilePosition = Vec2 { this->m_worldPosition.x, this->m_worldPosition.y - i };
                 break;
-            case ::character_left:
+            case ::left:
                 checkTilePosition = Vec2 { this->m_worldPosition.x - i, this->m_worldPosition.y };
                 break;
             default:

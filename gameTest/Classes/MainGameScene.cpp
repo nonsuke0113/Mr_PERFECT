@@ -145,6 +145,13 @@ void MainGameScene::initUI() {
     this->addChild(aButton);
     aButton->addTouchEventListener(CC_CALLBACK_2(MainGameScene::touchAEvent, this));
     
+    // Aボタン2
+    ui::Button* aButton2 { ui::Button::create("a_test.png") };
+    aButton2->setPosition(Vec2(880.0f, 220.0f));
+    aButton2->setCameraMask((unsigned short)CameraFlag::USER1);
+    this->addChild(aButton2);
+    aButton2->addTouchEventListener(CC_CALLBACK_2(MainGameScene::touchA2Event, this));
+    
     // SAVEボタン(仮)
     ui::Button* saveButton { ui::Button::create("CloseNormal.png") };
     saveButton->setPosition(Vec2(880.0f, 600.0f));
@@ -198,26 +205,26 @@ void MainGameScene::touchCrossKeyEvent(Ref *pSender, ui::Widget::TouchEventType 
         case ui::Widget::TouchEventType::BEGAN:
             switch (buttonType) {
                 case TAG_UP:
-                    this->pPlayer->setCharacterDirectcion(character_back);
+                    this->pPlayer->setDirectcion(back);
                     this->m_isPushedButton = isPushedUpButton;
                     break;
                 case TAG_RIGHT:
                     if(this->messageDialog != nullptr && this->messageDialog->isYesNo) {
                         this->messageDialog->selectChoice(false);
                     } else {
-                        this->pPlayer->setCharacterDirectcion(character_right);
+                        this->pPlayer->setDirectcion(right);
                         this->m_isPushedButton = isPushedRightButton;
                     }
                     break;
                 case TAG_DOWN:
-                    this->pPlayer->setCharacterDirectcion(character_front);
+                    this->pPlayer->setDirectcion(front);
                     this->m_isPushedButton = isPushedDownButton;
                     break;
                 case TAG_LEFT:
                     if(this->messageDialog != nullptr && this->messageDialog->isYesNo) {
                         this->messageDialog->selectChoice(true);
                     } else {
-                        this->pPlayer->setCharacterDirectcion(character_left);
+                        this->pPlayer->setDirectcion(left);
                         this->m_isPushedButton = isPushedLeftButton;
                     }
                     break;
@@ -296,6 +303,25 @@ void MainGameScene::touchAEvent(Ref *pSender, ui::Widget::TouchEventType type) {
 }
 
 
+/**
+    テスト
+    Aボタン2押下時のイベント
+ */
+void MainGameScene::touchA2Event(Ref *pSender, ui::Widget::TouchEventType type) {
+    
+    switch (type) {
+        case ui::Widget::TouchEventType::BEGAN: {
+            
+        }
+            
+        case ui::Widget::TouchEventType::MOVED:
+        case ui::Widget::TouchEventType::ENDED:
+        case ui::Widget::TouchEventType::CANCELED:
+            break;
+    }
+}
+            
+            
 /**
     Saveボタン押下時のイベント
  */

@@ -53,7 +53,9 @@ protected:
     
     void touchCrossKeyEvent(Ref *pSender, ui::Widget::TouchEventType type);
     void touchAEvent(Ref *pSender, ui::Widget::TouchEventType type);
+    void touchA2Event(Ref *pSender, ui::Widget::TouchEventType type);
     void touchSaveEvent(Ref *pSender, ui::Widget::TouchEventType type);
+    
     void createMessageDialog(::messageType messageType);
     void createMessage();
     void createSaveMessage();
