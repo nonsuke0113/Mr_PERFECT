@@ -23,11 +23,12 @@ class BulletSprite : public GameSpriteBase
 protected:
     float m_speed; // 弾の速度
     
-    static BulletSprite* create(const std::string& filename, const Vec2 &pos, TMXTiledMap* map, float speed);
     void updatePosition(float frame);
     
 public:
-    void shootBullet(const std::string& filename, const Vec2& pos, TMXTiledMap* map, float speed, ::directcion direction);
+    
+    static BulletSprite* create(const std::string& filename, const Vec2 &pos, TMXTiledMap* map, float speed);
+    void shootBullet(::directcion direction);
     
 };
 

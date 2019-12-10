@@ -31,16 +31,22 @@ BulletSprite* BulletSprite::create(const std::string& filename, const Vec2& pos,
 /**
     
  */
-void BulletSprite::shootBullet(const std::string& filename, const Vec2& pos, TMXTiledMap* map, float speed, ::directcion direction)
+void BulletSprite::shootBullet(::directcion direction)
 {
-    BulletSprite* bullet = BulletSprite::create(filename, pos, map, speed);
-    bullet->setDirectcion(direction);
+    this->setDirectcion(direction);
+    schedule(schedule_selector(BulletSprite::updatePosition), this->m_speed);
 }
 
 
 /**
+ 
  */
 void BulletSprite::updatePosition(float frame)
 {
     Vec2 nextTilePos = this->nextTilePosition();
+    if (!this->canMovePos(nextTilePos)) {
+        unschedule(schedule_selector(BulletSprite::updatePosition));
+    }
+    
+    this->moveWorld(0.1f, nextTilePos);
 }

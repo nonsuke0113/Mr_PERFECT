@@ -11,7 +11,7 @@
 #include "TitleScene.hpp"
 #include "MainGameScene.hpp"
 #include "ui/UIScale9Sprite.h"
-
+#include "BulletSprite.hpp"
 #include "AdMobHelper.h"
 
 USING_NS_CC;
@@ -311,7 +311,10 @@ void MainGameScene::touchA2Event(Ref *pSender, ui::Widget::TouchEventType type) 
     
     switch (type) {
         case ui::Widget::TouchEventType::BEGAN: {
-            
+            BulletSprite* bullet = BulletSprite::create("apple.png", this->pPlayer->nextTilePosition(), this->pMap, 0.1f);
+            bullet->setAnchorPoint(Vec2(0.0f, 0.0f));
+            this->addChild(bullet);
+            bullet->shootBullet(this->pPlayer->directcion());
         }
             
         case ui::Widget::TouchEventType::MOVED:

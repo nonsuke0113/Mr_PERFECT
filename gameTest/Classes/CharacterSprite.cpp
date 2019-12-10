@@ -34,7 +34,7 @@ CharacterSprite* CharacterSprite::create(const std::string& filename, const Vec2
  */
 void CharacterSprite::moveNextTile() {
     Vec2 nextTilePosition = this->nextTilePosition();
-    if (nextTilePosition != Vec2 { -1.0f, -1.0f }) {
+    if (this->canMovePos(nextTilePosition)) {
         this->moveWorld(this->m_moveSpeed, this->nextTilePosition());
     }
 }
