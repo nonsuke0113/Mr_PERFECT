@@ -13,13 +13,12 @@
  
     @param filename キャラクターの画像リソース名
     @param pos キャラクターのワールド座標初期位置
-    @param map キャラクターが配置されているマップ
     @param moveSpeed キャラクターの移動速度
     @return キャラクターのSprite
  */
-CharacterSprite* CharacterSprite::create(const std::string& filename, const Vec2& pos, TMXTiledMap* map, float moveSpeed)
+CharacterSprite* CharacterSprite::create(const std::string& filename, const Vec2& pos, float moveSpeed)
 {
-    CharacterSprite *sprite = (CharacterSprite *)GameSpriteBase::create(filename, pos, map);
+    CharacterSprite *sprite = (CharacterSprite *)GameSpriteBase::create(filename, pos);
     if (sprite) {
         sprite->m_moveSpeed = moveSpeed;
         return sprite;
@@ -52,13 +51,18 @@ CharacterSprite* CharacterSprite::nextCharacter()
         return nullptr;
     }
     
-    MainGameScene* mainScene = (MainGameScene*)this->m_map->getParent();
-    Vector<CharacterSprite*>* charactersVector = mainScene->charactersVector;
-    for (int i = 0; i < charactersVector->size(); i++) {
-        if(nextTilePosition == charactersVector->at(i)->worldPosition()) {
-            return charactersVector->at(i);
-        }
-    }
+//    MainGameScene* mainScene = (MainGameScene*)this->getParent();
+//    Vector<Node*> nodes = mainScene->getChildren();
+//    for (int i = 0; i < nodes.size(); i++) {
+//        if (<#condition#>) {
+//            <#statements#>
+//        }
+//        
+//        
+//        if(nextTilePosition == nodes.at(i)->worldPosition()) {
+//            return nodes.at(i);
+//        }
+//    }
     return nullptr;
 }
 

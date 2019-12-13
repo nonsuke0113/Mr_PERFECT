@@ -31,11 +31,10 @@ class GameSpriteBase : public Sprite
 {
 protected:
     Vec2 m_worldPosition; // ワールド座標
-    TMXTiledMap* m_map; // スプライトが配置されているマップ
     ::directcion m_directcion; // スプライトの向き
     
 public:
-    static GameSpriteBase* create(const std::string& filename, const Vec2 &pos, TMXTiledMap* map);
+    static GameSpriteBase* create(const std::string& filename, const Vec2 &pos);
     
     Vec2& worldPosition();
     directcion directcion();

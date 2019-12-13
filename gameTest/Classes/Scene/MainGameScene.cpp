@@ -13,6 +13,7 @@
 #include "ui/UIScale9Sprite.h"
 #include "BulletSprite.hpp"
 #include "AdMobHelper.h"
+#include <typeinfo.h>
 
 USING_NS_CC;
 
@@ -33,8 +34,8 @@ Scene* MainGameScene::createScene() {
     auto layer = MainGameScene::create();
     
     // 固定用カメラを追加
-    layer->pCamera = scene->getDefaultCamera();
-    layer->pCamera->setAnchorPoint(Vec2(0.0f, 0.0f));
+    layer->m_camera = scene->getDefaultCamera();
+    layer->m_camera->setAnchorPoint(Vec2(0.0f, 0.0f));
     Camera* camera = Camera::create();
     camera->setCameraFlag(CameraFlag::USER1);
     layer->addChild(camera);
@@ -60,17 +61,17 @@ bool MainGameScene::init() {
     this->initCharactor();
     
     // 操作キャラクター座標ラベル(デバッグ用)
-    this->playerMapPointLabel = Label::createWithSystemFont(StringUtils::format("x : $%f, y : $%f", this->pPlayer->worldPosition().x, this->pPlayer->worldPosition().y), "ariel", 20);
-    this->playerMapPointLabel->setAnchorPoint(Vec2(0,0));
-    this->playerMapPointLabel->setPosition(Vec2(0.0f, 0.0f));
-    this->playerMapPointLabel->setColor(Color3B(255, 0, 0));
-    this->playerMapPointLabel->setCameraMask((unsigned short)CameraFlag::USER1);
-    this->addChild(playerMapPointLabel);
+    this->m_playerMapPointLabel = Label::createWithSystemFont(StringUtils::format("x : $%f, y : $%f", this->m_player->worldPosition().x, this->m_player->worldPosition().y), "ariel", 20);
+    this->m_playerMapPointLabel->setAnchorPoint(Vec2(0,0));
+    this->m_playerMapPointLabel->setPosition(Vec2(0.0f, 0.0f));
+    this->m_playerMapPointLabel->setColor(Color3B(255, 0, 0));
+    this->m_playerMapPointLabel->setCameraMask((unsigned short)CameraFlag::USER1);
+    this->addChild(m_playerMapPointLabel);
     
     // 座標更新をスケジュール
     schedule(schedule_selector(MainGameScene::updatePosition), 0.1f);
     
-    CCLOG("player X:%f Y:%f", this->pPlayer->worldPosition().x, this->pPlayer->worldPosition().y);
+    CCLOG("player X:%f Y:%f", this->m_player->worldPosition().x, this->m_player->worldPosition().y);
     
     return true;
 }
@@ -82,8 +83,8 @@ bool MainGameScene::init() {
 void MainGameScene::initUI() {
     
     // マップ
-    this->pMap = TMXTiledMap::create("map1.tmx");
-    this->addChild(this->pMap);
+    this->m_map = TMXTiledMap::create("map1.tmx");
+    this->addChild(this->m_map);
     
     // 左サイドバー
     Sprite* leftBgSprite { Sprite::create("side_test.png") };
@@ -168,24 +169,32 @@ void MainGameScene::initCharactor() {
     
     UserDefault* userDefault = UserDefault::getInstance();
     
-    this->charactersVector = new (std::nothrow) Vector<CharacterSprite*>;
-    this->enemysVector = new (std::nothrow) Vector<EnemySprite*>;
-    
     // プレイヤー
-    this->pPlayer = CharacterSprite::create("chara.png", Vec2(7.0f, 19.0f), this->pMap, 0.1f);
-    this->pPlayer->setAnchorPoint(Vec2(0.0f, 0.0f));
-    this->pPlayer->setName(userDefault->getStringForKey("playerName"));
-    this->addChild(this->pPlayer);
-    this->charactersVector->pushBack(this->pPlayer);
+    this->m_player = CharacterSprite::create("chara.png", Vec2(7.0f, 19.0f), 0.1f);
+    this->m_player->setAnchorPoint(Vec2(0.0f, 0.0f));
+    this->m_player->setName(userDefault->getStringForKey("playerName"));
+    this->addChild(this->m_player);
     
     // 敵キャラクター
-    EnemySprite* mob = EnemySprite::create("enemy.png", Vec2(8.0f, 11.0f), this->pMap, 0.1f);
+    EnemySprite* mob = EnemySprite::create("enemy.png", Vec2(8.0f, 11.0f), 0.1f);
     mob->setName(StringUtils::format("mob"));
     mob->setAnchorPoint(Vec2(0.0f, 0.0f));
     this->addChild(mob);
-    this->charactersVector->pushBack(mob);
-    this->enemysVector->pushBack(mob);
     mob->startPatrol();
+}
+
+
+/**
+ */
+Vector<EnemySprite*> MainGameScene::enemysVector() {
+    Vector<Node*> nodes = this->getChildren();
+    Vector<EnemySprite*> enemysVector;
+    for (int i = 0; i < nodes.size(); i++) {
+        if (typeid(nodes.at(i)) == typeid(EnemySprite*)) {
+            enemysVector.pushBack((EnemySprite*)nodes.at(i));
+        }
+    }
+    return enemysVector;
 }
 
 
@@ -205,26 +214,26 @@ void MainGameScene::touchCrossKeyEvent(Ref *pSender, ui::Widget::TouchEventType 
         case ui::Widget::TouchEventType::BEGAN:
             switch (buttonType) {
                 case TAG_UP:
-                    this->pPlayer->setDirectcion(back);
+                    this->m_player->setDirectcion(back);
                     this->m_isPushedButton = isPushedUpButton;
                     break;
                 case TAG_RIGHT:
-                    if(this->messageDialog != nullptr && this->messageDialog->isYesNo) {
-                        this->messageDialog->selectChoice(false);
+                    if(this->m_messageDialog  != nullptr && this->m_messageDialog->isYesNo) {
+                        this->m_messageDialog->selectChoice(false);
                     } else {
-                        this->pPlayer->setDirectcion(right);
+                        this->m_player->setDirectcion(right);
                         this->m_isPushedButton = isPushedRightButton;
                     }
                     break;
                 case TAG_DOWN:
-                    this->pPlayer->setDirectcion(front);
+                    this->m_player->setDirectcion(front);
                     this->m_isPushedButton = isPushedDownButton;
                     break;
                 case TAG_LEFT:
-                    if(this->messageDialog != nullptr && this->messageDialog->isYesNo) {
-                        this->messageDialog->selectChoice(true);
+                    if(this->m_messageDialog  != nullptr && this->m_messageDialog->isYesNo) {
+                        this->m_messageDialog->selectChoice(true);
                     } else {
-                        this->pPlayer->setDirectcion(left);
+                        this->m_player->setDirectcion(left);
                         this->m_isPushedButton = isPushedLeftButton;
                     }
                     break;
@@ -255,16 +264,16 @@ void MainGameScene::touchAEvent(Ref *pSender, ui::Widget::TouchEventType type) {
     switch (type) {
         case ui::Widget::TouchEventType::BEGAN: {
             
-            if(this->messageDialog != nullptr &&
-               this->messageDialog->isYesNo) {
-                switch (this->messageDialog->m_messageType) {
+            if(this->m_messageDialog  != nullptr &&
+               this->m_messageDialog->isYesNo) {
+                switch (this->m_messageDialog->m_messageType) {
                     case messageType::save:
-                        if (this->messageDialog->userChoice) {
+                        if (this->m_messageDialog->userChoice) {
                             doSave();
                         }
                         break;
                     case messageType::findPlayer:
-                        if (this->messageDialog->userChoice) {
+                        if (this->m_messageDialog->userChoice) {
                             doContinue();
                         } else {
                             gameover();
@@ -275,22 +284,22 @@ void MainGameScene::touchAEvent(Ref *pSender, ui::Widget::TouchEventType type) {
                 }
             }
             
-            if (this->messageDialog == nullptr) {
+            if (this->m_messageDialog  == nullptr) {
                 // Messageテスト
-                if (this->pPlayer->nextTileGID() != -1) {
+                if (this->m_player->nextTileGID() != -1) {
                     this->createMessageDialog(messageType::nomal);
                 }
                 // 壁叩きテスト
                 else {
                     std::vector<Vec2> routeStack;
                     std::vector<Vec2> shortestRouteStack;
-                    this->enemysVector->at(0)->searchShortestRoute(routeStack, shortestRouteStack, this->enemysVector->at(0)->worldPosition(), this->pPlayer->worldPosition());
+                    this->enemysVector->at(0)->searchShortestRoute(routeStack, shortestRouteStack, this->enemysVector->at(0)->worldPosition(), this->m_player->worldPosition());
                     this->enemysVector->at(0)->startMoveAccordingToRouteStack(shortestRouteStack);
                 }
             }
             else {
                 // 文字送りを実行する
-                this->messageDialog->next();
+                this->m_messageDialog->next();
             }
             break;
         }
@@ -311,10 +320,10 @@ void MainGameScene::touchA2Event(Ref *pSender, ui::Widget::TouchEventType type) 
     
     switch (type) {
         case ui::Widget::TouchEventType::BEGAN: {
-            BulletSprite* bullet = BulletSprite::create("apple.png", this->pPlayer->nextTilePosition(), this->pMap, 0.1f);
+            BulletSprite* bullet = BulletSprite::create("apple.png", this->m_player->nextTilePosition(), 0.1f);
             bullet->setAnchorPoint(Vec2(0.0f, 0.0f));
             this->addChild(bullet);
-            bullet->shootBullet(this->pPlayer->directcion());
+            bullet->shootBullet(this->m_player->directcion());
         }
             
         case ui::Widget::TouchEventType::MOVED:
@@ -333,12 +342,12 @@ void MainGameScene::touchSaveEvent(Ref *pSender, ui::Widget::TouchEventType type
     switch (type) {
         case ui::Widget::TouchEventType::BEGAN: {
             // Messageテスト
-            if (this->messageDialog == nullptr) {
+            if (this->m_messageDialog  == nullptr) {
                 this->createMessageDialog(messageType::save);
             }
             else {
                 // 文字送りを実行する
-                this->messageDialog->next();
+                this->m_messageDialog->next();
             }
             break;
         }
@@ -371,7 +380,7 @@ void MainGameScene::doSave() {
     
     // Save
     UserDefault* userDefault = UserDefault::getInstance();
-    userDefault->setStringForKey("playerName", this->pPlayer->getName());
+    userDefault->setStringForKey("playerName", this->m_player->getName());
 }
 
 
@@ -398,6 +407,14 @@ void MainGameScene::enemyFindPlayer() {
     this->createMessageDialog(messageType::findPlayer);
 }
 
+/**
+    敵キャラクターの背後に弾丸が当たった
+ */
+//void MainGameScene::hitEnemy(EnemySprite* enemy) {
+//    this->enemysVector->
+//    this->removeChild(enemy);
+//}
+
 
 #pragma mark -
 #pragma mark Message
@@ -406,10 +423,10 @@ void MainGameScene::enemyFindPlayer() {
  */
 void MainGameScene::createMessageDialog(::messageType messageType) {
     
-    this->messageDialog = MessageDialog::create(640, 200);
-    this->messageDialog->setAnchorPoint(Vec2(0.0f,0.0f));
-    this->messageDialog->setPosition(Vec2(480.0f, 0.0f));
-    this->messageDialog->m_messageType = messageType;
+    this->m_messageDialog  = MessageDialog::create(640, 200);
+    this->m_messageDialog->setAnchorPoint(Vec2(0.0f,0.0f));
+    this->m_messageDialog->setPosition(Vec2(480.0f, 0.0f));
+    this->m_messageDialog->m_messageType = messageType;
     
     // メッセージを追加
     switch (messageType) {
@@ -430,16 +447,16 @@ void MainGameScene::createMessageDialog(::messageType messageType) {
     // メッセージ表示後のコールバックを設定
     this->setMessageCallback();
     
-    this->messageDialog->start();
-    this->messageDialog->setScale(0.05f);
-    this->messageDialog->runAction(
+    this->m_messageDialog->start();
+    this->m_messageDialog->setScale(0.05f);
+    this->m_messageDialog->runAction(
         Sequence::create(
             ScaleTo::create(0.1f, 0, 1, 1),
             ScaleTo::create(0.2f, 1, 1, 1),
             nullptr)
     );
-    this->messageDialog->setCameraMask((unsigned short)CameraFlag::USER1);
-    this->addChild(this->messageDialog);
+    this->m_messageDialog->setCameraMask((unsigned short)CameraFlag::USER1);
+    this->addChild(this->m_messageDialog );
 }
 
 
@@ -449,26 +466,26 @@ void MainGameScene::createMessageDialog(::messageType messageType) {
 void MainGameScene::createMessage() {
     
     // メッセージの内容を設定
-    CharacterSprite* nextChara = this->pPlayer->nextCharacter();
+    CharacterSprite* nextChara = this->m_player->nextCharacter();
     // 人
     if(nextChara != nullptr) {
         // mobの動きを一時停止
 //        unschedule(schedule_selector(MainGameScene::updateMobPosition));
         
-        if(this->pPlayer->getName() != "") {
-            this->messageDialog->addMessage(StringUtils::format("こんにちは、%s", this->pPlayer->getName().c_str()));
+        if(this->m_player->getName() != "") {
+            this->m_messageDialog->addMessage(StringUtils::format("こんにちは、%s", this->m_player->getName().c_str()));
         } else {
-            this->messageDialog->addMessage("はじめまして。");
-            this->messageDialog->addMessage(StringUtils::format("私は%sです。", nextChara->getName().c_str()));
-            this->messageDialog->addMessage("あなたの名前は?");
-            this->messageDialog->addMessage("さようなら、*1");
+            this->m_messageDialog->addMessage("はじめまして。");
+            this->m_messageDialog->addMessage(StringUtils::format("私は%sです。", nextChara->getName().c_str()));
+            this->m_messageDialog->addMessage("あなたの名前は?");
+            this->m_messageDialog->addMessage("さようなら、*1");
         }
     }
     // 人以外
     else {
-        this->messageDialog->addMessage("メッセージを開始します。");
-        this->messageDialog->addMessage(StringUtils::format("タイルID:%d", this->pPlayer->nextTileGID()));
-        this->messageDialog->addMessage("メッセージを終了します。");
+        this->m_messageDialog->addMessage("メッセージを開始します。");
+        this->m_messageDialog->addMessage(StringUtils::format("タイルID:%d", this->m_player->nextTileGID()));
+        this->m_messageDialog->addMessage("メッセージを終了します。");
     }
 }
 
@@ -477,10 +494,10 @@ void MainGameScene::createMessage() {
     敵キャラクターがプレイヤーを発見した際のメッセージダイアログに設定する本文を作成する
  */
 void MainGameScene::createFindPlayerMessage() {
-    this->messageDialog->addMessage("「何者だ！」");
-    this->messageDialog->addMessage("見つかってしまった...");
-    this->messageDialog->addMessage("GAME OVER");
-    this->messageDialog->addMessage("コンティニュー？$");
+    this->m_messageDialog->addMessage("「何者だ！」");
+    this->m_messageDialog->addMessage("見つかってしまった...");
+    this->m_messageDialog->addMessage("GAME OVER");
+    this->m_messageDialog->addMessage("コンティニュー？$");
 }
 
 
@@ -488,7 +505,7 @@ void MainGameScene::createFindPlayerMessage() {
     セーブ実行時のメッセージダイアログに設定する本文を作成する
  */
 void MainGameScene::createSaveMessage() {
-    this->messageDialog->addMessage("Saveしますか？$");
+    this->m_messageDialog->addMessage("Saveしますか？$");
 }
 
 
@@ -497,20 +514,20 @@ void MainGameScene::createSaveMessage() {
  */
 void MainGameScene::setMessageCallback() {
     
-    this->messageDialog->setCompleteAction([this]() {
+    this->m_messageDialog->setCompleteAction([this]() {
         // 名前を保存
-        if(this->messageDialog->answerList.size() != 0) {
-            this->pPlayer->setName(this->messageDialog->answerList[0]);
+        if(this->m_messageDialog->answerList.size() != 0) {
+            this->m_player->setName(this->m_messageDialog->answerList[0]);
         }
         // ダイアログを閉じて、Remove
-        this->messageDialog->runAction(
+        this->m_messageDialog->runAction(
                                        Sequence::create(
                                                         ScaleTo::create(0.1f, 0, 0.05f, 1),
                                                         ScaleTo::create(0.1f, 1, 0.05f, 0.05f),
                                                         RemoveSelf::create(true),
                                                         nullptr)
                                        );
-        this->messageDialog = nullptr;
+        this->m_messageDialog  = nullptr;
 //        schedule(schedule_selector(MainGameScene::updateMobPosition), 2.0f);
     });
 }
@@ -525,10 +542,10 @@ void MainGameScene::updatePosition(float frame) {
     
     // 十字キーが押されてなかったり、行けない道だったら何もしない
     if ((this->m_isPushedButton == pushedButtonNone) ||
-        (this->pMap->getNumberOfRunningActions() > 0) ||
-        (this->pPlayer->getNumberOfRunningActions() > 0) ||
-        this->pPlayer->nextTileGID() != 0 ||
-        this->pPlayer->nextCharacter() != nullptr) {
+        (this->m_map->getNumberOfRunningActions() > 0) ||
+        (this->m_player->getNumberOfRunningActions() > 0) ||
+        this->m_player->nextTileGID() != 0 ||
+        this->m_player->nextCharacter() != nullptr) {
         return;
     }
     
@@ -536,17 +553,17 @@ void MainGameScene::updatePosition(float frame) {
     this->updateCameraPosition();
     
     // プレイヤーの移動
-    this->pPlayer->moveNextTile();
+    this->m_player->moveNextTile();
     
     // DEBUG:現在いる位置のラベルを更新
-    this->playerMapPointLabel->setString(StringUtils::format("x : $%f, y : $%f", this->pPlayer->worldPosition().x, this->pPlayer->worldPosition().y));
+    this->m_playerMapPointLabel->setString(StringUtils::format("x : $%f, y : $%f", this->m_player->worldPosition().x, this->m_player->worldPosition().y));
     
     // 今いるタイルを判定
-    TMXLayer* layer = this->pMap->getLayer("MAP");
-    int tileGID = layer->getTileGIDAt(this->pPlayer->worldPosition());
+    TMXLayer* layer = this->m_map->getLayer("MAP");
+    int tileGID = layer->getTileGIDAt(this->m_player->worldPosition());
     CCLOG("タイルID:%d", tileGID-1);
-    CCLOG("player X:%f Y:%f", this->pPlayer->getPositionX(), this->pPlayer->getPositionY());
-    CCLOG("camera X:%f Y:%f", this->pCamera->getPositionX(), this->pCamera->getPositionY());
+    CCLOG("player X:%f Y:%f", this->m_player->getPositionX(), this->m_player->getPositionY());
+    CCLOG("camera X:%f Y:%f", this->m_camera->getPositionX(), this->m_camera->getPositionY());
 }
 
 
@@ -555,39 +572,39 @@ void MainGameScene::updatePosition(float frame) {
  */
 void MainGameScene::updateCameraPosition() {
     // カメラ座標
-    Vec3 newCameraPosition = this->pCamera->getPosition3D();
+    Vec3 newCameraPosition = this->m_camera->getPosition3D();
     
     // 上ボタン押下中
     if ((this->m_isPushedButton == isPushedUpButton) &&
         (newCameraPosition.y != ((PER_TILE_SIZE * MAP_TILE_HEGHT) - VIEW_HEGHT / 2)) &&
-        (newCameraPosition.y == this->pPlayer->getPosition().y))
+        (newCameraPosition.y == this->m_player->getPosition().y))
     {
         newCameraPosition.y += PER_TILE_SIZE;
     }
     // 右ボタン押下中
     else if ((this->m_isPushedButton == isPushedRightButton) &&
              (newCameraPosition.x != (PER_TILE_SIZE * MAP_TILE_WIDTH) - VIEW_WIDTH/2 + SIDE_BAR_WIDTH) &&
-             (newCameraPosition.x == this->pPlayer->getPosition().x))
+             (newCameraPosition.x == this->m_player->getPosition().x))
     {
         newCameraPosition.x += PER_TILE_SIZE;
     }
     // 下ボタン押下中
     else if ((this->m_isPushedButton == isPushedDownButton) &&
              (newCameraPosition.y != VIEW_HEGHT / 2) &&
-             (newCameraPosition.y == this->pPlayer->getPosition().y))
+             (newCameraPosition.y == this->m_player->getPosition().y))
     {
         newCameraPosition.y -= PER_TILE_SIZE;
     }
     // 左ボタン押下中
     else if ((this->m_isPushedButton == isPushedLeftButton) &&
              (newCameraPosition.x != VIEW_WIDTH / 2 - SIDE_BAR_WIDTH) &&
-             (newCameraPosition.x == this->pPlayer->getPosition().x))
+             (newCameraPosition.x == this->m_player->getPosition().x))
     {
         newCameraPosition.x -= PER_TILE_SIZE;
     }
     
     // カメラ移動
     MoveTo* actionMove = MoveTo::create(0.1f, newCameraPosition);
-    this->pCamera->stopAllActions();
-    this->pCamera->runAction(actionMove);
+    this->m_camera->stopAllActions();
+    this->m_camera->runAction(actionMove);
 }

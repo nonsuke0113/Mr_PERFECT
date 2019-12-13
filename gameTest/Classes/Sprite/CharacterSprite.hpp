@@ -24,7 +24,7 @@ protected:
     float m_moveSpeed; // 移動速度
     
 public:
-    static CharacterSprite* create(const std::string& filename, const Vec2 &pos, TMXTiledMap* map, float moveSpeed);
+    static CharacterSprite* create(const std::string& filename, const Vec2 &pos, float moveSpeed);
     
     void moveNextTile();
     CharacterSprite* nextCharacter();

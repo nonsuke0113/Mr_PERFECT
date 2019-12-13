@@ -36,7 +36,7 @@ protected:
     void moveAccordingToRouteStack(float frame);
     
 public:
-    static EnemySprite* create(const std::string& filename, const Vec2 &pos, TMXTiledMap* map, float moveSpeed);
+    static EnemySprite* create(const std::string& filename, const Vec2 &pos, float moveSpeed);
     
     void startPatrol();
     void stopPatrol();

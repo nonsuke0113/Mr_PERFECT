@@ -6,16 +6,16 @@
 //
 
 #include "GameSpriteBase.hpp"
+#include "MainGameScene.hpp"
 
 /**
     Sprite::createメソッドをオーバーライド
  
     @param filename 画像リソース名
     @param pos ワールド座標初期位置
-    @param map 配置されているマップ
     @return Sprite
  */
-GameSpriteBase* GameSpriteBase::create(const std::string& filename, const Vec2& pos, TMXTiledMap* map)
+GameSpriteBase* GameSpriteBase::create(const std::string& filename, const Vec2& pos)
 {
     GameSpriteBase *sprite = new (std::nothrow) GameSpriteBase();
     if (sprite && sprite->initWithFile(filename))
@@ -23,7 +23,6 @@ GameSpriteBase* GameSpriteBase::create(const std::string& filename, const Vec2& 
         sprite->autorelease();
         sprite->m_worldPosition = pos;
         sprite->setPosition(Vec2(pos.x * PER_TILE_SIZE, (MAP_TILE_HEGHT - pos.y - 1) * PER_TILE_SIZE));
-        sprite->m_map = map;
         return sprite;
     }
     CC_SAFE_DELETE(sprite);
@@ -122,7 +121,8 @@ Vec2 GameSpriteBase::nextTilePosition()  {
  */
 bool GameSpriteBase::canMovePos(Vec2& pos)
 {
-    TMXLayer* layer = this->m_map->getLayer("MAP");
+    MainGameScene* scene = (MainGameScene*)this->getParent();
+    TMXLayer* layer = scene->m_map->getLayer("MAP");
     if (pos.x < 0.0f || pos.x >= MAP_TILE_WIDTH ||
         pos.y < 0.0f || pos.y >= MAP_TILE_HEGHT ||
         layer->getTileGIDAt(pos) - 1.0f != 0) {
@@ -165,7 +165,8 @@ int GameSpriteBase::nextTileGID()  {
     Vec2 nextTilePosition = this->nextTilePosition();
     
     if(nextTilePosition != Vec2 { -1.0f, -1.0f }) {
-        TMXLayer* layer = this->m_map->getLayer("MAP");
+        MainGameScene* scene = (MainGameScene*)this->getParent();
+        TMXLayer* layer = scene->m_map->getLayer("MAP");
         tileGID = layer->getTileGIDAt(nextTilePosition) - 1;
     }
     

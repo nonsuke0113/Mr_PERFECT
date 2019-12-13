@@ -42,10 +42,9 @@ class MainGameScene : public Layer
 {
 protected:
     
-    TMXTiledMap* pMap;  // MAP
-    Camera* pCamera;    // スクロール用カメラ
-    Label* playerMapPointLabel { nullptr }; // 操作キャラクター座標ラベル(デバッグ用)
-    MessageDialog* messageDialog { nullptr };   // メッセージダイアログ
+    Camera* m_camera;    // スクロール用カメラ
+    Label* m_playerMapPointLabel { nullptr }; // 操作キャラクター座標ラベル(デバッグ用)
+    MessageDialog* m_messageDialog  { nullptr };   // メッセージダイアログ
     pushedButton m_isPushedButton;  // 十字ボタンの状態
     
     void initUI();
@@ -69,14 +68,14 @@ protected:
     
 public:
     
-    CharacterSprite* pPlayer;   // 操作キャラクター
-    Vector<CharacterSprite*>* charactersVector; //  画面内全キャラクターの動的配列
-    Vector<EnemySprite*>* enemysVector; //  画面内敵キャラクターの動的配列
+    TMXTiledMap* m_map;  // MAP
+    CharacterSprite* m_player;   // 操作キャラクター
     
     static Scene* createScene();
     CREATE_FUNC(MainGameScene);
     virtual bool init();
     
+    Vector<EnemySprite*> enemysVector();
     void enemyFindPlayer();
 };
 

@@ -15,13 +15,12 @@
  
     @param filename 敵キャラクターの画像リソース名
     @param pos 敵キャラクターのワールド座標初期位置
-    @param map 敵キャラクターが配置されているマップ
     @param moveSpeed 敵キャラクターの移動速度
     @return 敵キャラクターのSprite
  */
-EnemySprite* EnemySprite::create(const std::string& filename, const Vec2& pos, TMXTiledMap* map, float moveSpeed)
+EnemySprite* EnemySprite::create(const std::string& filename, const Vec2& pos, float moveSpeed)
 {
-    EnemySprite *sprite = (EnemySprite*)CharacterSprite::create(filename, pos, map, moveSpeed);
+    EnemySprite *sprite = (EnemySprite*)CharacterSprite::create(filename, pos, moveSpeed);
     if (sprite)
     {
         sprite->m_rotateDirectcion = ::turn_right;
@@ -58,7 +57,7 @@ void EnemySprite::rotatePatrol(float frame) {
     
     if (this->checkFindPlayer()) {
         this->stopPatrol();
-        MainGameScene* mainScene = (MainGameScene*)this->m_map->getParent();
+        MainGameScene* mainScene = (MainGameScene*)this->getParent();
         mainScene->enemyFindPlayer();
     }
     
@@ -121,8 +120,8 @@ void EnemySprite::rotate() {
 bool EnemySprite::checkFindPlayer() {
     
     Vec2 checkTilePosition;
-    MainGameScene* mainScene = (MainGameScene*)this->m_map->getParent();
-    CharacterSprite* player = mainScene->pPlayer;
+    MainGameScene* mainScene = (MainGameScene*)this->getParent();
+    CharacterSprite* player = mainScene->m_player;
     
     for (int i = 1; i < std::max(MAP_TILE_HEGHT, MAP_TILE_WIDTH); i++) {
         
@@ -259,7 +258,7 @@ void EnemySprite::moveAccordingToRouteStack(float frame)
     
     if (this->checkFindPlayer()) {
         this->stopMoveAccordingToRouteStack();
-        MainGameScene* mainScene = (MainGameScene*)this->m_map->getParent();
+        MainGameScene* mainScene = (MainGameScene*)this->getParent();
         mainScene->enemyFindPlayer();
         return;
     }

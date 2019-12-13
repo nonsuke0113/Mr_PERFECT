@@ -360,24 +360,14 @@
 		46880B8319C43A87006E1F66 /* Classes */ = {
 			isa = PBXGroup;
 			children = (
-				46880B8419C43A87006E1F66 /* AppDelegate.cpp */,
 				46880B8519C43A87006E1F66 /* AppDelegate.h */,
-				E9A5210C21A90B8C00DB44EA /* TitleScene.cpp */,
-				E9A5210D21A90B8C00DB44EA /* TitleScene.hpp */,
-				E9A5211021A90C3100DB44EA /* MainGameScene.cpp */,
-				E9A5211121A90C3100DB44EA /* MainGameScene.hpp */,
-				E9A5211321A90C6F00DB44EA /* CharacterSprite.cpp */,
-				E9A5211421A90C6F00DB44EA /* CharacterSprite.hpp */,
+				46880B8419C43A87006E1F66 /* AppDelegate.cpp */,
+				AB42A26623A37A2800B927DC /* Scene */,
+				AB42A26723A37A5E00B927DC /* Sprite */,
 				E9A5211721AECC9900DB44EA /* Const.hpp */,
-				ABBA36B521BA6A3500A02928 /* MessageDialog.cpp */,
-				ABBA36B621BA6A3500A02928 /* MessageDialog.hpp */,
 				E945438E21F49F4900C11542 /* StringUtil.h */,
-				864FC466237527FE00DDF5E8 /* EnemySprite.cpp */,
-				864FC467237527FE00DDF5E8 /* EnemySprite.hpp */,
-				861B748C239F37A6007068AB /* BulletSprite.cpp */,
-				861B748D239F37A6007068AB /* BulletSprite.hpp */,
-				861B7490239F516C007068AB /* GameSpriteBase.cpp */,
-				861B7491239F516C007068AB /* GameSpriteBase.hpp */,
+				ABBA36B621BA6A3500A02928 /* MessageDialog.hpp */,
+				ABBA36B521BA6A3500A02928 /* MessageDialog.cpp */,
 			);
 			name = Classes;
 			path = ../Classes;
@@ -401,6 +391,32 @@
 				503AE10417EB98FF00D1A890 /* Prefix.pch */,
 			);
 			name = mac;
+			sourceTree = "<group>";
+		};
+		AB42A26623A37A2800B927DC /* Scene */ = {
+			isa = PBXGroup;
+			children = (
+				E9A5210D21A90B8C00DB44EA /* TitleScene.hpp */,
+				E9A5210C21A90B8C00DB44EA /* TitleScene.cpp */,
+				E9A5211121A90C3100DB44EA /* MainGameScene.hpp */,
+				E9A5211021A90C3100DB44EA /* MainGameScene.cpp */,
+			);
+			path = Scene;
+			sourceTree = "<group>";
+		};
+		AB42A26723A37A5E00B927DC /* Sprite */ = {
+			isa = PBXGroup;
+			children = (
+				861B7491239F516C007068AB /* GameSpriteBase.hpp */,
+				861B7490239F516C007068AB /* GameSpriteBase.cpp */,
+				E9A5211421A90C6F00DB44EA /* CharacterSprite.hpp */,
+				E9A5211321A90C6F00DB44EA /* CharacterSprite.cpp */,
+				864FC467237527FE00DDF5E8 /* EnemySprite.hpp */,
+				864FC466237527FE00DDF5E8 /* EnemySprite.cpp */,
+				861B748D239F37A6007068AB /* BulletSprite.hpp */,
+				861B748C239F37A6007068AB /* BulletSprite.cpp */,
+			);
+			path = Sprite;
 			sourceTree = "<group>";
 		};
 		E92CE8592206814400E123FD /* GoogleMobileAdsSdkiOS-7.38.0 */ = {

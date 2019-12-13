@@ -24,10 +24,11 @@ protected:
     float m_speed; // 弾の速度
     
     void updatePosition(float frame);
+    EnemySprite* validateHitEnemy();
     
 public:
     
-    static BulletSprite* create(const std::string& filename, const Vec2 &pos, TMXTiledMap* map, float speed);
+    static BulletSprite* create(const std::string& filename, const Vec2 &pos, float speed);
     void shootBullet(::directcion direction);
     
 };
