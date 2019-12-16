@@ -16,6 +16,7 @@ USING_NS_CC;
 #include "ui/CocosGUI.h"
 
 #include "GameSpriteBase.hpp"
+#include "EnemySprite.hpp"
 
 
 class BulletSprite : public GameSpriteBase
@@ -28,9 +29,10 @@ protected:
     
 public:
     
-    static BulletSprite* create(const std::string& filename, const Vec2 &pos, float speed);
-    void shootBullet(::directcion direction);
+    static BulletSprite* create(const std::string& filename, const Vec2 &pos, ::directcion direction, float speed);
+    virtual bool initWithFileName(const std::string& filename, const Vec2 &pos, ::directcion direction, float speed);
     
+    void shootBullet(::directcion direction);
 };
 
 

@@ -8,19 +8,22 @@
 #include "MainGameScene.hpp"
 #include "CharacterSprite.hpp"
 
+#pragma mark -
+#pragma mark init
 /**
     Sprite::createメソッドをオーバーライド
  
     @param filename キャラクターの画像リソース名
     @param pos キャラクターのワールド座標初期位置
+    @param direction キャラクターの向き
     @param moveSpeed キャラクターの移動速度
     @return キャラクターのSprite
  */
-CharacterSprite* CharacterSprite::create(const std::string& filename, const Vec2& pos, float moveSpeed)
+CharacterSprite* CharacterSprite::create(const std::string& filename, const Vec2& pos, ::directcion direction, float moveSpeed)
 {
-    CharacterSprite *sprite = (CharacterSprite *)GameSpriteBase::create(filename, pos);
-    if (sprite) {
-        sprite->m_moveSpeed = moveSpeed;
+    CharacterSprite *sprite =  new (std::nothrow) CharacterSprite;
+    if (sprite && sprite->initWithFileName(filename, pos, direction, moveSpeed)) {
+        sprite->autorelease();
         return sprite;
     }
     CC_SAFE_DELETE(sprite);
@@ -28,6 +31,25 @@ CharacterSprite* CharacterSprite::create(const std::string& filename, const Vec2
 }
 
 
+/**
+    初期化処理
+ 
+    @param filename キャラクターの画像リソース名
+    @param pos キャラクターのワールド座標初期位置
+    @param direction キャラクターの向き
+    @param moveSpeed キャラクターの移動速度
+ */
+bool CharacterSprite::initWithFileName(const std::string& filename, const Vec2 &pos, ::directcion direction, float moveSpeed)
+{
+    if (!GameSpriteBase::initWithFileName(filename, pos, direction)) {
+        return false;
+    }
+    this->m_moveSpeed = moveSpeed;
+    return true;
+}
+
+
+#pragma mark -
 /**
     次のタイルに移動する
  */
@@ -51,18 +73,13 @@ CharacterSprite* CharacterSprite::nextCharacter()
         return nullptr;
     }
     
-//    MainGameScene* mainScene = (MainGameScene*)this->getParent();
-//    Vector<Node*> nodes = mainScene->getChildren();
-//    for (int i = 0; i < nodes.size(); i++) {
-//        if (<#condition#>) {
-//            <#statements#>
-//        }
-//        
-//        
-//        if(nextTilePosition == nodes.at(i)->worldPosition()) {
-//            return nodes.at(i);
-//        }
-//    }
+    MainGameScene* mainScene = (MainGameScene*)this->getParent();
+    Vector<CharacterSprite*> charactersVector = mainScene->charactersVector();
+    for (int i = 0; i < charactersVector.size(); i++) {
+        if(nextTilePosition == charactersVector.at(i)->worldPosition()) {
+            return charactersVector.at(i);
+        }
+    }
     return nullptr;
 }
 

@@ -34,7 +34,8 @@ protected:
     ::directcion m_directcion; // スプライトの向き
     
 public:
-    static GameSpriteBase* create(const std::string& filename, const Vec2 &pos);
+    static GameSpriteBase* create(const std::string& filename, const Vec2 &pos, ::directcion direction);
+    virtual bool initWithFileName(const std::string& filename, const Vec2 &pos, ::directcion direction);
     
     Vec2& worldPosition();
     directcion directcion();

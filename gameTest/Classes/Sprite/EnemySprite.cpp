@@ -10,26 +10,47 @@
 #include <algorithm>
 #include <unistd.h>
 
+#pragma mark -
+#pragma mark init
 /**
     CharacterSprite::createメソッドをオーバーライド
  
     @param filename 敵キャラクターの画像リソース名
     @param pos 敵キャラクターのワールド座標初期位置
+    @param direction 敵キャラクターの向き
     @param moveSpeed 敵キャラクターの移動速度
     @return 敵キャラクターのSprite
  */
-EnemySprite* EnemySprite::create(const std::string& filename, const Vec2& pos, float moveSpeed)
+EnemySprite* EnemySprite::create(const std::string& filename, const Vec2& pos, ::directcion direction, float moveSpeed)
 {
-    EnemySprite *sprite = (EnemySprite*)CharacterSprite::create(filename, pos, moveSpeed);
-    if (sprite)
-    {
-        sprite->m_rotateDirectcion = ::turn_right;
+    EnemySprite *sprite =  new (std::nothrow) EnemySprite;
+    if (sprite && sprite->initWithFileName(filename, pos, direction, moveSpeed)) {
+        sprite->autorelease();
         return sprite;
     }
     return nullptr;
 }
 
 
+/**
+    初期化処理
+ 
+    @param filename 敵キャラクターの画像リソース名
+    @param pos 敵キャラクターのワールド座標初期位置
+    @param direction 敵キャラクターの向き
+    @param moveSpeed 敵キャラクターの移動速度
+ */
+bool EnemySprite::initWithFileName(const std::string& filename, const Vec2 &pos, ::directcion direction, float moveSpeed)
+{
+    if (!CharacterSprite::initWithFileName(filename, pos, direction, moveSpeed)) {
+        return false;
+    }
+    this->m_rotateDirectcion = ::turn_right;
+    return true;
+}
+
+
+#pragma mark -
 /**
     巡回をスケジュール
  */

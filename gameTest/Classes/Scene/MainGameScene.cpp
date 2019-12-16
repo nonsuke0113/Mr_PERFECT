@@ -13,7 +13,7 @@
 #include "ui/UIScale9Sprite.h"
 #include "BulletSprite.hpp"
 #include "AdMobHelper.h"
-#include <typeinfo.h>
+#include <typeinfo>
 
 USING_NS_CC;
 
@@ -170,27 +170,47 @@ void MainGameScene::initCharactor() {
     UserDefault* userDefault = UserDefault::getInstance();
     
     // プレイヤー
-    this->m_player = CharacterSprite::create("chara.png", Vec2(7.0f, 19.0f), 0.1f);
+    this->m_player = CharacterSprite::create("chara.png", Vec2(7.0f, 19.0f), ::back, 0.1f);
     this->m_player->setAnchorPoint(Vec2(0.0f, 0.0f));
     this->m_player->setName(userDefault->getStringForKey("playerName"));
     this->addChild(this->m_player);
     
     // 敵キャラクター
-    EnemySprite* mob = EnemySprite::create("enemy.png", Vec2(8.0f, 11.0f), 0.1f);
+    EnemySprite* mob = EnemySprite::create("enemy.png", Vec2(8.0f, 11.0f), ::left, 0.1f);
     mob->setName(StringUtils::format("mob"));
     mob->setAnchorPoint(Vec2(0.0f, 0.0f));
     this->addChild(mob);
     mob->startPatrol();
 }
 
+/**
+    キャラクターの一覧を返す
+ 
+    @return キャラクターの一覧
+ */
+Vector<CharacterSprite*> MainGameScene::charactersVector() {
+    Vector<Node*> nodes = this->getChildren();
+    Vector<CharacterSprite*> characters;
+    for (int i = 0; i < nodes.size(); i++) {
+        if (typeid(*nodes.at(i)) == typeid(CharacterSprite) ||
+            typeid(*nodes.at(i)) == typeid(EnemySprite)){
+            characters.pushBack((CharacterSprite*)nodes.at(i));
+        }
+    }
+    return characters;
+}
+
 
 /**
+    敵キャラクターの一覧を返す
+ 
+    @return 敵キャラクターの一覧を返す
  */
 Vector<EnemySprite*> MainGameScene::enemysVector() {
     Vector<Node*> nodes = this->getChildren();
     Vector<EnemySprite*> enemysVector;
     for (int i = 0; i < nodes.size(); i++) {
-        if (typeid(nodes.at(i)) == typeid(EnemySprite*)) {
+        if (typeid(*nodes.at(i)) == typeid(EnemySprite)) {
             enemysVector.pushBack((EnemySprite*)nodes.at(i));
         }
     }
@@ -293,8 +313,8 @@ void MainGameScene::touchAEvent(Ref *pSender, ui::Widget::TouchEventType type) {
                 else {
                     std::vector<Vec2> routeStack;
                     std::vector<Vec2> shortestRouteStack;
-                    this->enemysVector->at(0)->searchShortestRoute(routeStack, shortestRouteStack, this->enemysVector->at(0)->worldPosition(), this->m_player->worldPosition());
-                    this->enemysVector->at(0)->startMoveAccordingToRouteStack(shortestRouteStack);
+                    this->enemysVector().at(0)->searchShortestRoute(routeStack, shortestRouteStack, this->enemysVector().at(0)->worldPosition(), this->m_player->worldPosition());
+                    this->enemysVector().at(0)->startMoveAccordingToRouteStack(shortestRouteStack);
                 }
             }
             else {
@@ -320,7 +340,7 @@ void MainGameScene::touchA2Event(Ref *pSender, ui::Widget::TouchEventType type) 
     
     switch (type) {
         case ui::Widget::TouchEventType::BEGAN: {
-            BulletSprite* bullet = BulletSprite::create("apple.png", this->m_player->nextTilePosition(), 0.1f);
+            BulletSprite* bullet = BulletSprite::create("apple.png", this->m_player->nextTilePosition(), this->m_player->directcion(), 0.1f);
             bullet->setAnchorPoint(Vec2(0.0f, 0.0f));
             this->addChild(bullet);
             bullet->shootBullet(this->m_player->directcion());
@@ -410,10 +430,9 @@ void MainGameScene::enemyFindPlayer() {
 /**
     敵キャラクターの背後に弾丸が当たった
  */
-//void MainGameScene::hitEnemy(EnemySprite* enemy) {
-//    this->enemysVector->
-//    this->removeChild(enemy);
-//}
+void MainGameScene::hitEnemy(EnemySprite* enemy) {
+    this->removeChild(enemy);
+}
 
 
 #pragma mark -

@@ -75,8 +75,10 @@ public:
     CREATE_FUNC(MainGameScene);
     virtual bool init();
     
+    Vector<CharacterSprite*> charactersVector();
     Vector<EnemySprite*> enemysVector();
     void enemyFindPlayer();
+    void hitEnemy(EnemySprite* enemy);
 };
 
 #endif /* MainGameScene_hpp */

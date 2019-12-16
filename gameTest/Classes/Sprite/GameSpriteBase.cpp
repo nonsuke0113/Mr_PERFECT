@@ -8,25 +8,45 @@
 #include "GameSpriteBase.hpp"
 #include "MainGameScene.hpp"
 
+#pragma mark -
+#pragma mark init
 /**
     Sprite::createメソッドをオーバーライド
  
     @param filename 画像リソース名
     @param pos ワールド座標初期位置
+    @param direction 画像の向き
     @return Sprite
  */
-GameSpriteBase* GameSpriteBase::create(const std::string& filename, const Vec2& pos)
+GameSpriteBase* GameSpriteBase::create(const std::string& filename, const Vec2& pos, ::directcion direction)
 {
     GameSpriteBase *sprite = new (std::nothrow) GameSpriteBase();
-    if (sprite && sprite->initWithFile(filename))
+    if (sprite && sprite->initWithFileName(filename, pos, direction))
     {
         sprite->autorelease();
-        sprite->m_worldPosition = pos;
-        sprite->setPosition(Vec2(pos.x * PER_TILE_SIZE, (MAP_TILE_HEGHT - pos.y - 1) * PER_TILE_SIZE));
         return sprite;
     }
     CC_SAFE_DELETE(sprite);
     return nullptr;
+}
+
+
+/**
+    初期化処理
+ 
+    @param filename 画像リソース名
+    @param pos ワールド座標初期位置
+    @param direction 画像の向き
+ */
+bool GameSpriteBase::initWithFileName(const std::string& filename, const Vec2 &pos, ::directcion direction)
+{
+    if (!Sprite::initWithFile(filename)) {
+        return false;
+    }
+    this->m_worldPosition = pos;
+    this->setPosition(Vec2(pos.x * PER_TILE_SIZE, (MAP_TILE_HEGHT - pos.y - 1) * PER_TILE_SIZE));
+    this->m_directcion = direction;
+    return true;
 }
 
 
