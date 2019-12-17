@@ -34,6 +34,7 @@ protected:
     bool checkFindPlayer();
     
     void moveAccordingToRouteStack(float frame);
+    void chasePlayer(float frame);
     
 public:
     static EnemySprite* create(const std::string& filename, const Vec2 &pos, ::directcion direction, float moveSpeed);
@@ -48,6 +49,8 @@ public:
                              const Vec2& destinationPos);
     void startMoveAccordingToRouteStack(const std::vector<Vec2>& routeStack);
     void stopMoveAccordingToRouteStack();
+    void startChasePlayer();
+    void stopChasePlayer();
 };
 
 #endif /* EnemySprite_hpp */

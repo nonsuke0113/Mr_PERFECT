@@ -287,3 +287,52 @@ void EnemySprite::moveAccordingToRouteStack(float frame)
     this->moveWorld(this->m_moveSpeed, nextPos);
     this->m_routeStackIndex++;
 }
+
+
+/**
+    プレイヤーの追跡を開始する
+ */
+void EnemySprite::startChasePlayer()
+{
+    // 巡回は中断する
+    this->stopPatrol();
+    
+    schedule(schedule_selector(EnemySprite::chasePlayer), 0.5f);
+}
+
+
+/**
+    プレイヤーの追跡を中止する
+ */
+void EnemySprite::stopChasePlayer()
+{
+    unschedule(schedule_selector(EnemySprite::chasePlayer));
+    
+    // 再度巡回する
+    this->startPatrol();
+}
+
+
+/**
+    プレイヤーを最短経路で追跡し続ける
+ */
+void EnemySprite::chasePlayer(float frame)
+{
+    // プレイヤーへの最短経路を計算
+    MainGameScene* mainScene = (MainGameScene*)this->getParent();
+    CharacterSprite* player = mainScene->m_player;
+    std::vector<Vec2> routeStack;
+    std::vector<Vec2> shortestRouteStack;
+    this->searchShortestRoute(routeStack, shortestRouteStack, this->worldPosition(), player->worldPosition());
+    
+    // 目の前まで来たらストップ
+    if (shortestRouteStack.size() < 3) {
+        this->stopChasePlayer();
+        return;
+    }
+    
+    // 最短経路でプレイヤーに近づく
+    Vec2 nextPos = shortestRouteStack.at(1);
+    this->facingNextPos(nextPos);
+    this->moveWorld(this->m_moveSpeed, nextPos);
+}

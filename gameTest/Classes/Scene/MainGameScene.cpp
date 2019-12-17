@@ -311,10 +311,12 @@ void MainGameScene::touchAEvent(Ref *pSender, ui::Widget::TouchEventType type) {
                 }
                 // 壁叩きテスト
                 else {
-                    std::vector<Vec2> routeStack;
-                    std::vector<Vec2> shortestRouteStack;
-                    this->enemysVector().at(0)->searchShortestRoute(routeStack, shortestRouteStack, this->enemysVector().at(0)->worldPosition(), this->m_player->worldPosition());
-                    this->enemysVector().at(0)->startMoveAccordingToRouteStack(shortestRouteStack);
+//                    std::vector<Vec2> routeStack;
+//                    std::vector<Vec2> shortestRouteStack;
+//                    this->enemysVector().at(0)->searchShortestRoute(routeStack, shortestRouteStack, this->enemysVector().at(0)->worldPosition(), this->m_player->worldPosition());
+//                    this->enemysVector().at(0)->startMoveAccordingToRouteStack(shortestRouteStack);
+                    
+                    this->enemysVector().at(0)->startChasePlayer();
                 }
             }
             else {
