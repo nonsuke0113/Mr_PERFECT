@@ -68,12 +68,13 @@ void BulletSprite::shootBullet(::directcion direction)
 void BulletSprite::updatePosition(float frame)
 {
     EnemySprite* hitEnemy = this->validateHitEnemy();
-    if (hitEnemy != nullptr) {
+    // 敵の背後に当たった場合に、敵を削除する
+    if (hitEnemy != nullptr && hitEnemy->directcion() == this->directcion()) {
         MainGameScene *mainScene = (MainGameScene*)this->getParent();
         mainScene->hitEnemy(hitEnemy);
     }
-    
-    if (!this->canMovePos(this->worldPosition())) {
+    // 敵に当たった or 進めなくなったら自身を削除する
+    if (hitEnemy != nullptr || !this->canMovePos(this->worldPosition())) {
         unschedule(schedule_selector(BulletSprite::updatePosition));
         this->removeFromParent();
         return;
@@ -84,17 +85,17 @@ void BulletSprite::updatePosition(float frame)
 
 
 /**
+    弾が敵に当たったかどうかを検証する
+    当たっている敵がいなかった場合、nullptrを返す
+ 
+    @return 弾に当たった敵 or nullptr
  */
 EnemySprite* BulletSprite::validateHitEnemy()
 {
     MainGameScene* mainScene = (MainGameScene*)this->getParent();
     Vector<EnemySprite*> enemysVector = mainScene->enemysVector();
     for (int i = 0; i < enemysVector.size(); i++) {
-        if (enemysVector.at(i)->worldPosition() != this->worldPosition()) {
-            continue;
-        }
-        
-        if (enemysVector.at(i)->directcion() == this->directcion()) {
+        if (enemysVector.at(i)->worldPosition() == this->worldPosition()) {
             return enemysVector.at(i);
         }
     }
