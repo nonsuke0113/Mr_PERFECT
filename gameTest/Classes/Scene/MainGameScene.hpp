@@ -22,20 +22,20 @@ USING_NS_CC;
 #include "MessageDialog.hpp"
 
 // 十字ボタン状態
-typedef enum {
-    pushedButtonNone,
-    isPushedUpButton,
-    isPushedRightButton,
-    isPushedDownButton,
-    isPushedLeftButton
-} pushedButton;
-
-// メッセージの種類
-typedef enum {
-    nomal,
-    save,
-    findPlayer
-} messageType;
+//typedef enum {
+//    pushedButtonNone,
+//    isPushedUpButton,
+//    isPushedRightButton,
+//    isPushedDownButton,
+//    isPushedLeftButton
+//} pushedButton;
+//
+//// メッセージの種類
+//typedef enum {
+//    nomal,
+//    save,
+//    findPlayer
+//} messageType;
 
 
 class MainGameScene : public Layer
@@ -45,7 +45,7 @@ protected:
     Camera* m_camera;    // スクロール用カメラ
     Label* m_playerMapPointLabel { nullptr }; // 操作キャラクター座標ラベル(デバッグ用)
     MessageDialog* m_messageDialog  { nullptr };   // メッセージダイアログ
-    pushedButton m_isPushedButton;  // 十字ボタンの状態
+//    pushedButton m_isPushedButton;  // 十字ボタンの状態
     
     void initUI();
     virtual void initCharactor();
@@ -55,7 +55,7 @@ protected:
     void touchA2Event(Ref *pSender, ui::Widget::TouchEventType type);
     void touchSaveEvent(Ref *pSender, ui::Widget::TouchEventType type);
     
-    void createMessageDialog(::messageType messageType);
+//    void createMessageDialog(::messageType messageType);
     void createMessage();
     void createSaveMessage();
     void createFindPlayerMessage();

@@ -47,6 +47,7 @@
 		861B748E239F37A6007068AB /* BulletSprite.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 861B748C239F37A6007068AB /* BulletSprite.cpp */; };
 		861B7492239F516C007068AB /* GameSpriteBase.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 861B7490239F516C007068AB /* GameSpriteBase.cpp */; };
 		864FC468237527FE00DDF5E8 /* EnemySprite.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 864FC466237527FE00DDF5E8 /* EnemySprite.cpp */; };
+		8659988923AA030F002EB428 /* Stage1Scene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8659988723AA030F002EB428 /* Stage1Scene.cpp */; };
 		8664737F23A8B58900ADCC59 /* StageSceneBase.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8664737D23A8B58900ADCC59 /* StageSceneBase.cpp */; };
 		ABBA36B721BA6A3500A02928 /* MessageDialog.cpp in Sources */ = {isa = PBXBuildFile; fileRef = ABBA36B521BA6A3500A02928 /* MessageDialog.cpp */; };
 		BF171245129291EC00B8313A /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BF170DB012928DE900B8313A /* OpenGLES.framework */; };
@@ -167,6 +168,8 @@
 		861B7491239F516C007068AB /* GameSpriteBase.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = GameSpriteBase.hpp; sourceTree = "<group>"; };
 		864FC466237527FE00DDF5E8 /* EnemySprite.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = EnemySprite.cpp; sourceTree = "<group>"; };
 		864FC467237527FE00DDF5E8 /* EnemySprite.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = EnemySprite.hpp; sourceTree = "<group>"; };
+		8659988723AA030F002EB428 /* Stage1Scene.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Stage1Scene.cpp; sourceTree = "<group>"; };
+		8659988823AA030F002EB428 /* Stage1Scene.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Stage1Scene.hpp; sourceTree = "<group>"; };
 		8664737D23A8B58900ADCC59 /* StageSceneBase.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = StageSceneBase.cpp; sourceTree = "<group>"; };
 		8664737E23A8B58900ADCC59 /* StageSceneBase.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = StageSceneBase.hpp; sourceTree = "<group>"; };
 		ABBA36B521BA6A3500A02928 /* MessageDialog.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = MessageDialog.cpp; sourceTree = "<group>"; };
@@ -405,6 +408,8 @@
 				E9A5211021A90C3100DB44EA /* MainGameScene.cpp */,
 				8664737E23A8B58900ADCC59 /* StageSceneBase.hpp */,
 				8664737D23A8B58900ADCC59 /* StageSceneBase.cpp */,
+				8659988823AA030F002EB428 /* Stage1Scene.hpp */,
+				8659988723AA030F002EB428 /* Stage1Scene.cpp */,
 			);
 			path = Scene;
 			sourceTree = "<group>";
@@ -582,6 +587,7 @@
 				E9A5211221A90C3100DB44EA /* MainGameScene.cpp in Sources */,
 				E92CE8792206A24900E123FD /* AdMobHelper.mm in Sources */,
 				1AF87B8A1F6F7822007BE51C /* main.m in Sources */,
+				8659988923AA030F002EB428 /* Stage1Scene.cpp in Sources */,
 				E9A5210E21A90B8C00DB44EA /* TitleScene.cpp in Sources */,
 				ABBA36B721BA6A3500A02928 /* MessageDialog.cpp in Sources */,
 				864FC468237527FE00DDF5E8 /* EnemySprite.cpp in Sources */,

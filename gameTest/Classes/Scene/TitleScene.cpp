@@ -8,7 +8,7 @@
 
 #include "TitleScene.hpp"
 #include "MainGameScene.hpp"
-#include "StageSceneBase.hpp"
+#include "Stage1Scene.hpp"
 
 /**
     シーンの作成
@@ -75,7 +75,7 @@ void TitleScene::touchEvent(Ref *pSender, ui::Widget::TouchEventType type)
         case ui::Widget::TouchEventType::BEGAN:
         {
             // MainGameSceneに遷移
-            Scene* mainGameScene { StageSceneBase::createScene() };
+            Scene* mainGameScene { Stage1Scene::createScene() };
             TransitionFade* fade = TransitionFade::create(1.0f, mainGameScene);
             Director::getInstance()->replaceScene(fade);
             break;
