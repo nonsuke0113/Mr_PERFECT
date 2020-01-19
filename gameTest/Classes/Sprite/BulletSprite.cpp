@@ -6,7 +6,7 @@
 //
 
 #include "BulletSprite.hpp"
-#include "MainGameScene.hpp"
+#include "StageSceneBase.hpp"
 
 #pragma mark -
 #pragma mark init
@@ -70,7 +70,7 @@ void BulletSprite::updatePosition(float frame)
     EnemySprite* hitEnemy = this->validateHitEnemy();
     // 敵の背後に当たった場合に、敵を削除する
     if (hitEnemy != nullptr && hitEnemy->directcion() == this->directcion()) {
-        MainGameScene *mainScene = (MainGameScene*)this->getParent();
+        StageSceneBase *mainScene = (StageSceneBase*)this->getParent();
         mainScene->hitEnemy(hitEnemy);
     }
     // 敵に当たった or 進めなくなったら自身を削除する
@@ -92,7 +92,7 @@ void BulletSprite::updatePosition(float frame)
  */
 EnemySprite* BulletSprite::validateHitEnemy()
 {
-    MainGameScene* mainScene = (MainGameScene*)this->getParent();
+    StageSceneBase* mainScene = (StageSceneBase*)this->getParent();
     Vector<EnemySprite*> enemysVector = mainScene->enemysVector();
     for (int i = 0; i < enemysVector.size(); i++) {
         if (enemysVector.at(i)->worldPosition() == this->worldPosition()) {

@@ -36,6 +36,7 @@ typedef enum {
     findPlayer
 } messageType;
 
+
 class StageSceneBase : public Scene
 {
 protected:

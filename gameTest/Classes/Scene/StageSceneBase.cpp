@@ -52,6 +52,17 @@ bool StageSceneBase::init()
     this->initMap();
     this->initCharactors();
     
+    // 操作キャラクター座標ラベル(デバッグ用)
+    this->m_playerMapPointLabel = Label::createWithSystemFont(StringUtils::format("x : $%f, y : $%f", this->m_player->worldPosition().x, this->m_player->worldPosition().y), "ariel", 20);
+    this->m_playerMapPointLabel->setAnchorPoint(Vec2(0,0));
+    this->m_playerMapPointLabel->setPosition(Vec2(0.0f, 0.0f));
+    this->m_playerMapPointLabel->setColor(Color3B(255, 0, 0));
+    this->m_playerMapPointLabel->setCameraMask((unsigned short)CameraFlag::USER1);
+    this->addChild(m_playerMapPointLabel);
+    
+    // 座標更新をスケジュール
+    schedule(schedule_selector(StageSceneBase::updatePosition), 0.1f);
+    
     return true;
 }
 
@@ -96,7 +107,7 @@ void StageSceneBase::initUI()
     upButton->setPosition(Vec2(60.0f, 340.0f));
     upButton->setCameraMask((unsigned short)CameraFlag::USER1);
     this->addChild(upButton);
-    //upButton->addTouchEventListener(CC_CALLBACK_2(MainGameScene::touchCrossKeyEvent, this));
+    upButton->addTouchEventListener(CC_CALLBACK_2(StageSceneBase::touchCrossKeyEvent, this));
     
     // 右ボタン
     ui::Button *rightButton { ui::Button::create("right_test.png") };
@@ -105,7 +116,7 @@ void StageSceneBase::initUI()
     rightButton->setPosition(Vec2(100.0f, 300.0f));
     rightButton->setCameraMask((unsigned short)CameraFlag::USER1);
     this->addChild(rightButton);
-    //rightButton->addTouchEventListener(CC_CALLBACK_2(MainGameScene::touchCrossKeyEvent, this));
+    rightButton->addTouchEventListener(CC_CALLBACK_2(StageSceneBase::touchCrossKeyEvent, this));
     
     // 下ボタン
     ui::Button *downButton { ui::Button::create("down_test.png") };
@@ -114,7 +125,7 @@ void StageSceneBase::initUI()
     downButton->setPosition(Vec2(60.0f, 250.0f));
     downButton->setCameraMask((unsigned short)CameraFlag::USER1);
     this->addChild(downButton);
-    //downButton->addTouchEventListener(CC_CALLBACK_2(MainGameScene::touchCrossKeyEvent, this));
+    downButton->addTouchEventListener(CC_CALLBACK_2(StageSceneBase::touchCrossKeyEvent, this));
     
     // 左ボタン
     ui::Button *leftButton { ui::Button::create("left_test.png") };
@@ -123,31 +134,31 @@ void StageSceneBase::initUI()
     leftButton->setPosition(Vec2(10.0f, 300.0f));
     leftButton->setCameraMask((unsigned short)CameraFlag::USER1);
     this->addChild(leftButton);
-    //leftButton->addTouchEventListener(CC_CALLBACK_2(MainGameScene::touchCrossKeyEvent, this));
+    leftButton->addTouchEventListener(CC_CALLBACK_2(StageSceneBase::touchCrossKeyEvent, this));
     
     // 十字ボタンの状態を初期化
-//    this->m_isPushedButton = pushedButtonNone;
+    this->m_isPushedButton = pushedButtonNone;
     
     // Aボタン
     ui::Button *aButton { ui::Button::create("a_test.png") };
     aButton->setPosition(Vec2(880.0f, 320.0f));
     aButton->setCameraMask((unsigned short)CameraFlag::USER1);
     this->addChild(aButton);
-    //aButton->addTouchEventListener(CC_CALLBACK_2(MainGameScene::touchAEvent, this));
+    aButton->addTouchEventListener(CC_CALLBACK_2(StageSceneBase::touchAEvent, this));
     
     // Aボタン2【仮】
     ui::Button *aButton2 { ui::Button::create("a_test.png") };
     aButton2->setPosition(Vec2(880.0f, 220.0f));
     aButton2->setCameraMask((unsigned short)CameraFlag::USER1);
     this->addChild(aButton2);
-    //aButton2->addTouchEventListener(CC_CALLBACK_2(MainGameScene::touchA2Event, this));
+    aButton2->addTouchEventListener(CC_CALLBACK_2(StageSceneBase::touchA2Event, this));
     
     // SAVEボタン【仮】
     ui::Button* saveButton { ui::Button::create("CloseNormal.png") };
     saveButton->setPosition(Vec2(880.0f, 600.0f));
     saveButton->setCameraMask((unsigned short)CameraFlag::USER1);
     this->addChild(saveButton);
-    //saveButton->addTouchEventListener(CC_CALLBACK_2(MainGameScene::touchSaveEvent, this));
+    saveButton->addTouchEventListener(CC_CALLBACK_2(StageSceneBase::touchSaveEvent, this));
 }
 
 
@@ -388,8 +399,8 @@ void StageSceneBase::doContinue()
     AdMobHelper::launchInterstitial();
     
     // コンティニュー
-    Scene* mainGameScene = this->createScene();
-    TransitionFade* fade = TransitionFade::create(1.0f, mainGameScene);
+    Scene* StageSceneBase = this->createScene();
+    TransitionFade* fade = TransitionFade::create(1.0f, StageSceneBase);
     Director::getInstance()->replaceScene(fade);
 }
 
@@ -469,7 +480,7 @@ void StageSceneBase::createMessage()
     // 人
     if(nextChara != nullptr) {
         // mobの動きを一時停止
-        //        unschedule(schedule_selector(MainGameScene::updateMobPosition));
+        //        unschedule(schedule_selector(StageSceneBase::updateMobPosition));
         
         if(this->m_player->getName() != "") {
             this->m_messageDialog->addMessage(StringUtils::format("こんにちは、%s", this->m_player->getName().c_str()));
@@ -529,7 +540,6 @@ void StageSceneBase::setMessageCallback()
                                                           nullptr)
                                          );
         this->m_messageDialog  = nullptr;
-        //        schedule(schedule_selector(MainGameScene::updateMobPosition), 2.0f);
     });
 }
 

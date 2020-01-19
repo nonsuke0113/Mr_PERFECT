@@ -6,7 +6,7 @@
 //
 
 #include "GameSpriteBase.hpp"
-#include "MainGameScene.hpp"
+#include "StageSceneBase.hpp"
 
 #pragma mark -
 #pragma mark init
@@ -141,7 +141,7 @@ Vec2 GameSpriteBase::nextTilePosition()  {
  */
 bool GameSpriteBase::canMovePos(Vec2& pos)
 {
-    MainGameScene* scene = (MainGameScene*)this->getParent();
+    StageSceneBase* scene = (StageSceneBase*)this->getParent();
     TMXLayer* layer = scene->m_map->getLayer("MAP");
     if (pos.x < 0.0f || pos.x >= MAP_TILE_WIDTH ||
         pos.y < 0.0f || pos.y >= MAP_TILE_HEGHT ||
@@ -185,7 +185,7 @@ int GameSpriteBase::nextTileGID()  {
     Vec2 nextTilePosition = this->nextTilePosition();
     
     if(nextTilePosition != Vec2 { -1.0f, -1.0f }) {
-        MainGameScene* scene = (MainGameScene*)this->getParent();
+        StageSceneBase* scene = (StageSceneBase*)this->getParent();
         TMXLayer* layer = scene->m_map->getLayer("MAP");
         tileGID = layer->getTileGIDAt(nextTilePosition) - 1;
     }

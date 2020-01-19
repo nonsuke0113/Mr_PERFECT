@@ -5,7 +5,7 @@
 //  Created by 健介 丹野 on 2018/10/22.
 //
 
-#include "MainGameScene.hpp"
+#include "StageSceneBase.hpp"
 #include "CharacterSprite.hpp"
 
 #pragma mark -
@@ -73,7 +73,7 @@ CharacterSprite* CharacterSprite::nextCharacter()
         return nullptr;
     }
     
-    MainGameScene* mainScene = (MainGameScene*)this->getParent();
+    StageSceneBase* mainScene = (StageSceneBase*)this->getParent();
     Vector<CharacterSprite*> charactersVector = mainScene->charactersVector();
     for (int i = 0; i < charactersVector.size(); i++) {
         if(nextTilePosition == charactersVector.at(i)->worldPosition()) {

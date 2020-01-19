@@ -42,7 +42,7 @@ void StageSceneBase::initCharactors()
     UserDefault* userDefault = UserDefault::getInstance();
     
     // プレイヤー
-    this->m_player = CharacterSprite::create("chara.png", Vec2(7.0f, 19.0f), ::back, 0.1f);
+    this->m_player = CharacterSprite::create("player_front.png", Vec2(7.0f, 19.0f), ::back, 0.1f);
     this->m_player->setAnchorPoint(Vec2(0.0f, 0.0f));
     this->m_player->setName(userDefault->getStringForKey("playerName"));
     this->addChild(this->m_player);

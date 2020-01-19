@@ -6,7 +6,7 @@
 //
 
 #include "EnemySprite.hpp"
-#include "MainGameScene.hpp"
+#include "StageSceneBase.hpp"
 #include <algorithm>
 #include <unistd.h>
 
@@ -78,7 +78,7 @@ void EnemySprite::rotatePatrol(float frame) {
     
     if (this->checkFindPlayer()) {
         this->stopPatrol();
-        MainGameScene* mainScene = (MainGameScene*)this->getParent();
+        StageSceneBase* mainScene = (StageSceneBase*)this->getParent();
         mainScene->enemyFindPlayer();
     }
     
@@ -141,7 +141,7 @@ void EnemySprite::rotate() {
 bool EnemySprite::checkFindPlayer() {
     
     Vec2 checkTilePosition;
-    MainGameScene* mainScene = (MainGameScene*)this->getParent();
+    StageSceneBase* mainScene = (StageSceneBase*)this->getParent();
     CharacterSprite* player = mainScene->m_player;
     
     for (int i = 1; i < std::max(MAP_TILE_HEGHT, MAP_TILE_WIDTH); i++) {
@@ -279,7 +279,7 @@ void EnemySprite::moveAccordingToRouteStack(float frame)
     
     if (this->checkFindPlayer()) {
         this->stopMoveAccordingToRouteStack();
-        MainGameScene* mainScene = (MainGameScene*)this->getParent();
+        StageSceneBase* mainScene = (StageSceneBase*)this->getParent();
         mainScene->enemyFindPlayer();
         return;
     }
@@ -319,7 +319,7 @@ void EnemySprite::stopChasePlayer()
 void EnemySprite::chasePlayer(float frame)
 {
     // プレイヤーへの最短経路を計算
-    MainGameScene* mainScene = (MainGameScene*)this->getParent();
+    StageSceneBase* mainScene = (StageSceneBase*)this->getParent();
     CharacterSprite* player = mainScene->m_player;
     std::vector<Vec2> routeStack;
     std::vector<Vec2> shortestRouteStack;
