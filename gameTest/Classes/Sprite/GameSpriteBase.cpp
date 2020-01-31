@@ -45,7 +45,7 @@ bool GameSpriteBase::initWithFileName(const std::string& filename, const Vec2 &p
     }
     this->m_worldPosition = pos;
     this->setPosition(Vec2(pos.x * PER_TILE_SIZE, (MAP_TILE_HEGHT - pos.y - 1) * PER_TILE_SIZE));
-    this->m_directcion = direction;
+    this->setDirectcion(direction);
     return true;
 }
 
@@ -100,8 +100,9 @@ void GameSpriteBase::setDirectcion(::directcion direction) {
  */
 void GameSpriteBase::moveWorld(float duration, const Vec2& newPosition) {
     this->m_worldPosition = newPosition;
-    MoveTo* actionMove = MoveTo::create(duration, Vec2(newPosition.x * PER_TILE_SIZE,  (MAP_TILE_HEGHT - newPosition.y - 1) * PER_TILE_SIZE));
-    this->stopAllActions();
+    MoveTo *actionMove = MoveTo::create(duration, Vec2(newPosition.x * PER_TILE_SIZE,  (MAP_TILE_HEGHT - newPosition.y - 1) * PER_TILE_SIZE));
+    actionMove->setTag(::move);
+    this->stopActionByTag(::move);
     this->runAction(actionMove);
 }
 

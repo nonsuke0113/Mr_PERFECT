@@ -10,7 +10,6 @@
 #include "TitleScene.hpp"
 #include "ui/UIScale9Sprite.h"
 #include "BulletSprite.hpp"
-#include "AdMobHelper.h"
 #include <typeinfo>
 
 // 十字ボタンタグ
@@ -72,12 +71,13 @@ bool StageSceneBase::init()
  */
 void StageSceneBase::initCamera()
 {
-    // 固定用カメラを追加
     this->m_camera = this->getDefaultCamera();
     this->m_camera->setAnchorPoint(Vec2(0.0f, 0.0f));
-    Camera* camera = Camera::create();
-    camera->setCameraFlag(CameraFlag::USER1);
-    this->addChild(camera);
+    
+    // 固定用カメラを追加
+    Camera *camera1 = Camera::create();
+    camera1->setCameraFlag(CameraFlag::USER1);
+    this->addChild(camera1);
 }
 
 
@@ -161,6 +161,25 @@ void StageSceneBase::initUI()
     saveButton->addTouchEventListener(CC_CALLBACK_2(StageSceneBase::touchSaveEvent, this));
 }
 
+
+/**
+    MAPの初期化処理
+    子クラスにて実装する
+ */
+void StageSceneBase::initMap()
+{
+    return;
+}
+
+
+/**
+    キャラクターの初期化処理
+    子クラスにて実装する
+ */
+void StageSceneBase::initCharactors()
+{
+    return;
+}
 
 #pragma mark -
 #pragma mark Getter
@@ -323,7 +342,23 @@ void StageSceneBase::touchA2Event(Ref *pSender, ui::Widget::TouchEventType type)
 {
     switch (type) {
         case ui::Widget::TouchEventType::BEGAN: {
-            BulletSprite* bullet = BulletSprite::create("apple.png", this->m_player->nextTilePosition(), this->m_player->directcion(), 0.1f);
+            BulletSprite* bullet = nullptr;
+            switch (this->m_player->directcion()) {
+                case front:
+                    bullet = BulletSprite::create("bullet_front.png", this->m_player->nextTilePosition(), this->m_player->directcion(), 0.1f);
+                    break;
+                case right:
+                    bullet = BulletSprite::create("bullet_right.png", this->m_player->nextTilePosition(), this->m_player->directcion(), 0.1f);
+                    break;
+                case back:
+                    bullet = BulletSprite::create("bullet_back.png", this->m_player->nextTilePosition(), this->m_player->directcion(), 0.1f);
+                    break;
+                case left:
+                    bullet = BulletSprite::create("bullet_left.png", this->m_player->nextTilePosition(), this->m_player->directcion(), 0.1f);
+                    break;
+                default:
+                    break;
+            }
             bullet->setAnchorPoint(Vec2(0.0f, 0.0f));
             this->addChild(bullet);
             bullet->shootBullet(this->m_player->directcion());
@@ -392,16 +427,11 @@ void StageSceneBase::doSave()
 
 /**
     コンティニューを実行
+    子クラスにて自身のcreate関数を呼ぶ
  */
 void StageSceneBase::doContinue()
 {
-    // 広告を表示
-    AdMobHelper::launchInterstitial();
-    
-    // コンティニュー
-    Scene* StageSceneBase = this->createScene();
-    TransitionFade* fade = TransitionFade::create(1.0f, StageSceneBase);
-    Director::getInstance()->replaceScene(fade);
+    return;
 }
 
 
@@ -554,7 +584,7 @@ void StageSceneBase::updatePosition(float frame)
     // 十字キーが押されてなかったり、行けない道だったら何もしない
     if ((this->m_isPushedButton == pushedButtonNone) ||
         (this->m_map->getNumberOfRunningActions() > 0) ||
-        (this->m_player->getNumberOfRunningActions() > 0) ||
+        (this->m_player->getActionByTag(::move) != nullptr) ||
         this->m_player->nextTileGID() != 0 ||
         this->m_player->nextCharacter() != nullptr) {
         return;
@@ -594,9 +624,9 @@ void StageSceneBase::updateCameraPosition()
         newCameraPosition.y += PER_TILE_SIZE;
     }
     // 右ボタン押下中
-    else if ((this->m_isPushedButton == isPushedRightButton) &&
-             (newCameraPosition.x != (PER_TILE_SIZE * MAP_TILE_WIDTH) - VIEW_WIDTH/2 + SIDE_BAR_WIDTH) &&
-             (newCameraPosition.x == this->m_player->getPosition().x))
+    else if ((this->m_isPushedButton == isPushedRightButton)
+             && (newCameraPosition.x != (PER_TILE_SIZE * MAP_TILE_WIDTH) - VIEW_WIDTH/2 + SIDE_BAR_WIDTH - PER_TILE_SIZE/2)
+             && (newCameraPosition.x == this->m_player->getPosition().x + PER_TILE_SIZE/2))
     {
         newCameraPosition.x += PER_TILE_SIZE;
     }
@@ -608,9 +638,9 @@ void StageSceneBase::updateCameraPosition()
         newCameraPosition.y -= PER_TILE_SIZE;
     }
     // 左ボタン押下中
-    else if ((this->m_isPushedButton == isPushedLeftButton) &&
-             (newCameraPosition.x != VIEW_WIDTH / 2 - SIDE_BAR_WIDTH) &&
-             (newCameraPosition.x == this->m_player->getPosition().x))
+    else if ((this->m_isPushedButton == isPushedLeftButton)
+             && (newCameraPosition.x != VIEW_WIDTH / 2 - SIDE_BAR_WIDTH + PER_TILE_SIZE/2)
+             && (newCameraPosition.x == this->m_player->getPosition().x + PER_TILE_SIZE/2))
     {
         newCameraPosition.x -= PER_TILE_SIZE;
     }

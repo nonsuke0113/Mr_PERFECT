@@ -29,6 +29,10 @@ protected:
     std::vector<Vec2>* m_routeStack; // 経路
     int m_routeStackIndex; // 経路の進捗を管理するインデックス
     
+    void setupAnimationCache();
+    
+    void setDirectcion(::directcion direction);
+    
     void rotatePatrol(float frame);
     void rotate();
     bool checkFindPlayer();

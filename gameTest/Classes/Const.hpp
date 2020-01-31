@@ -14,6 +14,8 @@ constexpr float SIDE_BAR_WIDTH = 160.0f; // サイドバーの幅(pixel)
 
 constexpr float PER_TILE_SIZE { 64.0f }; // 1MAP_TILEあたりのサイズ(pixel)
 
+constexpr float CHARACTER_ANIMATION_SPEED { 0.5f }; // キャラクターのアニメーション切り替え速度
+
 constexpr int MAP_TILE_HEGHT = 20; // MAPの高さ(Tile)
 constexpr int MAP_TILE_WIDTH = 20; // MAPの幅(Tile)
 

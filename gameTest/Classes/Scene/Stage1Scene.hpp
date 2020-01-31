@@ -12,6 +12,10 @@
 
 class Stage1Scene : public StageSceneBase
 {
+protected:
+    void initMap();
+    void initCharactors();
+    void doContinue();
 public:
     static Stage1Scene *createScene();
 };

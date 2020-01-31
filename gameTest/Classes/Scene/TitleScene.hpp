@@ -20,7 +20,15 @@ class TitleScene : public Layer
 {
 private:
     
-    void touchEvent(Ref *pSender, cocos2d::ui::Widget::TouchEventType type);
+    Sprite *logo; // タイトルロゴ
+    ui::Button *startButton; // スタートボタン
+    ui::Button *menu1Button; // ミッションモードボタン
+    ui::Button *menu2Button; // 遊び方ボタン
+    
+    void touchStartEvent(Ref *pSender, cocos2d::ui::Widget::TouchEventType type);
+    void touchMissionModeEvent(Ref *pSender, cocos2d::ui::Widget::TouchEventType type);
+    void touchMissionEvent(Ref *pSender, cocos2d::ui::Widget::TouchEventType type);
+    void touchHowToPlayEvent(Ref *pSender, cocos2d::ui::Widget::TouchEventType type);
     
 public:
     

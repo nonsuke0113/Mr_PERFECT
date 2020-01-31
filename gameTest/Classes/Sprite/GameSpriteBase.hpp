@@ -26,6 +26,12 @@ typedef enum {
     none
 } directcion;
 
+// アクション
+typedef enum {
+    move,
+    animate
+} actutionTag;
+
 
 class GameSpriteBase : public Sprite
 {
@@ -41,7 +47,7 @@ public:
     directcion directcion();
     
     void setWorldPosition(Vec2& worldPos);
-    void setDirectcion(::directcion direction);
+    virtual void setDirectcion(::directcion direction);
     
     void moveWorld(float duration, const Vec2& newPosition);
     Vec2 nextTilePosition();

@@ -16,9 +16,11 @@ USING_NS_CC;
 #include "cocos2d.h"
 #include "ui/CocosGUI.h"
 
-#include "CharacterSprite.hpp"
+#include "PlayerSprite.hpp"
 #include "EnemySprite.hpp"
 #include "MessageDialog.hpp"
+
+#include "AdMobHelper.h"
 
 // 十字ボタン状態
 typedef enum {
@@ -62,13 +64,13 @@ protected:
     void setMessageCallback();
     void gameover();
     void doSave();
-    void doContinue();
+    virtual void doContinue();
     void updatePosition(float frame);
     void updateCameraPosition();
     
 public:
     TMXTiledMap *m_map;  // MAP
-    CharacterSprite *m_player;   // 操作キャラクター
+    PlayerSprite *m_player;   // 操作キャラクター
     
     static StageSceneBase *createScene();
     virtual bool init();

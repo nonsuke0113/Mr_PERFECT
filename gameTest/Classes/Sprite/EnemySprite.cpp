@@ -50,6 +50,76 @@ bool EnemySprite::initWithFileName(const std::string& filename, const Vec2 &pos,
 }
 
 
+/**
+    アニメーションキャッシュを作成する
+ */
+void EnemySprite::setupAnimationCache()
+{
+    Rect rect = Rect(0, 0, PER_TILE_SIZE, PER_TILE_SIZE);
+    
+    Animation *animationPlayerFront = Animation::create();
+    animationPlayerFront->addSpriteFrame(SpriteFrame::create("enemy1_front1.png", rect));
+    animationPlayerFront->addSpriteFrame(SpriteFrame::create("enemy1_front2.png", rect));
+    animationPlayerFront->setDelayPerUnit(CHARACTER_ANIMATION_SPEED);
+    AnimationCache::getInstance()->addAnimation(animationPlayerFront, "ENEMY_FRONT");
+    
+    Animation *animationPlayerRight = Animation::create();
+    animationPlayerRight->addSpriteFrame(SpriteFrame::create("enemy1_right1.png", rect));
+    animationPlayerRight->addSpriteFrame(SpriteFrame::create("enemy1_right2.png", rect));
+    animationPlayerRight->setDelayPerUnit(CHARACTER_ANIMATION_SPEED);
+    AnimationCache::getInstance()->addAnimation(animationPlayerRight, "ENEMY_RIGHT");
+    
+    Animation *animationPlayerBack = Animation::create();
+    animationPlayerBack->addSpriteFrame(SpriteFrame::create("enemy1_back1.png", rect));
+    animationPlayerBack->addSpriteFrame(SpriteFrame::create("enemy1_back2.png", rect));
+    animationPlayerBack->setDelayPerUnit(CHARACTER_ANIMATION_SPEED);
+    AnimationCache::getInstance()->addAnimation(animationPlayerBack, "ENEMY_BACK");
+    
+    Animation *animationPlayerLeft = Animation::create();
+    animationPlayerLeft->addSpriteFrame(SpriteFrame::create("enemy1_left1.png", rect));
+    animationPlayerLeft->addSpriteFrame(SpriteFrame::create("enemy1_left2.png", rect));
+    animationPlayerLeft->setDelayPerUnit(CHARACTER_ANIMATION_SPEED);
+    AnimationCache::getInstance()->addAnimation(animationPlayerLeft, "ENEMY_LEFT");
+}
+
+
+#pragma mark -
+#pragma mark Setter
+/**
+    向きセッター
+ */
+void EnemySprite::setDirectcion(::directcion direction) {
+    this->m_directcion = direction;
+    
+    Animation *animation = nullptr;
+    switch (direction) {
+        case front:
+            animation = AnimationCache::getInstance()->getAnimation("ENEMY_FRONT");
+            break;
+        case right:
+            animation = AnimationCache::getInstance()->getAnimation("ENEMY_RIGHT");
+            break;
+        case back:
+            animation = AnimationCache::getInstance()->getAnimation("ENEMY_BACK");
+            break;
+        case left:
+            animation = AnimationCache::getInstance()->getAnimation("ENEMY_LEFT");
+            break;
+        default:
+            break;
+    }
+    
+    if (animation == nullptr) {
+        return;
+    }
+    this->stopActionByTag(animate);
+    
+    RepeatForever *action = RepeatForever::create( Animate::create(animation) );
+    action->setTag(animate);
+    this->runAction(action);
+}
+
+
 #pragma mark -
 /**
     巡回をスケジュール

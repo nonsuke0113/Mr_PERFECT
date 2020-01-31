@@ -23,6 +23,8 @@ class CharacterSprite : public GameSpriteBase
 protected:
     float m_moveSpeed; // 移動速度
     
+    virtual void setupAnimationCache();
+    
 public:
     static CharacterSprite* create(const std::string& filename, const Vec2 &pos, ::directcion direction, float moveSpeed);
     virtual bool initWithFileName(const std::string& filename, const Vec2 &pos, ::directcion direction, float moveSpeed);

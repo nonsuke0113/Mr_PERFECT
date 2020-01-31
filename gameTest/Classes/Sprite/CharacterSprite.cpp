@@ -41,6 +41,7 @@ CharacterSprite* CharacterSprite::create(const std::string& filename, const Vec2
  */
 bool CharacterSprite::initWithFileName(const std::string& filename, const Vec2 &pos, ::directcion direction, float moveSpeed)
 {
+    this->setupAnimationCache();
     if (!GameSpriteBase::initWithFileName(filename, pos, direction)) {
         return false;
     }
@@ -49,11 +50,21 @@ bool CharacterSprite::initWithFileName(const std::string& filename, const Vec2 &
 }
 
 
+/**
+    アニメーションキャッシュに移動用のアニメーションを設定する
+    子クラスにて実装する
+ */
+void CharacterSprite::setupAnimationCache()
+{
+    return;
+}
+
 #pragma mark -
 /**
     次のタイルに移動する
  */
-void CharacterSprite::moveNextTile() {
+void CharacterSprite::moveNextTile()
+{
     Vec2 nextTilePosition = this->nextTilePosition();
     if (this->canMovePos(nextTilePosition)) {
         this->moveWorld(this->m_moveSpeed, this->nextTilePosition());
