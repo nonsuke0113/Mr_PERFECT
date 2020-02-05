@@ -11,6 +11,7 @@
 #include "ui/UIScale9Sprite.h"
 #include "BulletSprite.hpp"
 #include <typeinfo>
+#include "SelectMissonScene.hpp"
 
 // 十字ボタンタグ
 enum crossKeyTag {
@@ -50,6 +51,7 @@ bool StageSceneBase::init()
     this->initUI();
     this->initMap();
     this->initCharactors();
+    this->initStart();
     
     // 操作キャラクター座標ラベル(デバッグ用)
     this->m_playerMapPointLabel = Label::createWithSystemFont(StringUtils::format("x : $%f, y : $%f", this->m_player->worldPosition().x, this->m_player->worldPosition().y), "ariel", 20);
@@ -58,6 +60,9 @@ bool StageSceneBase::init()
     this->m_playerMapPointLabel->setColor(Color3B(255, 0, 0));
     this->m_playerMapPointLabel->setCameraMask((unsigned short)CameraFlag::USER1);
     this->addChild(m_playerMapPointLabel);
+    
+    // クリア判定をスケジュール
+    schedule(schedule_selector(StageSceneBase::checkClear), 0.1f);
     
     // 座標更新をスケジュール
     schedule(schedule_selector(StageSceneBase::updatePosition), 0.1f);
@@ -180,6 +185,29 @@ void StageSceneBase::initCharactors()
 {
     return;
 }
+
+
+/**
+    スタート表示の初期化処理
+ */
+void StageSceneBase::initStart()
+{
+    Sprite *start { Sprite::create("mission_start.png") };
+    Size visibleSize { Director::getInstance()->getVisibleSize() };
+    start->setPosition(Vec2(0.0f, visibleSize.height/2));
+    this->addChild(start);
+    
+    Vector<FiniteTimeAction *> actionAry;
+    actionAry.pushBack(MoveTo::create(1.0f, Vec2(visibleSize.width/2, visibleSize.height/2)));
+    actionAry.pushBack(MoveTo::create(1.0f, Vec2(visibleSize.width/2, visibleSize.height/2)));
+    actionAry.pushBack(MoveTo::create(0.5f, Vec2(visibleSize.width + start->getContentSize().width, visibleSize.height/2)));
+    actionAry.pushBack(Hide::create());
+    Sequence *actions { Sequence::create(actionAry) };
+    start->runAction(actions);
+    
+    return;
+}
+
 
 #pragma mark -
 #pragma mark Getter
@@ -438,6 +466,38 @@ void StageSceneBase::doContinue()
 #pragma mark -
 #pragma mark Event
 /**
+    クリア条件を満たした
+ */
+void StageSceneBase::stageClear()
+{
+    // 全てのスケジュールを中止
+    unscheduleAllCallbacks();
+    
+    // コンプリート表示処理
+    Sprite *complate { Sprite::create("mission_complate.png") };
+    Size visibleSize { Director::getInstance()->getVisibleSize() };
+    complate->setPosition(Vec2(0.0f, visibleSize.height/2));
+    complate->setCameraMask((unsigned short)CameraFlag::USER1);
+    this->addChild(complate);
+    
+    Vector<FiniteTimeAction *> actionAry;
+    actionAry.pushBack(MoveTo::create(1.0f, Vec2(visibleSize.width/2, visibleSize.height/2)));
+    actionAry.pushBack(MoveTo::create(1.0f, Vec2(visibleSize.width/2, visibleSize.height/2)));
+    actionAry.pushBack(MoveTo::create(0.5f, Vec2(visibleSize.width + complate->getContentSize().width, visibleSize.height/2)));
+    actionAry.pushBack(Hide::create());
+    
+    // ミッション選択シーンに遷移
+    actionAry.pushBack(CallFunc::create([]() {
+        Scene *selectMissionScene { SelectMissonScene::createScene() };
+        TransitionFade* fade = TransitionFade::create(1.0f, selectMissionScene);
+        Director::getInstance()->replaceScene(fade);
+    }));
+    Sequence *actions { Sequence::create(actionAry) };
+    complate->runAction(actions);
+}
+
+
+/**
     敵キャラクターがプレイヤーを発見した
  */
 void StageSceneBase::enemyFindPlayer()
@@ -576,6 +636,14 @@ void StageSceneBase::setMessageCallback()
 
 #pragma mark -
 #pragma mark Update
+/**
+ */
+void StageSceneBase::checkClear(float frame)
+{
+    return;
+}
+
+
 /**
     座標更新処理
  */

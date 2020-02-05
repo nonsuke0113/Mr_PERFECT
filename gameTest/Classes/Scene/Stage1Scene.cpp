@@ -69,3 +69,20 @@ void Stage1Scene::doContinue()
     TransitionFade* fade = TransitionFade::create(1.0f, StageSceneBase);
     Director::getInstance()->replaceScene(fade);
 }
+
+
+#pragma mark -
+/**
+ */
+void Stage1Scene::checkClear(float frame)
+{
+    if (this->m_player->worldPosition() == Vec2(7.0f, 0.0f)) {
+        
+        UserDefault* userDefault = UserDefault::getInstance();
+        userDefault->setStringForKey("mission1", "clear");
+        
+        StageSceneBase::stageClear();
+    }
+    return;
+}
+

@@ -50,6 +50,7 @@
 		8659988923AA030F002EB428 /* Stage1Scene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8659988723AA030F002EB428 /* Stage1Scene.cpp */; };
 		865D5A6E23E10BAC008A7C6D /* PlayerSprite.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 865D5A6C23E10BAC008A7C6D /* PlayerSprite.cpp */; };
 		8664737F23A8B58900ADCC59 /* StageSceneBase.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8664737D23A8B58900ADCC59 /* StageSceneBase.cpp */; };
+		86DA7CC423E4364900B495AB /* SelectMissonScene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 86DA7CC223E4364900B495AB /* SelectMissonScene.cpp */; };
 		ABBA36B721BA6A3500A02928 /* MessageDialog.cpp in Sources */ = {isa = PBXBuildFile; fileRef = ABBA36B521BA6A3500A02928 /* MessageDialog.cpp */; };
 		BF171245129291EC00B8313A /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BF170DB012928DE900B8313A /* OpenGLES.framework */; };
 		BF1712471292920000B8313A /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = BF170DB412928DE900B8313A /* libz.dylib */; };
@@ -174,6 +175,8 @@
 		865D5A6D23E10BAC008A7C6D /* PlayerSprite.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = PlayerSprite.hpp; sourceTree = "<group>"; };
 		8664737D23A8B58900ADCC59 /* StageSceneBase.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = StageSceneBase.cpp; sourceTree = "<group>"; };
 		8664737E23A8B58900ADCC59 /* StageSceneBase.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = StageSceneBase.hpp; sourceTree = "<group>"; };
+		86DA7CC223E4364900B495AB /* SelectMissonScene.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = SelectMissonScene.cpp; sourceTree = "<group>"; };
+		86DA7CC323E4364900B495AB /* SelectMissonScene.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = SelectMissonScene.hpp; sourceTree = "<group>"; };
 		ABBA36B521BA6A3500A02928 /* MessageDialog.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = MessageDialog.cpp; sourceTree = "<group>"; };
 		ABBA36B621BA6A3500A02928 /* MessageDialog.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = MessageDialog.hpp; sourceTree = "<group>"; };
 		BF170DB012928DE900B8313A /* OpenGLES.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGLES.framework; path = System/Library/Frameworks/OpenGLES.framework; sourceTree = SDKROOT; };
@@ -404,6 +407,8 @@
 			children = (
 				E9A5210D21A90B8C00DB44EA /* TitleScene.hpp */,
 				E9A5210C21A90B8C00DB44EA /* TitleScene.cpp */,
+				86DA7CC323E4364900B495AB /* SelectMissonScene.hpp */,
+				86DA7CC223E4364900B495AB /* SelectMissonScene.cpp */,
 				8664737E23A8B58900ADCC59 /* StageSceneBase.hpp */,
 				8664737D23A8B58900ADCC59 /* StageSceneBase.cpp */,
 				8659988823AA030F002EB428 /* Stage1Scene.hpp */,
@@ -591,6 +596,7 @@
 				E9A5210E21A90B8C00DB44EA /* TitleScene.cpp in Sources */,
 				ABBA36B721BA6A3500A02928 /* MessageDialog.cpp in Sources */,
 				864FC468237527FE00DDF5E8 /* EnemySprite.cpp in Sources */,
+				86DA7CC423E4364900B495AB /* SelectMissonScene.cpp in Sources */,
 				861B7492239F516C007068AB /* GameSpriteBase.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

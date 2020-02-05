@@ -9,6 +9,8 @@
 #include "TitleScene.hpp"
 #include "StageSceneBase.hpp"
 #include "Stage1Scene.hpp"
+#include "SelectMissonScene.hpp"
+
 
 /**
     シーンの作成
@@ -113,56 +115,8 @@ void TitleScene::touchMissionModeEvent(Ref *pSender, ui::Widget::TouchEventType 
     {
         case ui::Widget::TouchEventType::BEGAN:
         {
-            this->menu1Button->setVisible(false);
-            this->menu2Button->setVisible(false);
-            
-            // 画面サイズ取得
-            Size visibleSize { Director::getInstance()->getVisibleSize() };
-            
-            // ミッションボタン
-            for (int i = 1; i < 6; i++) {
-                ui::Button *missionButton = ui::Button::create(StringUtils::format("mission%s.png", std::to_string(i).c_str()));
-                missionButton->setTag(i);
-                missionButton->setPosition(Vec2(visibleSize.width / 2, 400 - (60 * i)));
-                missionButton->addTouchEventListener(CC_CALLBACK_2(TitleScene::touchMissionEvent, this));
-                this->addChild(missionButton);
-                
-                UserDefault *userDefault = UserDefault::getInstance();
-                const char* key = StringUtils::format("mission%s", std::to_string(i).c_str()).c_str();
-                std::string clear = userDefault->getStringForKey(key);
-                if (i != 1 && clear.empty()) {
-                    missionButton->setVisible(false);
-                }
-            }
-            break;
-        }
-        default:
-            break;
-    }
-}
-
-
-/**
-    ミッションボタン押下時のイベント
- */
-void TitleScene::touchMissionEvent(Ref *pSender, ui::Widget::TouchEventType type)
-{
-    switch (type)
-    {
-        case ui::Widget::TouchEventType::BEGAN:
-        {
-            ui::Button *button = (ui::Button*)pSender;
-            switch (button->getTag()) {
-                case 1:
-                {
-                    Scene *stage1Scene { Stage1Scene::createScene() };
-                    TransitionFade* fade = TransitionFade::create(1.0f, stage1Scene);
-                    Director::getInstance()->replaceScene(fade);
-                    break;
-                }
-                default:
-                    break;
-            }
+            Scene *selectMissionScene { SelectMissonScene::createScene() };
+            Director::getInstance()->replaceScene(selectMissionScene);
             break;
         }
         default:

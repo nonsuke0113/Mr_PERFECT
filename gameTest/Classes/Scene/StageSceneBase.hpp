@@ -51,6 +51,7 @@ protected:
     void initUI();
     virtual void initMap();
     virtual void initCharactors();
+    void initStart();
     
     void touchCrossKeyEvent(Ref *pSender, ui::Widget::TouchEventType type);
     void touchAEvent(Ref *pSender, ui::Widget::TouchEventType type);
@@ -62,9 +63,14 @@ protected:
     void createSaveMessage();
     void createFindPlayerMessage();
     void setMessageCallback();
+    
+    void stageClear();
+    
     void gameover();
     void doSave();
     virtual void doContinue();
+    
+    virtual void checkClear(float frame);
     void updatePosition(float frame);
     void updateCameraPosition();
     

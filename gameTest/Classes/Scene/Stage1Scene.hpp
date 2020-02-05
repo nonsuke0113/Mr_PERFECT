@@ -16,6 +16,9 @@ protected:
     void initMap();
     void initCharactors();
     void doContinue();
+    
+    void checkClear(float frame);
+    
 public:
     static Stage1Scene *createScene();
 };
