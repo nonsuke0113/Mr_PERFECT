@@ -29,7 +29,7 @@ protected:
     
 public:
     
-    static BulletSprite* create(const std::string& filename, const Vec2 &pos, ::directcion direction, float speed);
+    static BulletSprite* create(const Vec2 &pos, ::directcion direction, float speed);
     virtual bool initWithFileName(const std::string& filename, const Vec2 &pos, ::directcion direction, float speed);
     
     void shootBullet(::directcion direction);

@@ -370,23 +370,7 @@ void StageSceneBase::touchA2Event(Ref *pSender, ui::Widget::TouchEventType type)
 {
     switch (type) {
         case ui::Widget::TouchEventType::BEGAN: {
-            BulletSprite* bullet = nullptr;
-            switch (this->m_player->directcion()) {
-                case front:
-                    bullet = BulletSprite::create("bullet_front.png", this->m_player->nextTilePosition(), this->m_player->directcion(), 0.1f);
-                    break;
-                case right:
-                    bullet = BulletSprite::create("bullet_right.png", this->m_player->nextTilePosition(), this->m_player->directcion(), 0.1f);
-                    break;
-                case back:
-                    bullet = BulletSprite::create("bullet_back.png", this->m_player->nextTilePosition(), this->m_player->directcion(), 0.1f);
-                    break;
-                case left:
-                    bullet = BulletSprite::create("bullet_left.png", this->m_player->nextTilePosition(), this->m_player->directcion(), 0.1f);
-                    break;
-                default:
-                    break;
-            }
+            BulletSprite* bullet = BulletSprite::create(　this->m_player->nextTilePosition(), this->m_player->directcion(), 0.1f);
             bullet->setAnchorPoint(Vec2(0.0f, 0.0f));
             this->addChild(bullet);
             bullet->shootBullet(this->m_player->directcion());

@@ -147,9 +147,10 @@ void EnemySprite::stopPatrol() {
 void EnemySprite::rotatePatrol(float frame) {
     
     if (this->checkFindPlayer()) {
-        this->stopPatrol();
-        StageSceneBase* mainScene = (StageSceneBase*)this->getParent();
-        mainScene->enemyFindPlayer();
+        this->startChasePlayer();
+//        this->stopPatrol();
+//        StageSceneBase* mainScene = (StageSceneBase*)this->getParent();
+//        mainScene->enemyFindPlayer();
     }
     
     if (this->nextTileGID() == 0) {
@@ -388,6 +389,10 @@ void EnemySprite::stopChasePlayer()
  */
 void EnemySprite::chasePlayer(float frame)
 {
+    if (!this->checkFindPlayer()) {
+        this->stopChasePlayer();
+    }
+    
     // プレイヤーへの最短経路を計算
     StageSceneBase* mainScene = (StageSceneBase*)this->getParent();
     CharacterSprite* player = mainScene->m_player;

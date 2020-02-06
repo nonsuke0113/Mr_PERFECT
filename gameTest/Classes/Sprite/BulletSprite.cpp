@@ -13,14 +13,32 @@
 /**
     Sprite::createメソッドをオーバーライド
  
-    @param filename 弾の画像リソース名
     @param pos 弾のワールド座標初期位置
     @param direction 弾の向き
     @param moveSpeed 弾の移動速度
     @return 弾のSprite
  */
-BulletSprite* BulletSprite::create(const std::string& filename, const Vec2& pos, ::directcion direction, float speed)
+BulletSprite* BulletSprite::create(const Vec2& pos, ::directcion direction, float speed)
 {
+    // 向きに応じてファイル名を設定
+    std::string filename;
+    switch (direction) {
+        case front:
+            filename = "bullet_front.png";
+            break;
+        case right:
+            filename = "bullet_right.png";
+            break;
+        case back:
+            filename = "bullet_back.png";
+            break;
+        case left:
+            filename = "bullet_left.png";
+            break;
+        default:
+            break;
+    }
+    
     BulletSprite *sprite =  new (std::nothrow) BulletSprite;
     if (sprite && sprite->initWithFileName(filename, pos, direction, speed)) {
         return sprite;
