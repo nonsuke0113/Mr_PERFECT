@@ -46,7 +46,7 @@ bool EnemySprite::initWithFileName(const std::string& filename, const Vec2 &pos,
         return false;
     }
     this->m_rotateDirectcion = ::turn_right;
-    this->m_hp = 3;
+    this->m_hp = 5;
     return true;
 }
 
@@ -174,7 +174,9 @@ void EnemySprite::rotatePatrol(float frame) {
     
     if (this->checkFindPlayer()) {
         this->stopPatrol();
+        
         this->startChasePlayer();
+        this->startShoot();
         return;
     }
     
@@ -385,6 +387,8 @@ void EnemySprite::moveAccordingToRouteStack(float frame)
 }
 
 
+#pragma mark -
+#pragma mark Chase
 /**
     プレイヤーの追跡を開始する
  */
@@ -414,11 +418,11 @@ void EnemySprite::stopChasePlayer()
  */
 void EnemySprite::chasePlayer(float frame)
 {
-//    if (!this->checkFindPlayer()) {
-//        this->stopChasePlayer();
-//    }
-    
-    // 発砲
+    if (!this->checkFindPlayer()) {
+        this->stopChasePlayer();
+        this->stopShoot();
+        this->startPatrol();
+    }
     
     // プレイヤーへの最短経路を計算
     StageSceneBase* mainScene = (StageSceneBase*)this->getParent();
@@ -436,4 +440,33 @@ void EnemySprite::chasePlayer(float frame)
     Vec2 nextPos = shortestRouteStack.at(1);
     this->facingNextPos(nextPos);
     this->moveWorld(this->m_moveSpeed, nextPos);
+}
+
+
+#pragma mark -
+#pragma mark Shoot
+/**
+    銃撃を開始する
+ */
+void EnemySprite::startShoot()
+{
+    schedule(schedule_selector(EnemySprite::shoot), 0.7f);
+}
+
+
+/**
+    銃撃を中止する
+ */
+void EnemySprite::stopShoot()
+{
+    unschedule(schedule_selector(EnemySprite::shoot));
+}
+
+
+/**
+    銃撃し続ける
+ */
+void EnemySprite::shoot(float frame)
+{
+    this->shootBullet();
 }

@@ -42,6 +42,7 @@ protected:
     
     void moveAccordingToRouteStack(float frame);
     void chasePlayer(float frame);
+    void shoot(float frame);
     
 public:
     static EnemySprite* create(const std::string& filename, const Vec2 &pos, ::directcion direction, float moveSpeed);
@@ -49,7 +50,6 @@ public:
     
     void startPatrol();
     void stopPatrol();
-    
     void searchShortestRoute(std::vector<Vec2>& routeStack,
                              std::vector<Vec2>& shortestRouteStack,
                              const Vec2& currentPos,
@@ -58,6 +58,8 @@ public:
     void stopMoveAccordingToRouteStack();
     void startChasePlayer();
     void stopChasePlayer();
+    void startShoot();
+    void stopShoot();
 };
 
 #endif /* EnemySprite_hpp */

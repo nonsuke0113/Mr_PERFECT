@@ -219,7 +219,7 @@ Vector<CharacterSprite*> StageSceneBase::charactersVector() {
     Vector<Node*> nodes = this->getChildren();
     Vector<CharacterSprite*> characters;
     for (int i = 0; i < nodes.size(); i++) {
-        if (typeid(*nodes.at(i)) == typeid(CharacterSprite) ||
+        if (typeid(*nodes.at(i)) == typeid(PlayerSprite) ||
             typeid(*nodes.at(i)) == typeid(EnemySprite)){
             characters.pushBack((CharacterSprite*)nodes.at(i));
         }

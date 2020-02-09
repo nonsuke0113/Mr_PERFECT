@@ -126,7 +126,8 @@ CharacterSprite* BulletSprite::validateHit()
     StageSceneBase* mainScene = (StageSceneBase*)this->getParent();
     Vector<CharacterSprite*> charactersVector = mainScene->charactersVector();
     for (int i = 0; i < charactersVector.size(); i++) {
-        if (charactersVector.at(i)->worldPosition() == this->worldPosition()) {
+        if (charactersVector.at(i)->worldPosition() == this->worldPosition() &&
+            charactersVector.at(i) != this->m_shootCharactor) {
             return charactersVector.at(i);
         }
     }

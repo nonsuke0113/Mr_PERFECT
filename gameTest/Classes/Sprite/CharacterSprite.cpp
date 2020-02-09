@@ -46,7 +46,7 @@ bool CharacterSprite::initWithFileName(const std::string& filename, const Vec2 &
     if (!GameSpriteBase::initWithFileName(filename, pos, direction)) {
         return false;
     }
-    this->m_hp = 1;
+    this->m_hp = 3;
     this->m_moveSpeed = moveSpeed;
     return true;
 }
