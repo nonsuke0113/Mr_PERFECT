@@ -9,6 +9,7 @@
 #include "TitleScene.hpp"
 #include "StageSceneBase.hpp"
 #include "Stage1Scene.hpp"
+#include "Stage2Scene.hpp"
 
 /**
     シーンの作成
@@ -81,6 +82,13 @@ void SelectMissonScene::touchMissionEvent(Ref *pSender, ui::Widget::TouchEventTy
                 case 1:
                 {
                     Scene *stage1Scene { Stage1Scene::createScene() };
+                    TransitionFade* fade = TransitionFade::create(1.0f, stage1Scene);
+                    Director::getInstance()->replaceScene(fade);
+                    break;
+                }
+                case 2:
+                {
+                    Scene *stage1Scene { Stage2Scene::createScene() };
                     TransitionFade* fade = TransitionFade::create(1.0f, stage1Scene);
                     Director::getInstance()->replaceScene(fade);
                     break;

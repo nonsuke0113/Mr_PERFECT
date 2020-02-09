@@ -147,10 +147,11 @@ void EnemySprite::stopPatrol() {
 void EnemySprite::rotatePatrol(float frame) {
     
     if (this->checkFindPlayer()) {
-        this->startChasePlayer();
-//        this->stopPatrol();
-//        StageSceneBase* mainScene = (StageSceneBase*)this->getParent();
-//        mainScene->enemyFindPlayer();
+//        this->startChasePlayer();
+        this->stopPatrol();
+        StageSceneBase* mainScene = (StageSceneBase*)this->getParent();
+        mainScene->enemyFindPlayer();
+        return;
     }
     
     if (this->nextTileGID() == 0) {

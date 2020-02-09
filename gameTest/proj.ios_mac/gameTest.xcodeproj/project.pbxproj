@@ -50,6 +50,7 @@
 		8659988923AA030F002EB428 /* Stage1Scene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8659988723AA030F002EB428 /* Stage1Scene.cpp */; };
 		865D5A6E23E10BAC008A7C6D /* PlayerSprite.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 865D5A6C23E10BAC008A7C6D /* PlayerSprite.cpp */; };
 		8664737F23A8B58900ADCC59 /* StageSceneBase.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8664737D23A8B58900ADCC59 /* StageSceneBase.cpp */; };
+		86C1AEC723EFE2A7003F61B7 /* Stage2Scene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 86C1AEC523EFE2A7003F61B7 /* Stage2Scene.cpp */; };
 		86DA7CC423E4364900B495AB /* SelectMissonScene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 86DA7CC223E4364900B495AB /* SelectMissonScene.cpp */; };
 		ABBA36B721BA6A3500A02928 /* MessageDialog.cpp in Sources */ = {isa = PBXBuildFile; fileRef = ABBA36B521BA6A3500A02928 /* MessageDialog.cpp */; };
 		BF171245129291EC00B8313A /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BF170DB012928DE900B8313A /* OpenGLES.framework */; };
@@ -175,6 +176,8 @@
 		865D5A6D23E10BAC008A7C6D /* PlayerSprite.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = PlayerSprite.hpp; sourceTree = "<group>"; };
 		8664737D23A8B58900ADCC59 /* StageSceneBase.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = StageSceneBase.cpp; sourceTree = "<group>"; };
 		8664737E23A8B58900ADCC59 /* StageSceneBase.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = StageSceneBase.hpp; sourceTree = "<group>"; };
+		86C1AEC523EFE2A7003F61B7 /* Stage2Scene.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Stage2Scene.cpp; sourceTree = "<group>"; };
+		86C1AEC623EFE2A7003F61B7 /* Stage2Scene.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Stage2Scene.hpp; sourceTree = "<group>"; };
 		86DA7CC223E4364900B495AB /* SelectMissonScene.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = SelectMissonScene.cpp; sourceTree = "<group>"; };
 		86DA7CC323E4364900B495AB /* SelectMissonScene.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = SelectMissonScene.hpp; sourceTree = "<group>"; };
 		ABBA36B521BA6A3500A02928 /* MessageDialog.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = MessageDialog.cpp; sourceTree = "<group>"; };
@@ -402,17 +405,27 @@
 			name = mac;
 			sourceTree = "<group>";
 		};
-		AB42A26623A37A2800B927DC /* Scene */ = {
+		86C1AEC323EFE277003F61B7 /* StageScene */ = {
 			isa = PBXGroup;
 			children = (
-				E9A5210D21A90B8C00DB44EA /* TitleScene.hpp */,
-				E9A5210C21A90B8C00DB44EA /* TitleScene.cpp */,
-				86DA7CC323E4364900B495AB /* SelectMissonScene.hpp */,
-				86DA7CC223E4364900B495AB /* SelectMissonScene.cpp */,
 				8664737E23A8B58900ADCC59 /* StageSceneBase.hpp */,
 				8664737D23A8B58900ADCC59 /* StageSceneBase.cpp */,
 				8659988823AA030F002EB428 /* Stage1Scene.hpp */,
 				8659988723AA030F002EB428 /* Stage1Scene.cpp */,
+				86C1AEC623EFE2A7003F61B7 /* Stage2Scene.hpp */,
+				86C1AEC523EFE2A7003F61B7 /* Stage2Scene.cpp */,
+			);
+			path = StageScene;
+			sourceTree = "<group>";
+		};
+		AB42A26623A37A2800B927DC /* Scene */ = {
+			isa = PBXGroup;
+			children = (
+				86C1AEC323EFE277003F61B7 /* StageScene */,
+				E9A5210D21A90B8C00DB44EA /* TitleScene.hpp */,
+				E9A5210C21A90B8C00DB44EA /* TitleScene.cpp */,
+				86DA7CC323E4364900B495AB /* SelectMissonScene.hpp */,
+				86DA7CC223E4364900B495AB /* SelectMissonScene.cpp */,
 			);
 			path = Scene;
 			sourceTree = "<group>";
@@ -587,6 +600,7 @@
 				8664737F23A8B58900ADCC59 /* StageSceneBase.cpp in Sources */,
 				1AF87B781F6F77F7007BE51C /* AppController.mm in Sources */,
 				861B748E239F37A6007068AB /* BulletSprite.cpp in Sources */,
+				86C1AEC723EFE2A7003F61B7 /* Stage2Scene.cpp in Sources */,
 				865D5A6E23E10BAC008A7C6D /* PlayerSprite.cpp in Sources */,
 				1AF87B8B1F6F782A007BE51C /* RootViewController.mm in Sources */,
 				46880B8819C43A87006E1F66 /* AppDelegate.cpp in Sources */,
