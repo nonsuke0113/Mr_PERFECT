@@ -97,3 +97,13 @@ void PlayerSprite::setDirectcion(::directcion direction) {
     action->setTag(animate);
     this->runAction(action);
 }
+
+
+#pragma mark -
+/**
+    死亡処理
+ */
+void PlayerSprite::dead()
+{
+    
+}

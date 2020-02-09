@@ -486,17 +486,6 @@ void StageSceneBase::enemyFindPlayer()
 }
 
 
-/**
-    敵キャラクターの背後に弾丸が当たった
- 
-    @param enemy 該当の敵
- */
-void StageSceneBase::hitEnemy(EnemySprite* enemy)
-{
-    this->removeChild(enemy);
-}
-
-
 #pragma mark -
 #pragma mark Message
 /**

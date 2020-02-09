@@ -18,6 +18,8 @@ class PlayerSprite : public CharacterSprite
 {
 protected:
     void setupAnimationCache();
+    void dead();
+    
 public:
     static PlayerSprite* create(const std::string& filename, const Vec2& pos, ::directcion direction, float moveSpeed);
     void setDirectcion(::directcion direction);

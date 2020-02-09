@@ -46,6 +46,7 @@ bool CharacterSprite::initWithFileName(const std::string& filename, const Vec2 &
     if (!GameSpriteBase::initWithFileName(filename, pos, direction)) {
         return false;
     }
+    this->m_hp = 1;
     this->m_moveSpeed = moveSpeed;
     return true;
 }
@@ -62,6 +63,42 @@ void CharacterSprite::setupAnimationCache()
 
 
 #pragma mark -
+#pragma mark Getter
+/**
+    HPゲッター
+ 
+    @return キャラクターのHP
+ */
+int CharacterSprite::hp() {
+    return this->m_hp;
+}
+
+
+#pragma mark -
+#pragma mark Setter
+/**
+    HPセッター
+    HPが0以下であれば死亡処理を実行する
+ */
+void CharacterSprite::setHp(int hp) {
+    this->m_hp = hp;
+    if (this->m_hp <= 0) {
+        this->dead();
+    }
+}
+
+
+#pragma mark -
+/**
+    キャラクターのHPが0以下になった場合の処理
+    子クラスにて実装する
+ */
+void CharacterSprite::dead()
+{
+    return;
+}
+
+
 /**
     次のタイルに移動する
  */
@@ -97,14 +134,25 @@ CharacterSprite* CharacterSprite::nextCharacter()
 }
 
 
-#pragma mark -
 /**
     自身の向いている方向に弾を発射する
  */
 void CharacterSprite::shootBullet()
 {
-    BulletSprite* bullet = BulletSprite::create(this->nextTilePosition(), this->directcion(), 0.1f);
+    BulletSprite* bullet = BulletSprite::create(this->nextTilePosition(), this->directcion(), this, 0.1f);
     bullet->setAnchorPoint(Vec2(0.0f, 0.0f));
     this->getParent()->addChild(bullet);
     bullet->shootBullet(this->directcion());
+}
+
+
+/**
+    被弾処理
+ 
+    @param damage ダメージ
+    @param bulletDirection 弾の方向
+ */
+void CharacterSprite::hitToBullet(int damage, ::directcion bulletDirection)
+{
+    this->setHp(this->m_hp - damage);
 }

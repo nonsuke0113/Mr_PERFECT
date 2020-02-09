@@ -33,6 +33,9 @@ protected:
     
     void setDirectcion(::directcion direction);
     
+    void hitToBullet(int damage, ::directcion bulletDirection);
+    void dead();
+    
     void rotatePatrol(float frame);
     void rotate();
     bool checkFindPlayer();

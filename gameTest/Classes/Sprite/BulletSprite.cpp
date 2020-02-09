@@ -15,10 +15,11 @@
  
     @param pos 弾のワールド座標初期位置
     @param direction 弾の向き
+    @param charactor 発砲したキャラクター
     @param moveSpeed 弾の移動速度
     @return 弾のSprite
  */
-BulletSprite* BulletSprite::create(const Vec2& pos, ::directcion direction, float speed)
+BulletSprite* BulletSprite::create(const Vec2& pos, ::directcion direction, CharacterSprite* charactor, float speed)
 {
     // 向きに応じてファイル名を設定
     std::string filename;
@@ -40,7 +41,7 @@ BulletSprite* BulletSprite::create(const Vec2& pos, ::directcion direction, floa
     }
     
     BulletSprite *sprite =  new (std::nothrow) BulletSprite;
-    if (sprite && sprite->initWithFileName(filename, pos, direction, speed)) {
+    if (sprite && sprite->initWithFileName(filename, pos, direction, charactor, speed)) {
         return sprite;
     }
     CC_SAFE_DELETE(sprite);
@@ -54,17 +55,30 @@ BulletSprite* BulletSprite::create(const Vec2& pos, ::directcion direction, floa
     @param filename 弾の画像リソース名
     @param pos 弾のワールド座標初期位置
     @param direction 画像の向き
+    @param charactor 発砲したキャラクター
     @param moveSpeed 弾の移動速度
  */
-bool BulletSprite::initWithFileName(const std::string& filename, const Vec2 &pos, ::directcion direction, float speed)
+bool BulletSprite::initWithFileName(const std::string& filename, const Vec2 &pos, ::directcion direction, CharacterSprite* charactor, float speed)
 {
     if (!GameSpriteBase::initWithFileName(filename, pos, direction)) {
         return false;
     }
+    this->m_shootCharactor = charactor;
     this->m_speed = speed;
     return true;
 }
 
+
+#pragma mark -
+#pragma mark Getter
+/**
+    威力ゲッター
+ 
+    @return 弾の威力
+ */
+int BulletSprite::power() {
+    return this->m_power;
+}
 
 #pragma mark -
 /**
@@ -85,14 +99,13 @@ void BulletSprite::shootBullet(::directcion direction)
  */
 void BulletSprite::updatePosition(float frame)
 {
-    EnemySprite* hitEnemy = this->validateHitEnemy();
-    // 敵の背後に当たった場合に、敵を削除する
-    if (hitEnemy != nullptr && hitEnemy->directcion() == this->directcion()) {
-        StageSceneBase *mainScene = (StageSceneBase*)this->getParent();
-        mainScene->hitEnemy(hitEnemy);
+    CharacterSprite* hitCharacter = this->validateHit();
+    // 被弾処理
+    if (hitCharacter != nullptr) {
+        hitCharacter->hitToBullet(this->power(), this->directcion());
     }
-    // 敵に当たった or 進めなくなったら自身を削除する
-    if (hitEnemy != nullptr || !this->canMovePos(this->worldPosition())) {
+    // 被弾した or 進めなくなったら自身を削除する
+    if (hitCharacter != nullptr || !this->canMovePos(this->worldPosition())) {
         unschedule(schedule_selector(BulletSprite::updatePosition));
         this->removeFromParent();
         return;
@@ -103,18 +116,18 @@ void BulletSprite::updatePosition(float frame)
 
 
 /**
-    弾が敵に当たったかどうかを検証する
-    当たっている敵がいなかった場合、nullptrを返す
+    弾がキャラクターに当たったかどうかを検証する
+    当たっているキャラクターがいなかった場合、nullptrを返す
  
-    @return 弾に当たった敵 or nullptr
+    @return 弾に当たったキャラクター or nullptr
  */
-EnemySprite* BulletSprite::validateHitEnemy()
+CharacterSprite* BulletSprite::validateHit()
 {
     StageSceneBase* mainScene = (StageSceneBase*)this->getParent();
-    Vector<EnemySprite*> enemysVector = mainScene->enemysVector();
-    for (int i = 0; i < enemysVector.size(); i++) {
-        if (enemysVector.at(i)->worldPosition() == this->worldPosition()) {
-            return enemysVector.at(i);
+    Vector<CharacterSprite*> charactersVector = mainScene->charactersVector();
+    for (int i = 0; i < charactersVector.size(); i++) {
+        if (charactersVector.at(i)->worldPosition() == this->worldPosition()) {
+            return charactersVector.at(i);
         }
     }
     return nullptr;

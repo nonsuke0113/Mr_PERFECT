@@ -85,7 +85,6 @@ public:
     Vector<EnemySprite*> enemysVector();
     
     void enemyFindPlayer();
-    void hitEnemy(EnemySprite* enemy);
 };
 
 #endif /* StageSceneBase_hpp */
