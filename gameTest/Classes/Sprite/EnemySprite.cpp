@@ -242,32 +242,53 @@ bool EnemySprite::checkFindPlayer() {
     StageSceneBase* mainScene = (StageSceneBase*)this->getParent();
     CharacterSprite* player = mainScene->m_player;
     
-    for (int i = 1; i < std::max(MAP_TILE_HEGHT, MAP_TILE_WIDTH); i++) {
-        
-        switch (this->m_directcion) {
-            case ::front:
+    switch (this->m_directcion) {
+        case ::front:
+            for (int i = 1; this->m_worldPosition.y + i < MAP_TILE_HEGHT; i++) {
                 checkTilePosition = Vec2 { this->m_worldPosition.x, this->m_worldPosition.y + i };
-                break;
-            case ::right:
+                if (!this->canMovePos(checkTilePosition)) {
+                    return false;
+                }
+                if (player->worldPosition() == checkTilePosition) {
+                    return true;
+                }
+            }
+            break;
+        case ::right:
+            for (int i = 1; this->m_worldPosition.x + i < MAP_TILE_WIDTH; i++) {
                 checkTilePosition = Vec2 { this->m_worldPosition.x + i, this->m_worldPosition.y };
-                break;
-            case ::back:
+                if (!this->canMovePos(checkTilePosition)) {
+                    return false;
+                }
+                if (player->worldPosition() == checkTilePosition) {
+                    return true;
+                }
+            }
+            break;
+        case ::back:
+            for (int i = 1; this->m_worldPosition.y - i > 0; i++) {
                 checkTilePosition = Vec2 { this->m_worldPosition.x, this->m_worldPosition.y - i };
-                break;
-            case ::left:
+                if (!this->canMovePos(checkTilePosition)) {
+                    return false;
+                }
+                if (player->worldPosition() == checkTilePosition) {
+                    return true;
+                }
+            }
+            break;
+        case ::left:
+            for (int i = 1; this->m_worldPosition.x - i > 0; i++) {
                 checkTilePosition = Vec2 { this->m_worldPosition.x - i, this->m_worldPosition.y };
-                break;
-            default:
-                break;
-        }
-        
-        if (!this->canMovePos(checkTilePosition)) {
-            return false;
-        }
-        
-        if (player->worldPosition() == checkTilePosition) {
-            return true;
-        }
+                if (!this->canMovePos(checkTilePosition)) {
+                    return false;
+                }
+                if (player->worldPosition() == checkTilePosition) {
+                    return true;
+                }
+            }
+            break;
+        default:
+            break;
     }
     
     return false;

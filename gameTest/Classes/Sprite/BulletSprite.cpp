@@ -64,6 +64,7 @@ bool BulletSprite::initWithFileName(const std::string& filename, const Vec2 &pos
         return false;
     }
     this->m_shootCharactor = charactor;
+    this->m_power = 1;
     this->m_speed = speed;
     return true;
 }
