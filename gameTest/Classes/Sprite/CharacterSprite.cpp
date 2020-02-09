@@ -7,6 +7,7 @@
 
 #include "StageSceneBase.hpp"
 #include "CharacterSprite.hpp"
+#include "BulletSprite.hpp"
 
 #pragma mark -
 #pragma mark init
@@ -59,6 +60,7 @@ void CharacterSprite::setupAnimationCache()
     return;
 }
 
+
 #pragma mark -
 /**
     次のタイルに移動する
@@ -94,3 +96,15 @@ CharacterSprite* CharacterSprite::nextCharacter()
     return nullptr;
 }
 
+
+#pragma mark -
+/**
+    自身の向いている方向に弾を発射する
+ */
+void CharacterSprite::shootBullet()
+{
+    BulletSprite* bullet = BulletSprite::create(this->nextTilePosition(), this->directcion(), 0.1f);
+    bullet->setAnchorPoint(Vec2(0.0f, 0.0f));
+    this->getParent()->addChild(bullet);
+    bullet->shootBullet(this->directcion());
+}

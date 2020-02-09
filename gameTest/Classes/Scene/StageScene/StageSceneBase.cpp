@@ -9,7 +9,6 @@
 #include "Const.hpp"
 #include "TitleScene.hpp"
 #include "ui/UIScale9Sprite.h"
-#include "BulletSprite.hpp"
 #include <typeinfo>
 #include "SelectMissonScene.hpp"
 
@@ -370,10 +369,7 @@ void StageSceneBase::touchA2Event(Ref *pSender, ui::Widget::TouchEventType type)
 {
     switch (type) {
         case ui::Widget::TouchEventType::BEGAN: {
-            BulletSprite* bullet = BulletSprite::create(　this->m_player->nextTilePosition(), this->m_player->directcion(), 0.1f);
-            bullet->setAnchorPoint(Vec2(0.0f, 0.0f));
-            this->addChild(bullet);
-            bullet->shootBullet(this->m_player->directcion());
+            this->m_player->shootBullet();
         }
             
         case ui::Widget::TouchEventType::MOVED:

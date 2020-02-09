@@ -31,6 +31,8 @@ public:
     
     void moveNextTile();
     CharacterSprite* nextCharacter();
+    
+    void shootBullet();
 };
 
 
