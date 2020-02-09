@@ -46,6 +46,7 @@ bool EnemySprite::initWithFileName(const std::string& filename, const Vec2 &pos,
         return false;
     }
     this->m_rotateDirectcion = ::turn_right;
+    this->m_hp = 3;
     return true;
 }
 
@@ -122,6 +123,31 @@ void EnemySprite::setDirectcion(::directcion direction) {
 
 #pragma mark -
 /**
+    被弾処理
+ 
+    @param damage ダメージ
+    @param bulletDirection 弾の方向
+ */
+void EnemySprite::hitToBullet(int damage, ::directcion bulletDirection)
+{
+    if (this->directcion() == bulletDirection) {
+        this->setHp(0);
+    } else {
+        this->setHp(this->m_hp - damage);
+    }
+}
+
+/**
+    死亡処理
+ */
+void EnemySprite::dead()
+{
+    this->removeFromParent();
+}
+
+
+#pragma mark -
+/**
     巡回をスケジュール
  */
 void EnemySprite::startPatrol() {
@@ -147,10 +173,8 @@ void EnemySprite::stopPatrol() {
 void EnemySprite::rotatePatrol(float frame) {
     
     if (this->checkFindPlayer()) {
-//        this->startChasePlayer();
         this->stopPatrol();
-        StageSceneBase* mainScene = (StageSceneBase*)this->getParent();
-        mainScene->enemyFindPlayer();
+        this->startChasePlayer();
         return;
     }
     
@@ -390,9 +414,11 @@ void EnemySprite::stopChasePlayer()
  */
 void EnemySprite::chasePlayer(float frame)
 {
-    if (!this->checkFindPlayer()) {
-        this->stopChasePlayer();
-    }
+//    if (!this->checkFindPlayer()) {
+//        this->stopChasePlayer();
+//    }
+    
+    // 発砲
     
     // プレイヤーへの最短経路を計算
     StageSceneBase* mainScene = (StageSceneBase*)this->getParent();
@@ -403,7 +429,6 @@ void EnemySprite::chasePlayer(float frame)
     
     // 目の前まで来たらストップ
     if (shortestRouteStack.size() < 3) {
-        this->stopChasePlayer();
         return;
     }
     
