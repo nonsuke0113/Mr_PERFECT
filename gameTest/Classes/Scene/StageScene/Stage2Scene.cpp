@@ -5,7 +5,7 @@
 //  Created by 丹野健介 on 2020/02/09.
 //
 
-#include "Stage2Scene.hpp"
+#include "Stage2Scene.hpp";
 
 #pragma mark -
 #pragma mark init
@@ -42,13 +42,13 @@ void Stage2Scene::initCharactors()
     UserDefault* userDefault = UserDefault::getInstance();
     
     // プレイヤー
-    this->m_player = PlayerSprite::create("player.png", Vec2(7.0f, 19.0f), ::back, 0.1f);
+    this->m_player = PlayerSprite::create("player.png", Vec2(7.0f, 16.0f), ::back, 0.1f);
     this->m_player->setAnchorPoint(Vec2(0.0f, 0.0f));
     this->m_player->setName(userDefault->getStringForKey("playerName"));
     this->addChild(this->m_player);
     
     // 敵キャラクター
-    EnemySprite* mob = EnemySprite::create("enemy1.png", Vec2(8.0f, 11.0f), ::left, 0.1f);
+    EnemySprite* mob = EnemySprite::create("enemy1.png", Vec2(7.0f, 19.0f), ::left, 0.1f);
     mob->setName(StringUtils::format("mob"));
     mob->setAnchorPoint(Vec2(0.0f, 0.0f));
     this->addChild(mob);

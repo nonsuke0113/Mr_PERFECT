@@ -13,7 +13,6 @@
 #include "CharacterSprite.hpp"
 #include <vector>
 
-
 // 回転方向
 typedef enum {
     turn_right,
@@ -50,10 +49,6 @@ public:
     
     void startPatrol();
     void stopPatrol();
-    void searchShortestRoute(std::vector<Vec2>& routeStack,
-                             std::vector<Vec2>& shortestRouteStack,
-                             const Vec2& currentPos,
-                             const Vec2& destinationPos);
     void startMoveAccordingToRouteStack(const std::vector<Vec2>& routeStack);
     void stopMoveAccordingToRouteStack();
     void startChasePlayer();

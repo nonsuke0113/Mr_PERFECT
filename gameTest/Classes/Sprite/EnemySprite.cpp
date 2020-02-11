@@ -9,6 +9,7 @@
 #include "StageSceneBase.hpp"
 #include <algorithm>
 #include <unistd.h>
+#include "AStarUtils.hpp"
 
 #pragma mark -
 #pragma mark init
@@ -296,65 +297,6 @@ bool EnemySprite::checkFindPlayer() {
 
 
 /**
-    現在地から目的地までの最短経路を探索する
-    参照渡しにて経路のスタックを書き換える
- 
-    @param routeStack 現在の経路スタック
-    @param shortestRouteStack 現在の最短経路スタック
-    @param currentPos 現在地
-    @param destinationPos 目的地
- */
-void EnemySprite::searchShortestRoute(std::vector<Vec2>& routeStack,
-                                      std::vector<Vec2>& shortestRouteStack,
-                                      const Vec2& currentPos,
-                                      const Vec2& destinationPos)
-{
-    // 現在地を経路スタックにプッシュ
-    routeStack.push_back(currentPos);
-    
-    // ゴールしているかどうか
-    if (currentPos == destinationPos) {
-        // 最短経路であれば保存する
-        if (shortestRouteStack.empty() || routeStack.size() < shortestRouteStack.size()) {
-            shortestRouteStack = routeStack;
-            routeStack.pop_back();
-            return;
-        }
-    }
-    
-    // 既に最短経路の移動数を超えている場合、何もしない
-    if (!shortestRouteStack.empty() && routeStack.size() >= shortestRouteStack.size()) {
-        routeStack.pop_back();
-        return;
-    }
-    
-    // 経路探索
-    // 上
-    Vec2 upPos = Vec2 { currentPos.x, currentPos.y - 1.0f};
-    if (this->canMovePos(upPos) && std::find(routeStack.begin(), routeStack.end(), upPos) == routeStack.end()) {
-        this->searchShortestRoute(routeStack, shortestRouteStack, upPos, destinationPos);
-    }
-    // 右
-    Vec2 rightPos = Vec2 { currentPos.x + 1.0f, currentPos.y };
-    if (this->canMovePos(rightPos) && std::find(routeStack.begin(), routeStack.end(), rightPos) == routeStack.end()) {
-        this->searchShortestRoute(routeStack, shortestRouteStack, rightPos, destinationPos);
-    }
-    // 下
-    Vec2 downPos = Vec2 { currentPos.x, currentPos.y + 1.0f};
-    if (this->canMovePos(downPos) && std::find(routeStack.begin(), routeStack.end(), downPos) == routeStack.end()) {
-        this->searchShortestRoute(routeStack, shortestRouteStack, downPos, destinationPos);
-    }
-    // 左
-    Vec2 leftPos = Vec2 { currentPos.x - 1.0f, currentPos.y };
-       if (this->canMovePos(leftPos) && std::find(routeStack.begin(), routeStack.end(), leftPos) == routeStack.end()) {
-        this->searchShortestRoute(routeStack, shortestRouteStack, leftPos, destinationPos);
-    }
-
-    routeStack.pop_back();
-}
-
-
-/**
     与えられた経路で移動を開始する
  
     @param routeStack 移動経路
@@ -448,9 +390,7 @@ void EnemySprite::chasePlayer(float frame)
     // プレイヤーへの最短経路を計算
     StageSceneBase* mainScene = (StageSceneBase*)this->getParent();
     CharacterSprite* player = mainScene->m_player;
-    std::vector<Vec2> routeStack;
-    std::vector<Vec2> shortestRouteStack;
-    this->searchShortestRoute(routeStack, shortestRouteStack, this->worldPosition(), player->worldPosition());
+    std::vector<Vec2> shortestRouteStack = AStarUtils::shortestRouteStack(this, this->worldPosition(), player->worldPosition());
     
     // 目の前まで来たらストップ
     if (shortestRouteStack.size() < 3) {

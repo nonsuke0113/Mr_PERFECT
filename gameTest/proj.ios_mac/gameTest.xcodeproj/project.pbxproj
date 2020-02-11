@@ -46,6 +46,8 @@
 		8262943E1AAF051F00CB7CF7 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8262943D1AAF051F00CB7CF7 /* Security.framework */; };
 		861B748E239F37A6007068AB /* BulletSprite.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 861B748C239F37A6007068AB /* BulletSprite.cpp */; };
 		861B7492239F516C007068AB /* GameSpriteBase.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 861B7490239F516C007068AB /* GameSpriteBase.cpp */; };
+		8648AA8023F294F200365B62 /* AStarNode.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8648AA7E23F294F200365B62 /* AStarNode.cpp */; };
+		8648AA8423F2D43700365B62 /* AStarUtils.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8648AA8223F2D43700365B62 /* AStarUtils.cpp */; };
 		864FC468237527FE00DDF5E8 /* EnemySprite.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 864FC466237527FE00DDF5E8 /* EnemySprite.cpp */; };
 		8659988923AA030F002EB428 /* Stage1Scene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8659988723AA030F002EB428 /* Stage1Scene.cpp */; };
 		865D5A6E23E10BAC008A7C6D /* PlayerSprite.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 865D5A6C23E10BAC008A7C6D /* PlayerSprite.cpp */; };
@@ -168,6 +170,10 @@
 		861B748D239F37A6007068AB /* BulletSprite.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = BulletSprite.hpp; sourceTree = "<group>"; };
 		861B7490239F516C007068AB /* GameSpriteBase.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = GameSpriteBase.cpp; sourceTree = "<group>"; };
 		861B7491239F516C007068AB /* GameSpriteBase.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = GameSpriteBase.hpp; sourceTree = "<group>"; };
+		8648AA7E23F294F200365B62 /* AStarNode.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = AStarNode.cpp; sourceTree = "<group>"; };
+		8648AA7F23F294F200365B62 /* AStarNode.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = AStarNode.hpp; sourceTree = "<group>"; };
+		8648AA8223F2D43700365B62 /* AStarUtils.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = AStarUtils.cpp; sourceTree = "<group>"; };
+		8648AA8323F2D43700365B62 /* AStarUtils.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = AStarUtils.hpp; sourceTree = "<group>"; };
 		864FC466237527FE00DDF5E8 /* EnemySprite.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = EnemySprite.cpp; sourceTree = "<group>"; };
 		864FC467237527FE00DDF5E8 /* EnemySprite.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = EnemySprite.hpp; sourceTree = "<group>"; };
 		8659988723AA030F002EB428 /* Stage1Scene.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Stage1Scene.cpp; sourceTree = "<group>"; };
@@ -376,6 +382,7 @@
 				46880B8419C43A87006E1F66 /* AppDelegate.cpp */,
 				AB42A26623A37A2800B927DC /* Scene */,
 				AB42A26723A37A5E00B927DC /* Sprite */,
+				8648AA8523F2DDF700365B62 /* AStar */,
 				E9A5211721AECC9900DB44EA /* Const.hpp */,
 				E945438E21F49F4900C11542 /* StringUtil.h */,
 				ABBA36B621BA6A3500A02928 /* MessageDialog.hpp */,
@@ -403,6 +410,17 @@
 				503AE10417EB98FF00D1A890 /* Prefix.pch */,
 			);
 			name = mac;
+			sourceTree = "<group>";
+		};
+		8648AA8523F2DDF700365B62 /* AStar */ = {
+			isa = PBXGroup;
+			children = (
+				8648AA7F23F294F200365B62 /* AStarNode.hpp */,
+				8648AA7E23F294F200365B62 /* AStarNode.cpp */,
+				8648AA8323F2D43700365B62 /* AStarUtils.hpp */,
+				8648AA8223F2D43700365B62 /* AStarUtils.cpp */,
+			);
+			path = AStar;
 			sourceTree = "<group>";
 		};
 		86C1AEC323EFE277003F61B7 /* StageScene */ = {
@@ -599,9 +617,11 @@
 				E9A5211521A90C6F00DB44EA /* CharacterSprite.cpp in Sources */,
 				8664737F23A8B58900ADCC59 /* StageSceneBase.cpp in Sources */,
 				1AF87B781F6F77F7007BE51C /* AppController.mm in Sources */,
+				8648AA8023F294F200365B62 /* AStarNode.cpp in Sources */,
 				861B748E239F37A6007068AB /* BulletSprite.cpp in Sources */,
 				86C1AEC723EFE2A7003F61B7 /* Stage2Scene.cpp in Sources */,
 				865D5A6E23E10BAC008A7C6D /* PlayerSprite.cpp in Sources */,
+				8648AA8423F2D43700365B62 /* AStarUtils.cpp in Sources */,
 				1AF87B8B1F6F782A007BE51C /* RootViewController.mm in Sources */,
 				46880B8819C43A87006E1F66 /* AppDelegate.cpp in Sources */,
 				E92CE8792206A24900E123FD /* AdMobHelper.mm in Sources */,
