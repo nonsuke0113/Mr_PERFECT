@@ -58,10 +58,14 @@ std::vector<Vec2> AStarUtils::shortestRouteStack(GameSpriteBase *sprite,
     // スタート座標とゴール座標から、ゴールノードを求める
     AStarNode *goalNode = AStarUtils::findGoalNode(openNodes, closeNodes, startNode, goalPos, sprite);
     
+    // ゴールノードから最短経路を取得
+    std::vector<Vec2> shortestRouteStack = std::vector<Vec2>();
     if (goalNode) {
-        return goalNode->shortestRouteStack();
+        shortestRouteStack = goalNode->shortestRouteStack();
+        // 最初の座標は、スタート座標なので削除
+        shortestRouteStack.erase(shortestRouteStack.begin());
     }
-    return std::vector<Vec2>();
+    return shortestRouteStack;
 }
 
 

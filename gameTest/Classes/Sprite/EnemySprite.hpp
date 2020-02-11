@@ -28,6 +28,10 @@ protected:
     std::vector<Vec2>* m_routeStack; // 経路
     int m_routeStackIndex; // 経路の進捗を管理するインデックス
     
+    std::vector<Vec2> n_routeStack;
+    Vec2 m_playerLostPoint;
+    Vec2 m_playerLostNextPoint;
+    
     void setupAnimationCache();
     
     void setDirectcion(::directcion direction);
@@ -55,6 +59,7 @@ public:
     void stopChasePlayer();
     void startShoot();
     void stopShoot();
+    void loseSightOfPlayer();
 };
 
 #endif /* EnemySprite_hpp */
