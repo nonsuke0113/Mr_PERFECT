@@ -360,7 +360,7 @@ void EnemySprite::startChasePlayer()
     // 巡回は中断する
     this->stopPatrol();
     
-    this->n_routeStack = std::vector<Vec2>();
+    // 保持しているプレイヤーの座標情報リセット
     this->m_playerLostPoint = Vec2(-1, -1);
     this->m_playerLostNextPoint = Vec2(-1, -1);
     
@@ -381,24 +381,18 @@ void EnemySprite::stopChasePlayer()
 
 
 /**
-    プレイヤーを最短経路で追跡し続ける
+    プレイヤーを追跡し続ける
  */
 void EnemySprite::chasePlayer(float frame)
 {
-    int stop = 3;
     StageSceneBase* mainScene = (StageSceneBase*)this->getParent();
     CharacterSprite* player = mainScene->m_player;
     
     if (this->checkFindPlayer()) {
-        // プレイヤーを見つけた位置を覚えておく
+        // プレイヤーを最後に見つけた位置を保持
         this->m_playerLostPoint = player->worldPosition();
-        
-        // プレイヤーへの最短経路を計算
-        this->n_routeStack = AStarUtils::shortestRouteStack(this, this->worldPosition(), player->worldPosition());
     }
     else {
-        stop = 1;
-        
         // 見失った地点から、プレイヤーが次に進んだ地点を保持
         if (this->m_playerLostNextPoint == Vec2(-1, -1)) {
             this->m_playerLostNextPoint = player->worldPosition();
@@ -410,17 +404,11 @@ void EnemySprite::chasePlayer(float frame)
             this->loseSightOfPlayer();
         }
     }
-
-    // 目の前まで来たらストップ
-    if (this->n_routeStack.size() < stop) {
-        return;
-    }
     
-    // 最短経路でプレイヤーに近づく
-    Vec2 nextPos = this->n_routeStack.at(0);
-    this->n_routeStack.erase(this->n_routeStack.begin());
-    this->facingNextPos(nextPos);
-    this->moveWorld(this->m_moveSpeed, nextPos);
+    // まっすぐプレイヤーに近づく
+    if (this->nextCharacter() != player) {
+        this->moveNextTile();
+    }
 }
 
 
@@ -473,7 +461,7 @@ void EnemySprite::loseSightOfPlayer()
         }
     }
     
-    //
+    // 
     if (this->checkFindPlayer()) {
         this->startChasePlayer();
         this->startShoot();
