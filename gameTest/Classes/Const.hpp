@@ -9,8 +9,8 @@
 #define Const_hpp
 
 constexpr float VIEW_HEGHT = 640.0f; // 画面の高さ(pixel)
-constexpr float VIEW_WIDTH = 960.0f; // 画面の幅(pixel)
-constexpr float SIDE_BAR_WIDTH = 160.0f; // サイドバーの幅(pixel)
+constexpr float VIEW_WIDTH = 1136.0f; // 画面の幅(pixel)
+constexpr float SIDE_BAR_WIDTH = 248.0f; // サイドバーの幅(pixel)
 
 constexpr float PER_TILE_SIZE { 64.0f }; // 1MAP_TILEあたりのサイズ(pixel)
 

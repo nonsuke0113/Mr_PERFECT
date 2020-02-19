@@ -91,16 +91,16 @@ void StageSceneBase::initCamera()
 void StageSceneBase::initUI()
 {
     // 左サイドバー
-    Sprite *leftBgSprite { Sprite::create("side_test.png") };
+    Sprite *leftBgSprite { Sprite::create("side.png") };
     leftBgSprite->setAnchorPoint(Vec2(0.0f, 0.0f));
     leftBgSprite->setPosition(Vec2(0.0f, 0.0f));
     leftBgSprite->setCameraMask((unsigned short)CameraFlag::USER1);
     this->addChild(leftBgSprite);
     
     // 右サイドバー
-    Sprite *rightBgSprite { Sprite::create("side_test.png") };
+    Sprite *rightBgSprite { Sprite::create("side.png") };
     rightBgSprite->setAnchorPoint(Vec2(0.0f, 0.0f));
-    rightBgSprite->setPosition(Vec2(800.0f, 0.0f));
+    rightBgSprite->setPosition(Vec2(888.0f, 0.0f));
     rightBgSprite->setCameraMask((unsigned short)CameraFlag::USER1);
     this->addChild(rightBgSprite);
     
@@ -663,7 +663,8 @@ void StageSceneBase::updateCameraPosition()
     // 右ボタン押下中
     else if ((this->m_isPushedButton == isPushedRightButton)
              && (newCameraPosition.x != (PER_TILE_SIZE * MAP_TILE_WIDTH) - VIEW_WIDTH/2 + SIDE_BAR_WIDTH - PER_TILE_SIZE/2)
-             && (newCameraPosition.x == this->m_player->getPosition().x + PER_TILE_SIZE/2))
+             // 56 = VIEW_WIDTH/2 - 基準となるx座標
+             && (newCameraPosition.x == this->m_player->getPosition().x + 56))
     {
         newCameraPosition.x += PER_TILE_SIZE;
     }
@@ -677,7 +678,7 @@ void StageSceneBase::updateCameraPosition()
     // 左ボタン押下中
     else if ((this->m_isPushedButton == isPushedLeftButton)
              && (newCameraPosition.x != VIEW_WIDTH / 2 - SIDE_BAR_WIDTH + PER_TILE_SIZE/2)
-             && (newCameraPosition.x == this->m_player->getPosition().x + PER_TILE_SIZE/2))
+             && (newCameraPosition.x == this->m_player->getPosition().x + 56))
     {
         newCameraPosition.x -= PER_TILE_SIZE;
     }
