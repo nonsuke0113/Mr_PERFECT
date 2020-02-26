@@ -11,6 +11,7 @@
 #include "ui/UIScale9Sprite.h"
 #include <typeinfo>
 #include "SelectMissonScene.hpp"
+#include "StageUILayer.hpp"
 
 // 十字ボタンタグ
 enum crossKeyTag {
@@ -163,6 +164,11 @@ void StageSceneBase::initUI()
     saveButton->setCameraMask((unsigned short)CameraFlag::USER1);
     this->addChild(saveButton);
     saveButton->addTouchEventListener(CC_CALLBACK_2(StageSceneBase::touchSaveEvent, this));
+    
+    //
+    StageUILayer *uiLayer = StageUILayer::create();
+    uiLayer->setCameraMask((unsigned short)CameraFlag::USER1);
+    this->addChild(uiLayer, 10000);
 }
 
 
