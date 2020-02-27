@@ -29,6 +29,7 @@ public:
     
     void onTouchesBegan(const std::vector<Touch*>& touches, Event *unused_event);
     void onTouchesMoved(const std::vector<Touch*>& touches, Event *unused_event);
+    void onTouchesEnded(const std::vector<Touch*>& touches, Event *unused_event);
 };
 
 #endif /* StageUILayer_hpp */

@@ -5,7 +5,7 @@
 //  Created by 丹野健介 on 2020/02/09.
 //
 
-#include "Stage2Scene.hpp";
+#include "Stage2Scene.hpp"
 
 #pragma mark -
 #pragma mark init

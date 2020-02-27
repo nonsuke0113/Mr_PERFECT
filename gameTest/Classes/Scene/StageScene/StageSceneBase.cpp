@@ -48,24 +48,29 @@ bool StageSceneBase::init()
         return false;
     }
     this->initCamera();
-    this->initUI();
+//    this->initUI();
     this->initMap();
-    this->initCharactors();
+//    this->initCharactors();
     this->initStart();
     
     // 操作キャラクター座標ラベル(デバッグ用)
-    this->m_playerMapPointLabel = Label::createWithSystemFont(StringUtils::format("x : $%f, y : $%f", this->m_player->worldPosition().x, this->m_player->worldPosition().y), "ariel", 20);
-    this->m_playerMapPointLabel->setAnchorPoint(Vec2(0,0));
-    this->m_playerMapPointLabel->setPosition(Vec2(0.0f, 0.0f));
-    this->m_playerMapPointLabel->setColor(Color3B(255, 0, 0));
-    this->m_playerMapPointLabel->setCameraMask((unsigned short)CameraFlag::USER1);
-    this->addChild(m_playerMapPointLabel);
+//    this->m_playerMapPointLabel = Label::createWithSystemFont(StringUtils::format("x : $%f, y : $%f", this->m_player->worldPosition().x, this->m_player->worldPosition().y), "ariel", 20);
+//    this->m_playerMapPointLabel->setAnchorPoint(Vec2(0,0));
+//    this->m_playerMapPointLabel->setPosition(Vec2(0.0f, 0.0f));
+//    this->m_playerMapPointLabel->setColor(Color3B(255, 0, 0));
+//    this->m_playerMapPointLabel->setCameraMask((unsigned short)CameraFlag::USER1);
+//    this->addChild(m_playerMapPointLabel);
     
     // クリア判定をスケジュール
-    schedule(schedule_selector(StageSceneBase::checkClear), 0.1f);
+//    schedule(schedule_selector(StageSceneBase::checkClear), 0.1f);
     
     // 座標更新をスケジュール
-    schedule(schedule_selector(StageSceneBase::updatePosition), 0.1f);
+//    schedule(schedule_selector(StageSceneBase::updatePosition), 0.1f);
+    
+    //
+    StageUILayer *uiLayer = StageUILayer::create();
+    uiLayer->setCameraMask((unsigned short)CameraFlag::USER1);
+    this->addChild(uiLayer, 10000);
     
     return true;
 }
@@ -164,11 +169,6 @@ void StageSceneBase::initUI()
     saveButton->setCameraMask((unsigned short)CameraFlag::USER1);
     this->addChild(saveButton);
     saveButton->addTouchEventListener(CC_CALLBACK_2(StageSceneBase::touchSaveEvent, this));
-    
-    //
-    StageUILayer *uiLayer = StageUILayer::create();
-    uiLayer->setCameraMask((unsigned short)CameraFlag::USER1);
-    this->addChild(uiLayer, 10000);
 }
 
 

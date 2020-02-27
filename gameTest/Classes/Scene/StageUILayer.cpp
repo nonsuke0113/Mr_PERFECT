@@ -9,6 +9,9 @@
 
 #pragma mark -
 #pragma mark init
+
+static Vec2 _defaultPickPos;
+
 /**
     初期化処理
  */
@@ -24,23 +27,25 @@ bool StageUILayer::init()
 
     // パッド下地
     this->padBack = { Sprite::create("virtualPad_background.png") };
-//    this->padBack->setAnchorPoint(Vec2(0.0f, 0.0f));
     this->padBack->setPosition(Vec2(24.0f + this->padBack->getContentSize().width / 2, (visibleSize.height / 2)));
     this->addChild(this->padBack);
     
     // パッド操作部
     this->padPick = { Sprite::create("virtualPad_pick.png") };
-//    this->padPick->setAnchorPoint(Vec2(0.0f, 0.0f));
-    this->padPick->setPosition(Vec2(84.0f + this->padPick->getContentSize().width / 2, (visibleSize.height / 2) ));
+    this->padPick->setPosition(Vec2(84.0f + this->padPick->getContentSize().width / 2, (visibleSize.height / 2)));
     this->addChild(this->padPick);
+    
+    //
+    _defaultPickPos = this->padPick->getPosition();
     
     //
     auto listener = EventListenerTouchAllAtOnce::create();
     listener->setEnabled(true);
     listener->onTouchesBegan = CC_CALLBACK_2(StageUILayer::onTouchesBegan, this);
     listener->onTouchesMoved = CC_CALLBACK_2(StageUILayer::onTouchesMoved, this);
+    listener->onTouchesEnded = CC_CALLBACK_2(StageUILayer::onTouchesEnded, this);
     
-    this->getEventDispatcher()->addEventListenerWithSceneGraphPriority(listener, this);
+    this->getEventDispatcher()->addEventListenerWithSceneGraphPriority(listener, this->padPick);
     
     return true;
 }
@@ -53,9 +58,22 @@ void StageUILayer::onTouchesBegan(const std::vector<Touch *> &touches, cocos2d::
     std::vector<cocos2d::Touch*>::const_iterator iterator = touches.begin();
     while (iterator != touches.end()) {
         Touch* touch = (Touch*)(*iterator);
-        auto location = touch->getLocation();
+        Vec2 location = touch->getLocation();
         Rect padPickRect = this->padPick->getBoundingBox();
         if (padPickRect.containsPoint(location)) {
+            
+            if (location.x > _defaultPickPos.x + this->padPick->getContentSize().width / 2) {
+                location.x = _defaultPickPos.x + this->padPick->getContentSize().width / 2;
+            } else if (location.x < _defaultPickPos.x - this->padPick->getContentSize().width / 2) {
+                location.x = _defaultPickPos.x - this->padPick->getContentSize().width / 2;
+            }
+            
+            if (location.y > _defaultPickPos.y + this->padPick->getContentSize().height / 2) {
+                location.y = _defaultPickPos.y + this->padPick->getContentSize().height / 2;
+            } else if (location.y < _defaultPickPos.y - this->padPick->getContentSize().height / 2) {
+                location.y = _defaultPickPos.y - this->padPick->getContentSize().height / 2;
+            }
+            
             this->padPick->setPosition(location);
         }
         iterator++;
@@ -66,16 +84,37 @@ void StageUILayer::onTouchesBegan(const std::vector<Touch *> &touches, cocos2d::
 
 /**
  */
-void StageUILayer::onTouchesMoved(const std::vector<Touch *> &touches, cocos2d::Event *unused_event){
+void StageUILayer::onTouchesMoved(const std::vector<Touch *> &touches, cocos2d::Event *unused_event)
+{
     std::vector<cocos2d::Touch*>::const_iterator iterator = touches.begin();
     while (iterator != touches.end()) {
         Touch* touch = (Touch*)(*iterator);
         auto location = touch->getLocation();
         Rect padPickRect = this->padPick->getBoundingBox();
-        if (padPickRect.containsPoint(location)) {
-            this->padPick->setPosition(location);
+            
+        if (location.x > _defaultPickPos.x + this->padPick->getContentSize().width / 2) {
+            location.x = _defaultPickPos.x + this->padPick->getContentSize().width / 2;
+        } else if (location.x < _defaultPickPos.x - this->padPick->getContentSize().width / 2) {
+            location.x = _defaultPickPos.x - this->padPick->getContentSize().width / 2;
         }
+        
+        if (location.y > _defaultPickPos.y + this->padPick->getContentSize().height / 2) {
+            location.y = _defaultPickPos.y + this->padPick->getContentSize().height / 2;
+        } else if (location.y < _defaultPickPos.y - this->padPick->getContentSize().height / 2) {
+            location.y = _defaultPickPos.y - this->padPick->getContentSize().height / 2;
+        }
+        
+        this->padPick->setPosition(location);
+        
         iterator++;
     }
     return;
+}
+
+
+/**
+ */
+void StageUILayer::onTouchesEnded(const std::vector<Touch*>& touches, Event *unused_event)
+{
+    this->padPick->setPosition(_defaultPickPos);
 }
