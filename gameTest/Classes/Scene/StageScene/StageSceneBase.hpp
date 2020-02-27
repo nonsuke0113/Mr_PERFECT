@@ -21,6 +21,7 @@ USING_NS_CC;
 #include "MessageDialog.hpp"
 
 #include "AdMobHelper.h"
+#include "StageUILayer.hpp"
 
 // 十字ボタン状態
 typedef enum {
@@ -46,6 +47,8 @@ protected:
     Label *m_playerMapPointLabel { nullptr }; // 操作キャラクター座標ラベル(デバッグ用)
     MessageDialog *m_messageDialog  { nullptr };   // メッセージダイアログ
     pushedButton m_isPushedButton;  // 十字ボタンの状態
+    
+    StageUILayer *m_uiLayer;
     
     void initCamera();
     void initUI();

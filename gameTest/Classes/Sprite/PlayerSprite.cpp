@@ -68,6 +68,12 @@ void PlayerSprite::setupAnimationCache()
     向きセッター
  */
 void PlayerSprite::setDirectcion(::directcion direction) {
+    
+    // 変化なしなら何もしない
+    if (this->m_directcion == direction) {
+        return;
+    }
+    
     this->m_directcion = direction;
     
     Animation *animation = nullptr;

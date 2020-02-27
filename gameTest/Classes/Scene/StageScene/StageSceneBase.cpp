@@ -11,7 +11,6 @@
 #include "ui/UIScale9Sprite.h"
 #include <typeinfo>
 #include "SelectMissonScene.hpp"
-#include "StageUILayer.hpp"
 
 // 十字ボタンタグ
 enum crossKeyTag {
@@ -48,29 +47,29 @@ bool StageSceneBase::init()
         return false;
     }
     this->initCamera();
-//    this->initUI();
+    this->initUI();
     this->initMap();
-//    this->initCharactors();
+    this->initCharactors();
     this->initStart();
     
-    // 操作キャラクター座標ラベル(デバッグ用)
-//    this->m_playerMapPointLabel = Label::createWithSystemFont(StringUtils::format("x : $%f, y : $%f", this->m_player->worldPosition().x, this->m_player->worldPosition().y), "ariel", 20);
-//    this->m_playerMapPointLabel->setAnchorPoint(Vec2(0,0));
-//    this->m_playerMapPointLabel->setPosition(Vec2(0.0f, 0.0f));
-//    this->m_playerMapPointLabel->setColor(Color3B(255, 0, 0));
-//    this->m_playerMapPointLabel->setCameraMask((unsigned short)CameraFlag::USER1);
-//    this->addChild(m_playerMapPointLabel);
+//     操作キャラクター座標ラベル(デバッグ用)
+    this->m_playerMapPointLabel = Label::createWithSystemFont(StringUtils::format("x : $%f, y : $%f", this->m_player->worldPosition().x, this->m_player->worldPosition().y), "ariel", 20);
+    this->m_playerMapPointLabel->setAnchorPoint(Vec2(0,0));
+    this->m_playerMapPointLabel->setPosition(Vec2(0.0f, 0.0f));
+    this->m_playerMapPointLabel->setColor(Color3B(255, 0, 0));
+    this->m_playerMapPointLabel->setCameraMask((unsigned short)CameraFlag::USER1);
+    this->addChild(m_playerMapPointLabel);
     
     // クリア判定をスケジュール
-//    schedule(schedule_selector(StageSceneBase::checkClear), 0.1f);
+    schedule(schedule_selector(StageSceneBase::checkClear), 0.1f);
     
     // 座標更新をスケジュール
-//    schedule(schedule_selector(StageSceneBase::updatePosition), 0.1f);
+    schedule(schedule_selector(StageSceneBase::updatePosition), 0.1f);
     
     //
-    StageUILayer *uiLayer = StageUILayer::create();
-    uiLayer->setCameraMask((unsigned short)CameraFlag::USER1);
-    this->addChild(uiLayer, 10000);
+    this->m_uiLayer = StageUILayer::create();
+    this->m_uiLayer->setCameraMask((unsigned short)CameraFlag::USER1);
+    this->addChild(this->m_uiLayer, 10000);
     
     return true;
 }
@@ -110,44 +109,44 @@ void StageSceneBase::initUI()
     rightBgSprite->setCameraMask((unsigned short)CameraFlag::USER1);
     this->addChild(rightBgSprite);
     
-    // 上ボタン
-    ui::Button *upButton { ui::Button::create("up_test.png") };
-    upButton->setTag(TAG_UP);
-    upButton->setAnchorPoint(Vec2(0.0f, 0.0f));
-    upButton->setPosition(Vec2(60.0f, 340.0f));
-    upButton->setCameraMask((unsigned short)CameraFlag::USER1);
-    this->addChild(upButton);
-    upButton->addTouchEventListener(CC_CALLBACK_2(StageSceneBase::touchCrossKeyEvent, this));
-    
-    // 右ボタン
-    ui::Button *rightButton { ui::Button::create("right_test.png") };
-    rightButton->setTag(TAG_RIGHT);
-    rightButton->setAnchorPoint(Vec2(0.0f, 0.0f));
-    rightButton->setPosition(Vec2(100.0f, 300.0f));
-    rightButton->setCameraMask((unsigned short)CameraFlag::USER1);
-    this->addChild(rightButton);
-    rightButton->addTouchEventListener(CC_CALLBACK_2(StageSceneBase::touchCrossKeyEvent, this));
-    
-    // 下ボタン
-    ui::Button *downButton { ui::Button::create("down_test.png") };
-    downButton->setTag(TAG_DOWN);
-    downButton->setAnchorPoint(Vec2(0.0f, 0.0f));
-    downButton->setPosition(Vec2(60.0f, 250.0f));
-    downButton->setCameraMask((unsigned short)CameraFlag::USER1);
-    this->addChild(downButton);
-    downButton->addTouchEventListener(CC_CALLBACK_2(StageSceneBase::touchCrossKeyEvent, this));
-    
-    // 左ボタン
-    ui::Button *leftButton { ui::Button::create("left_test.png") };
-    leftButton->setTag(TAG_LEFT);
-    leftButton->setAnchorPoint(Vec2(0.0f, 0.0f));
-    leftButton->setPosition(Vec2(10.0f, 300.0f));
-    leftButton->setCameraMask((unsigned short)CameraFlag::USER1);
-    this->addChild(leftButton);
-    leftButton->addTouchEventListener(CC_CALLBACK_2(StageSceneBase::touchCrossKeyEvent, this));
-    
-    // 十字ボタンの状態を初期化
-    this->m_isPushedButton = pushedButtonNone;
+//    // 上ボタン
+//    ui::Button *upButton { ui::Button::create("up_test.png") };
+//    upButton->setTag(TAG_UP);
+//    upButton->setAnchorPoint(Vec2(0.0f, 0.0f));
+//    upButton->setPosition(Vec2(60.0f, 340.0f));
+//    upButton->setCameraMask((unsigned short)CameraFlag::USER1);
+//    this->addChild(upButton);
+//    upButton->addTouchEventListener(CC_CALLBACK_2(StageSceneBase::touchCrossKeyEvent, this));
+//
+//    // 右ボタン
+//    ui::Button *rightButton { ui::Button::create("right_test.png") };
+//    rightButton->setTag(TAG_RIGHT);
+//    rightButton->setAnchorPoint(Vec2(0.0f, 0.0f));
+//    rightButton->setPosition(Vec2(100.0f, 300.0f));
+//    rightButton->setCameraMask((unsigned short)CameraFlag::USER1);
+//    this->addChild(rightButton);
+//    rightButton->addTouchEventListener(CC_CALLBACK_2(StageSceneBase::touchCrossKeyEvent, this));
+//
+//    // 下ボタン
+//    ui::Button *downButton { ui::Button::create("down_test.png") };
+//    downButton->setTag(TAG_DOWN);
+//    downButton->setAnchorPoint(Vec2(0.0f, 0.0f));
+//    downButton->setPosition(Vec2(60.0f, 250.0f));
+//    downButton->setCameraMask((unsigned short)CameraFlag::USER1);
+//    this->addChild(downButton);
+//    downButton->addTouchEventListener(CC_CALLBACK_2(StageSceneBase::touchCrossKeyEvent, this));
+//
+//    // 左ボタン
+//    ui::Button *leftButton { ui::Button::create("left_test.png") };
+//    leftButton->setTag(TAG_LEFT);
+//    leftButton->setAnchorPoint(Vec2(0.0f, 0.0f));
+//    leftButton->setPosition(Vec2(10.0f, 300.0f));
+//    leftButton->setCameraMask((unsigned short)CameraFlag::USER1);
+//    this->addChild(leftButton);
+//    leftButton->addTouchEventListener(CC_CALLBACK_2(StageSceneBase::touchCrossKeyEvent, this));
+//
+//    // 十字ボタンの状態を初期化
+//    this->m_isPushedButton = pushedButtonNone;
     
     // Aボタン
     ui::Button *aButton { ui::Button::create("a_test.png") };
@@ -624,8 +623,26 @@ void StageSceneBase::checkClear(float frame)
  */
 void StageSceneBase::updatePosition(float frame)
 {
+    padState padState = this->m_uiLayer->padState();
+    switch (padState) {
+        case padUp:
+            this->m_player->setDirectcion(back);
+            break;
+        case padRight:
+            this->m_player->setDirectcion(right);
+            break;
+        case padDown:
+            this->m_player->setDirectcion(front);
+            break;
+        case padLeft:
+            this->m_player->setDirectcion(left);
+            break;
+        default:
+            break;
+    }
+    
     // 十字キーが押されてなかったり、行けない道だったら何もしない
-    if ((this->m_isPushedButton == pushedButtonNone) ||
+    if ((padState == padNone) ||
         (this->m_map->getNumberOfRunningActions() > 0) ||
         (this->m_player->getActionByTag(::move) != nullptr) ||
         this->m_player->nextTileGID() != 0 ||
@@ -659,15 +676,17 @@ void StageSceneBase::updateCameraPosition()
     // カメラ座標
     Vec3 newCameraPosition = this->m_camera->getPosition3D();
     
+    padState padState = this->m_uiLayer->padState();
+    
     // 上ボタン押下中
-    if ((this->m_isPushedButton == isPushedUpButton) &&
+    if ((padState == padUp) &&
         (newCameraPosition.y != ((PER_TILE_SIZE * MAP_TILE_HEGHT) - VIEW_HEGHT / 2)) &&
         (newCameraPosition.y == this->m_player->getPosition().y))
     {
         newCameraPosition.y += PER_TILE_SIZE;
     }
     // 右ボタン押下中
-    else if ((this->m_isPushedButton == isPushedRightButton)
+    else if ((padState == padRight)
              && (newCameraPosition.x != (PER_TILE_SIZE * MAP_TILE_WIDTH) - VIEW_WIDTH/2 + SIDE_BAR_WIDTH - PER_TILE_SIZE/2)
              // 56 = VIEW_WIDTH/2 - 基準となるx座標
              && (newCameraPosition.x == this->m_player->getPosition().x + 56))
@@ -675,14 +694,14 @@ void StageSceneBase::updateCameraPosition()
         newCameraPosition.x += PER_TILE_SIZE;
     }
     // 下ボタン押下中
-    else if ((this->m_isPushedButton == isPushedDownButton) &&
+    else if ((padState == padDown) &&
              (newCameraPosition.y != VIEW_HEGHT / 2) &&
              (newCameraPosition.y == this->m_player->getPosition().y))
     {
         newCameraPosition.y -= PER_TILE_SIZE;
     }
     // 左ボタン押下中
-    else if ((this->m_isPushedButton == isPushedLeftButton)
+    else if ((padState == padLeft)
              && (newCameraPosition.x != VIEW_WIDTH / 2 - SIDE_BAR_WIDTH + PER_TILE_SIZE/2)
              && (newCameraPosition.x == this->m_player->getPosition().x + 56))
     {
