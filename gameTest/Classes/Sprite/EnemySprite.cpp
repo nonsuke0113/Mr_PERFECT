@@ -381,7 +381,9 @@ void EnemySprite::startChasePlayer()
     this->stopPatrol();
     
     // 保持しているプレイヤーの座標情報リセット
-    this->m_playerLostPoint = Vec2(-1, -1);
+    StageSceneBase* mainScene = (StageSceneBase*)this->getParent();
+    CharacterSprite* player = mainScene->m_player;
+    this->m_playerLostPoint = player->worldPosition();
     this->m_playerLostNextPoint = Vec2(-1, -1);
     
     schedule(schedule_selector(EnemySprite::chasePlayer), 0.5f);
@@ -394,9 +396,6 @@ void EnemySprite::startChasePlayer()
 void EnemySprite::stopChasePlayer()
 {
     unschedule(schedule_selector(EnemySprite::chasePlayer));
-    
-    // 再度巡回する
-    this->startPatrol();
 }
 
 

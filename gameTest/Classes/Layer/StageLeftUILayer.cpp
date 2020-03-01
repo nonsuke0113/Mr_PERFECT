@@ -200,5 +200,8 @@ double StageLeftUILayer::degreeFromVec2(Vec2 posA, Vec2 posB)
  */
 void StageLeftUILayer::heartOff(int i)
 {
+    if (i < 0) {
+        return;
+    }
     this->heartes.at(i)->setVisible(false);
 }

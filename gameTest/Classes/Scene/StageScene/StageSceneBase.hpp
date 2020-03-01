@@ -27,7 +27,7 @@ USING_NS_CC;
 typedef enum {
     nomal,
     save,
-    findPlayer
+    failed
 } messageType;
 
 
@@ -49,11 +49,11 @@ protected:
     void createMessageDialog(::messageType messageType);
     void createMessage();
     void createSaveMessage();
-    void createFindPlayerMessage();
+    void createMissionFailedMessage();
     void setMessageCallback();
     
+    void allNodeUnschedule();
     void stageClear();
-    
     void gameover();
     void doSave();
     virtual void doContinue();
@@ -73,6 +73,7 @@ public:
     Vector<EnemySprite*> enemysVector();
     void touchAEvent(Ref *pSender, ui::Widget::TouchEventType type);
     void touchBEvent(Ref *pSender, ui::Widget::TouchEventType type);
+    void missionFailed();
     void enemyFindPlayer();
     void heartOff(int i);
 };

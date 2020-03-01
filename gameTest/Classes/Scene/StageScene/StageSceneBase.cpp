@@ -180,7 +180,7 @@ void StageSceneBase::touchAEvent(Ref *pSender, ui::Widget::TouchEventType type)
                     doSave();
                 }
                 break;
-            case messageType::findPlayer:
+            case messageType::failed:
                 if (this->m_messageDialog->userChoice) {
                     doContinue();
                 } else {
@@ -296,12 +296,23 @@ void StageSceneBase::doContinue()
 #pragma mark -
 #pragma mark Event
 /**
+ */
+void StageSceneBase::allNodeUnschedule()
+{
+    for (int i = 0; i < this->getChildren().size(); i++) {
+        this->getChildren().at(i)->unscheduleAllCallbacks();
+    }
+    this->unscheduleAllCallbacks();
+}
+
+
+/**
     クリア条件を満たした
  */
 void StageSceneBase::stageClear()
 {
     // 全てのスケジュールを中止
-    unscheduleAllCallbacks();
+    this->allNodeUnschedule();
     
     // コンプリート表示処理
     Sprite *complate { Sprite::create("mission_complate.png") };
@@ -328,11 +339,28 @@ void StageSceneBase::stageClear()
 
 
 /**
-    敵キャラクターがプレイヤーを発見した
+    ミッション失敗
  */
-void StageSceneBase::enemyFindPlayer()
+void StageSceneBase::missionFailed()
 {
-    this->createMessageDialog(messageType::findPlayer);
+    // 全てのスケジュールを中止
+    this->allNodeUnschedule();
+    
+    // 失敗表示処理
+    Sprite *failed { Sprite::create("mission_failed.png") };
+    Size visibleSize { Director::getInstance()->getVisibleSize() };
+    failed->setPosition(Vec2(0.0f, visibleSize.height / 2));
+    failed->setCameraMask((unsigned short)CameraFlag::USER1);
+    this->addChild(failed);
+    
+    Vector<FiniteTimeAction *> actionAry;
+    actionAry.pushBack(MoveTo::create(1.0f, Vec2(visibleSize.width/2, visibleSize.height/2)));
+    // コンテニューメッセージダイアログを表示する
+    actionAry.pushBack(CallFunc::create([this]() {
+        this->createMessageDialog(messageType::failed);
+    }));
+    Sequence *actions { Sequence::create(actionAry) };
+    failed->runAction(actions);
 }
 
 
@@ -356,7 +384,7 @@ void StageSceneBase::createMessageDialog(::messageType messageType)
 {
     this->m_messageDialog = MessageDialog::create(640, 200);
     this->m_messageDialog->setAnchorPoint(Vec2(0.0f,0.0f));
-    this->m_messageDialog->setPosition(Vec2(480.0f, 0.0f));
+    this->m_messageDialog->setPosition(Vec2(568.0f, 0.0f));
     this->m_messageDialog->m_messageType = messageType;
     
     // メッセージを追加
@@ -367,8 +395,8 @@ void StageSceneBase::createMessageDialog(::messageType messageType)
         case messageType::save:
             this->createSaveMessage();
             break;
-        case messageType::findPlayer:
-            this->createFindPlayerMessage();
+        case messageType::failed:
+            this->createMissionFailedMessage();
             break;
         default:
             break;
@@ -399,9 +427,6 @@ void StageSceneBase::createMessage()
     CharacterSprite* nextChara = this->m_player->nextCharacter();
     // 人
     if(nextChara != nullptr) {
-        // mobの動きを一時停止
-        //        unschedule(schedule_selector(StageSceneBase::updateMobPosition));
-        
         if(this->m_player->getName() != "") {
             this->m_messageDialog->addMessage(StringUtils::format("こんにちは、%s", this->m_player->getName().c_str()));
         } else {
@@ -421,13 +446,10 @@ void StageSceneBase::createMessage()
 
 
 /**
-    敵キャラクターがプレイヤーを発見した際のメッセージダイアログに設定する本文を作成する
+    ミッション失敗時のメッセージダイアログに設定する本文を作成する
  */
-void StageSceneBase::createFindPlayerMessage()
+void StageSceneBase::createMissionFailedMessage()
 {
-    this->m_messageDialog->addMessage("「何者だ！」");
-    this->m_messageDialog->addMessage("見つかってしまった...");
-    this->m_messageDialog->addMessage("GAME OVER");
     this->m_messageDialog->addMessage("コンティニュー？$");
 }
 

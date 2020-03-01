@@ -127,5 +127,6 @@ void PlayerSprite::hitToBullet(int damage, ::directcion bulletDirection)
  */
 void PlayerSprite::dead()
 {
-    
+    StageSceneBase* mainScene = (StageSceneBase*)this->getParent();
+    mainScene->missionFailed();
 }
