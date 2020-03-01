@@ -16,17 +16,20 @@ USING_NS_CC;
 #include <vector>
 
 
-class AStarNode
+class AStarNode : public Ref
 {
 protected:
     
 public:
+    
+    static AStarNode* create(const Vec2 pos, const Vec2 goalPos, AStarNode* parent);
+    virtual bool init(const Vec2 pos, const Vec2 goalPos, AStarNode* parent);
+    
     Vec2 pos; // ワールド座標
     float eCost; // 推定(estimated)コスト。このノードから、ゴールノードまでの最短距離。
     float aCost; // 実(actual)コスト。スタートノードからの距離+eコスト。
     AStarNode *parentNode; // 親のノード。
     
-    AStarNode(Vec2 pos, Vec2 goalPos, AStarNode* parent);
     std::vector<Vec2> shortestRouteStack();
 };
 

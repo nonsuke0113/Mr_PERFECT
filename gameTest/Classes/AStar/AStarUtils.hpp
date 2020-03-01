@@ -25,7 +25,7 @@ private:
 public:
     static float calculateECost(const Vec2 &posA, const Vec2 &posB);
     static bool findNodeFromVector(std::vector<AStarNode*>& vector, AStarNode *node);
-    static std::vector<Vec2> shortestRouteStack(GameSpriteBase　*sprite, const Vec2 &startPos, const Vec2 &goalPos);
+    static std::vector<Vec2> shortestRouteStack(GameSpriteBase *sprite, const Vec2 &startPos, const Vec2 &goalPos);
 };
 
 #endif /* AStarUtils_hpp */

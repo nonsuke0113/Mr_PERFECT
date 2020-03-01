@@ -52,7 +52,7 @@ std::vector<Vec2> AStarUtils::shortestRouteStack(GameSpriteBase *sprite,
 {
     std::vector<AStarNode*> openNodes;
     std::vector<AStarNode*> closeNodes;
-    AStarNode *startNode = new AStarNode(startPos, goalPos, nullptr);
+    AStarNode *startNode = AStarNode::create(startPos, goalPos, nullptr);
     openNodes.push_back(startNode);
     
     // スタート座標とゴール座標から、ゴールノードを求める
@@ -92,51 +92,39 @@ AStarNode* AStarUtils::findGoalNode(std::vector<AStarNode*>& openNodes,
     
     // 経路探索
     // 上
-    AStarNode *upNode = new AStarNode(Vec2{ currentNode->pos.x, currentNode->pos.y - 1.0f }, goalPos, currentNode);
+    AStarNode *upNode = AStarNode::create(Vec2{ currentNode->pos.x, currentNode->pos.y - 1.0f }, goalPos, currentNode);
     if (sprite->canMovePos(upNode->pos) &&
         !AStarUtils::findNodeFromVector(openNodes, upNode) &&
         !AStarUtils::findNodeFromVector(closeNodes, upNode))
     {
         openNodes.push_back(upNode);
     }
-    else {
-        delete upNode;
-    }
     
     // 右
-    AStarNode *rightNode = new AStarNode(Vec2{ currentNode->pos.x + 1.0f, currentNode->pos.y }, goalPos, currentNode);
+    AStarNode *rightNode = AStarNode::create(Vec2{ currentNode->pos.x + 1.0f, currentNode->pos.y }, goalPos, currentNode);
     if (sprite->canMovePos(rightNode->pos) &&
         !AStarUtils::findNodeFromVector(openNodes, rightNode) &&
         !AStarUtils::findNodeFromVector(closeNodes, rightNode))
     {
         openNodes.push_back(rightNode);
     }
-    else {
-        delete rightNode;
-    }
     
     // 下
-    AStarNode *downNode = new AStarNode(Vec2{ currentNode->pos.x, currentNode->pos.y + 1.0f }, goalPos, currentNode);
+    AStarNode *downNode = AStarNode::create(Vec2{ currentNode->pos.x, currentNode->pos.y + 1.0f }, goalPos, currentNode);
     if (sprite->canMovePos(downNode->pos) &&
         !AStarUtils::findNodeFromVector(openNodes, downNode) &&
         !AStarUtils::findNodeFromVector(closeNodes, downNode))
     {
         openNodes.push_back(downNode);
     }
-    else {
-        delete downNode;
-    }
     
     // 左
-    AStarNode *leftNode = new AStarNode(Vec2{ currentNode->pos.x - 1.0f, currentNode->pos.y }, goalPos, currentNode);
+    AStarNode *leftNode = AStarNode::create(Vec2{ currentNode->pos.x - 1.0f, currentNode->pos.y }, goalPos, currentNode);
     if (sprite->canMovePos(leftNode->pos) &&
         !AStarUtils::findNodeFromVector(openNodes, leftNode) &&
         !AStarUtils::findNodeFromVector(closeNodes, leftNode))
     {
         openNodes.push_back(leftNode);
-    }
-    else {
-        delete leftNode;
     }
     
     // 上下左右の検証が終わったら、現在検証中のノードを検証済みとする
