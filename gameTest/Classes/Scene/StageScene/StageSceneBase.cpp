@@ -62,14 +62,8 @@ bool StageSceneBase::init()
     
     // クリア判定をスケジュール
     schedule(schedule_selector(StageSceneBase::checkClear), 0.1f);
-    
     // 座標更新をスケジュール
     schedule(schedule_selector(StageSceneBase::updatePosition), 0.1f);
-    
-    //
-    this->m_uiLayer = StageUILayer::create();
-    this->m_uiLayer->setCameraMask((unsigned short)CameraFlag::USER1);
-    this->addChild(this->m_uiLayer, 10000);
     
     return true;
 }
@@ -95,72 +89,9 @@ void StageSceneBase::initCamera()
  */
 void StageSceneBase::initUI()
 {
-    // 左サイドバー
-    Sprite *leftBgSprite { Sprite::create("side.png") };
-    leftBgSprite->setAnchorPoint(Vec2(0.0f, 0.0f));
-    leftBgSprite->setPosition(Vec2(0.0f, 0.0f));
-    leftBgSprite->setCameraMask((unsigned short)CameraFlag::USER1);
-    this->addChild(leftBgSprite);
-    
-    // 右サイドバー
-    Sprite *rightBgSprite { Sprite::create("side.png") };
-    rightBgSprite->setAnchorPoint(Vec2(0.0f, 0.0f));
-    rightBgSprite->setPosition(Vec2(888.0f, 0.0f));
-    rightBgSprite->setCameraMask((unsigned short)CameraFlag::USER1);
-    this->addChild(rightBgSprite);
-    
-//    // 上ボタン
-//    ui::Button *upButton { ui::Button::create("up_test.png") };
-//    upButton->setTag(TAG_UP);
-//    upButton->setAnchorPoint(Vec2(0.0f, 0.0f));
-//    upButton->setPosition(Vec2(60.0f, 340.0f));
-//    upButton->setCameraMask((unsigned short)CameraFlag::USER1);
-//    this->addChild(upButton);
-//    upButton->addTouchEventListener(CC_CALLBACK_2(StageSceneBase::touchCrossKeyEvent, this));
-//
-//    // 右ボタン
-//    ui::Button *rightButton { ui::Button::create("right_test.png") };
-//    rightButton->setTag(TAG_RIGHT);
-//    rightButton->setAnchorPoint(Vec2(0.0f, 0.0f));
-//    rightButton->setPosition(Vec2(100.0f, 300.0f));
-//    rightButton->setCameraMask((unsigned short)CameraFlag::USER1);
-//    this->addChild(rightButton);
-//    rightButton->addTouchEventListener(CC_CALLBACK_2(StageSceneBase::touchCrossKeyEvent, this));
-//
-//    // 下ボタン
-//    ui::Button *downButton { ui::Button::create("down_test.png") };
-//    downButton->setTag(TAG_DOWN);
-//    downButton->setAnchorPoint(Vec2(0.0f, 0.0f));
-//    downButton->setPosition(Vec2(60.0f, 250.0f));
-//    downButton->setCameraMask((unsigned short)CameraFlag::USER1);
-//    this->addChild(downButton);
-//    downButton->addTouchEventListener(CC_CALLBACK_2(StageSceneBase::touchCrossKeyEvent, this));
-//
-//    // 左ボタン
-//    ui::Button *leftButton { ui::Button::create("left_test.png") };
-//    leftButton->setTag(TAG_LEFT);
-//    leftButton->setAnchorPoint(Vec2(0.0f, 0.0f));
-//    leftButton->setPosition(Vec2(10.0f, 300.0f));
-//    leftButton->setCameraMask((unsigned short)CameraFlag::USER1);
-//    this->addChild(leftButton);
-//    leftButton->addTouchEventListener(CC_CALLBACK_2(StageSceneBase::touchCrossKeyEvent, this));
-//
-//    // 十字ボタンの状態を初期化
-//    this->m_isPushedButton = pushedButtonNone;
-    
-    // Aボタン
-    ui::Button *aButton { ui::Button::create("a_test.png") };
-    aButton->setPosition(Vec2(880.0f, 320.0f));
-    aButton->setCameraMask((unsigned short)CameraFlag::USER1);
-    this->addChild(aButton);
-    aButton->addTouchEventListener(CC_CALLBACK_2(StageSceneBase::touchAEvent, this));
-    
-    // Aボタン2【仮】
-    ui::Button *aButton2 { ui::Button::create("a_test.png") };
-    aButton2->setPosition(Vec2(880.0f, 220.0f));
-    aButton2->setCameraMask((unsigned short)CameraFlag::USER1);
-    this->addChild(aButton2);
-    aButton2->addTouchEventListener(CC_CALLBACK_2(StageSceneBase::touchA2Event, this));
+    this->m_uiLayer = StageUILayer::create();
+    this->m_uiLayer->setCameraMask((unsigned short)CameraFlag::USER1);
+    this->addChild(this->m_uiLayer);
     
     // SAVEボタン【仮】
     ui::Button* saveButton { ui::Button::create("CloseNormal.png") };
@@ -253,135 +184,57 @@ Vector<EnemySprite*> StageSceneBase::enemysVector() {
 #pragma mark -
 #pragma mark ButtonEvent
 /**
-    十字キー押下時のイベント
- */
-void StageSceneBase::touchCrossKeyEvent(Ref *pSender, ui::Widget::TouchEventType type)
-{
-    // タグから押下されたボタンの方向を取得
-    ui::Button* button = (ui::Button*)pSender;
-    int buttonType = button->getTag();
-    
-    // 操作キャラクターの向きとボタンの状態を設定
-    switch (type) {
-        case ui::Widget::TouchEventType::BEGAN:
-            switch (buttonType) {
-                case TAG_UP:
-                    this->m_player->setDirectcion(back);
-                    this->m_isPushedButton = isPushedUpButton;
-                    break;
-                case TAG_RIGHT:
-                    if(this->m_messageDialog  != nullptr && this->m_messageDialog->isYesNo) {
-                        this->m_messageDialog->selectChoice(false);
-                    } else {
-                        this->m_player->setDirectcion(right);
-                        this->m_isPushedButton = isPushedRightButton;
-                    }
-                    break;
-                case TAG_DOWN:
-                    this->m_player->setDirectcion(front);
-                    this->m_isPushedButton = isPushedDownButton;
-                    break;
-                case TAG_LEFT:
-                    if(this->m_messageDialog  != nullptr && this->m_messageDialog->isYesNo) {
-                        this->m_messageDialog->selectChoice(true);
-                    } else {
-                        this->m_player->setDirectcion(left);
-                        this->m_isPushedButton = isPushedLeftButton;
-                    }
-                    break;
-                default:
-                    break;
-            }
-            break;
-            
-        case ui::Widget::TouchEventType::MOVED:
-            break;
-            
-        case ui::Widget::TouchEventType::ENDED:
-        case ui::Widget::TouchEventType::CANCELED:
-            this->m_isPushedButton = pushedButtonNone;
-            break;
-            
-        default:
-            break;
-    }
-}
-
-
-/**
     Aボタン押下時のイベント
  */
 void StageSceneBase::touchAEvent(Ref *pSender, ui::Widget::TouchEventType type)
 {
-    switch (type) {
-        case ui::Widget::TouchEventType::BEGAN: {
-            
-            if(this->m_messageDialog  != nullptr &&
-               this->m_messageDialog->isYesNo) {
-                switch (this->m_messageDialog->m_messageType) {
-                    case messageType::save:
-                        if (this->m_messageDialog->userChoice) {
-                            doSave();
-                        }
-                        break;
-                    case messageType::findPlayer:
-                        if (this->m_messageDialog->userChoice) {
-                            doContinue();
-                        } else {
-                            gameover();
-                        }
-                        break;
-                    default:
-                        break;
+    if(this->m_messageDialog  != nullptr && this->m_messageDialog->isYesNo) {
+        switch (this->m_messageDialog->m_messageType) {
+            case messageType::save:
+                if (this->m_messageDialog->userChoice) {
+                    doSave();
                 }
-            }
-            
-            if (this->m_messageDialog  == nullptr) {
-                // Messageテスト
-                if (this->m_player->nextTileGID() != -1) {
-                    this->createMessageDialog(messageType::nomal);
+                break;
+            case messageType::findPlayer:
+                if (this->m_messageDialog->userChoice) {
+                    doContinue();
+                } else {
+                    gameover();
                 }
-                // 壁叩きテスト
-                else {
-                    //                    std::vector<Vec2> routeStack;
-                    //                    std::vector<Vec2> shortestRouteStack;
-                    //                    this->enemysVector().at(0)->searchShortestRoute(routeStack, shortestRouteStack, this->enemysVector().at(0)->worldPosition(), this->m_player->worldPosition());
-                    //                    this->enemysVector().at(0)->startMoveAccordingToRouteStack(shortestRouteStack);
-                    
-                    this->enemysVector().at(0)->startChasePlayer();
-                }
-            }
-            else {
-                // 文字送りを実行する
-                this->m_messageDialog->next();
-            }
-            break;
+                break;
+            default:
+                break;
         }
+    }
+    
+    if (this->m_messageDialog  == nullptr) {
+        // Messageテスト
+        if (this->m_player->nextTileGID() != -1) {
+            this->createMessageDialog(messageType::nomal);
+        }
+        // 壁叩きテスト
+        else {
+            //                    std::vector<Vec2> routeStack;
+            //                    std::vector<Vec2> shortestRouteStack;
+            //                    this->enemysVector().at(0)->searchShortestRoute(routeStack, shortestRouteStack, this->enemysVector().at(0)->worldPosition(), this->m_player->worldPosition());
+            //                    this->enemysVector().at(0)->startMoveAccordingToRouteStack(shortestRouteStack);
             
-        case ui::Widget::TouchEventType::MOVED:
-        case ui::Widget::TouchEventType::ENDED:
-        case ui::Widget::TouchEventType::CANCELED:
-            break;
+            this->enemysVector().at(0)->startChasePlayer();
+        }
+    }
+    else {
+        // 文字送りを実行する
+        this->m_messageDialog->next();
     }
 }
 
 
 /**
-    テスト
-    Aボタン2押下時のイベント
+    Bボタン押下時のイベント
  */
-void StageSceneBase::touchA2Event(Ref *pSender, ui::Widget::TouchEventType type)
+void StageSceneBase::touchBEvent(Ref *pSender, ui::Widget::TouchEventType type)
 {
-    switch (type) {
-        case ui::Widget::TouchEventType::BEGAN: {
-            this->m_player->shootBullet();
-        }
-            
-        case ui::Widget::TouchEventType::MOVED:
-        case ui::Widget::TouchEventType::ENDED:
-        case ui::Widget::TouchEventType::CANCELED:
-            break;
-    }
+    this->m_player->shootBullet();
 }
 
 

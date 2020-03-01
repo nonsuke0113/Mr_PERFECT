@@ -1,20 +1,21 @@
 //
-//  StageUILayer.hpp
+//  StageLeftUILayer.hpp
 //  gameTest-mobile
 //
-//  ステージUIを配置するレイヤー
+//  ステージの左サイドバーのUIレイヤー
 //
-//  Created by 丹野健介 on 2020/02/26.
+//  Created by 丹野健介 on 2020/02/29.
 //
 
-#ifndef StageUILayer_hpp
-#define StageUILayer_hpp
+#ifndef StageLeftUILayer_hpp
+#define StageLeftUILayer_hpp
 
 USING_NS_CC;
 
 #include "cocos2d.h"
 #include "ui/CocosGUI.h"
 
+// バーチャルパッドステータス一覧
 typedef enum {
     padNone,
     padUp,
@@ -23,25 +24,27 @@ typedef enum {
     padLeft
 } padState;
 
-class StageUILayer : public Layer
+
+class StageLeftUILayer : public Layer
 {
 private:
     
+    Sprite *background; // 背景
     Sprite *padBack; // パッド下地
     Sprite *padPick; // パッド操作部
     
-    double degreeFromVec2(Vec2 posA, Vec2 posB);
+    static double degreeFromVec2(Vec2 posA, Vec2 posB);
     
     void onTouchesBegan(const std::vector<Touch*>& touches, Event *unused_event);
     void onTouchesMoved(const std::vector<Touch*>& touches, Event *unused_event);
     void onTouchesEnded(const std::vector<Touch*>& touches, Event *unused_event);
     
 public:
-
-    CREATE_FUNC(StageUILayer);
+    
+    CREATE_FUNC(StageLeftUILayer);
     virtual bool init();
     
     ::padState padState();
 };
 
-#endif /* StageUILayer_hpp */
+#endif /* StageLeftUILayer_hpp */

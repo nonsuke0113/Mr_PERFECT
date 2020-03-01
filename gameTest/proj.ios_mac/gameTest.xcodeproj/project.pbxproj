@@ -44,6 +44,8 @@
 		521A8EAA19F11F5000D177D7 /* fonts in Resources */ = {isa = PBXBuildFile; fileRef = 521A8EA819F11F5000D177D7 /* fonts */; };
 		52B47A471A53D09C004E4C60 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 52B47A461A53D09B004E4C60 /* Security.framework */; };
 		8262943E1AAF051F00CB7CF7 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8262943D1AAF051F00CB7CF7 /* Security.framework */; };
+		86114BE0240AB31E00864BEA /* StageLeftUILayer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 86114BDE240AB31E00864BEA /* StageLeftUILayer.cpp */; };
+		86114BE5240AB95700864BEA /* StageRightUILayer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 86114BE3240AB95700864BEA /* StageRightUILayer.cpp */; };
 		861B748E239F37A6007068AB /* BulletSprite.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 861B748C239F37A6007068AB /* BulletSprite.cpp */; };
 		861B7492239F516C007068AB /* GameSpriteBase.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 861B7490239F516C007068AB /* GameSpriteBase.cpp */; };
 		8648AA8023F294F200365B62 /* AStarNode.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8648AA7E23F294F200365B62 /* AStarNode.cpp */; };
@@ -167,6 +169,10 @@
 		521A8EA819F11F5000D177D7 /* fonts */ = {isa = PBXFileReference; lastKnownFileType = folder; path = fonts; sourceTree = "<group>"; };
 		52B47A461A53D09B004E4C60 /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS.sdk/System/Library/Frameworks/Security.framework; sourceTree = DEVELOPER_DIR; };
 		8262943D1AAF051F00CB7CF7 /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
+		86114BDE240AB31E00864BEA /* StageLeftUILayer.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = StageLeftUILayer.cpp; sourceTree = "<group>"; };
+		86114BDF240AB31E00864BEA /* StageLeftUILayer.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = StageLeftUILayer.hpp; sourceTree = "<group>"; };
+		86114BE3240AB95700864BEA /* StageRightUILayer.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = StageRightUILayer.cpp; sourceTree = "<group>"; };
+		86114BE4240AB95700864BEA /* StageRightUILayer.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = StageRightUILayer.hpp; sourceTree = "<group>"; };
 		861B748C239F37A6007068AB /* BulletSprite.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = BulletSprite.cpp; sourceTree = "<group>"; };
 		861B748D239F37A6007068AB /* BulletSprite.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = BulletSprite.hpp; sourceTree = "<group>"; };
 		861B7490239F516C007068AB /* GameSpriteBase.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = GameSpriteBase.cpp; sourceTree = "<group>"; };
@@ -384,6 +390,7 @@
 				46880B8519C43A87006E1F66 /* AppDelegate.h */,
 				46880B8419C43A87006E1F66 /* AppDelegate.cpp */,
 				AB42A26623A37A2800B927DC /* Scene */,
+				86114BE2240AB8E600864BEA /* Layer */,
 				AB42A26723A37A5E00B927DC /* Sprite */,
 				8648AA8523F2DDF700365B62 /* AStar */,
 				E9A5211721AECC9900DB44EA /* Const.hpp */,
@@ -413,6 +420,19 @@
 				503AE10417EB98FF00D1A890 /* Prefix.pch */,
 			);
 			name = mac;
+			sourceTree = "<group>";
+		};
+		86114BE2240AB8E600864BEA /* Layer */ = {
+			isa = PBXGroup;
+			children = (
+				86F5F1892406A8A90051060B /* StageUILayer.hpp */,
+				86F5F1882406A8A90051060B /* StageUILayer.cpp */,
+				86114BDF240AB31E00864BEA /* StageLeftUILayer.hpp */,
+				86114BDE240AB31E00864BEA /* StageLeftUILayer.cpp */,
+				86114BE4240AB95700864BEA /* StageRightUILayer.hpp */,
+				86114BE3240AB95700864BEA /* StageRightUILayer.cpp */,
+			);
+			path = Layer;
 			sourceTree = "<group>";
 		};
 		8648AA8523F2DDF700365B62 /* AStar */ = {
@@ -447,8 +467,6 @@
 				E9A5210C21A90B8C00DB44EA /* TitleScene.cpp */,
 				86DA7CC323E4364900B495AB /* SelectMissonScene.hpp */,
 				86DA7CC223E4364900B495AB /* SelectMissonScene.cpp */,
-				86F5F1892406A8A90051060B /* StageUILayer.hpp */,
-				86F5F1882406A8A90051060B /* StageUILayer.cpp */,
 			);
 			path = Scene;
 			sourceTree = "<group>";
@@ -620,6 +638,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				E9A5211521A90C6F00DB44EA /* CharacterSprite.cpp in Sources */,
+				86114BE5240AB95700864BEA /* StageRightUILayer.cpp in Sources */,
 				8664737F23A8B58900ADCC59 /* StageSceneBase.cpp in Sources */,
 				1AF87B781F6F77F7007BE51C /* AppController.mm in Sources */,
 				8648AA8023F294F200365B62 /* AStarNode.cpp in Sources */,
@@ -634,6 +653,7 @@
 				8659988923AA030F002EB428 /* Stage1Scene.cpp in Sources */,
 				E9A5210E21A90B8C00DB44EA /* TitleScene.cpp in Sources */,
 				ABBA36B721BA6A3500A02928 /* MessageDialog.cpp in Sources */,
+				86114BE0240AB31E00864BEA /* StageLeftUILayer.cpp in Sources */,
 				864FC468237527FE00DDF5E8 /* EnemySprite.cpp in Sources */,
 				86F5F18A2406A8A90051060B /* StageUILayer.cpp in Sources */,
 				86DA7CC423E4364900B495AB /* SelectMissonScene.cpp in Sources */,

@@ -1,31 +1,39 @@
 //
-//  StageUILayer.cpp
+//  StageLeftUILayer.cpp
 //  gameTest-mobile
 //
-//  Created by 丹野健介 on 2020/02/26.
+//  Created by 丹野健介 on 2020/02/29.
 //
 
-#include "StageUILayer.hpp"
+#include "StageLeftUILayer.hpp"
 #include <math.h>
-
-#pragma mark -
-#pragma mark init
 
 static Vec2 _defaultPickPos; // パッド操作部の基準座標
 
+#pragma mark -
+#pragma mark init
 /**
     初期化処理
  */
-bool StageUILayer::init()
+bool StageLeftUILayer::init()
 {
     if ( !Layer::init() )
     {
         return false;
     }
     
+    // 背景
+    this->background = { Sprite::create("side.png") };
+    this->background->setAnchorPoint(Vec2(0.0f, 0.0f));
+    this->background->setPosition(Vec2(0.0f, 0.0f));
+    this->addChild(this->background);
+    
+    // 自身のサイズ設定
+    this->setContentSize(this->background->getContentSize());
+    
     // 画面サイズ取得
     Size visibleSize { Director::getInstance()->getVisibleSize() };
-
+    
     // パッド下地
     this->padBack = { Sprite::create("virtualPad_background.png") };
     this->padBack->setPosition(Vec2(24.0f + this->padBack->getContentSize().width / 2, (visibleSize.height / 2)));
@@ -42,19 +50,21 @@ bool StageUILayer::init()
     // イベントリスナーを設定
     auto listener = EventListenerTouchAllAtOnce::create();
     listener->setEnabled(true);
-    listener->onTouchesBegan = CC_CALLBACK_2(StageUILayer::onTouchesBegan, this);
-    listener->onTouchesMoved = CC_CALLBACK_2(StageUILayer::onTouchesMoved, this);
-    listener->onTouchesEnded = CC_CALLBACK_2(StageUILayer::onTouchesEnded, this);
+    listener->onTouchesBegan = CC_CALLBACK_2(StageLeftUILayer::onTouchesBegan, this);
+    listener->onTouchesMoved = CC_CALLBACK_2(StageLeftUILayer::onTouchesMoved, this);
+    listener->onTouchesEnded = CC_CALLBACK_2(StageLeftUILayer::onTouchesEnded, this);
     this->getEventDispatcher()->addEventListenerWithSceneGraphPriority(listener, this->padPick);
     
     return true;
 }
 
 
+#pragma mark -
+#pragma mark TouchEvent
 /**
     タッチ時に呼び出される
  */
-void StageUILayer::onTouchesBegan(const std::vector<Touch *> &touches, cocos2d::Event *unused_event)
+void StageLeftUILayer::onTouchesBegan(const std::vector<Touch *> &touches, cocos2d::Event *unused_event)
 {
     std::vector<cocos2d::Touch*>::const_iterator iterator = touches.begin();
     while (iterator != touches.end()) {
@@ -74,7 +84,7 @@ void StageUILayer::onTouchesBegan(const std::vector<Touch *> &touches, cocos2d::
             } else if (location.y < _defaultPickPos.y - this->padPick->getContentSize().height / 2) {
                 location.y = _defaultPickPos.y - this->padPick->getContentSize().height / 2;
             }
-
+            
             this->padPick->setPosition(location);
         }
         iterator++;
@@ -86,14 +96,14 @@ void StageUILayer::onTouchesBegan(const std::vector<Touch *> &touches, cocos2d::
 /**
     ドラッグ時に呼び出される
  */
-void StageUILayer::onTouchesMoved(const std::vector<Touch *> &touches, cocos2d::Event *unused_event)
+void StageLeftUILayer::onTouchesMoved(const std::vector<Touch *> &touches, cocos2d::Event *unused_event)
 {
     std::vector<cocos2d::Touch*>::const_iterator iterator = touches.begin();
     while (iterator != touches.end()) {
         Touch* touch = (Touch*)(*iterator);
         auto location = touch->getLocation();
         Rect padPickRect = this->padPick->getBoundingBox();
-            
+        
         if (location.x > _defaultPickPos.x + this->padPick->getContentSize().width / 2) {
             location.x = _defaultPickPos.x + this->padPick->getContentSize().width / 2;
         } else if (location.x < _defaultPickPos.x - this->padPick->getContentSize().width / 2) {
@@ -117,18 +127,19 @@ void StageUILayer::onTouchesMoved(const std::vector<Touch *> &touches, cocos2d::
 /**
     タッチ終了時に呼び出される
  */
-void StageUILayer::onTouchesEnded(const std::vector<Touch*>& touches, Event *unused_event)
+void StageLeftUILayer::onTouchesEnded(const std::vector<Touch*>& touches, Event *unused_event)
 {
     this->padPick->setPosition(_defaultPickPos);
 }
 
 
+#pragma mark -
 /**
-    バーチャルパッドの状態を返却する
+     バーチャルパッドの状態を返却する
  
-    @return バーチャルパッドの向き
+     @return バーチャルパッドの向き
  */
-::padState StageUILayer::padState()
+::padState StageLeftUILayer::padState()
 {
     if (_defaultPickPos == this->padPick->getPosition()) {
         return ::padNone;
@@ -151,13 +162,13 @@ void StageUILayer::onTouchesEnded(const std::vector<Touch*>& touches, Event *unu
 
 
 /**
-    2点の座標から角度を計算して返す
+     2点の座標から角度を計算して返す
  
-    @param posA 1つ目の点の座標
-    @param posB 2つ目の点の座標
-    @return 角度
+     @param posA 1つ目の点の座標
+     @param posB 2つ目の点の座標
+     @return 角度
  */
-double StageUILayer::degreeFromVec2(Vec2 posA, Vec2 posB)
+double StageLeftUILayer::degreeFromVec2(Vec2 posA, Vec2 posB)
 {
     double radian = atan2(posB.y - posA.y, posB.x - posA.x);
     double degree = radian * 180.0 / M_PI;

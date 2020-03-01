@@ -23,15 +23,6 @@ USING_NS_CC;
 #include "AdMobHelper.h"
 #include "StageUILayer.hpp"
 
-// 十字ボタン状態
-typedef enum {
-    pushedButtonNone,
-    isPushedUpButton,
-    isPushedRightButton,
-    isPushedDownButton,
-    isPushedLeftButton
-} pushedButton;
-
 // メッセージの種類
 typedef enum {
     nomal,
@@ -46,9 +37,7 @@ protected:
     Camera *m_camera;    // スクロール用カメラ
     Label *m_playerMapPointLabel { nullptr }; // 操作キャラクター座標ラベル(デバッグ用)
     MessageDialog *m_messageDialog  { nullptr };   // メッセージダイアログ
-    pushedButton m_isPushedButton;  // 十字ボタンの状態
-    
-    StageUILayer *m_uiLayer;
+    StageUILayer *m_uiLayer; // UIレイヤー
     
     void initCamera();
     void initUI();
@@ -56,9 +45,6 @@ protected:
     virtual void initCharactors();
     void initStart();
     
-    void touchCrossKeyEvent(Ref *pSender, ui::Widget::TouchEventType type);
-    void touchAEvent(Ref *pSender, ui::Widget::TouchEventType type);
-    void touchA2Event(Ref *pSender, ui::Widget::TouchEventType type);
     void touchSaveEvent(Ref *pSender, ui::Widget::TouchEventType type);
     
     void createMessageDialog(::messageType messageType);
@@ -86,7 +72,8 @@ public:
     
     Vector<CharacterSprite*> charactersVector();
     Vector<EnemySprite*> enemysVector();
-    
+    void touchAEvent(Ref *pSender, ui::Widget::TouchEventType type);
+    void touchBEvent(Ref *pSender, ui::Widget::TouchEventType type);
     void enemyFindPlayer();
 };
 
