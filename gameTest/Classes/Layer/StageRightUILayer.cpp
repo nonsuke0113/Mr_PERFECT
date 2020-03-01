@@ -30,16 +30,16 @@ bool StageRightUILayer::init()
     this->setContentSize(this->background->getContentSize());
     
     // Aボタン
-    this->aButton = ui::Button::create("a_test.png");
+    this->aButton = ui::Button::create("aButton.png");
     this->aButton->setAnchorPoint(Vec2(0.0f, 0.0f));
-    this->aButton->setPosition(Vec2(0.0f, 320.0f));
+    this->aButton->setPosition(Vec2(84.0f, 340.0f));
     this->aButton->addTouchEventListener(CC_CALLBACK_2(StageRightUILayer::touchAEvent, this));
     this->addChild(this->aButton);
     
     // Bボタン
-    this->bButton = ui::Button::create("a_test.png");
+    this->bButton = ui::Button::create("bButton.png");
     this->bButton->setAnchorPoint(Vec2(0.0f, 0.0f));
-    this->bButton->setPosition(Vec2(0.0f, 220.0f));
+    this->bButton->setPosition(Vec2(84.0f, 220.0f));
     this->bButton->addTouchEventListener(CC_CALLBACK_2(StageRightUILayer::touchBEvent, this));
     this->addChild(this->bButton);
     
