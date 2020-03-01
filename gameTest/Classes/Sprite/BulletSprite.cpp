@@ -108,7 +108,8 @@ void BulletSprite::updatePosition(float frame)
     // 被弾した or 進めなくなったら自身を削除する
     if (hitCharacter != nullptr || !this->canMovePos(this->worldPosition())) {
         unschedule(schedule_selector(BulletSprite::updatePosition));
-        this->removeFromParent();
+        this->removeFromParentAndCleanup(true);
+        this->m_shootCharactor->m_bullet = nullptr;
         return;
     }
     

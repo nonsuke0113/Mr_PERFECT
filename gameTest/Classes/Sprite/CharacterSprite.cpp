@@ -48,6 +48,7 @@ bool CharacterSprite::initWithFileName(const std::string& filename, const Vec2 &
     }
     this->m_hp = 3;
     this->m_moveSpeed = moveSpeed;
+    this->m_bullet = nullptr;
     return true;
 }
 
@@ -139,7 +140,12 @@ CharacterSprite* CharacterSprite::nextCharacter()
  */
 void CharacterSprite::shootBullet()
 {
+    if (this->m_bullet != nullptr) {
+        return;
+    }
+    
     BulletSprite* bullet = BulletSprite::create(this->nextTilePosition(), this->directcion(), this, 0.1f);
+    this->m_bullet = bullet;
     bullet->setAnchorPoint(Vec2(0.0f, 0.0f));
     this->getParent()->addChild(bullet);
     bullet->shootBullet(this->directcion());

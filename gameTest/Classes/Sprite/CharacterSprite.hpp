@@ -27,6 +27,8 @@ protected:
     virtual void dead();
     
 public:
+    Sprite *m_bullet; // 発砲した弾丸
+    
     static CharacterSprite* create(const std::string& filename, const Vec2 &pos, ::directcion direction, float moveSpeed);
     virtual bool initWithFileName(const std::string& filename, const Vec2 &pos, ::directcion direction, float moveSpeed);
     
