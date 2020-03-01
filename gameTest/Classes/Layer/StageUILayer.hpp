@@ -32,6 +32,7 @@ public:
     ::padState padState();
     void touchAEvent(Ref *pSender, ui::Widget::TouchEventType type);
     void touchBEvent(Ref *pSender, ui::Widget::TouchEventType type);
+    void heartOff(int i);
 };
 
 #endif /* StageUILayer_hpp */

@@ -336,6 +336,17 @@ void StageSceneBase::enemyFindPlayer()
 }
 
 
+/**
+    プレイヤーが被弾した
+ 
+    @param i 残りHP
+ */
+void StageSceneBase::heartOff(int i)
+{
+    this->m_uiLayer->heartOff(i);
+}
+
+
 #pragma mark -
 #pragma mark Message
 /**

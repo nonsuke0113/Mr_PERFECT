@@ -32,6 +32,7 @@ private:
     Sprite *background; // 背景
     Sprite *padBack; // パッド下地
     Sprite *padPick; // パッド操作部
+    Vector<Sprite*> heartes; // hp
     
     static double degreeFromVec2(Vec2 posA, Vec2 posB);
     
@@ -45,6 +46,7 @@ public:
     virtual bool init();
     
     ::padState padState();
+    void heartOff(int i);
 };
 
 #endif /* StageLeftUILayer_hpp */

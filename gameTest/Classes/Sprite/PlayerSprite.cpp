@@ -6,6 +6,7 @@
 //
 
 #include "PlayerSprite.hpp"
+#include "StageSceneBase.hpp"
 
 #pragma mark -
 #pragma mark init
@@ -106,6 +107,21 @@ void PlayerSprite::setDirectcion(::directcion direction) {
 
 
 #pragma mark -
+/**
+    被弾処理
+ 
+    @param damage ダメージ
+    @param bulletDirection 弾の方向
+ */
+void PlayerSprite::hitToBullet(int damage, ::directcion bulletDirection)
+{
+    this->setHp(this->m_hp - damage);
+    
+    StageSceneBase* mainScene = (StageSceneBase*)this->getParent();
+    mainScene->heartOff(this->m_hp);
+}
+
+
 /**
     死亡処理
  */

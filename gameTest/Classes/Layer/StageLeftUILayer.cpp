@@ -34,6 +34,23 @@ bool StageLeftUILayer::init()
     // 画面サイズ取得
     Size visibleSize { Director::getInstance()->getVisibleSize() };
     
+    
+    this->heartes = Vector<Sprite*>();
+    for (int i = 0; i < 3; i++) {
+        
+        Sprite *heartOff = Sprite::create("heart_off.png");
+        heartOff->setAnchorPoint(Vec2(0.0f, 0.0f));
+        heartOff->setPosition(Vec2(24.5f + ((heartOff->getContentSize().width + 24.5f) * i), 615.5f - heartOff->getContentSize().height / 2));
+        this->addChild(heartOff);
+        
+        Sprite *heartOn = Sprite::create("heart_on.png");
+        heartOn->setAnchorPoint(Vec2(0.0f, 0.0f));
+        heartOn->setPosition(Vec2(24.5f + ((heartOn->getContentSize().width + 24.5f) * i), 615.5f - heartOn->getContentSize().height / 2));
+        this->addChild(heartOn);
+        this->heartes.pushBack(heartOn);
+    }
+    
+    
     // パッド下地
     this->padBack = { Sprite::create("virtualPad_background.png") };
     this->padBack->setPosition(Vec2(24.0f + this->padBack->getContentSize().width / 2, (visibleSize.height / 2)));
@@ -173,4 +190,15 @@ double StageLeftUILayer::degreeFromVec2(Vec2 posA, Vec2 posB)
     double radian = atan2(posB.y - posA.y, posB.x - posA.x);
     double degree = radian * 180.0 / M_PI;
     return degree;
+}
+
+
+/**
+    プレイヤーが被弾した
+ 
+    @param i 残りHP
+ */
+void StageLeftUILayer::heartOff(int i)
+{
+    this->heartes.at(i)->setVisible(false);
 }

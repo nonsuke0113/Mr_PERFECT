@@ -68,3 +68,14 @@ void StageUILayer::touchBEvent(Ref *pSender, ui::Widget::TouchEventType type)
     StageSceneBase *parent = (StageSceneBase*)this->getParent();
     parent->touchBEvent(pSender, type);
 }
+
+
+/**
+    プレイヤーが被弾した
+ 
+    @param i 残りHP
+ */
+void StageUILayer::heartOff(int i)
+{
+    this->leftLayer->heartOff(i);
+}

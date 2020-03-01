@@ -74,6 +74,7 @@ public:
     void touchAEvent(Ref *pSender, ui::Widget::TouchEventType type);
     void touchBEvent(Ref *pSender, ui::Widget::TouchEventType type);
     void enemyFindPlayer();
+    void heartOff(int i);
 };
 
 #endif /* StageSceneBase_hpp */
