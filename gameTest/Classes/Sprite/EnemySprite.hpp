@@ -49,6 +49,7 @@ public:
     
     void startPatrol();
     void stopPatrol();
+    void moveToPos(const Vec2 &pos);
     void startMoveAccordingToRouteStack(const std::vector<Vec2>& routeStack);
     void stopMoveAccordingToRouteStack();
     void startChasePlayer();

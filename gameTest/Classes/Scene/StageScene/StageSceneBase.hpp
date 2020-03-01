@@ -35,7 +35,6 @@ class StageSceneBase : public Scene
 {
 protected:
     Camera *m_camera;    // スクロール用カメラ
-    Label *m_playerMapPointLabel { nullptr }; // 操作キャラクター座標ラベル(デバッグ用)
     MessageDialog *m_messageDialog  { nullptr };   // メッセージダイアログ
     StageUILayer *m_uiLayer; // UIレイヤー
     

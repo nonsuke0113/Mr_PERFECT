@@ -48,6 +48,8 @@ bool EnemySprite::initWithFileName(const std::string& filename, const Vec2 &pos,
     }
     this->m_rotateDirectcion = ::turn_right;
     this->m_hp = 5;
+    this->m_routeStack = nullptr;
+    this->m_routeStackIndex = 0;
     return true;
 }
 
@@ -297,6 +299,23 @@ bool EnemySprite::checkFindPlayer() {
 
 
 /**
+    与えられた座標まで、最短経路で移動する
+ 
+    @param pos 移動する座標
+ */
+void EnemySprite::moveToPos(const Vec2 &pos)
+{
+    if (this->m_routeStack != nullptr) {
+        this->stopMoveAccordingToRouteStack();
+    }
+    
+    // 指定された座標まで最短経路で移動する
+    std::vector<Vec2> routeStack = AStarUtils::shortestRouteStack(this, this->worldPosition(), pos);
+    this->startMoveAccordingToRouteStack(routeStack);
+}
+
+
+/**
     与えられた経路で移動を開始する
  
     @param routeStack 移動経路
@@ -317,11 +336,12 @@ void EnemySprite::startMoveAccordingToRouteStack(const std::vector<Vec2>& routeS
  */
 void EnemySprite::stopMoveAccordingToRouteStack()
 {
+    if (this->m_routeStack != nullptr) {
+        delete this->m_routeStack;
+        this->m_routeStack = nullptr;
+    }
     this->m_routeStackIndex = 0;
     unschedule(schedule_selector(EnemySprite::moveAccordingToRouteStack));
-    
-    // 再度巡回する
-    this->startPatrol();
 }
 
 
@@ -332,6 +352,7 @@ void EnemySprite::moveAccordingToRouteStack(float frame)
 {
     if (this->m_routeStack->empty() || this->m_routeStack->size() <= this->m_routeStackIndex) {
         this->stopMoveAccordingToRouteStack();
+        this->startPatrol();
         return;
     }
     
@@ -340,8 +361,7 @@ void EnemySprite::moveAccordingToRouteStack(float frame)
     
     if (this->checkFindPlayer()) {
         this->stopMoveAccordingToRouteStack();
-        StageSceneBase* mainScene = (StageSceneBase*)this->getParent();
-        mainScene->enemyFindPlayer();
+        this->startChasePlayer();
         return;
     }
     
@@ -412,6 +432,39 @@ void EnemySprite::chasePlayer(float frame)
 }
 
 
+/**
+    プレイヤーを見失った際の処理
+ */
+void EnemySprite::loseSightOfPlayer()
+{
+    // プレイヤーが逃げた方を向く
+    bool isMoveUpdown = this->worldPosition().x == this->m_playerLostNextPoint.x;
+    if (isMoveUpdown) {
+        if (this->worldPosition().y > this->m_playerLostNextPoint.y) {
+            this->setDirectcion(back);
+        } else {
+            this->setDirectcion(front);
+        }
+    } else {
+        if (this->worldPosition().x > this->m_playerLostNextPoint.x) {
+            this->setDirectcion(left);
+        } else {
+            this->setDirectcion(right);
+        }
+    }
+    
+    // プレイヤーがいれば再度追跡する
+    if (this->checkFindPlayer()) {
+        this->startChasePlayer();
+        this->startShoot();
+    }
+    // 完全に見失った
+    else {
+        this->startPatrol();
+    }
+}
+
+
 #pragma mark -
 #pragma mark Shoot
 /**
@@ -438,34 +491,4 @@ void EnemySprite::stopShoot()
 void EnemySprite::shoot(float frame)
 {
     this->shootBullet();
-}
-
-
-/**
- */
-void EnemySprite::loseSightOfPlayer()
-{
-    // プレイヤーが逃げた方を向く
-    bool isMoveUpdown = this->worldPosition().x == this->m_playerLostNextPoint.x;
-    if (isMoveUpdown) {
-        if (this->worldPosition().y > this->m_playerLostNextPoint.y) {
-            this->setDirectcion(back);
-        } else {
-            this->setDirectcion(front);
-        }
-    } else {
-        if (this->worldPosition().x > this->m_playerLostNextPoint.x) {
-            this->setDirectcion(left);
-        } else {
-            this->setDirectcion(right);
-        }
-    }
-    
-    // 
-    if (this->checkFindPlayer()) {
-        this->startChasePlayer();
-        this->startShoot();
-    } else {
-        this->startPatrol();
-    }
 }

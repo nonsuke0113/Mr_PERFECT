@@ -11,19 +11,12 @@
 #include "ui/UIScale9Sprite.h"
 #include <typeinfo>
 #include "SelectMissonScene.hpp"
-
-// 十字ボタンタグ
-enum crossKeyTag {
-    TAG_UP = 10,
-    TAG_RIGHT = 20,
-    TAG_DOWN = 30,
-    TAG_LEFT = 40
-};
-
+#include "AStarUtils.hpp"
 
 #pragma mark -
 #pragma mark init
 /**
+    シーンの作成
  */
 StageSceneBase* StageSceneBase::createScene()
 {
@@ -51,14 +44,6 @@ bool StageSceneBase::init()
     this->initMap();
     this->initCharactors();
     this->initStart();
-    
-//     操作キャラクター座標ラベル(デバッグ用)
-    this->m_playerMapPointLabel = Label::createWithSystemFont(StringUtils::format("x : $%f, y : $%f", this->m_player->worldPosition().x, this->m_player->worldPosition().y), "ariel", 20);
-    this->m_playerMapPointLabel->setAnchorPoint(Vec2(0,0));
-    this->m_playerMapPointLabel->setPosition(Vec2(0.0f, 0.0f));
-    this->m_playerMapPointLabel->setColor(Color3B(255, 0, 0));
-    this->m_playerMapPointLabel->setCameraMask((unsigned short)CameraFlag::USER1);
-    this->addChild(m_playerMapPointLabel);
     
     // クリア判定をスケジュール
     schedule(schedule_selector(StageSceneBase::checkClear), 0.1f);
@@ -188,7 +173,7 @@ Vector<EnemySprite*> StageSceneBase::enemysVector() {
  */
 void StageSceneBase::touchAEvent(Ref *pSender, ui::Widget::TouchEventType type)
 {
-    if(this->m_messageDialog  != nullptr && this->m_messageDialog->isYesNo) {
+    if(this->m_messageDialog != nullptr && this->m_messageDialog->isYesNo) {
         switch (this->m_messageDialog->m_messageType) {
             case messageType::save:
                 if (this->m_messageDialog->userChoice) {
@@ -209,17 +194,19 @@ void StageSceneBase::touchAEvent(Ref *pSender, ui::Widget::TouchEventType type)
     
     if (this->m_messageDialog  == nullptr) {
         // Messageテスト
-        if (this->m_player->nextTileGID() != -1) {
+        if (this->m_player->nextTileGID() != 1) {
             this->createMessageDialog(messageType::nomal);
         }
-        // 壁叩きテスト
+        // 壁叩き
         else {
-            //                    std::vector<Vec2> routeStack;
-            //                    std::vector<Vec2> shortestRouteStack;
-            //                    this->enemysVector().at(0)->searchShortestRoute(routeStack, shortestRouteStack, this->enemysVector().at(0)->worldPosition(), this->m_player->worldPosition());
-            //                    this->enemysVector().at(0)->startMoveAccordingToRouteStack(shortestRouteStack);
-            
-            this->enemysVector().at(0)->startChasePlayer();
+            Vector<EnemySprite*> enemies = this->enemysVector();
+            for (int i = 0; i < enemies.size(); i++) {
+                // 遠い箇所の音は移動しない
+                if (AStarUtils::calculateECost(this->m_player->worldPosition(), enemies.at(i)->worldPosition()) > 5.0) {
+                    continue;
+                }
+                enemies.at(i)->moveToPos(this->m_player->worldPosition());
+            }
         }
     }
     else {
@@ -235,6 +222,11 @@ void StageSceneBase::touchAEvent(Ref *pSender, ui::Widget::TouchEventType type)
 void StageSceneBase::touchBEvent(Ref *pSender, ui::Widget::TouchEventType type)
 {
     this->m_player->shootBullet();
+    
+    Vector<EnemySprite*> enemies = this->enemysVector();
+    for (int i = 0; i < enemies.size(); i++) {
+        enemies.at(i)->moveToPos(this->m_player->worldPosition());
+    }
 }
 
 
@@ -464,6 +456,8 @@ void StageSceneBase::setMessageCallback()
 #pragma mark -
 #pragma mark Update
 /**
+    ステージクリアの判定
+    子クラスにて実装する
  */
 void StageSceneBase::checkClear(float frame)
 {
@@ -508,16 +502,6 @@ void StageSceneBase::updatePosition(float frame)
     
     // プレイヤーの移動
     this->m_player->moveNextTile();
-    
-    // DEBUG:現在いる位置のラベルを更新
-    this->m_playerMapPointLabel->setString(StringUtils::format("x : $%f, y : $%f", this->m_player->worldPosition().x, this->m_player->worldPosition().y));
-    
-    // 今いるタイルを判定
-    TMXLayer* layer = this->m_map->getLayer("MAP");
-    int tileGID = layer->getTileGIDAt(this->m_player->worldPosition());
-    CCLOG("タイルID:%d", tileGID-1);
-    CCLOG("player X:%f Y:%f", this->m_player->getPositionX(), this->m_player->getPositionY());
-    CCLOG("camera X:%f Y:%f", this->m_camera->getPositionX(), this->m_camera->getPositionY());
 }
 
 
