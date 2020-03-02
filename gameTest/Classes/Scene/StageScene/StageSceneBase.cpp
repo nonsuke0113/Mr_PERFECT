@@ -132,6 +132,17 @@ void StageSceneBase::initStart()
 #pragma mark -
 #pragma mark Getter
 /**
+    バーチャルパッドの状態を返却する
+
+    @return バーチャルパッドの向き
+ */
+::padState StageSceneBase::padState()
+{
+    return this->m_uiLayer->padState();
+}
+
+
+/**
     キャラクターの一覧を返す
  
     @return キャラクターの一覧
@@ -503,7 +514,7 @@ void StageSceneBase::checkClear(float frame)
  */
 void StageSceneBase::updatePosition(float frame)
 {
-    padState padState = this->m_uiLayer->padState();
+    ::padState padState = this->padState();
     switch (padState) {
         case padUp:
             this->m_player->setDirectcion(back);
@@ -546,7 +557,7 @@ void StageSceneBase::updateCameraPosition()
     // カメラ座標
     Vec3 newCameraPosition = this->m_camera->getPosition3D();
     
-    padState padState = this->m_uiLayer->padState();
+    ::padState padState = this->m_uiLayer->padState();
     
     // 上ボタン押下中
     if ((padState == padUp) &&
