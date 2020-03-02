@@ -8,7 +8,72 @@
 #include "MessageDialog.hpp"
 #include "StringUtil.h"
 #include "Const.hpp"
+#include "StageSceneBase.hpp"
 
+
+#pragma mark -
+#pragma mark init
+/**
+    createメソッド
+ 
+    @param frameWidth メッセージダイアログの幅
+    @param frameHeight メッセージダイアログの高さ
+ */
+MessageDialog* MessageDialog::create(const int frameWidth, const int frameHeight)
+{
+    MessageDialog *pRet = new(std::nothrow) MessageDialog();
+    if (pRet && pRet->init(frameWidth, frameHeight)) {
+        pRet->autorelease();
+        return pRet;
+    }
+    else {
+        delete pRet;
+        pRet = nullptr;
+        return nullptr;
+    }
+}
+
+
+/**
+    初期化処理
+ 
+    @param frameWidth メッセージダイアログの幅
+    @param frameHeight メッセージダイアログの高さ
+ */
+bool MessageDialog::init(const int frameWidth, const int frameHeight) {
+    
+    if (!Node::init()) {
+        return false;
+    }
+    
+    // 外枠の準備
+    const Rect outerRect(0, 0, 24, 24);
+    const Rect innerRect(7, 7, 10, 10);
+    
+    this->frame = ui::Scale9Sprite::create("frame.png", outerRect, innerRect);
+    this->frame->setAnchorPoint(Vec2(0.5f,0));
+    this->frame->setContentSize(Size(frameWidth, frameHeight));
+    this->frame->getTexture()->setAliasTexParameters();
+    
+    this->addChild(this->frame);
+    
+    // 文字送り完了の矢印
+    this->finishArrow = Sprite::create("arrow.png");
+    this->frame->setAnchorPoint(Vec2(0.5f,0));
+    this->finishArrow->setPosition(0, LABEL_MARGIN);
+    this->finishArrow->setOpacity(0);
+    this->addChild(this->finishArrow);
+    
+    return true;
+}
+
+
+MessageDialog::~MessageDialog() {
+    this->removeAllChildrenWithCleanup(true);
+}
+
+
+#pragma mark -
 /**
     表示するラベルを作成
  */
@@ -73,6 +138,7 @@ void MessageDialog::prepareLabel() {
 void MessageDialog::addMessage(const std::string &message) {
     this->messageList.push_back(message);
 }
+
 
 /**
     メッセージの表示を開始する
@@ -154,6 +220,24 @@ void MessageDialog::createYesNo() {
     this->userChoiceArrow->setPosition(LABEL_MARGIN, this->label->getHeight() - (LABEL_MARGIN*2));
     this->userChoiceArrow->setCameraMask((unsigned short)CameraFlag::USER1);
     this->frame->addChild(this->userChoiceArrow);
+    
+    // 選択の監視
+    schedule(schedule_selector(MessageDialog::updateChoice), 0.1f);
+}
+
+
+/**
+    ユーザーの選択の更新を行う
+ */
+void MessageDialog::updateChoice(float frame)
+{
+    StageSceneBase *parent = (StageSceneBase*)this->getParent();
+    ::padState padState = parent->padState();
+    if (padState == padLeft) {
+        this->selectChoice(true);
+    } else if (padState == padRight) {
+        this->selectChoice(false);
+    }
 }
 
 
@@ -169,7 +253,6 @@ void MessageDialog::selectChoice(bool choice) {
     }
     
 }
-
 
 
 /**
@@ -274,58 +357,6 @@ void MessageDialog::next() {
     }
 }
 
-
-/**
-    初期化処理
- 
-    @param frameWidth
-    @param frameHeight
- */
-bool MessageDialog::init(const int frameWidth, const int frameHeight) {
-    
-    if (!Node::init()) {
-        return false;
-    }
-    
-    // 外枠の準備
-    const Rect outerRect(0, 0, 24, 24);
-    const Rect innerRect(7, 7, 10, 10);
-    
-    this->frame = ui::Scale9Sprite::create("frame.png", outerRect, innerRect);
-    this->frame->setAnchorPoint(Vec2(0.5f,0));
-    this->frame->setContentSize(Size(frameWidth, frameHeight));
-    this->frame->getTexture()->setAliasTexParameters();
-    
-    this->addChild(this->frame);
-    
-    // 文字送り完了の矢印
-    this->finishArrow = Sprite::create("arrow.png");
-    this->frame->setAnchorPoint(Vec2(0.5f,0));
-    this->finishArrow->setPosition(0, LABEL_MARGIN);
-    this->finishArrow->setOpacity(0);
-    this->addChild(this->finishArrow);
-    
-    return true;
-}
-
-
-MessageDialog* MessageDialog::create(const int frameWidth, const int frameHeight)
-{
-    MessageDialog *pRet = new(std::nothrow) MessageDialog();
-    if (pRet && pRet->init(frameWidth, frameHeight)) {
-        pRet->autorelease();
-        return pRet;
-    }
-    else {
-        delete pRet;
-        pRet = nullptr;
-        return nullptr;
-    }
-}
-
-MessageDialog::~MessageDialog() {
-    this->removeAllChildrenWithCleanup(true);
-}
 
 /**
     文字送り完了ハンドラをセットする

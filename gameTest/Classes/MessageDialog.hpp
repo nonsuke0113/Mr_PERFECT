@@ -38,6 +38,7 @@ private:
     
     void prepareLabel();
     void createYesNo();
+    void updateChoice(float frame);
     void createEditBox();
     void startArrowBlink();
     void stopAllowBlink();
