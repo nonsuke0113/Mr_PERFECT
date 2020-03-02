@@ -48,7 +48,7 @@ bool EnemySprite::initWithFileName(const std::string& filename, const Vec2 &pos,
     }
     this->m_rotateDirectcion = ::turn_right;
     this->m_hp = 5;
-    this->m_routeStack = nullptr;
+    this->m_routeStack = std::vector<Vec2>();
     this->m_routeStackIndex = 0;
     return true;
 }
@@ -305,7 +305,7 @@ bool EnemySprite::checkFindPlayer() {
  */
 void EnemySprite::moveToPos(const Vec2 &pos)
 {
-    if (this->m_routeStack != nullptr) {
+    if (!this->m_routeStack.empty()) {
         this->stopMoveAccordingToRouteStack();
     }
     
@@ -325,7 +325,7 @@ void EnemySprite::startMoveAccordingToRouteStack(const std::vector<Vec2>& routeS
     // 巡回は中断する
     this->stopPatrol();
     
-    this->m_routeStack = new (std::nothrow) std::vector<Vec2>(routeStack);
+    std::copy(routeStack.begin(), routeStack.end(), std::back_inserter(this->m_routeStack));
     this->m_routeStackIndex = 0;
     schedule(schedule_selector(EnemySprite::moveAccordingToRouteStack), 0.5f);
 }
@@ -336,9 +336,8 @@ void EnemySprite::startMoveAccordingToRouteStack(const std::vector<Vec2>& routeS
  */
 void EnemySprite::stopMoveAccordingToRouteStack()
 {
-    if (this->m_routeStack != nullptr) {
-        delete this->m_routeStack;
-        this->m_routeStack = nullptr;
+    if (!this->m_routeStack.empty()) {
+        this->m_routeStack.clear();
     }
     this->m_routeStackIndex = 0;
     unschedule(schedule_selector(EnemySprite::moveAccordingToRouteStack));
@@ -350,13 +349,13 @@ void EnemySprite::stopMoveAccordingToRouteStack()
  */
 void EnemySprite::moveAccordingToRouteStack(float frame)
 {
-    if (this->m_routeStack->empty() || this->m_routeStack->size() <= this->m_routeStackIndex) {
+    if (this->m_routeStack.empty() || this->m_routeStack.size() <= this->m_routeStackIndex) {
         this->stopMoveAccordingToRouteStack();
         this->startPatrol();
         return;
     }
     
-    Vec2 nextPos = this->m_routeStack->at(this->m_routeStackIndex);
+    Vec2 nextPos = this->m_routeStack.at(this->m_routeStackIndex);
     this->facingNextPos(nextPos);
     
     if (this->checkFindPlayer()) {
