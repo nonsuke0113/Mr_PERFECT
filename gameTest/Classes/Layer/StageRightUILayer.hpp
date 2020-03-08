@@ -20,6 +20,7 @@ class StageRightUILayer : public Layer
 private:
     
     Sprite *background; // 背景
+    Label *timeValueLabel; // 時間
     ui::Button *aButton; // Aボタン
     ui::Button *bButton; // Bボタン
     
@@ -30,6 +31,8 @@ public:
     
     CREATE_FUNC(StageRightUILayer);
     virtual bool init();
+    
+    void updateTime(float time);
     
 };
 #endif /* StageRightUILayer_hpp */

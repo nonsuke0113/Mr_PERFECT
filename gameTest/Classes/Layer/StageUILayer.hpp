@@ -33,6 +33,7 @@ public:
     void touchAEvent(Ref *pSender, ui::Widget::TouchEventType type);
     void touchBEvent(Ref *pSender, ui::Widget::TouchEventType type);
     void heartOff(int i);
+    void updateTime(float time);
 };
 
 #endif /* StageUILayer_hpp */

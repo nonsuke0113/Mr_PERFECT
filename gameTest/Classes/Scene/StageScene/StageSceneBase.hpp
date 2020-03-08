@@ -34,6 +34,7 @@ typedef enum {
 class StageSceneBase : public Scene
 {
 protected:
+    float time; // 経過時間
     Camera *m_camera;    // スクロール用カメラ
     MessageDialog *m_messageDialog  { nullptr };   // メッセージダイアログ
     StageUILayer *m_uiLayer; // UIレイヤー
@@ -58,6 +59,7 @@ protected:
     void doSave();
     virtual void doContinue();
     
+    virtual void update(float delta);
     virtual void checkClear(float frame);
     void updatePosition(float frame);
     void updateCameraPosition();

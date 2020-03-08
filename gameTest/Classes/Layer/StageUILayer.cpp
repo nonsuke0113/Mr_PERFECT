@@ -79,3 +79,14 @@ void StageUILayer::heartOff(int i)
 {
     this->leftLayer->heartOff(i);
 }
+
+
+/**
+    経過時間ラベルを更新する
+ 
+    @param time 経過時間
+ */
+void StageUILayer::updateTime(float time)
+{
+    this->rightLayer->updateTime(time);
+}

@@ -45,6 +45,9 @@ bool StageSceneBase::init()
     this->initCharactors();
     this->initStart();
     
+    this->time = 0.0f;
+    
+    this->scheduleUpdate();
     // クリア判定をスケジュール
     schedule(schedule_selector(StageSceneBase::checkClear), 0.1f);
     // 座標更新をスケジュール
@@ -499,6 +502,16 @@ void StageSceneBase::setMessageCallback()
 
 #pragma mark -
 #pragma mark Update
+/**
+    定期処理
+ */
+void StageSceneBase::update(float delta)
+{
+    this->time++;
+    this->m_uiLayer->updateTime(this->time / 60.0f);
+}
+
+
 /**
     ステージクリアの判定
     子クラスにて実装する

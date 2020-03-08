@@ -29,6 +29,19 @@ bool StageRightUILayer::init()
     // 自身のサイズ設定
     this->setContentSize(this->background->getContentSize());
     
+    // タイム
+    Label *timeLabel = Label::createWithTTF("TIME:", "fonts/PixelMplus12-Regular.ttf", 30);
+    timeLabel->setAnchorPoint(Vec2(0,0));
+    timeLabel->setPosition(Vec2(24.0f, 600.0f));
+    timeLabel->setColor(Color3B(255, 255, 255));
+    
+    this->addChild(timeLabel);
+    this->timeValueLabel = Label::createWithTTF("000", "fonts/PixelMplus12-Regular.ttf", 30);
+    this->timeValueLabel->setAnchorPoint(Vec2(0,0));
+    this->timeValueLabel->setPosition(Vec2(104.0f, 570.0f));
+    this->timeValueLabel->setColor(Color3B(255, 255, 255));
+    this->addChild(this->timeValueLabel);
+    
     // Aボタン
     this->aButton = ui::Button::create("aButton.png");
     this->aButton->setAnchorPoint(Vec2(0.0f, 0.0f));
@@ -86,4 +99,17 @@ void StageRightUILayer::touchBEvent(Ref *pSender, ui::Widget::TouchEventType typ
         case ui::Widget::TouchEventType::CANCELED:
             break;
     }
+}
+
+
+#pragma mark -
+#pragma mark Update
+/**
+    経過時間ラベルを更新する
+ 
+    @param time 経過時間
+ */
+void StageRightUILayer::updateTime(float time)
+{
+    this->timeValueLabel->setString(StringUtils::format("%03d", (int)time));
 }
