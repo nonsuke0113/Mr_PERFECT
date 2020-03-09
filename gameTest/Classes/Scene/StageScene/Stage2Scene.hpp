@@ -16,8 +16,8 @@ protected:
     void initMap();
     void initCharactors();
     void doContinue();
-    
-    void checkClear(float frame);
+    void checkPosition();
+    void stageClear();
     
 public:
     static Stage2Scene *createScene();

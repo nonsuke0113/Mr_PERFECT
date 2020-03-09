@@ -10,6 +10,7 @@
 #pragma mark -
 #pragma mark init
 /**
+    シーンの作成
  */
 Stage1Scene* Stage1Scene::createScene()
 {
@@ -39,15 +40,12 @@ void Stage1Scene::initMap()
  */
 void Stage1Scene::initCharactors()
 {
-    UserDefault* userDefault = UserDefault::getInstance();
-    
     // プレイヤー
     this->m_player = PlayerSprite::create("player.png", Vec2(7.0f, 19.0f), ::back, 0.1f);
     this->m_player->setAnchorPoint(Vec2(0.0f, 0.0f));
-    this->m_player->setName(userDefault->getStringForKey("playerName"));
     this->addChild(this->m_player);
     
-    // 敵キャラクター
+    // 敵キャラクター1
     EnemySprite* mob = EnemySprite::create("enemy1.png", Vec2(8.0f, 11.0f), ::left, 0.1f);
     mob->setName(StringUtils::format("mob"));
     mob->setAnchorPoint(Vec2(0.0f, 0.0f));
@@ -72,17 +70,28 @@ void Stage1Scene::doContinue()
 
 
 #pragma mark -
+#pragma mark Clear
 /**
+    座標の判定
  */
-void Stage1Scene::checkClear(float frame)
+void Stage1Scene::checkPosition()
 {
     if (this->m_player->worldPosition() == Vec2(7.0f, 0.0f)) {
-        
-        UserDefault* userDefault = UserDefault::getInstance();
-        userDefault->setStringForKey("mission1", "clear");
-        
-        StageSceneBase::stageClear();
+        this->stageClear();
     }
     return;
 }
 
+
+/**
+    ステージクリア時の処理
+ */
+void Stage1Scene::stageClear()
+{
+    // クリア情報を保存
+    UserDefault* userDefault = UserDefault::getInstance();
+    userDefault->setStringForKey("mission1", "clear");
+    
+    // 親のクリア処理を呼び出す
+    StageSceneBase::stageClear();
+}

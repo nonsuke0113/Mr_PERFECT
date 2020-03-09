@@ -44,14 +44,10 @@ bool StageSceneBase::init()
     this->initMap();
     this->initCharactors();
     this->initStart();
-    
     this->time = 0.0f;
     
+    // 更新処理をスケジュール
     this->scheduleUpdate();
-    // クリア判定をスケジュール
-    schedule(schedule_selector(StageSceneBase::checkClear), 0.1f);
-    // 座標更新をスケジュール
-    schedule(schedule_selector(StageSceneBase::updatePosition), 0.1f);
     
     return true;
 }
@@ -77,6 +73,7 @@ void StageSceneBase::initCamera()
  */
 void StageSceneBase::initUI()
 {
+    // UIレイヤーを追加
     this->m_uiLayer = StageUILayer::create();
     this->m_uiLayer->setCameraMask((unsigned short)CameraFlag::USER1);
     this->addChild(this->m_uiLayer);
@@ -507,16 +504,26 @@ void StageSceneBase::setMessageCallback()
  */
 void StageSceneBase::update(float delta)
 {
-    this->time++;
-    this->m_uiLayer->updateTime(this->time / 60.0f);
+    this->updateTime();
+    this->checkPosition();
+    this->updatePosition();
 }
 
 
 /**
-    ステージクリアの判定
+    経過時間の更新
+ */
+void StageSceneBase::updateTime()
+{
+    this->time++;
+    this->m_uiLayer->updateTime(this->time / 60.0f);
+}
+
+/**
+    座標の判定
     子クラスにて実装する
  */
-void StageSceneBase::checkClear(float frame)
+void StageSceneBase::checkPosition()
 {
     return;
 }
@@ -525,7 +532,7 @@ void StageSceneBase::checkClear(float frame)
 /**
     座標更新処理
  */
-void StageSceneBase::updatePosition(float frame)
+void StageSceneBase::updatePosition()
 {
     ::padState padState = this->padState();
     switch (padState) {
@@ -563,7 +570,7 @@ void StageSceneBase::updatePosition(float frame)
 
 
 /**
- カメラ座標更新
+    カメラ座標更新
  */
 void StageSceneBase::updateCameraPosition()
 {

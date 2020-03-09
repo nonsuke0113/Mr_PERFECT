@@ -10,6 +10,7 @@
 #pragma mark -
 #pragma mark init
 /**
+    シーンの作成
  */
 Stage2Scene* Stage2Scene::createScene()
 {
@@ -25,7 +26,7 @@ Stage2Scene* Stage2Scene::createScene()
 
 
 /**
- MAPの初期化処理
+    MAPの初期化処理
  */
 void Stage2Scene::initMap()
 {
@@ -35,16 +36,13 @@ void Stage2Scene::initMap()
 
 
 /**
- キャラクターの初期化処理
+    キャラクターの初期化処理
  */
 void Stage2Scene::initCharactors()
 {
-    UserDefault* userDefault = UserDefault::getInstance();
-    
     // プレイヤー
     this->m_player = PlayerSprite::create("player.png", Vec2(7.0f, 16.0f), ::back, 0.1f);
     this->m_player->setAnchorPoint(Vec2(0.0f, 0.0f));
-    this->m_player->setName(userDefault->getStringForKey("playerName"));
     this->addChild(this->m_player);
     
     // 敵キャラクター
@@ -52,12 +50,12 @@ void Stage2Scene::initCharactors()
     mob->setName(StringUtils::format("mob"));
     mob->setAnchorPoint(Vec2(0.0f, 0.0f));
     this->addChild(mob);
-    mob->startPatrol();
+//    mob->startPatrol();
 }
 
 #pragma mark -
 /**
- コンティニューを実行
+    コンティニューを実行
  */
 void Stage2Scene::doContinue()
 {
@@ -72,16 +70,28 @@ void Stage2Scene::doContinue()
 
 
 #pragma mark -
+#pragma mark Clear
 /**
+    座標の判定
  */
-void Stage2Scene::checkClear(float frame)
+void Stage2Scene::checkPosition()
 {
     if (this->m_player->worldPosition() == Vec2(7.0f, 0.0f)) {
-        
-        UserDefault* userDefault = UserDefault::getInstance();
-        userDefault->setStringForKey("mission2", "clear");
-        
-        StageSceneBase::stageClear();
+        this->stageClear();
     }
     return;
+}
+
+
+/**
+    ステージクリア時の処理
+ */
+void Stage2Scene::stageClear()
+{
+    // クリア情報を保存
+    UserDefault* userDefault = UserDefault::getInstance();
+    userDefault->setStringForKey("mission2", "clear");
+    
+    // 親のクリア処理を呼び出す
+    StageSceneBase::stageClear();
 }

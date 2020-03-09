@@ -54,14 +54,15 @@ protected:
     void setMessageCallback();
     
     void allNodeUnschedule();
-    void stageClear();
+    virtual void stageClear();
     void gameover();
     void doSave();
     virtual void doContinue();
     
     virtual void update(float delta);
-    virtual void checkClear(float frame);
-    void updatePosition(float frame);
+    virtual void checkPosition();
+    void updateTime();
+    void updatePosition();
     void updateCameraPosition();
     
 public:
