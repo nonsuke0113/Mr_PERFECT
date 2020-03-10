@@ -12,6 +12,7 @@
 #include <typeinfo>
 #include "SelectMissonScene.hpp"
 #include "AStarUtils.hpp"
+#include "ResultScene.hpp"
 
 #pragma mark -
 #pragma mark init
@@ -338,9 +339,9 @@ void StageSceneBase::stageClear()
     actionAry.pushBack(MoveTo::create(0.5f, Vec2(visibleSize.width + complate->getContentSize().width, visibleSize.height/2)));
     actionAry.pushBack(Hide::create());
     
-    // ミッション選択シーンに遷移
+    // リザルトシーンに遷移
     actionAry.pushBack(CallFunc::create([]() {
-        Scene *selectMissionScene { SelectMissonScene::createScene() };
+        Scene *selectMissionScene { ResultScene::createScene() };
         TransitionFade* fade = TransitionFade::create(1.0f, selectMissionScene);
         Director::getInstance()->replaceScene(fade);
     }));
