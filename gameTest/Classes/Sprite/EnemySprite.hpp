@@ -23,6 +23,7 @@ typedef enum {
 class EnemySprite : public CharacterSprite
 {
 protected:
+    Vec2 m_initPosition; // 初期座標
     ::rotateDirectcion m_rotateDirectcion; // 巡回時の回転方向
     std::vector<Vec2> m_routeStack; // 経路
     int m_routeStackIndex; // 経路の進捗を管理するインデックス

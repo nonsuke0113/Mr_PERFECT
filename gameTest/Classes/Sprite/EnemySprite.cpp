@@ -46,6 +46,7 @@ bool EnemySprite::initWithFileName(const std::string& filename, const Vec2 &pos,
     if (!CharacterSprite::initWithFileName(filename, pos, direction, moveSpeed)) {
         return false;
     }
+    this->m_initPosition = pos;
     this->m_rotateDirectcion = ::turn_right;
     this->m_hp = 5;
     this->m_routeStack = std::vector<Vec2>();
@@ -176,10 +177,13 @@ void EnemySprite::stopPatrol() {
 void EnemySprite::rotatePatrol(float frame) {
     
     if (this->checkFindPlayer()) {
-        this->stopPatrol();
+        // シーンに通知
+        StageSceneBase* mainScene = (StageSceneBase*)this->getParent();
+        mainScene->enemyFoundPlayer();
         
-        this->startChasePlayer();
+        this->stopPatrol();
         this->startShoot();
+        this->startChasePlayer();
         return;
     }
     
@@ -453,12 +457,17 @@ void EnemySprite::loseSightOfPlayer()
     
     // プレイヤーがいれば再度追跡する
     if (this->checkFindPlayer()) {
-        this->startChasePlayer();
+        // シーンに通知
+        StageSceneBase* mainScene = (StageSceneBase*)this->getParent();
+        mainScene->enemyFoundPlayer();
+        
         this->startShoot();
+        this->startChasePlayer();
     }
     // 完全に見失った
     else {
-        this->startPatrol();
+        // 初期座標まで最短経路で戻る
+        this->moveToPos(this->m_initPosition);
     }
 }
 
@@ -470,7 +479,7 @@ void EnemySprite::loseSightOfPlayer()
  */
 void EnemySprite::startShoot()
 {
-    schedule(schedule_selector(EnemySprite::shoot), 0.7f);
+    schedule(schedule_selector(EnemySprite::shoot), 0.5f);
 }
 
 
