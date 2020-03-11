@@ -6,23 +6,20 @@
 //
 
 #include "ResultScene.hpp"
+#include "SelectMissonScene.hpp"
 
 #pragma mark -
 #pragma mark Init
 /**
     シーンの作成
  
-    @param time クリアタイム
-    @param hp クリア時の残HP
-    @param foundCnt クリア時の敵に見つかった回数
-    @param rank クリアランク
- 
+    @param resultInfo リザルト情報
     @return シーン
  */
-Scene* ResultScene::createScene(int time, int hp, int foundCnt, int rank)
+Scene* ResultScene::createScene(::resultInfo *resultInfo)
 {
     auto scene = Scene::create();
-    auto layer = ResultScene::create(time, hp, foundCnt, rank);
+    auto layer = ResultScene::create(resultInfo);
     scene->addChild(layer);
     return scene;
 }
@@ -31,17 +28,13 @@ Scene* ResultScene::createScene(int time, int hp, int foundCnt, int rank)
 /**
     レイヤーの作成
  
-    @param time クリアタイム
-    @param hp クリア時の残HP
-    @param foundCnt クリア時の敵に見つかった回数
-    @param rank クリアランク
- 
+    @param resultInfo リザルト情報
     @return レイヤー
  */
-ResultScene* ResultScene::create(int time, int hp, int foundCnt, int rank)
+ResultScene* ResultScene::create(::resultInfo *resultInfo)
 {
     ResultScene *layer = new (std::nothrow) ResultScene();
-    if (layer && layer->init(time, hp, foundCnt, rank))
+    if (layer && layer->init(resultInfo))
     {
         layer->autorelease();
         return layer;
@@ -54,20 +47,20 @@ ResultScene* ResultScene::create(int time, int hp, int foundCnt, int rank)
 /**
     初期化処理
  
-    @param time クリアタイム
-    @param hp クリア時の残HP
-    @param foundCnt クリア時の敵に見つかった回数
-    @param rank クリアランク
+    @param resultInfo リザルト情報
  */
-bool ResultScene::init(int time, int hp, int foundCnt, int rank)
+bool ResultScene::init(::resultInfo *resultInfo)
 {
     if ( !Layer::init() )
     {
         return false;
     }
     
+    // リザルト設定
+    this->m_resultInfo = resultInfo;
+    
     // 画面サイズ取得
-    Size visibleSize { Director::getInstance()->getVisibleSize() };
+    Size visibleSize = Director::getInstance()->getVisibleSize();
     
     // 背景
     Sprite *bgSprite { Sprite::create("title_background.png") };
@@ -85,7 +78,7 @@ bool ResultScene::init(int time, int hp, int foundCnt, int rank)
     timeSprite->setAnchorPoint(Vec2(0.0f, 0.0f));
     timeSprite->setPosition(Vec2(356.0f, 360.0f));
     this->addChild(timeSprite);
-    Label *timeLabel = Label::createWithTTF(StringUtils::format("%d", time), "fonts/PixelMplus12-Regular.ttf", 30);
+    Label *timeLabel = Label::createWithTTF(StringUtils::format("%03d       %s", this->m_resultInfo->clearTime, this->convertRankStr(this->m_resultInfo->timeRank).c_str()), "fonts/PixelMplus12-Regular.ttf", 30);
     timeLabel->setAnchorPoint(Vec2(0,0));
     timeLabel->setPosition(Vec2(600.0f, 360.0f));
     timeLabel->setColor(Color3B(0, 0, 0));
@@ -96,7 +89,7 @@ bool ResultScene::init(int time, int hp, int foundCnt, int rank)
     hpSprite->setAnchorPoint(Vec2(0.0f, 0.0f));
     hpSprite->setPosition(Vec2(384.0f, 300.0f));
     this->addChild(hpSprite);
-    Label *hpLabel = Label::createWithTTF(StringUtils::format("%d", hp), "fonts/PixelMplus12-Regular.ttf", 30);
+    Label *hpLabel = Label::createWithTTF(StringUtils::format("%d/3       %s", this->m_resultInfo->clearHp, this->convertRankStr(this->m_resultInfo->hpRank).c_str()), "fonts/PixelMplus12-Regular.ttf", 30);
     hpLabel->setAnchorPoint(Vec2(0,0));
     hpLabel->setPosition(Vec2(600.0f, 300.0f));
     hpLabel->setColor(Color3B(0, 0, 0));
@@ -107,7 +100,7 @@ bool ResultScene::init(int time, int hp, int foundCnt, int rank)
     foundSprite->setAnchorPoint(Vec2(0.0f, 0.0f));
     foundSprite->setPosition(Vec2(350.0f, 240.0f));
     this->addChild(foundSprite);
-    Label *foundLabel = Label::createWithTTF(StringUtils::format("%d", foundCnt), "fonts/PixelMplus12-Regular.ttf", 30);
+    Label *foundLabel = Label::createWithTTF(StringUtils::format("%03d       %s", this->m_resultInfo->clearFoundCount, this->convertRankStr(this->m_resultInfo->foundRank).c_str()), "fonts/PixelMplus12-Regular.ttf", 30);
     foundLabel->setAnchorPoint(Vec2(0,0));
     foundLabel->setPosition(Vec2(600.0f, 240.0f));
     foundLabel->setColor(Color3B(0, 0, 0));
@@ -118,26 +111,82 @@ bool ResultScene::init(int time, int hp, int foundCnt, int rank)
     rankSprite->setAnchorPoint(Vec2(0.0f, 1.0f));
     rankSprite->setPosition(Vec2(400.0f, 160.0f));
     this->addChild(rankSprite);
+    
+    // イベントリスナーを設定
+    auto listener = EventListenerTouchAllAtOnce::create();
+    listener->setEnabled(true);
+    listener->onTouchesBegan = CC_CALLBACK_2(ResultScene::onTouchesBegan, this);
+    this->getEventDispatcher()->addEventListenerWithSceneGraphPriority(listener, this);
+    
+    return true;
+}
+
+
+#pragma mark -
+#pragma mark TouchEvent
+/**
+    タッチ時に呼び出される
+ */
+void ResultScene::onTouchesBegan(const std::vector<Touch *> &touches, cocos2d::Event *unused_event)
+{
     Sprite *userRank = nullptr;
-    switch (rank) {
-        case 0:
-            userRank = Sprite::create("pRank.png");
+    int totalRank = (int)this->m_resultInfo->timeRank + (int)this->m_resultInfo->hpRank + (int)this->m_resultInfo->foundRank;
+    if (totalRank == 0) {
+        userRank = Sprite::create("pRank.png");
+    } else if (totalRank == 1) {
+        userRank = Sprite::create("aRank.png");
+    } else if (totalRank < 4) {
+        userRank = Sprite::create("bRank.png");
+    } else {
+        userRank = Sprite::create("cRank.png");
+    }
+    userRank->setAnchorPoint(Vec2(0.0f, 1.0f));
+    userRank->setPosition(Vec2(-userRank->getContentSize().width, 180.0f));
+    this->addChild(userRank);
+    
+    // 画面サイズ取得
+    Size visibleSize = Director::getInstance()->getVisibleSize();
+    
+    Vector<FiniteTimeAction *> actionAry;
+    actionAry.pushBack(MoveTo::create(0.5f, Vec2(630.0f, 180.0f)));
+    actionAry.pushBack(MoveTo::create(1.0f, Vec2(630.0f, 180.0f)));
+    actionAry.pushBack(MoveTo::create(0.3f, Vec2(visibleSize.width + userRank->getContentSize().width, 180.0f)));
+    actionAry.pushBack(Hide::create());
+    
+    // ミッション選択シーンに遷移
+    actionAry.pushBack(CallFunc::create([this]() {
+        Scene *selectMissionScene = SelectMissonScene::createScene();
+        TransitionFade* fade = TransitionFade::create(1.0f, selectMissionScene);
+        Director::getInstance()->replaceScene(fade);
+    }));
+    Sequence *actions = Sequence::create(actionAry);
+    userRank->runAction(actions);
+    return;
+}
+
+
+#pragma mark -
+/**
+    クリアランクを文字列に変換する
+ 
+    @param clearRank クリアランク
+    @return 変換した文字列
+ */
+std::string ResultScene::convertRankStr(::clearRank clearRank)
+{
+    std::string rankStr = "";
+    switch (clearRank) {
+        case ::clearRank::A:
+            rankStr = "A";
             break;
-        case 1:
-            userRank = Sprite::create("aRank.png");
+        case ::clearRank::B:
+            rankStr = "B";
             break;
-        case 2:
-            userRank = Sprite::create("bRank.png");
-            break;
-        case 3:
-            userRank = Sprite::create("cRank.png");
+        case ::clearRank::C:
+            rankStr = "C";
             break;
         default:
             break;
     }
-    userRank->setAnchorPoint(Vec2(0.0f, 1.0f));
-    userRank->setPosition(Vec2(630.0f, 180.0f));
-    this->addChild(userRank);
-    
-    return true;
+    return rankStr;
 }

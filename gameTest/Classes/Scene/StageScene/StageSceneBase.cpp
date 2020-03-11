@@ -10,7 +10,6 @@
 #include "TitleScene.hpp"
 #include "ui/UIScale9Sprite.h"
 #include <typeinfo>
-#include "SelectMissonScene.hpp"
 #include "AStarUtils.hpp"
 #include "ResultScene.hpp"
 
@@ -295,14 +294,30 @@ void StageSceneBase::stageClear()
     actionAry.pushBack(MoveTo::create(0.5f, Vec2(visibleSize.width + complate->getContentSize().width, visibleSize.height/2)));
     actionAry.pushBack(Hide::create());
     
+    // リザルトの設定
+    this->setupResult();
+    
     // リザルトシーンに遷移
     actionAry.pushBack(CallFunc::create([this]() {
-        Scene *selectMissionScene = ResultScene::createScene((int)(this->m_time / 60.0f), this->m_player->hp(), this->m_enemyFoundPlayerCount,  0);
-        TransitionFade* fade = TransitionFade::create(1.0f, selectMissionScene);
+        Scene *resultScene = ResultScene::createScene(&this->m_resultInfo);
+        TransitionFade* fade = TransitionFade::create(1.0f, resultScene);
         Director::getInstance()->replaceScene(fade);
     }));
-    Sequence *actions { Sequence::create(actionAry) };
+    Sequence *actions = Sequence::create(actionAry);
     complate->runAction(actions);
+}
+
+
+/**
+    リザルトを設定する
+    timeRankとfoundRankは子クラスにて設定する
+ */
+void StageSceneBase::setupResult()
+{
+    this->m_resultInfo.clearTime = (int)this->m_time / 60;
+    this->m_resultInfo.clearHp = this->m_player->hp();
+    this->m_resultInfo.clearFoundCount = this->m_enemyFoundPlayerCount;
+    this->m_resultInfo.hpRank = (::clearRank)(3 - this->m_player->hp());
 }
 
 

@@ -29,7 +29,6 @@ typedef enum {
 
 // クリアランク
 typedef enum {
-    P,
     A,
     B,
     C
@@ -37,9 +36,9 @@ typedef enum {
 
 // リザルト情報
 typedef struct {
-    int  clearTime;
-    int  clearHp;
-    int  clearFoundCount;
+    int clearTime;
+    int clearHp;
+    int clearFoundCount;
     ::clearRank timeRank;
     ::clearRank hpRank;
     ::clearRank foundRank;
@@ -72,6 +71,7 @@ protected:
     void setMessageCallback();
     void allNodeUnschedule();
     virtual void stageClear();
+    virtual void setupResult();
     virtual void doContinue();
     virtual void update(float delta);
     virtual void checkPosition();

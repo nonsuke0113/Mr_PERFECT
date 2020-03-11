@@ -14,19 +14,20 @@ USING_NS_CC;
 
 #include "cocos2d.h"
 #include "ui/CocosGUI.h"
+#include "StageSceneBase.hpp"
 
 class ResultScene : public Layer
 {
 private:
-    int m_clearTime; // クリアタイム
-    int m_clearHp; // クリア時のHP
-    int m_clearFoundCount; // クリア時の見つかった数
-    int m_clearRank; // クリア時の総合評価
-        
+    ::resultInfo *m_resultInfo; // リザルト情報
+    
+    void onTouchesBegan(const std::vector<Touch*>& touches, Event *unused_event);
+    static std::string convertRankStr(::clearRank clearRank);
+    
 public:
-    static Scene* createScene(int time, int hp, int foundCnt, int rank);
-    static ResultScene* create(int time, int hp, int foundCnt, int rank);
-    virtual bool init(int time, int hp, int foundCnt, int rank);
+    static Scene* createScene(::resultInfo *resultInfo);
+    static ResultScene* create(::resultInfo *resultInfo);
+    virtual bool init(::resultInfo *resultInfo);
     
 };
 
