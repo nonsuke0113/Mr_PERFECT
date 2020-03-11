@@ -10,7 +10,7 @@
 
 
 #pragma mark -
-#pragma mark init
+#pragma mark Init
 /**
      AStarNodeのcreateメソッド
  
@@ -41,15 +41,16 @@ AStarNode* AStarNode::create(const Vec2 pos, const Vec2 goalPos, AStarNode* pare
  */
 bool AStarNode::init(const Vec2 pos, const Vec2 goalPos, AStarNode* parent)
 {
-    this->pos = pos;
-    this->eCost = AStarUtils::calculateECost(pos, goalPos);
-    this->aCost = parent == nullptr ? 0 : parent->aCost + 1;
-    this->parentNode = parent;
+    this->m_pos = pos;
+    this->m_eCost = AStarUtils::calculateECost(pos, goalPos);
+    this->m_aCost = parent == nullptr ? 0 : parent->m_aCost + 1;
+    this->m_parentNode = parent;
     
     return true;
 }
 
 
+#pragma mark -
 /**
     自身の座標をゴールとする最短経路の配列を返す
  */
@@ -58,8 +59,8 @@ std::vector<Vec2> AStarNode::shortestRouteStack()
     std::vector<Vec2> routeStack;
     AStarNode *node = this;
     while (node) {
-        routeStack.insert(routeStack.begin(), node->pos);
-        node = node->parentNode;
+        routeStack.insert(routeStack.begin(), node->m_pos);
+        node = node->m_parentNode;
     }
     return routeStack;
 }

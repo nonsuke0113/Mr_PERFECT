@@ -11,7 +11,7 @@
 static Vec2 _defaultPickPos; // パッド操作部の基準座標
 
 #pragma mark -
-#pragma mark init
+#pragma mark Init
 /**
     初期化処理
  */
@@ -23,13 +23,13 @@ bool StageLeftUILayer::init()
     }
     
     // 背景
-    this->background = { Sprite::create("side.png") };
-    this->background->setAnchorPoint(Vec2(0.0f, 0.0f));
-    this->background->setPosition(Vec2(0.0f, 0.0f));
-    this->addChild(this->background);
+    this->m_background = { Sprite::create("side.png") };
+    this->m_background->setAnchorPoint(Vec2(0.0f, 0.0f));
+    this->m_background->setPosition(Vec2(0.0f, 0.0f));
+    this->addChild(this->m_background);
     
     // 自身のサイズ設定
-    this->setContentSize(this->background->getContentSize());
+    this->setContentSize(this->m_background->getContentSize());
     
     // 画面サイズ取得
     Size visibleSize { Director::getInstance()->getVisibleSize() };
@@ -41,7 +41,7 @@ bool StageLeftUILayer::init()
     hpLabel->setColor(Color3B(255, 255, 255));
     this->addChild(hpLabel);
     
-    this->heartes = Vector<Sprite*>();
+    this->m_heartes = Vector<Sprite*>();
     for (int i = 0; i < 3; i++) {
         
         Sprite *heartOff = Sprite::create("heart_off.png");
@@ -53,22 +53,22 @@ bool StageLeftUILayer::init()
         heartOn->setAnchorPoint(Vec2(0.0f, 0.0f));
         heartOn->setPosition(Vec2(24.5f + ((heartOn->getContentSize().width + 24.5f) * i), 570.0f - heartOn->getContentSize().height / 2));
         this->addChild(heartOn);
-        this->heartes.pushBack(heartOn);
+        this->m_heartes.pushBack(heartOn);
     }
     
     
     // パッド下地
-    this->padBack = { Sprite::create("virtualPad_background.png") };
-    this->padBack->setPosition(Vec2(24.0f + this->padBack->getContentSize().width / 2, (visibleSize.height / 2)));
-    this->addChild(this->padBack);
+    this->m_padBack = { Sprite::create("virtualPad_background.png") };
+    this->m_padBack->setPosition(Vec2(24.0f + this->m_padBack->getContentSize().width / 2, (visibleSize.height / 2)));
+    this->addChild(this->m_padBack);
     
     // パッド操作部
-    this->padPick = { Sprite::create("virtualPad_pick.png") };
-    this->padPick->setPosition(Vec2(84.0f + this->padPick->getContentSize().width / 2, (visibleSize.height / 2)));
-    this->addChild(this->padPick);
+    this->m_padPick = { Sprite::create("virtualPad_pick.png") };
+    this->m_padPick->setPosition(Vec2(84.0f + this->m_padPick->getContentSize().width / 2, (visibleSize.height / 2)));
+    this->addChild(this->m_padPick);
     
     // 基準座標を設定
-    _defaultPickPos = this->padPick->getPosition();
+    _defaultPickPos = this->m_padPick->getPosition();
     
     // イベントリスナーを設定
     auto listener = EventListenerTouchAllAtOnce::create();
@@ -76,7 +76,7 @@ bool StageLeftUILayer::init()
     listener->onTouchesBegan = CC_CALLBACK_2(StageLeftUILayer::onTouchesBegan, this);
     listener->onTouchesMoved = CC_CALLBACK_2(StageLeftUILayer::onTouchesMoved, this);
     listener->onTouchesEnded = CC_CALLBACK_2(StageLeftUILayer::onTouchesEnded, this);
-    this->getEventDispatcher()->addEventListenerWithSceneGraphPriority(listener, this->padPick);
+    this->getEventDispatcher()->addEventListenerWithSceneGraphPriority(listener, this->m_padPick);
     
     return true;
 }
@@ -93,22 +93,22 @@ void StageLeftUILayer::onTouchesBegan(const std::vector<Touch *> &touches, cocos
     while (iterator != touches.end()) {
         Touch* touch = (Touch*)(*iterator);
         Vec2 location = touch->getLocation();
-        Rect padPickRect = this->padPick->getBoundingBox();
+        Rect padPickRect = this->m_padPick->getBoundingBox();
         if (padPickRect.containsPoint(location)) {
             
-            if (location.x > _defaultPickPos.x + this->padPick->getContentSize().width / 2) {
-                location.x = _defaultPickPos.x + this->padPick->getContentSize().width / 2;
-            } else if (location.x < _defaultPickPos.x - this->padPick->getContentSize().width / 2) {
-                location.x = _defaultPickPos.x - this->padPick->getContentSize().width / 2;
+            if (location.x > _defaultPickPos.x + this->m_padPick->getContentSize().width / 2) {
+                location.x = _defaultPickPos.x + this->m_padPick->getContentSize().width / 2;
+            } else if (location.x < _defaultPickPos.x - this->m_padPick->getContentSize().width / 2) {
+                location.x = _defaultPickPos.x - this->m_padPick->getContentSize().width / 2;
             }
             
-            if (location.y > _defaultPickPos.y + this->padPick->getContentSize().height / 2) {
-                location.y = _defaultPickPos.y + this->padPick->getContentSize().height / 2;
-            } else if (location.y < _defaultPickPos.y - this->padPick->getContentSize().height / 2) {
-                location.y = _defaultPickPos.y - this->padPick->getContentSize().height / 2;
+            if (location.y > _defaultPickPos.y + this->m_padPick->getContentSize().height / 2) {
+                location.y = _defaultPickPos.y + this->m_padPick->getContentSize().height / 2;
+            } else if (location.y < _defaultPickPos.y - this->m_padPick->getContentSize().height / 2) {
+                location.y = _defaultPickPos.y - this->m_padPick->getContentSize().height / 2;
             }
             
-            this->padPick->setPosition(location);
+            this->m_padPick->setPosition(location);
         }
         iterator++;
     }
@@ -125,21 +125,21 @@ void StageLeftUILayer::onTouchesMoved(const std::vector<Touch *> &touches, cocos
     while (iterator != touches.end()) {
         Touch* touch = (Touch*)(*iterator);
         auto location = touch->getLocation();
-        Rect padPickRect = this->padPick->getBoundingBox();
+        Rect padPickRect = this->m_padPick->getBoundingBox();
         
-        if (location.x > _defaultPickPos.x + this->padPick->getContentSize().width / 2) {
-            location.x = _defaultPickPos.x + this->padPick->getContentSize().width / 2;
-        } else if (location.x < _defaultPickPos.x - this->padPick->getContentSize().width / 2) {
-            location.x = _defaultPickPos.x - this->padPick->getContentSize().width / 2;
+        if (location.x > _defaultPickPos.x + this->m_padPick->getContentSize().width / 2) {
+            location.x = _defaultPickPos.x + this->m_padPick->getContentSize().width / 2;
+        } else if (location.x < _defaultPickPos.x - this->m_padPick->getContentSize().width / 2) {
+            location.x = _defaultPickPos.x - this->m_padPick->getContentSize().width / 2;
         }
         
-        if (location.y > _defaultPickPos.y + this->padPick->getContentSize().height / 2) {
-            location.y = _defaultPickPos.y + this->padPick->getContentSize().height / 2;
-        } else if (location.y < _defaultPickPos.y - this->padPick->getContentSize().height / 2) {
-            location.y = _defaultPickPos.y - this->padPick->getContentSize().height / 2;
+        if (location.y > _defaultPickPos.y + this->m_padPick->getContentSize().height / 2) {
+            location.y = _defaultPickPos.y + this->m_padPick->getContentSize().height / 2;
+        } else if (location.y < _defaultPickPos.y - this->m_padPick->getContentSize().height / 2) {
+            location.y = _defaultPickPos.y - this->m_padPick->getContentSize().height / 2;
         }
         
-        this->padPick->setPosition(location);
+        this->m_padPick->setPosition(location);
         
         iterator++;
     }
@@ -152,11 +152,12 @@ void StageLeftUILayer::onTouchesMoved(const std::vector<Touch *> &touches, cocos
  */
 void StageLeftUILayer::onTouchesEnded(const std::vector<Touch*>& touches, Event *unused_event)
 {
-    this->padPick->setPosition(_defaultPickPos);
+    this->m_padPick->setPosition(_defaultPickPos);
 }
 
 
 #pragma mark -
+#pragma mark Getter
 /**
      バーチャルパッドの状態を返却する
  
@@ -164,11 +165,11 @@ void StageLeftUILayer::onTouchesEnded(const std::vector<Touch*>& touches, Event 
  */
 ::padState StageLeftUILayer::padState()
 {
-    if (_defaultPickPos == this->padPick->getPosition()) {
+    if (_defaultPickPos == this->m_padPick->getPosition()) {
         return ::padNone;
     }
     
-    double degree = this->degreeFromVec2(_defaultPickPos, this->padPick->getPosition());
+    double degree = this->degreeFromVec2(_defaultPickPos, this->m_padPick->getPosition());
     
     if (degree >= 45.0 && degree < 135.0) {
         return ::padUp;
@@ -184,6 +185,7 @@ void StageLeftUILayer::onTouchesEnded(const std::vector<Touch*>& touches, Event 
 }
 
 
+#pragma mark -
 /**
      2点の座標から角度を計算して返す
  
@@ -199,6 +201,8 @@ double StageLeftUILayer::degreeFromVec2(Vec2 posA, Vec2 posB)
 }
 
 
+#pragma mark -
+#pragma mark GameEvent
 /**
     プレイヤーが被弾した
  
@@ -209,5 +213,5 @@ void StageLeftUILayer::heartOff(int i)
     if (i < 0) {
         return;
     }
-    this->heartes.at(i)->setVisible(false);
+    this->m_heartes.at(i)->setVisible(false);
 }

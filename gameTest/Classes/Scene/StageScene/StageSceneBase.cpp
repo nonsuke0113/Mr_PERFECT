@@ -15,7 +15,7 @@
 #include "ResultScene.hpp"
 
 #pragma mark -
-#pragma mark init
+#pragma mark Init
 /**
     シーンの作成
  */
@@ -45,7 +45,8 @@ bool StageSceneBase::init()
     this->initMap();
     this->initCharactors();
     this->initStart();
-    this->time = 0.0f;
+    this->m_messageDialog = nullptr;
+    this->m_time = 0.0f;
     
     // 更新処理をスケジュール
     this->scheduleUpdate();
@@ -78,13 +79,6 @@ void StageSceneBase::initUI()
     this->m_uiLayer = StageUILayer::create();
     this->m_uiLayer->setCameraMask((unsigned short)CameraFlag::USER1);
     this->addChild(this->m_uiLayer);
-    
-    // SAVEボタン【仮】
-    ui::Button* saveButton { ui::Button::create("CloseNormal.png") };
-    saveButton->setPosition(Vec2(880.0f, 600.0f));
-    saveButton->setCameraMask((unsigned short)CameraFlag::USER1);
-    this->addChild(saveButton);
-    saveButton->addTouchEventListener(CC_CALLBACK_2(StageSceneBase::touchSaveEvent, this));
 }
 
 
@@ -187,11 +181,6 @@ void StageSceneBase::touchAEvent(Ref *pSender, ui::Widget::TouchEventType type)
 {
     if(this->m_messageDialog != nullptr && this->m_messageDialog->isYesNo) {
         switch (this->m_messageDialog->m_messageType) {
-            case messageType::save:
-                if (this->m_messageDialog->userChoice) {
-                    doSave();
-                }
-                break;
             case messageType::failed:
                 if (this->m_messageDialog->userChoice) {
                     doContinue();
@@ -242,56 +231,33 @@ void StageSceneBase::touchBEvent(Ref *pSender, ui::Widget::TouchEventType type)
 }
 
 
+#pragma mark -
 /**
-    Saveボタン押下時のイベント
+    自身と子のスケジュールを全てキャンセルする
  */
-void StageSceneBase::touchSaveEvent(Ref *pSender, ui::Widget::TouchEventType type)
+void StageSceneBase::allNodeUnschedule()
 {
-    switch (type) {
-        case ui::Widget::TouchEventType::BEGAN: {
-            // Messageテスト
-            if (this->m_messageDialog  == nullptr) {
-                this->createMessageDialog(messageType::save);
-            }
-            else {
-                // 文字送りを実行する
-                this->m_messageDialog->next();
-            }
-            break;
-        }
-            
-        case ui::Widget::TouchEventType::MOVED:
-        case ui::Widget::TouchEventType::ENDED:
-        case ui::Widget::TouchEventType::CANCELED:
-            break;
+    for (int i = 0; i < this->getChildren().size(); i++) {
+        this->getChildren().at(i)->unscheduleAllCallbacks();
     }
+    this->unscheduleAllCallbacks();
 }
 
 
 #pragma mark -
+#pragma mark GameEvent
 /**
     ゲームオーバー
  */
 void StageSceneBase::gameover()
 {
+    // 広告を表示
+    AdMobHelper::launchInterstitial();
+    
     // タイトルに戻る
     Scene* titleGameScene { TitleScene::createScene() };
     TransitionFade* fade = TransitionFade::create(1.0f, titleGameScene);
     Director::getInstance()->replaceScene(fade);
-}
-
-
-/**
-    セーブを実行
- */
-void StageSceneBase::doSave()
-{
-    // 広告を表示
-    AdMobHelper::launchInterstitial();
-    
-    // Save
-    UserDefault* userDefault = UserDefault::getInstance();
-    userDefault->setStringForKey("playerName", this->m_player->getName());
 }
 
 
@@ -301,20 +267,9 @@ void StageSceneBase::doSave()
  */
 void StageSceneBase::doContinue()
 {
+    // 広告を表示
+    AdMobHelper::launchInterstitial();
     return;
-}
-
-
-#pragma mark -
-#pragma mark Event
-/**
- */
-void StageSceneBase::allNodeUnschedule()
-{
-    for (int i = 0; i < this->getChildren().size(); i++) {
-        this->getChildren().at(i)->unscheduleAllCallbacks();
-    }
-    this->unscheduleAllCallbacks();
 }
 
 
@@ -404,9 +359,6 @@ void StageSceneBase::createMessageDialog(::messageType messageType)
         case messageType::nomal:
             this->createMessage();
             break;
-        case messageType::save:
-            this->createSaveMessage();
-            break;
         case messageType::failed:
             this->createMissionFailedMessage();
             break;
@@ -436,24 +388,9 @@ void StageSceneBase::createMessageDialog(::messageType messageType)
 void StageSceneBase::createMessage()
 {
     // メッセージの内容を設定
-    CharacterSprite* nextChara = this->m_player->nextCharacter();
-    // 人
-    if(nextChara != nullptr) {
-        if(this->m_player->getName() != "") {
-            this->m_messageDialog->addMessage(StringUtils::format("こんにちは、%s", this->m_player->getName().c_str()));
-        } else {
-            this->m_messageDialog->addMessage("はじめまして。");
-            this->m_messageDialog->addMessage(StringUtils::format("私は%sです。", nextChara->getName().c_str()));
-            this->m_messageDialog->addMessage("あなたの名前は?");
-            this->m_messageDialog->addMessage("さようなら、*1");
-        }
-    }
-    // 人以外
-    else {
-        this->m_messageDialog->addMessage("メッセージを開始します。");
-        this->m_messageDialog->addMessage(StringUtils::format("タイルID:%d", this->m_player->nextTileGID()));
-        this->m_messageDialog->addMessage("メッセージを終了します。");
-    }
+    this->m_messageDialog->addMessage("メッセージを開始します。");
+    this->m_messageDialog->addMessage(StringUtils::format("タイルID:%d", this->m_player->nextTileGID()));
+    this->m_messageDialog->addMessage("メッセージを終了します。");
 }
 
 
@@ -463,15 +400,6 @@ void StageSceneBase::createMessage()
 void StageSceneBase::createMissionFailedMessage()
 {
     this->m_messageDialog->addMessage("コンティニュー？$");
-}
-
-
-/**
-    セーブ実行時のメッセージダイアログに設定する本文を作成する
- */
-void StageSceneBase::createSaveMessage()
-{
-    this->m_messageDialog->addMessage("Saveしますか？$");
 }
 
 
@@ -516,8 +444,8 @@ void StageSceneBase::update(float delta)
  */
 void StageSceneBase::updateTime()
 {
-    this->time++;
-    this->m_uiLayer->updateTime(this->time / 60.0f);
+    this->m_time++;
+    this->m_uiLayer->updateTime(this->m_time / 60.0f);
 }
 
 /**

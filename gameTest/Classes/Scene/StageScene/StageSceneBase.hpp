@@ -15,63 +15,53 @@ USING_NS_CC;
 #include <vector>
 #include "cocos2d.h"
 #include "ui/CocosGUI.h"
-
 #include "PlayerSprite.hpp"
 #include "EnemySprite.hpp"
 #include "MessageDialog.hpp"
-
 #include "AdMobHelper.h"
 #include "StageUILayer.hpp"
 
 // メッセージの種類
 typedef enum {
     nomal,
-    save,
     failed
 } messageType;
 
-
 class StageSceneBase : public Scene
 {
-protected:
-    float time; // 経過時間
-    Camera *m_camera;    // スクロール用カメラ
-    MessageDialog *m_messageDialog  { nullptr };   // メッセージダイアログ
-    StageUILayer *m_uiLayer; // UIレイヤー
-    
+private:
     void initCamera();
     void initUI();
-    virtual void initMap();
-    virtual void initCharactors();
     void initStart();
-    
-    void touchSaveEvent(Ref *pSender, ui::Widget::TouchEventType type);
-    
-    void createMessageDialog(::messageType messageType);
-    void createMessage();
-    void createSaveMessage();
-    void createMissionFailedMessage();
-    void setMessageCallback();
-    
-    void allNodeUnschedule();
-    virtual void stageClear();
     void gameover();
-    void doSave();
-    virtual void doContinue();
-    
-    virtual void update(float delta);
-    virtual void checkPosition();
     void updateTime();
     void updatePosition();
     void updateCameraPosition();
     
+protected:
+    float m_time; // 経過時間
+    Camera *m_camera; // スクロール用カメラ
+    MessageDialog *m_messageDialog; // メッセージダイアログ
+    StageUILayer *m_uiLayer; // UIレイヤー
+    
+    virtual void initMap();
+    virtual void initCharactors();
+    void createMessageDialog(::messageType messageType);
+    void createMessage();
+    void createMissionFailedMessage();
+    void setMessageCallback();
+    void allNodeUnschedule();
+    virtual void stageClear();
+    virtual void doContinue();
+    virtual void update(float delta);
+    virtual void checkPosition();
+    
 public:
-    TMXTiledMap *m_map;  // MAP
-    PlayerSprite *m_player;   // 操作キャラクター
+    TMXTiledMap *m_map; // MAP
+    PlayerSprite *m_player; // 操作キャラクター
     
     static StageSceneBase *createScene();
     virtual bool init();
-    
     ::padState padState();
     Vector<CharacterSprite*> charactersVector();
     Vector<EnemySprite*> enemysVector();
@@ -80,6 +70,7 @@ public:
     void missionFailed();
     void enemyFindPlayer();
     void heartOff(int i);
+    
 };
 
 #endif /* StageSceneBase_hpp */

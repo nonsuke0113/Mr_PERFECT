@@ -24,29 +24,25 @@ typedef enum {
     padLeft
 } padState;
 
-
 class StageLeftUILayer : public Layer
 {
 private:
-    
-    Sprite *background; // 背景
-    Sprite *padBack; // パッド下地
-    Sprite *padPick; // パッド操作部
-    Vector<Sprite*> heartes; // hp
+    Sprite *m_background; // 背景
+    Sprite *m_padBack; // パッド下地
+    Sprite *m_padPick; // パッド操作部
+    Vector<Sprite*> m_heartes; // hp
     
     static double degreeFromVec2(Vec2 posA, Vec2 posB);
-    
     void onTouchesBegan(const std::vector<Touch*>& touches, Event *unused_event);
     void onTouchesMoved(const std::vector<Touch*>& touches, Event *unused_event);
     void onTouchesEnded(const std::vector<Touch*>& touches, Event *unused_event);
     
 public:
-    
     CREATE_FUNC(StageLeftUILayer);
     virtual bool init();
-    
     ::padState padState();
     void heartOff(int i);
+    
 };
 
 #endif /* StageLeftUILayer_hpp */

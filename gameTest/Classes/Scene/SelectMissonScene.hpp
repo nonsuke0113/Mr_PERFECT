@@ -18,15 +18,14 @@ USING_NS_CC;
 class SelectMissonScene : public Layer
 {
 private:
-    
     void touchMissionEvent(Ref *pSender, cocos2d::ui::Widget::TouchEventType type);
     void touchBackEvent(Ref *pSender, ui::Widget::TouchEventType type);
     
 public:
-    
     static Scene* createScene();
     CREATE_FUNC(SelectMissonScene);
     virtual bool init();
+    
 };
 
 #endif /* SelectMissonScene_hpp */

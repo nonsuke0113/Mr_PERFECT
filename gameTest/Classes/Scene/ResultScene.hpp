@@ -18,14 +18,12 @@ USING_NS_CC;
 class ResultScene : public Layer
 {
 private:
-    
-
-    
+        
 public:
-    
     static Scene* createScene();
     CREATE_FUNC(ResultScene);
     virtual bool init();
+    
 };
 
 #endif /* ResultScene_hpp */

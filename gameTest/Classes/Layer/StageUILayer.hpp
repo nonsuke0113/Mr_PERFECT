@@ -20,20 +20,18 @@ USING_NS_CC;
 class StageUILayer : public Layer
 {
 private:
-    
-    StageLeftUILayer *leftLayer; // 左サイドバー
-    StageRightUILayer *rightLayer; // 右サイドバー
+    StageLeftUILayer *m_leftLayer; // 左サイドバー
+    StageRightUILayer *m_rightLayer; // 右サイドバー
     
 public:
-
     CREATE_FUNC(StageUILayer);
     virtual bool init();
-    
     ::padState padState();
     void touchAEvent(Ref *pSender, ui::Widget::TouchEventType type);
     void touchBEvent(Ref *pSender, ui::Widget::TouchEventType type);
     void heartOff(int i);
     void updateTime(float time);
+    
 };
 
 #endif /* StageUILayer_hpp */

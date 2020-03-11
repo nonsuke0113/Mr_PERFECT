@@ -10,7 +10,7 @@
 #include "BulletSprite.hpp"
 
 #pragma mark -
-#pragma mark init
+#pragma mark Init
 /**
     Sprite::createメソッドをオーバーライド
  

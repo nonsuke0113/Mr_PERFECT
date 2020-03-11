@@ -9,7 +9,7 @@
 #include "StageSceneBase.hpp"
 
 #pragma mark -
-#pragma mark init
+#pragma mark Init
 /**
     Sprite::createメソッドをオーバーライド
  
@@ -80,6 +80,7 @@ bool BulletSprite::initWithFileName(const std::string& filename, const Vec2 &pos
 int BulletSprite::power() {
     return this->m_power;
 }
+
 
 #pragma mark -
 /**

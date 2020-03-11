@@ -9,7 +9,7 @@
 #include "StageSceneBase.hpp"
 
 #pragma mark -
-#pragma mark init
+#pragma mark Init
 /**
     初期化処理
  */
@@ -21,22 +21,23 @@ bool StageUILayer::init()
     }
 
     // 左サイドバー
-    this->leftLayer = StageLeftUILayer::create();
-    this->leftLayer->setAnchorPoint(Vec2(0.0f, 0.0f));
-    this->leftLayer->setPosition(Vec2(0.0f, 0.0f));
-    this->addChild(this->leftLayer);
+    this->m_leftLayer = StageLeftUILayer::create();
+    this->m_leftLayer->setAnchorPoint(Vec2(0.0f, 0.0f));
+    this->m_leftLayer->setPosition(Vec2(0.0f, 0.0f));
+    this->addChild(this->m_leftLayer);
     
     // 右サイドバー
-    this->rightLayer = StageRightUILayer::create();
-    this->rightLayer->setAnchorPoint(Vec2(0.0f, 0.0f));
-    this->rightLayer->setPosition(Vec2(888.0f, 0.0f));
-    this->addChild(this->rightLayer);
+    this->m_rightLayer = StageRightUILayer::create();
+    this->m_rightLayer->setAnchorPoint(Vec2(0.0f, 0.0f));
+    this->m_rightLayer->setPosition(Vec2(888.0f, 0.0f));
+    this->addChild(this->m_rightLayer);
     
     return true;
 }
 
 
 #pragma mark -
+#pragma mark Getter
 /**
     バーチャルパッドの状態を返却する
  
@@ -44,10 +45,12 @@ bool StageUILayer::init()
  */
 ::padState StageUILayer::padState()
 {
-    return this->leftLayer->padState();
+    return this->m_leftLayer->padState();
 }
 
 
+#pragma mark -
+#pragma mark ButtonEvent
 /**
     Aボタン押下時のイベント
  */
@@ -70,6 +73,8 @@ void StageUILayer::touchBEvent(Ref *pSender, ui::Widget::TouchEventType type)
 }
 
 
+#pragma mark -
+#pragma mark GameEvent
 /**
     プレイヤーが被弾した
  
@@ -77,10 +82,12 @@ void StageUILayer::touchBEvent(Ref *pSender, ui::Widget::TouchEventType type)
  */
 void StageUILayer::heartOff(int i)
 {
-    this->leftLayer->heartOff(i);
+    this->m_leftLayer->heartOff(i);
 }
 
 
+#pragma mark -
+#pragma mark Update
 /**
     経過時間ラベルを更新する
  
@@ -88,5 +95,5 @@ void StageUILayer::heartOff(int i)
  */
 void StageUILayer::updateTime(float time)
 {
-    this->rightLayer->updateTime(time);
+    this->m_rightLayer->updateTime(time);
 }

@@ -18,20 +18,17 @@ USING_NS_CC;
 class StageRightUILayer : public Layer
 {
 private:
-    
-    Sprite *background; // 背景
-    Label *timeValueLabel; // 時間
-    ui::Button *aButton; // Aボタン
-    ui::Button *bButton; // Bボタン
+    Sprite *m_background; // 背景
+    Label *m_timeValueLabel; // 時間
+    ui::Button *m_aButton; // Aボタン
+    ui::Button *m_bButton; // Bボタン
     
     void touchAEvent(Ref *pSender, ui::Widget::TouchEventType type);
     void touchBEvent(Ref *pSender, ui::Widget::TouchEventType type);
 
 public:
-    
     CREATE_FUNC(StageRightUILayer);
     virtual bool init();
-    
     void updateTime(float time);
     
 };

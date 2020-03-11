@@ -13,7 +13,6 @@
 #include "CharacterSprite.hpp"
 #include <vector>
 
-
 class PlayerSprite : public CharacterSprite
 {
 protected:
@@ -24,6 +23,7 @@ public:
     static PlayerSprite* create(const std::string& filename, const Vec2& pos, ::directcion direction, float moveSpeed);
     void setDirectcion(::directcion direction);
     void hitToBullet(int damage, ::directcion bulletDirection);
+    
 };
 
 #endif /* PlayerSprite_hpp */

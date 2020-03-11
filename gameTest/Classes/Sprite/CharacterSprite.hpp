@@ -14,7 +14,6 @@ USING_NS_CC;
 
 #include "cocos2d.h"
 #include "ui/CocosGUI.h"
-
 #include "GameSpriteBase.hpp"
 
 class CharacterSprite : public GameSpriteBase
@@ -31,15 +30,13 @@ public:
     
     static CharacterSprite* create(const std::string& filename, const Vec2 &pos, ::directcion direction, float moveSpeed);
     virtual bool initWithFileName(const std::string& filename, const Vec2 &pos, ::directcion direction, float moveSpeed);
-    
     int hp();
     void setHp(int hp);
-    
     void moveNextTile();
     CharacterSprite* nextCharacter();
-    
     void shootBullet();
     virtual void hitToBullet(int damage, ::directcion bulletDirection);
+    
 };
 
 

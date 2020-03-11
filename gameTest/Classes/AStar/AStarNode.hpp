@@ -15,22 +15,20 @@ USING_NS_CC;
 #include "cocos2d.h"
 #include <vector>
 
-
 class AStarNode : public Ref
 {
 protected:
     
 public:
+    Vec2 m_pos; // ワールド座標
+    float m_eCost; // 推定(estimated)コスト。このノードから、ゴールノードまでの最短距離。
+    float m_aCost; // 実(actual)コスト。スタートノードからの距離+eコスト。
+    AStarNode *m_parentNode; // 親のノード。
     
     static AStarNode* create(const Vec2 pos, const Vec2 goalPos, AStarNode* parent);
     virtual bool init(const Vec2 pos, const Vec2 goalPos, AStarNode* parent);
-    
-    Vec2 pos; // ワールド座標
-    float eCost; // 推定(estimated)コスト。このノードから、ゴールノードまでの最短距離。
-    float aCost; // 実(actual)コスト。スタートノードからの距離+eコスト。
-    AStarNode *parentNode; // 親のノード。
-    
     std::vector<Vec2> shortestRouteStack();
+    
 };
 
 #endif /* AStarNode_hpp */

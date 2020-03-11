@@ -14,7 +14,6 @@ USING_NS_CC;
 
 #include "cocos2d.h"
 #include "ui/CocosGUI.h"
-
 #include "Const.hpp"
 
 // 向き
@@ -32,7 +31,6 @@ typedef enum {
     animate
 } actutionTag;
 
-
 class GameSpriteBase : public Sprite
 {
 protected:
@@ -42,18 +40,16 @@ protected:
 public:
     static GameSpriteBase* create(const std::string& filename, const Vec2 &pos, ::directcion direction);
     virtual bool initWithFileName(const std::string& filename, const Vec2 &pos, ::directcion direction);
-    
     Vec2& worldPosition();
     directcion directcion();
-    
     void setWorldPosition(Vec2& worldPos);
     virtual void setDirectcion(::directcion direction);
-    
     void moveWorld(float duration, const Vec2& newPosition);
     Vec2 nextTilePosition();
     int nextTileGID();
     bool canMovePos(Vec2& pos);
     void facingNextPos(Vec2& pos);
+    
 };
 
 #endif /* GameSpriteBase_hpp */

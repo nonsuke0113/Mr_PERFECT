@@ -11,7 +11,8 @@
 #include "Stage1Scene.hpp"
 #include "SelectMissonScene.hpp"
 
-
+#pragma mark -
+#pragma mark Init
 /**
     シーンの作成
  */
@@ -43,29 +44,22 @@ bool TitleScene::init()
     this->addChild(bgSprite);
     
     // ロゴ
-    this->logo = Sprite::create("title_logo.png");
-    this->logo->setPosition(Vec2(visibleSize.width / 2, 480));
-    this->addChild(this->logo);
+    this->m_logo = Sprite::create("title_logo.png");
+    this->m_logo->setPosition(Vec2(visibleSize.width / 2, 480));
+    this->addChild(this->m_logo);
 
     // スタートボタン
-    this->startButton = ui::Button::create("start_button.png");
-    this->startButton->setPosition(Vec2(visibleSize.width / 2, 160));
-    this->addChild(this->startButton);
-    this->startButton->addTouchEventListener(CC_CALLBACK_2(TitleScene::touchStartEvent, this));
-    
-    // 最初からボタン(仮)
-//    ui::Button* restartButton { ui::Button::create("CloseSelected.png") };
-//    restartButton->setPosition(Vec2(visibleSize.width / 2, 100.0f));
-//    restartButton->setTag(1);
-//    this->addChild(restartButton);
-//    restartButton->addTouchEventListener(CC_CALLBACK_2(TitleScene::touchEvent, this));
+    this->m_startButton = ui::Button::create("start_button.png");
+    this->m_startButton->setPosition(Vec2(visibleSize.width / 2, 160));
+    this->addChild(this->m_startButton);
+    this->m_startButton->addTouchEventListener(CC_CALLBACK_2(TitleScene::touchStartEvent, this));
     
     return true;
 }
 
 
 #pragma mark -
-#pragma mark Event
+#pragma mark ButtonEvent
 /**
     スタートボタン押下時のイベント
  */
@@ -81,22 +75,22 @@ void TitleScene::touchStartEvent(Ref *pSender, ui::Widget::TouchEventType type)
     {
         case ui::Widget::TouchEventType::BEGAN:
         {
-            this->startButton->setVisible(false);
+            this->m_startButton->setVisible(false);
             
             // 画面サイズ取得
             Size visibleSize { Director::getInstance()->getVisibleSize() };
             
             // ミッションモードボタン
-            this->menu1Button = ui::Button::create("main_menu1.png");
-            this->menu1Button->setPosition(Vec2(visibleSize.width / 2, 220));
-            this->addChild(this->menu1Button);
-            this->menu1Button->addTouchEventListener(CC_CALLBACK_2(TitleScene::touchMissionModeEvent, this));
+            this->m_menu1Button = ui::Button::create("main_menu1.png");
+            this->m_menu1Button->setPosition(Vec2(visibleSize.width / 2, 220));
+            this->addChild(this->m_menu1Button);
+            this->m_menu1Button->addTouchEventListener(CC_CALLBACK_2(TitleScene::touchMissionModeEvent, this));
             
             // 遊び方ボタン
-            this->menu2Button = ui::Button::create("main_menu2.png");
-            this->menu2Button->setPosition(Vec2(visibleSize.width / 2, 100));
-            this->addChild(this->menu2Button);
-            this->menu2Button->addTouchEventListener(CC_CALLBACK_2(TitleScene::touchHowToPlayEvent, this));
+            this->m_menu2Button = ui::Button::create("main_menu2.png");
+            this->m_menu2Button->setPosition(Vec2(visibleSize.width / 2, 100));
+            this->addChild(this->m_menu2Button);
+            this->m_menu2Button->addTouchEventListener(CC_CALLBACK_2(TitleScene::touchHowToPlayEvent, this));
             
             break;
         }
@@ -134,8 +128,8 @@ void TitleScene::touchHowToPlayEvent(Ref *pSender, ui::Widget::TouchEventType ty
     {
         case ui::Widget::TouchEventType::BEGAN:
         {
-            this->menu1Button->setVisible(false);
-            this->menu2Button->setVisible(false);
+            this->m_menu1Button->setVisible(false);
+            this->m_menu2Button->setVisible(false);
             
             // 画面サイズ取得
             Size visibleSize { Director::getInstance()->getVisibleSize() };

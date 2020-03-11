@@ -11,6 +11,8 @@
 #include "Stage1Scene.hpp"
 #include "Stage2Scene.hpp"
 
+#pragma mark -
+#pragma mark Init
 /**
     シーンの作成
  */
@@ -68,6 +70,8 @@ bool SelectMissonScene::init()
 }
     
 
+#pragma mark -
+#pragma mark ButtonEvent
 /**
     ミッションボタン押下時のイベント
  */

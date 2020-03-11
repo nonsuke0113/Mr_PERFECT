@@ -12,7 +12,7 @@
 #include "AStarUtils.hpp"
 
 #pragma mark -
-#pragma mark init
+#pragma mark Init
 /**
     CharacterSprite::createメソッドをオーバーライド
  

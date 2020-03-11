@@ -7,6 +7,8 @@
 
 #include "ResultScene.hpp"
 
+#pragma mark -
+#pragma mark Init
 /**
     シーンの作成
  */

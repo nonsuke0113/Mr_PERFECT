@@ -30,7 +30,7 @@ float AStarUtils::calculateECost(const Vec2 &posA, const Vec2 &posB)
 bool AStarUtils::findNodeFromVector(std::vector<AStarNode*>& vector, AStarNode *node)
 {
     for (AStarNode* i : vector) {
-        if (i->pos == node->pos) {
+        if (i->m_pos == node->m_pos) {
             return true;
         }
     }
@@ -86,14 +86,14 @@ AStarNode* AStarUtils::findGoalNode(std::vector<AStarNode*>& openNodes,
                                     GameSpriteBase *sprite)
 {
     // 目的地についているかチェック
-    if (currentNode->pos == goalPos) {
+    if (currentNode->m_pos == goalPos) {
         return currentNode;
     }
     
     // 経路探索
     // 上
-    AStarNode *upNode = AStarNode::create(Vec2{ currentNode->pos.x, currentNode->pos.y - 1.0f }, goalPos, currentNode);
-    if (sprite->canMovePos(upNode->pos) &&
+    AStarNode *upNode = AStarNode::create(Vec2{ currentNode->m_pos.x, currentNode->m_pos.y - 1.0f }, goalPos, currentNode);
+    if (sprite->canMovePos(upNode->m_pos) &&
         !AStarUtils::findNodeFromVector(openNodes, upNode) &&
         !AStarUtils::findNodeFromVector(closeNodes, upNode))
     {
@@ -101,8 +101,8 @@ AStarNode* AStarUtils::findGoalNode(std::vector<AStarNode*>& openNodes,
     }
     
     // 右
-    AStarNode *rightNode = AStarNode::create(Vec2{ currentNode->pos.x + 1.0f, currentNode->pos.y }, goalPos, currentNode);
-    if (sprite->canMovePos(rightNode->pos) &&
+    AStarNode *rightNode = AStarNode::create(Vec2{ currentNode->m_pos.x + 1.0f, currentNode->m_pos.y }, goalPos, currentNode);
+    if (sprite->canMovePos(rightNode->m_pos) &&
         !AStarUtils::findNodeFromVector(openNodes, rightNode) &&
         !AStarUtils::findNodeFromVector(closeNodes, rightNode))
     {
@@ -110,8 +110,8 @@ AStarNode* AStarUtils::findGoalNode(std::vector<AStarNode*>& openNodes,
     }
     
     // 下
-    AStarNode *downNode = AStarNode::create(Vec2{ currentNode->pos.x, currentNode->pos.y + 1.0f }, goalPos, currentNode);
-    if (sprite->canMovePos(downNode->pos) &&
+    AStarNode *downNode = AStarNode::create(Vec2{ currentNode->m_pos.x, currentNode->m_pos.y + 1.0f }, goalPos, currentNode);
+    if (sprite->canMovePos(downNode->m_pos) &&
         !AStarUtils::findNodeFromVector(openNodes, downNode) &&
         !AStarUtils::findNodeFromVector(closeNodes, downNode))
     {
@@ -119,8 +119,8 @@ AStarNode* AStarUtils::findGoalNode(std::vector<AStarNode*>& openNodes,
     }
     
     // 左
-    AStarNode *leftNode = AStarNode::create(Vec2{ currentNode->pos.x - 1.0f, currentNode->pos.y }, goalPos, currentNode);
-    if (sprite->canMovePos(leftNode->pos) &&
+    AStarNode *leftNode = AStarNode::create(Vec2{ currentNode->m_pos.x - 1.0f, currentNode->m_pos.y }, goalPos, currentNode);
+    if (sprite->canMovePos(leftNode->m_pos) &&
         !AStarUtils::findNodeFromVector(openNodes, leftNode) &&
         !AStarUtils::findNodeFromVector(closeNodes, leftNode))
     {
@@ -133,7 +133,7 @@ AStarNode* AStarUtils::findGoalNode(std::vector<AStarNode*>& openNodes,
     
     // 最短経路推定値でソート(昇順)
     std::sort(openNodes.begin(), openNodes.end(), [](const AStarNode *nodeA, const AStarNode *nodeB) {
-        return nodeA->aCost + nodeA->eCost < nodeB->aCost + nodeB->eCost;
+        return nodeA->m_aCost + nodeA->m_eCost < nodeB->m_aCost + nodeB->m_eCost;
     });
     
     // 近いところから再起で検証

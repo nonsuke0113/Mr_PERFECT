@@ -14,10 +14,8 @@ USING_NS_CC;
 
 #include "cocos2d.h"
 #include "ui/CocosGUI.h"
-
 #include "GameSpriteBase.hpp"
 #include "CharacterSprite.hpp"
-
 
 class BulletSprite : public GameSpriteBase
 {
@@ -30,12 +28,11 @@ protected:
     CharacterSprite* validateHit();
     
 public:
-    int power();
-    
     static BulletSprite* create(const Vec2 &pos, ::directcion direction, CharacterSprite* charactor, float speed);
     virtual bool initWithFileName(const std::string& filename, const Vec2 &pos, ::directcion direction, CharacterSprite* charactor, float speed);
-    
+    int power();
     void shootBullet(::directcion direction);
+    
 };
 
 

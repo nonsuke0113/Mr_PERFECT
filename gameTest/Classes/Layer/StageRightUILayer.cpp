@@ -9,7 +9,7 @@
 #include "StageUILayer.hpp"
 
 #pragma mark -
-#pragma mark init
+#pragma mark Init
 /**
     初期化処理
  */
@@ -21,13 +21,13 @@ bool StageRightUILayer::init()
     }
     
     // 背景
-    this->background = { Sprite::create("side.png") };
-    this->background->setAnchorPoint(Vec2(0.0f, 0.0f));
-    this->background->setPosition(Vec2(0.0f, 0.0f));
-    this->addChild(this->background);
+    this->m_background = { Sprite::create("side.png") };
+    this->m_background->setAnchorPoint(Vec2(0.0f, 0.0f));
+    this->m_background->setPosition(Vec2(0.0f, 0.0f));
+    this->addChild(this->m_background);
     
     // 自身のサイズ設定
-    this->setContentSize(this->background->getContentSize());
+    this->setContentSize(this->m_background->getContentSize());
     
     // タイム
     Label *timeLabel = Label::createWithTTF("TIME:", "fonts/PixelMplus12-Regular.ttf", 30);
@@ -36,25 +36,25 @@ bool StageRightUILayer::init()
     timeLabel->setColor(Color3B(255, 255, 255));
     
     this->addChild(timeLabel);
-    this->timeValueLabel = Label::createWithTTF("000", "fonts/PixelMplus12-Regular.ttf", 30);
-    this->timeValueLabel->setAnchorPoint(Vec2(0,0));
-    this->timeValueLabel->setPosition(Vec2(104.0f, 570.0f));
-    this->timeValueLabel->setColor(Color3B(255, 255, 255));
-    this->addChild(this->timeValueLabel);
+    this->m_timeValueLabel = Label::createWithTTF("000", "fonts/PixelMplus12-Regular.ttf", 30);
+    this->m_timeValueLabel->setAnchorPoint(Vec2(0,0));
+    this->m_timeValueLabel->setPosition(Vec2(104.0f, 570.0f));
+    this->m_timeValueLabel->setColor(Color3B(255, 255, 255));
+    this->addChild(this->m_timeValueLabel);
     
     // Aボタン
-    this->aButton = ui::Button::create("aButton.png");
-    this->aButton->setAnchorPoint(Vec2(0.0f, 0.0f));
-    this->aButton->setPosition(Vec2(84.0f, 340.0f));
-    this->aButton->addTouchEventListener(CC_CALLBACK_2(StageRightUILayer::touchAEvent, this));
-    this->addChild(this->aButton);
+    this->m_aButton = ui::Button::create("aButton.png");
+    this->m_aButton->setAnchorPoint(Vec2(0.0f, 0.0f));
+    this->m_aButton->setPosition(Vec2(84.0f, 340.0f));
+    this->m_aButton->addTouchEventListener(CC_CALLBACK_2(StageRightUILayer::touchAEvent, this));
+    this->addChild(this->m_aButton);
     
     // Bボタン
-    this->bButton = ui::Button::create("bButton.png");
-    this->bButton->setAnchorPoint(Vec2(0.0f, 0.0f));
-    this->bButton->setPosition(Vec2(84.0f, 220.0f));
-    this->bButton->addTouchEventListener(CC_CALLBACK_2(StageRightUILayer::touchBEvent, this));
-    this->addChild(this->bButton);
+    this->m_bButton = ui::Button::create("bButton.png");
+    this->m_bButton->setAnchorPoint(Vec2(0.0f, 0.0f));
+    this->m_bButton->setPosition(Vec2(84.0f, 220.0f));
+    this->m_bButton->addTouchEventListener(CC_CALLBACK_2(StageRightUILayer::touchBEvent, this));
+    this->addChild(this->m_bButton);
     
     return true;
 }
@@ -111,5 +111,5 @@ void StageRightUILayer::touchBEvent(Ref *pSender, ui::Widget::TouchEventType typ
  */
 void StageRightUILayer::updateTime(float time)
 {
-    this->timeValueLabel->setString(StringUtils::format("%03d", (int)time));
+    this->m_timeValueLabel->setString(StringUtils::format("%03d", (int)time));
 }

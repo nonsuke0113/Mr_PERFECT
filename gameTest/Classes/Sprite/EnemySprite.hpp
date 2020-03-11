@@ -31,14 +31,11 @@ protected:
     
     void setupAnimationCache();
     void setDirectcion(::directcion direction);
-    
     void hitToBullet(int damage, ::directcion bulletDirection);
     void dead();
-    
     void rotatePatrol(float frame);
     void rotate();
     bool checkFindPlayer();
-    
     void moveAccordingToRouteStack(float frame);
     void chasePlayer(float frame);
     void shoot(float frame);
@@ -46,7 +43,6 @@ protected:
 public:
     static EnemySprite* create(const std::string& filename, const Vec2 &pos, ::directcion direction, float moveSpeed);
     virtual bool initWithFileName(const std::string& filename, const Vec2 &pos, ::directcion direction, float moveSpeed);
-    
     void startPatrol();
     void stopPatrol();
     void moveToPos(const Vec2 &pos);
@@ -57,6 +53,7 @@ public:
     void startShoot();
     void stopShoot();
     void loseSightOfPlayer();
+    
 };
 
 #endif /* EnemySprite_hpp */

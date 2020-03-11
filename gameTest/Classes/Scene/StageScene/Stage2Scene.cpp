@@ -8,7 +8,7 @@
 #include "Stage2Scene.hpp"
 
 #pragma mark -
-#pragma mark init
+#pragma mark Init
 /**
     シーンの作成
  */
@@ -53,14 +53,15 @@ void Stage2Scene::initCharactors()
 //    mob->startPatrol();
 }
 
+
 #pragma mark -
+#pragma mark GameEvent
 /**
     コンティニューを実行
  */
 void Stage2Scene::doContinue()
 {
-    // 広告を表示
-    AdMobHelper::launchInterstitial();
+    StageSceneBase::doContinue();
     
     // コンティニュー
     Scene* StageSceneBase = this->createScene();
@@ -69,8 +70,6 @@ void Stage2Scene::doContinue()
 }
 
 
-#pragma mark -
-#pragma mark Clear
 /**
     座標の判定
  */
