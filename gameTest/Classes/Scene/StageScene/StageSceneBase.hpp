@@ -27,6 +27,24 @@ typedef enum {
     failed
 } messageType;
 
+// クリアランク
+typedef enum {
+    P,
+    A,
+    B,
+    C
+} clearRank;
+
+// リザルト情報
+typedef struct {
+    int  clearTime;
+    int  clearHp;
+    int  clearFoundCount;
+    ::clearRank timeRank;
+    ::clearRank hpRank;
+    ::clearRank foundRank;
+} resultInfo;
+
 class StageSceneBase : public Scene
 {
 private:
@@ -40,9 +58,11 @@ private:
     
 protected:
     float m_time; // 経過時間
+    int m_enemyFoundPlayerCount; // 敵がプレイヤーを発見した回数
     Camera *m_camera; // スクロール用カメラ
     MessageDialog *m_messageDialog; // メッセージダイアログ
     StageUILayer *m_uiLayer; // UIレイヤー
+    ::resultInfo m_resultInfo; // リザルト用の情報
     
     virtual void initMap();
     virtual void initCharactors();
@@ -68,7 +88,7 @@ public:
     void touchAEvent(Ref *pSender, ui::Widget::TouchEventType type);
     void touchBEvent(Ref *pSender, ui::Widget::TouchEventType type);
     void missionFailed();
-    void enemyFindPlayer();
+    void enemyFoundPlayer();
     void heartOff(int i);
     
 };

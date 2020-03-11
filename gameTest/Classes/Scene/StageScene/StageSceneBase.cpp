@@ -47,6 +47,7 @@ bool StageSceneBase::init()
     this->initStart();
     this->m_messageDialog = nullptr;
     this->m_time = 0.0f;
+    this->m_enemyFoundPlayerCount = 0;
     
     // 更新処理をスケジュール
     this->scheduleUpdate();
@@ -295,8 +296,8 @@ void StageSceneBase::stageClear()
     actionAry.pushBack(Hide::create());
     
     // リザルトシーンに遷移
-    actionAry.pushBack(CallFunc::create([]() {
-        Scene *selectMissionScene { ResultScene::createScene() };
+    actionAry.pushBack(CallFunc::create([this]() {
+        Scene *selectMissionScene = ResultScene::createScene((int)(this->m_time / 60.0f), this->m_player->hp(), this->m_enemyFoundPlayerCount,  0);
         TransitionFade* fade = TransitionFade::create(1.0f, selectMissionScene);
         Director::getInstance()->replaceScene(fade);
     }));
@@ -328,6 +329,15 @@ void StageSceneBase::missionFailed()
     }));
     Sequence *actions { Sequence::create(actionAry) };
     failed->runAction(actions);
+}
+
+
+/**
+    敵キャラクターがプレイヤーを発見した
+ */
+void StageSceneBase::enemyFoundPlayer()
+{
+    this->m_enemyFoundPlayerCount++;
 }
 
 

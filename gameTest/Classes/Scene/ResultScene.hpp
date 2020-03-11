@@ -18,11 +18,15 @@ USING_NS_CC;
 class ResultScene : public Layer
 {
 private:
+    int m_clearTime; // クリアタイム
+    int m_clearHp; // クリア時のHP
+    int m_clearFoundCount; // クリア時の見つかった数
+    int m_clearRank; // クリア時の総合評価
         
 public:
-    static Scene* createScene();
-    CREATE_FUNC(ResultScene);
-    virtual bool init();
+    static Scene* createScene(int time, int hp, int foundCnt, int rank);
+    static ResultScene* create(int time, int hp, int foundCnt, int rank);
+    virtual bool init(int time, int hp, int foundCnt, int rank);
     
 };
 
