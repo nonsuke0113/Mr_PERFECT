@@ -16,12 +16,6 @@ USING_NS_CC;
 #include "MessageDialog.hpp"
 #include <vector>
 
-// メッセージの種類
-typedef enum {
-    none,
-    nomal,
-    failed
-} messageType;
 
 class MessageDialogController : public Ref
 {
@@ -33,6 +27,11 @@ public:
     
     static MessageDialogController* create();
     virtual bool init();
+    void setMessages(std::vector<std::string> messages);
+    void setMessageCallback(std::function<void()> completedAction);
+    void displayMessageDialog();
+    void createTestMessage(int tileGID);
+    void createMissionFailedMessage();
     
 };
 

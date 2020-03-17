@@ -44,7 +44,11 @@ bool StageSceneBase::init()
     this->initMap();
     this->initCharactors();
     this->initStart();
-    this->m_messageDialog = nullptr;
+    
+    this->m_mdController = MessageDialogController::create();
+    this->m_mdController->retain();
+    this->addChild(this->m_mdController->m_dialog);
+    
     this->m_time = 0.0f;
     this->m_enemyFoundPlayerCount = 0;
     
@@ -179,24 +183,11 @@ Vector<EnemySprite*> StageSceneBase::enemysVector() {
  */
 void StageSceneBase::touchAEvent(Ref *pSender, ui::Widget::TouchEventType type)
 {
-    if(this->m_messageDialog != nullptr && this->m_messageDialog->isYesNo) {
-        switch (this->m_messageDialog->m_messageType) {
-            case messageType::failed:
-                if (this->m_messageDialog->userChoice) {
-                    doContinue();
-                } else {
-                    gameover();
-                }
-                break;
-            default:
-                break;
-        }
-    }
-    
-    if (this->m_messageDialog  == nullptr) {
+    if (this->m_mdController->m_dialog->isViewedAllMessage() && this->m_mdController->m_dialog->messageIndex == 0) {
         // Messageテスト
-        if (this->m_player->nextTileGID() != 1) {
-            this->createMessageDialog(messageType::nomal);
+        int nextTileGID = this->m_player->nextTileGID();
+        if (nextTileGID != 1) {
+            this->m_mdController->createTestMessage(nextTileGID);
         }
         // 壁叩き
         else {
@@ -212,7 +203,7 @@ void StageSceneBase::touchAEvent(Ref *pSender, ui::Widget::TouchEventType type)
     }
     else {
         // 文字送りを実行する
-        this->m_messageDialog->next();
+        this->m_mdController->m_dialog->next();
     }
 }
 
@@ -340,7 +331,7 @@ void StageSceneBase::missionFailed()
     actionAry.pushBack(MoveTo::create(1.0f, Vec2(visibleSize.width/2, visibleSize.height/2)));
     // コンテニューメッセージダイアログを表示する
     actionAry.pushBack(CallFunc::create([this]() {
-        this->createMessageDialog(messageType::failed);
+        this->m_mdController->createMissionFailedMessage();
     }));
     Sequence *actions { Sequence::create(actionAry) };
     failed->runAction(actions);
@@ -364,84 +355,6 @@ void StageSceneBase::enemyFoundPlayer()
 void StageSceneBase::heartOff(int i)
 {
     this->m_uiLayer->heartOff(i);
-}
-
-
-#pragma mark -
-#pragma mark Message
-/**
-    メッセージダイアログを作成する
- */
-void StageSceneBase::createMessageDialog(::messageType messageType)
-{
-    this->m_messageDialog = MessageDialog::create(640, 200);
-    this->m_messageDialog->setAnchorPoint(Vec2(0.0f,0.0f));
-    this->m_messageDialog->setPosition(Vec2(568.0f, 0.0f));
-    this->m_messageDialog->m_messageType = messageType;
-    
-    // メッセージを追加
-    switch (messageType) {
-        case messageType::nomal:
-            this->createMessage();
-            break;
-        case messageType::failed:
-            this->createMissionFailedMessage();
-            break;
-        default:
-            break;
-    }
-    
-    // メッセージ表示後のコールバックを設定
-    this->setMessageCallback();
-    
-    this->m_messageDialog->start();
-    
-    this->m_messageDialog->setCameraMask((unsigned short)CameraFlag::USER1);
-    this->addChild(this->m_messageDialog);
-}
-
-
-/**
-    メッセージダイアログに設定する本文を作成する
- */
-void StageSceneBase::createMessage()
-{
-    // メッセージの内容を設定
-    this->m_messageDialog->addMessage("メッセージを開始します。");
-    this->m_messageDialog->addMessage(StringUtils::format("タイルID:%d", this->m_player->nextTileGID()));
-    this->m_messageDialog->addMessage("メッセージを終了します。");
-}
-
-
-/**
-    ミッション失敗時のメッセージダイアログに設定する本文を作成する
- */
-void StageSceneBase::createMissionFailedMessage()
-{
-    this->m_messageDialog->addMessage("コンティニュー？$");
-}
-
-
-/**
-    メッセージ表示後のコールバックを設定する
- */
-void StageSceneBase::setMessageCallback()
-{
-    this->m_messageDialog->setCompleteAction([this]() {
-        // 名前を保存
-        if(this->m_messageDialog->answerList.size() != 0) {
-            this->m_player->setName(this->m_messageDialog->answerList[0]);
-        }
-        // ダイアログを閉じて、Remove
-//        this->m_messageDialog->runAction(
-//                                         Sequence::create(
-//                                                          ScaleTo::create(0.1f, 0, 0.05f, 1),
-//                                                          ScaleTo::create(0.1f, 1, 0.05f, 0.05f),
-//                                                          RemoveSelf::create(true),
-//                                                          nullptr)
-//                                         );
-        this->m_messageDialog  = nullptr;
-    });
 }
 
 

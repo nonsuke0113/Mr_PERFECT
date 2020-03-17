@@ -37,8 +37,8 @@ MessageDialog* MessageDialog::create(const int frameWidth, const int frameHeight
     @param frameWidth メッセージダイアログの幅
     @param frameHeight メッセージダイアログの高さ
  */
-bool MessageDialog::init(const int frameWidth, const int frameHeight) {
-    
+bool MessageDialog::init(const int frameWidth, const int frameHeight)
+{    
     if (!Node::init()) {
         return false;
     }
@@ -320,7 +320,7 @@ void MessageDialog::stopAllowBlink() {
  */
 void MessageDialog::next() {
     // 最後のメッセージまで進んでいれば終了する
-    if (!this->isSending && this->messageIndex >= this->messageList.size()) {
+    if (this->isViewedAllMessage()) {
         this->startArrowBlink();
         this->closeSelf();
         // ハンドラが有れば文字送りの完了を通知
@@ -372,6 +372,7 @@ void MessageDialog::closeSelf()
                                      nullptr
                                      )
                     );
+    this->messageIndex = 0;
 }
 
 
@@ -380,4 +381,12 @@ void MessageDialog::closeSelf()
  */
 void MessageDialog::setCompleteAction(std::function<void()> completedAction) {
     this->completedAction = completedAction;
+}
+
+
+/**
+    メッセージを全部表示済みかどうか
+ */
+bool MessageDialog::isViewedAllMessage() {
+    return !this->isSending && this->messageIndex >= this->messageList.size();
 }

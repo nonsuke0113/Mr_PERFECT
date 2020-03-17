@@ -24,7 +24,7 @@ private:
     ui::EditBox* editBox = nullptr;
     Sprite* finishArrow; // 文字送り終了矢印
     std::vector<std::string> messageList; // 表示するメッセージのリスト
-    size_t messageIndex;    // 現在表示中のメッセージのインデックス
+    
     const int LABEL_MARGIN = 30;
     bool isSending = false;
     bool isQuestion = false;
@@ -50,6 +50,7 @@ public:
     bool userChoice = true;
     
     int m_messageType;
+    size_t messageIndex;    // 現在表示中のメッセージのインデックス
     
     MessageDialog() {};
     ~MessageDialog();
@@ -61,6 +62,7 @@ public:
     void addMessage(const std::string &message);
     void setCompleteAction(std::function<void()> completedAction);
     void selectChoice(bool choice);
+    bool isViewedAllMessage();
     
     virtual void editBoxEditingDidBegin(ui::EditBox *editBox);
     virtual void editBoxEditingDidEnd(ui::EditBox *editBox);

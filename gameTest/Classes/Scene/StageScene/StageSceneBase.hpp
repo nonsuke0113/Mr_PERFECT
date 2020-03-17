@@ -17,7 +17,7 @@ USING_NS_CC;
 #include "ui/CocosGUI.h"
 #include "PlayerSprite.hpp"
 #include "EnemySprite.hpp"
-#include "MessageDialog.hpp"
+#include "MessageDialogController.hpp"
 #include "AdMobHelper.h"
 #include "StageUILayer.hpp"
 
@@ -50,7 +50,6 @@ private:
     void initCamera();
     void initUI();
     void initStart();
-    void gameover();
     void updateTime();
     void updatePosition();
     void updateCameraPosition();
@@ -59,7 +58,7 @@ protected:
     float m_time; // 経過時間
     int m_enemyFoundPlayerCount; // 敵がプレイヤーを発見した回数
     Camera *m_camera; // スクロール用カメラ
-    MessageDialog *m_messageDialog; // メッセージダイアログ
+    MessageDialogController *m_mdController; // メッセージダイアログコントローラー
     StageUILayer *m_uiLayer; // UIレイヤー
     ::resultInfo m_resultInfo; // リザルト用の情報
     
@@ -72,7 +71,6 @@ protected:
     void allNodeUnschedule();
     virtual void stageClear();
     virtual void setupResult();
-    virtual void doContinue();
     virtual void update(float delta);
     virtual void checkPosition();
     
@@ -87,6 +85,8 @@ public:
     Vector<EnemySprite*> enemysVector();
     void touchAEvent(Ref *pSender, ui::Widget::TouchEventType type);
     void touchBEvent(Ref *pSender, ui::Widget::TouchEventType type);
+    virtual void doContinue();
+    void gameover();
     void missionFailed();
     void enemyFoundPlayer();
     void heartOff(int i);
