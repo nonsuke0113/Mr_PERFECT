@@ -58,6 +58,7 @@
 		86C1AEC723EFE2A7003F61B7 /* Stage2Scene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 86C1AEC523EFE2A7003F61B7 /* Stage2Scene.cpp */; };
 		86DA7CC423E4364900B495AB /* SelectMissonScene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 86DA7CC223E4364900B495AB /* SelectMissonScene.cpp */; };
 		86F5F18A2406A8A90051060B /* StageUILayer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 86F5F1882406A8A90051060B /* StageUILayer.cpp */; };
+		ABB249BA2420C01B005018AB /* MessageDialogController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = ABB249B82420C01B005018AB /* MessageDialogController.cpp */; };
 		ABBA36B721BA6A3500A02928 /* MessageDialog.cpp in Sources */ = {isa = PBXBuildFile; fileRef = ABBA36B521BA6A3500A02928 /* MessageDialog.cpp */; };
 		BF171245129291EC00B8313A /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BF170DB012928DE900B8313A /* OpenGLES.framework */; };
 		BF1712471292920000B8313A /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = BF170DB412928DE900B8313A /* libz.dylib */; };
@@ -198,6 +199,8 @@
 		86DA7CC323E4364900B495AB /* SelectMissonScene.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = SelectMissonScene.hpp; sourceTree = "<group>"; };
 		86F5F1882406A8A90051060B /* StageUILayer.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = StageUILayer.cpp; sourceTree = "<group>"; };
 		86F5F1892406A8A90051060B /* StageUILayer.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = StageUILayer.hpp; sourceTree = "<group>"; };
+		ABB249B82420C01B005018AB /* MessageDialogController.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = MessageDialogController.cpp; sourceTree = "<group>"; };
+		ABB249B92420C01B005018AB /* MessageDialogController.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = MessageDialogController.hpp; sourceTree = "<group>"; };
 		ABBA36B521BA6A3500A02928 /* MessageDialog.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = MessageDialog.cpp; sourceTree = "<group>"; };
 		ABBA36B621BA6A3500A02928 /* MessageDialog.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = MessageDialog.hpp; sourceTree = "<group>"; };
 		BF170DB012928DE900B8313A /* OpenGLES.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGLES.framework; path = System/Library/Frameworks/OpenGLES.framework; sourceTree = SDKROOT; };
@@ -398,6 +401,8 @@
 				8648AA8523F2DDF700365B62 /* AStar */,
 				E9A5211721AECC9900DB44EA /* Const.hpp */,
 				E945438E21F49F4900C11542 /* StringUtil.h */,
+				ABB249B92420C01B005018AB /* MessageDialogController.hpp */,
+				ABB249B82420C01B005018AB /* MessageDialogController.cpp */,
 				ABBA36B621BA6A3500A02928 /* MessageDialog.hpp */,
 				ABBA36B521BA6A3500A02928 /* MessageDialog.cpp */,
 			);
@@ -646,6 +651,7 @@
 				86114BE5240AB95700864BEA /* StageRightUILayer.cpp in Sources */,
 				8664737F23A8B58900ADCC59 /* StageSceneBase.cpp in Sources */,
 				1AF87B781F6F77F7007BE51C /* AppController.mm in Sources */,
+				ABB249BA2420C01B005018AB /* MessageDialogController.cpp in Sources */,
 				8648AA8023F294F200365B62 /* AStarNode.cpp in Sources */,
 				861B748E239F37A6007068AB /* BulletSprite.cpp in Sources */,
 				86C1AEC723EFE2A7003F61B7 /* Stage2Scene.cpp in Sources */,

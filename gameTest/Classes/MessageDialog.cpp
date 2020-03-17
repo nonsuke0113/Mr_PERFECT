@@ -26,11 +26,8 @@ MessageDialog* MessageDialog::create(const int frameWidth, const int frameHeight
         pRet->autorelease();
         return pRet;
     }
-    else {
-        delete pRet;
-        pRet = nullptr;
-        return nullptr;
-    }
+    CC_SAFE_DELETE(pRet);
+    return nullptr;
 }
 
 
@@ -49,25 +46,29 @@ bool MessageDialog::init(const int frameWidth, const int frameHeight) {
     // 外枠の準備
     const Rect outerRect(0, 0, 24, 24);
     const Rect innerRect(7, 7, 10, 10);
-    
     this->frame = ui::Scale9Sprite::create("frame.png", outerRect, innerRect);
-    this->frame->setAnchorPoint(Vec2(0.5f,0));
+    this->frame->setAnchorPoint(Vec2(0.5f, 0));
     this->frame->setContentSize(Size(frameWidth, frameHeight));
     this->frame->getTexture()->setAliasTexParameters();
-    
     this->addChild(this->frame);
     
     // 文字送り完了の矢印
     this->finishArrow = Sprite::create("arrow.png");
-    this->frame->setAnchorPoint(Vec2(0.5f,0));
+    this->frame->setAnchorPoint(Vec2(0.5f, 0));
     this->finishArrow->setPosition(0, LABEL_MARGIN);
     this->finishArrow->setOpacity(0);
     this->addChild(this->finishArrow);
+    
+    // インデックス初期化
+    this->messageIndex = 0;
     
     return true;
 }
 
 
+/**
+    デストラクタ
+ */
 MessageDialog::~MessageDialog() {
     this->removeAllChildrenWithCleanup(true);
 }
@@ -88,7 +89,7 @@ void MessageDialog::prepareLabel() {
     
     this->charIndex = 0;
     
-    // 次の表示するメッセージの選択
+    // 次に表示するメッセージの選択
     this->message = this->messageList.at(messageIndex++);
     
     // ユーザーの回答に応じて、メッセージの内容を変換する
@@ -321,6 +322,7 @@ void MessageDialog::next() {
     // 最後のメッセージまで進んでいれば終了する
     if (!this->isSending && this->messageIndex >= this->messageList.size()) {
         this->startArrowBlink();
+        this->closeSelf();
         // ハンドラが有れば文字送りの完了を通知
         if (this->completedAction != nullptr) {
             this->completedAction();
@@ -355,6 +357,21 @@ void MessageDialog::next() {
         this->start();
         this->stopAllowBlink();
     }
+}
+
+
+/**
+    自身を閉じる
+ */
+void MessageDialog::closeSelf()
+{
+    this->runAction(
+                    Sequence::create(
+                                     ScaleTo::create(0.1f, 0, 0.05f, 1),
+                                     ScaleTo::create(0.1f, 1, 0.0f, 0.05f),
+                                     nullptr
+                                     )
+                    );
 }
 
 

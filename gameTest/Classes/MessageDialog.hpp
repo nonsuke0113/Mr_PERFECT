@@ -24,13 +24,13 @@ private:
     ui::EditBox* editBox = nullptr;
     Sprite* finishArrow; // 文字送り終了矢印
     std::vector<std::string> messageList; // 表示するメッセージのリスト
+    size_t messageIndex;    // 現在表示中のメッセージのインデックス
     const int LABEL_MARGIN = 30;
     bool isSending = false;
     bool isQuestion = false;
     Sprite* userChoiceArrow; // 
     int charIndex = 0; // 現在の文字位置
     std::string message;    // 現在表示中のメッセージ
-    size_t messageIndex = 0;    // 現在表示中のメッセージのインデックス
     int messageLength = 0; // 現在の文字列の長さ
     float interval = 0.1f; // 文字と文字を表示する間隔
     float distance = 0; // 前の文字を表示してからの経過時間
@@ -42,6 +42,7 @@ private:
     void createEditBox();
     void startArrowBlink();
     void stopAllowBlink();
+    void closeSelf();
     
 public:
     std::vector<std::string> answerList;

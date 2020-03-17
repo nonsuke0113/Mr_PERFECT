@@ -395,13 +395,7 @@ void StageSceneBase::createMessageDialog(::messageType messageType)
     this->setMessageCallback();
     
     this->m_messageDialog->start();
-    this->m_messageDialog->setScale(0.05f);
-    this->m_messageDialog->runAction(
-                                     Sequence::create(
-                                                      ScaleTo::create(0.1f, 0, 1, 1),
-                                                      ScaleTo::create(0.2f, 1, 1, 1),
-                                                      nullptr)
-                                     );
+    
     this->m_messageDialog->setCameraMask((unsigned short)CameraFlag::USER1);
     this->addChild(this->m_messageDialog);
 }
@@ -439,13 +433,13 @@ void StageSceneBase::setMessageCallback()
             this->m_player->setName(this->m_messageDialog->answerList[0]);
         }
         // ダイアログを閉じて、Remove
-        this->m_messageDialog->runAction(
-                                         Sequence::create(
-                                                          ScaleTo::create(0.1f, 0, 0.05f, 1),
-                                                          ScaleTo::create(0.1f, 1, 0.05f, 0.05f),
-                                                          RemoveSelf::create(true),
-                                                          nullptr)
-                                         );
+//        this->m_messageDialog->runAction(
+//                                         Sequence::create(
+//                                                          ScaleTo::create(0.1f, 0, 0.05f, 1),
+//                                                          ScaleTo::create(0.1f, 1, 0.05f, 0.05f),
+//                                                          RemoveSelf::create(true),
+//                                                          nullptr)
+//                                         );
         this->m_messageDialog  = nullptr;
     });
 }
