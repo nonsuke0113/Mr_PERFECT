@@ -460,7 +460,11 @@ void StageSceneBase::update(float delta)
 {
     this->updateTime();
     this->checkPosition();
-    this->updatePosition();
+    
+    // 座標更新は0.5秒(30/60フレーム)毎に判定
+    if (fmod(this->m_time, 30) == 0) {
+        this->updatePosition();
+    }
 }
 
 
