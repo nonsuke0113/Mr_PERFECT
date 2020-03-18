@@ -364,6 +364,7 @@ void EnemySprite::moveAccordingToRouteStack(float frame)
     
     if (this->checkFindPlayer()) {
         this->stopMoveAccordingToRouteStack();
+        this->startShoot();
         this->startChasePlayer();
         return;
     }
