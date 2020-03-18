@@ -43,7 +43,7 @@ bool MessageDialogController::init()
  */
 void MessageDialogController::initMessageDialog()
 {
-    this->m_dialog = MessageDialog::create(640.0f, 200.0f);
+    this->m_dialog = MessageDialog::create(Size(640.0f, 200.0f));
     this->m_dialog->setAnchorPoint(Vec2(0.0f, 0.0f));
     this->m_dialog->setPosition(Vec2(568.0f, 0.0f));
     this->m_dialog->setCameraMask((unsigned short)CameraFlag::USER1);

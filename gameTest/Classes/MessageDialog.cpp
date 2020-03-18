@@ -10,19 +10,21 @@
 #include "Const.hpp"
 #include "StageSceneBase.hpp"
 
+const float INTERVAL = 0.1f; // 文字と文字を表示する間隔
+const int LABEL_MARGIN = 30; // 表示するラベルの間隔
 
 #pragma mark -
 #pragma mark init
 /**
     createメソッド
  
-    @param frameWidth メッセージダイアログの幅
-    @param frameHeight メッセージダイアログの高さ
+    @param frameSize フレームサイズ
+    @return メッセージダイアログ
  */
-MessageDialog* MessageDialog::create(const int frameWidth, const int frameHeight)
+MessageDialog* MessageDialog::create(const Size frameSize)
 {
     MessageDialog *pRet = new(std::nothrow) MessageDialog();
-    if (pRet && pRet->init(frameWidth, frameHeight)) {
+    if (pRet && pRet->init(frameSize)) {
         pRet->autorelease();
         return pRet;
     }
@@ -34,37 +36,50 @@ MessageDialog* MessageDialog::create(const int frameWidth, const int frameHeight
 /**
     初期化処理
  
-    @param frameWidth メッセージダイアログの幅
-    @param frameHeight メッセージダイアログの高さ
+    @param frameSize フレームサイズ
  */
-bool MessageDialog::init(const int frameWidth, const int frameHeight)
+bool MessageDialog::init(const Size frameSize)
 {    
     if (!Node::init()) {
         return false;
     }
     
-    // 外枠の準備
-    const Rect outerRect(0, 0, 24, 24);
-    const Rect innerRect(7, 7, 10, 10);
+    this->initFrame(frameSize);
+    this->initFinishArrow();
+    this->messageIndex = 0;
+    
+    this->m_isVisible = false;
+    
+    
+    return true;
+}
+
+
+/**
+    フレームの初期化
+ */
+void MessageDialog::initFrame(const Size frameSize)
+{
+    Rect outerRect(0, 0, 24, 24);
+    Rect innerRect(7, 7, 10, 10);
     this->frame = ui::Scale9Sprite::create("frame.png", outerRect, innerRect);
     this->frame->setAnchorPoint(Vec2(0.5f, 0));
-    this->frame->setContentSize(Size(frameWidth, frameHeight));
+    this->frame->setContentSize(Size(frameSize.width, frameSize.height));
     this->frame->getTexture()->setAliasTexParameters();
     this->addChild(this->frame);
-    
-    // 文字送り完了の矢印
+}
+
+
+/**
+    文字送り矢印の初期化
+ */
+void MessageDialog::initFinishArrow()
+{
     this->finishArrow = Sprite::create("arrow.png");
     this->frame->setAnchorPoint(Vec2(0.5f, 0));
     this->finishArrow->setPosition(0, LABEL_MARGIN);
     this->finishArrow->setOpacity(0);
     this->addChild(this->finishArrow);
-    
-    // インデックス初期化
-    this->messageIndex = 0;
-    
-    this->m_isVisible = false;
-    
-    return true;
 }
 
 
@@ -78,73 +93,7 @@ MessageDialog::~MessageDialog() {
 
 #pragma mark -
 /**
-    表示するラベルを作成
- */
-void MessageDialog::prepareLabel() {
-    
-    if (this->label != nullptr) {
-        this->label->removeFromParentAndCleanup(true);
-    }
-    if (this->editBox != nullptr) {
-        this->editBox->removeFromParentAndCleanup(true);
-    }
-    
-    this->charIndex = 0;
-    
-    // 次に表示するメッセージの選択
-    this->message = this->messageList.at(messageIndex++);
-    
-    // ユーザーの回答に応じて、メッセージの内容を変換する
-    if(this->message.find("*") != -1) {
-        int replaceIndex = (int)this->message[this->message.find("*") + 1] - (int)'0';
-        if(!(replaceIndex > answerList.size())) {
-            this->message.replace(this->message.find("*"), 2, answerList[replaceIndex - 1]);
-        }
-    }
-    
-    // 問いかけフラグを設定
-    if(this->message.back() == '?') {
-        this->isQuestion = true;
-    } else if(this->message.back() == '$') {
-        this->message.pop_back();
-        this->isYesNo = true;
-    }
-    
-    // 表示するメッセージの長さ(文字数)を取得
-    this->messageLength = StringUtil::lenUtf8(this->message);
-    
-    // ラベルを作成
-    this->label = Label::createWithTTF(this->message, "fonts/PixelMplus12-Regular.ttf", MESSAGE_FONT_SIZE);
-    // アンチエイリアスをOFF
-    this->label->getFontAtlas()->setAliasTexParameters();
-    this->label->setAnchorPoint(Vec2(0.0f, 1.0f));
-    // 外側のフレームに合わせて位置とサイズを調整
-    this->label->setPosition(LABEL_MARGIN, frame->getContentSize().height - LABEL_MARGIN);
-    this->label->setWidth(this->frame->getContentSize().width - (LABEL_MARGIN * 2));
-    this->label->setHeight(this->frame->getContentSize().height - (LABEL_MARGIN * 2));
-
-    // 文字を透明に設定
-    this->label->setOpacity(0);
-    // 行の高さを設定
-    this->label->setLineHeight(this->label->getLineHeight() * 1.5f);
-    
-    this->label->setCameraMask((unsigned short)CameraFlag::USER1);
-    this->frame->addChild(this->label);
-}
-
-
-/**
-    メッセージを配列に追加する
- 
-    @param &message 追加するメッセージ
- */
-void MessageDialog::addMessage(const std::string &message) {
-    this->messageList.push_back(message);
-}
-
-
-/**
-    メッセージの表示を開始する
+    1メッセージの表示を開始する
  */
 void MessageDialog::start() {
     this->prepareLabel();
@@ -153,27 +102,107 @@ void MessageDialog::start() {
 }
 
 
+#pragma mark -
+#pragma mark Label
 /**
-    経過時間に応じて文字送りを実行
- 
-    @param delta 
+    表示するラベルを準備
  */
-void MessageDialog::update(float delta) {
+void MessageDialog::prepareLabel()
+{
+    // メッセージの状態をリセット
+    this->resetMessage();
     
-    this->distance += delta;
+    // 次に表示するメッセージの選択
+    std::string message = this->messageList.at(messageIndex++);
     
-    if (this->distance > this->interval) {
-        // 1文字ずつ表示していく
-        Sprite* sp = this->label->getLetter(this->charIndex);
-        if (sp != nullptr) {
-            sp->setOpacity(255);
-        }
-        this->distance = 0;
-        this->charIndex++;
+    // フラグを設定
+    // プレイヤー入力が必要
+    if(message.back() == '?') {
+        this->isQuestion = true;
+    }
+    // 2択選択が必要
+    else if(message.back() == '$') {
+        message.pop_back();
+        this->isYesNo = true;
     }
     
+    // ラベルを作成
+    this->label = this->createMessageLabel(message);
+    this->label->setCameraMask((unsigned short)CameraFlag::USER1);
+    this->frame->addChild(this->label);
+}
+
+
+/**
+    表示用のラベルを作成する
+ 
+    @param message ラベルにする文字列
+    @return 作成したラベル
+ */
+Label* MessageDialog::createMessageLabel(const std::string &message)
+{
+    Label *label = Label::createWithTTF(message, "fonts/PixelMplus12-Regular.ttf", MESSAGE_FONT_SIZE);
+    // アンチエイリアスをOFF
+    label->getFontAtlas()->setAliasTexParameters();
+    label->setAnchorPoint(Vec2(0.0f, 1.0f));
+    // 外側のフレームに合わせて位置とサイズを調整
+    label->setPosition(LABEL_MARGIN, this->frame->getContentSize().height - LABEL_MARGIN);
+    label->setWidth(this->frame->getContentSize().width - (LABEL_MARGIN * 2));
+    label->setHeight(this->frame->getContentSize().height - (LABEL_MARGIN * 2));
+    // 文字を透明に設定
+    label->setOpacity(0);
+    // 行の高さを設定
+    label->setLineHeight(label->getLineHeight() * 1.5f);
+    return label;
+}
+
+
+#pragma mark -
+#pragma mark Message
+/**
+    メッセージの状態を初期化する
+ */
+void MessageDialog::resetMessage()
+{
+    if (this->label != nullptr) {
+        this->label->removeFromParentAndCleanup(true);
+    }
+    if (this->editBox != nullptr) {
+        this->editBox->removeFromParentAndCleanup(true);
+    }
+    this->charIndex = 0;
+    this->distance = 0;
+    this->isSending = false;
+    this->isYesNo = false;
+}
+
+
+/**
+    メッセージを配列に追加する
+ 
+    @param &message 追加するメッセージ
+ */
+void MessageDialog::addMessage(const std::string &message)
+{
+    this->messageList.push_back(message);
+}
+
+
+#pragma mark -
+#pragma mark Update
+/**
+    定期処理
+    経過時間に応じて文字送りを実行する
+ */
+void MessageDialog::update(float delta)
+{
+    // 経過時間をインクリメント
+    this->distance += delta;
+    // インターバル毎に1文字ずつ表示していく
+    this->displayCharAtInterval();
+    
     // メッセージの最後まで表示したら、文字送りを停止する
-    if (this->charIndex >= this->messageLength) {
+    if (this->charIndex >= this->label->getStringLength()) {
         this->isSending = false;
         this->unscheduleUpdate();
         
@@ -189,12 +218,30 @@ void MessageDialog::update(float delta) {
 
 
 /**
+    一定時間経過毎に、1文字づつラベルを表示する
+ */
+void MessageDialog::displayCharAtInterval()
+{
+    // 前の文字を表示してから0.1秒以上経過していなければ何もしない
+    if (this->distance < INTERVAL) {
+        return;
+    }
+    
+    // 1文字づつ表示していく
+    Sprite *charSprite = this->label->getLetter(this->charIndex);
+    if (charSprite != nullptr) {
+        charSprite->setOpacity(255);
+    }
+    this->distance = 0;
+    this->charIndex++;
+}
+
+
+/**
     Yes/No選択肢を生成する
  */
-void MessageDialog::createYesNo() {
-    
-    this->isYesNo = true;
-    
+void MessageDialog::createYesNo()
+{
     // Yesラベルを作成
     Label* yesLabel = Label::createWithTTF("はい", "fonts/PixelMplus12-Regular.ttf", MESSAGE_FONT_SIZE);
     // アンチエイリアスをOFF
@@ -245,24 +292,27 @@ void MessageDialog::updateChoice(float frame)
 
 
 /**
+    プレイヤーの選択に合わせて、矢印の位置を変更する
+ 
+    @param choice プレーヤーの選択
  */
-void MessageDialog::selectChoice(bool choice) {
+void MessageDialog::selectChoice(bool choice)
+{
     if(choice) {
         this->userChoice = true;
-        this->userChoiceArrow->setPosition(LABEL_MARGIN, this->label->getHeight() - (LABEL_MARGIN*2));
+        this->userChoiceArrow->setPosition(LABEL_MARGIN, this->label->getHeight() - (LABEL_MARGIN * 2));
     } else {
         this->userChoice = false;
-        this->userChoiceArrow->setPosition(this->frame->getContentSize().width/2, this->label->getHeight() - (LABEL_MARGIN*2));
+        this->userChoiceArrow->setPosition(this->frame->getContentSize().width / 2, this->label->getHeight() - (LABEL_MARGIN * 2));
     }
-    
 }
 
 
 /**
     EditBoxを生成する
  */
-void MessageDialog::createEditBox() {
-    
+void MessageDialog::createEditBox()
+{
     this->editBox = ui::EditBox::create(Size(480, 50), ui::Scale9Sprite::create("side_test.png"));
     this->editBox->setFont("fonts/PixelMplus12-Regular.ttf", MESSAGE_FONT_SIZE);
     this->editBox->setAnchorPoint(Vec2(0.5f,0));
@@ -295,7 +345,8 @@ void MessageDialog::editBoxReturn(ui::EditBox *editBox) {
 /**
     文字送り完了矢印の点滅を開始する
  */
-void MessageDialog::startArrowBlink() {
+void MessageDialog::startArrowBlink()
+{
     // 点滅用の繰り返しアニメーション
     auto blink = Sequence::create(
                                   DelayTime::create(0.1f),
@@ -303,8 +354,8 @@ void MessageDialog::startArrowBlink() {
                                   DelayTime::create(0.3f),
                                   CallFunc::create([this]() { this->finishArrow->setOpacity(0); }),
                                   DelayTime::create(0.2f),
-                                  nullptr);
-    
+                                  nullptr
+                                  );
     this->finishArrow->runAction(RepeatForever::create(blink));
 }
 
@@ -312,7 +363,8 @@ void MessageDialog::startArrowBlink() {
 /**
     文字送り完了矢印の点滅を終了する
  */
-void MessageDialog::stopAllowBlink() {
+void MessageDialog::stopAllowBlink()
+{
     this->finishArrow->stopAllActions();
     this->finishArrow->setOpacity(0);
 }

@@ -21,11 +21,6 @@ USING_NS_CC;
 #include "AdMobHelper.h"
 #include "StageUILayer.hpp"
 
-// メッセージの種類
-typedef enum {
-    nomal,
-    failed
-} messageType;
 
 // クリアランク
 typedef enum {
@@ -64,10 +59,6 @@ protected:
     
     virtual void initMap();
     virtual void initCharactors();
-    void createMessageDialog(::messageType messageType);
-    void createMessage();
-    void createMissionFailedMessage();
-    void setMessageCallback();
     void allNodeUnschedule();
     virtual void stageClear();
     virtual void setupResult();
