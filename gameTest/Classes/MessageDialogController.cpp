@@ -52,6 +52,19 @@ void MessageDialogController::initMessageDialog()
 
 
 #pragma mark -
+#pragma mark Getter
+/**
+    メッセージダイアログが表示中かどうか
+ 
+    @return メッセージダイアログが表示中かどうか
+ */
+bool MessageDialogController::isVisibleMessageDialog()
+{
+    return this->m_dialog->isVisible();
+}
+
+
+#pragma mark -
 #pragma mark Setter
 /**
     メッセージダイアログにメッセージを追加する
@@ -91,9 +104,18 @@ void MessageDialogController::displayMessageDialog()
                                                nullptr
                                                )
                               );
-    this->m_dialog->m_isVisible = true;
+    this->m_dialog->setIsVisible(true);
     // 文字送りを開始
     this->m_dialog->start();
+}
+
+
+/**
+    メッセージの文字送りを実行する
+ */
+void MessageDialogController::next()
+{
+    this->m_dialog->next();
 }
 
 
@@ -126,7 +148,7 @@ void MessageDialogController::createMissionFailedMessage()
     this->setMessageCallback([this]() {
         // シーンに通知
         StageSceneBase* mainScene = (StageSceneBase*)this->m_dialog->getParent();
-        if (this->m_dialog->userChoice) {
+        if (this->m_dialog->userChoice()) {
             mainScene->doContinue();
         } else {
             mainScene->gameover();

@@ -183,7 +183,7 @@ Vector<EnemySprite*> StageSceneBase::enemysVector() {
  */
 void StageSceneBase::touchAEvent(Ref *pSender, ui::Widget::TouchEventType type)
 {
-    if (!this->m_mdController->m_dialog->m_isVisible) {
+    if (!this->m_mdController->isVisibleMessageDialog()) {
         // Messageテスト
         int nextTileGID = this->m_player->nextTileGID();
         if (nextTileGID != 1) {
@@ -203,7 +203,7 @@ void StageSceneBase::touchAEvent(Ref *pSender, ui::Widget::TouchEventType type)
     }
     else {
         // 文字送りを実行する
-        this->m_mdController->m_dialog->next();
+        this->m_mdController->next();
     }
 }
 

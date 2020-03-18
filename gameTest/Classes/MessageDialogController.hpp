@@ -16,7 +16,6 @@ USING_NS_CC;
 #include "MessageDialog.hpp"
 #include <vector>
 
-
 class MessageDialogController : public Ref
 {
 protected:
@@ -27,9 +26,11 @@ public:
     
     static MessageDialogController* create();
     virtual bool init();
+    bool isVisibleMessageDialog();
     void setMessages(std::vector<std::string> messages);
     void setMessageCallback(std::function<void()> completedAction);
     void displayMessageDialog();
+    void next();
     void createTestMessage(int tileGID);
     void createMissionFailedMessage();
     
