@@ -46,10 +46,10 @@ private:
     
 public:
     std::vector<std::string> answerList;
+    bool m_isVisible;
     bool isYesNo = false;
     bool userChoice = true;
-    
-    int m_messageType;
+
     size_t messageIndex;    // 現在表示中のメッセージのインデックス
     
     MessageDialog() {};

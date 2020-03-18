@@ -62,6 +62,8 @@ bool MessageDialog::init(const int frameWidth, const int frameHeight)
     // インデックス初期化
     this->messageIndex = 0;
     
+    this->m_isVisible = false;
+    
     return true;
 }
 
@@ -373,6 +375,9 @@ void MessageDialog::closeSelf()
                                      )
                     );
     this->messageIndex = 0;
+    this->messageList.clear();
+    this->messageList.shrink_to_fit();
+    this->m_isVisible = false;
 }
 
 

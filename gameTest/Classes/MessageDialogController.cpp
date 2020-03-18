@@ -91,6 +91,7 @@ void MessageDialogController::displayMessageDialog()
                                                nullptr
                                                )
                               );
+    this->m_dialog->m_isVisible = true;
     // 文字送りを開始
     this->m_dialog->start();
 }

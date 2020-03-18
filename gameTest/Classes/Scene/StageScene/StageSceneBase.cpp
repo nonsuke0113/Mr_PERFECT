@@ -183,7 +183,7 @@ Vector<EnemySprite*> StageSceneBase::enemysVector() {
  */
 void StageSceneBase::touchAEvent(Ref *pSender, ui::Widget::TouchEventType type)
 {
-    if (this->m_mdController->m_dialog->isViewedAllMessage() && this->m_mdController->m_dialog->messageIndex == 0) {
+    if (!this->m_mdController->m_dialog->m_isVisible) {
         // Messageテスト
         int nextTileGID = this->m_player->nextTileGID();
         if (nextTileGID != 1) {
