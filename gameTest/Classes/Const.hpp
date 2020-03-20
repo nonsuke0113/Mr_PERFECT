@@ -16,8 +16,8 @@ constexpr float PER_TILE_SIZE { 64.0f }; // 1MAP_TILEあたりのサイズ(pixel
 
 constexpr float CHARACTER_ANIMATION_SPEED { 0.5f }; // キャラクターのアニメーション切り替え速度
 
-constexpr int MAP_TILE_HEGHT = 20; // MAPの高さ(Tile)
-constexpr int MAP_TILE_WIDTH = 20; // MAPの幅(Tile)
+constexpr int MAP_TILE_HEGHT = 30; // MAPの高さ(Tile)
+constexpr int MAP_TILE_WIDTH = 30; // MAPの幅(Tile)
 
 constexpr int MESSAGE_FONT_SIZE = 40; // メッセージフォントサイズ
 
