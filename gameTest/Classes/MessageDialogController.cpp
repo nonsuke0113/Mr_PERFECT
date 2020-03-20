@@ -138,11 +138,48 @@ void MessageDialogController::createTestMessage(int tileGID)
 
 
 /**
+    敵に見つからずに進むミッション開始時のメッセージを作成して表示する
+ */
+void MessageDialogController::createStartSeekMissonMessage(std::function<void()> completedAction)
+{
+    std::vector<std::string> messages = std::vector<std::string>();
+    messages.push_back("MISSON:");
+    messages.push_back("敵に見つからずに脱出しろ");
+    this->setMessages(messages);
+    this->setMessageCallback(completedAction);
+    this->displayMessageDialog();
+}
+
+
+/**
     ミッション失敗時のメッセージダイアログを作成して表示する
  */
 void MessageDialogController::createMissionFailedMessage()
 {
     std::vector<std::string> messages = std::vector<std::string>();
+    messages.push_back("コンティニュー？$");
+    this->setMessages(messages);
+    this->setMessageCallback([this]() {
+        // シーンに通知
+        StageSceneBase* mainScene = (StageSceneBase*)this->m_dialog->getParent();
+        if (this->m_dialog->userChoice()) {
+            mainScene->doContinue();
+        } else {
+            mainScene->gameover();
+        }
+    });
+    this->displayMessageDialog();
+}
+
+
+/**
+    敵に見つからないでゴールするミッションにて、敵に見つかってしまった際のメッセージ
+ */
+void MessageDialogController::createEnemyFoundPlayerMessage()
+{
+    std::vector<std::string> messages = std::vector<std::string>();
+    messages.push_back("「何者だ！」");
+    messages.push_back("見つかってしまった...");
     messages.push_back("コンティニュー？$");
     this->setMessages(messages);
     this->setMessageCallback([this]() {

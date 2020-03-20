@@ -32,8 +32,9 @@ public:
     void displayMessageDialog();
     void next();
     void createTestMessage(int tileGID);
+    void createStartSeekMissonMessage(std::function<void()> completedAction);
     void createMissionFailedMessage();
-    
+    void createEnemyFoundPlayerMessage();
 };
 
 #endif /* MessageDialogController_hpp */
