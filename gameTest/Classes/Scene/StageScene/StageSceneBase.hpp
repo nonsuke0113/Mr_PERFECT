@@ -44,7 +44,6 @@ class StageSceneBase : public Scene
 private:
     void initCamera();
     void initUI();
-    void initStart();
     void updateTime();
     void updatePosition();
     void updateCameraPosition();
@@ -59,6 +58,9 @@ protected:
     
     virtual void initMap();
     virtual void initCharactors();
+    virtual void gameStart();
+    void gamePause();
+    void gameResume();
     void allNodeUnschedule();
     virtual void touchA();
     virtual void touchB();
@@ -81,7 +83,7 @@ public:
     virtual void doContinue();
     void gameover();
     void missionFailed();
-    void enemyFoundPlayer();
+    virtual void enemyFoundPlayer();
     void heartOff(int i);
     
 };

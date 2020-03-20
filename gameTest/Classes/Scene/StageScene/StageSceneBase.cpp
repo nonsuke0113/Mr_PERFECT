@@ -43,7 +43,6 @@ bool StageSceneBase::init()
     this->initUI();
     this->initMap();
     this->initCharactors();
-    this->initStart();
     
     this->m_mdController = MessageDialogController::create();
     this->m_mdController->retain();
@@ -52,8 +51,7 @@ bool StageSceneBase::init()
     this->m_time = 0.0f;
     this->m_enemyFoundPlayerCount = 0;
     
-    // 更新処理をスケジュール
-    this->scheduleUpdate();
+    this->gameStart();
     
     return true;
 }
@@ -102,28 +100,6 @@ void StageSceneBase::initMap()
  */
 void StageSceneBase::initCharactors()
 {
-    return;
-}
-
-
-/**
-    スタート表示の初期化処理
- */
-void StageSceneBase::initStart()
-{
-    Sprite *start { Sprite::create("mission_start.png") };
-    Size visibleSize { Director::getInstance()->getVisibleSize() };
-    start->setPosition(Vec2(0.0f, visibleSize.height/2));
-    this->addChild(start);
-    
-    Vector<FiniteTimeAction *> actionAry;
-    actionAry.pushBack(MoveTo::create(1.0f, Vec2(visibleSize.width/2, visibleSize.height/2)));
-    actionAry.pushBack(MoveTo::create(1.0f, Vec2(visibleSize.width/2, visibleSize.height/2)));
-    actionAry.pushBack(MoveTo::create(0.5f, Vec2(visibleSize.width + start->getContentSize().width, visibleSize.height/2)));
-    actionAry.pushBack(Hide::create());
-    Sequence *actions { Sequence::create(actionAry) };
-    start->runAction(actions);
-    
     return;
 }
 
@@ -243,6 +219,51 @@ void StageSceneBase::touchB()
 
 
 #pragma mark -
+/**
+    ゲームを開始する処理
+ */
+void StageSceneBase::gameStart()
+{
+    Sprite *start { Sprite::create("mission_start.png") };
+    Size visibleSize { Director::getInstance()->getVisibleSize() };
+    start->setPosition(Vec2(0.0f, visibleSize.height/2));
+    this->addChild(start);
+    
+    Vector<FiniteTimeAction *> actionAry;
+    actionAry.pushBack(MoveTo::create(1.0f, Vec2(visibleSize.width/2, visibleSize.height/2)));
+    actionAry.pushBack(MoveTo::create(1.0f, Vec2(visibleSize.width/2, visibleSize.height/2)));
+    actionAry.pushBack(MoveTo::create(0.5f, Vec2(visibleSize.width + start->getContentSize().width, visibleSize.height/2)));
+    actionAry.pushBack(Hide::create());
+    Sequence *actions { Sequence::create(actionAry) };
+    start->runAction(actions);
+    
+    // 更新処理をスケジュール
+    this->scheduleUpdate();
+}
+
+
+/**
+    ゲームを一時停止する
+ */
+void StageSceneBase::gamePause()
+{
+    for (Node *node : this->enemysVector()) {
+        node->pause();
+    }
+}
+
+
+/**
+    ゲームを再開する
+ */
+void StageSceneBase::gameResume()
+{
+    for (Node *node : this->enemysVector()) {
+        node->resume();
+    }
+}
+
+
 /**
     自身と子のスケジュールを全てキャンセルする
  */
@@ -401,7 +422,7 @@ void StageSceneBase::update(float delta)
 void StageSceneBase::updateTime()
 {
     this->m_time++;
-    this->m_uiLayer->updateTime(this->m_time / 60.0f);
+    this->m_uiLayer->updateTime(this->m_time / 30.0f);
 }
 
 /**
@@ -439,9 +460,10 @@ void StageSceneBase::updatePosition()
     
     // 十字キーが押されてなかったり、行けない道だったら何もしない
     if ((padState == padNone) ||
+        (this->m_mdController->isVisibleMessageDialog()) ||
         (this->m_map->getNumberOfRunningActions() > 0) ||
         (this->m_player->getActionByTag(::move) != nullptr) ||
-        this->m_player->nextTileGID() != 0 ||
+        (!((this->m_player->nextTileGID() == 0) || (this->m_player->nextTileGID() == 3))) ||
         this->m_player->nextCharacter() != nullptr) {
         return;
     }
