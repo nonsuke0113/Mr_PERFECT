@@ -20,12 +20,13 @@
     @param pos 敵キャラクターのワールド座標初期位置
     @param direction 敵キャラクターの向き
     @param moveSpeed 敵キャラクターの移動速度
+    @param patorolType 敵キャラクターの巡回タイプ
     @return 敵キャラクターのSprite
  */
-EnemySprite* EnemySprite::create(const std::string& filename, const Vec2& pos, ::directcion direction, float moveSpeed)
+EnemySprite* EnemySprite::create(const std::string& filename, const Vec2& pos, ::directcion direction, float moveSpeed, ::patorolType patorolType)
 {
     EnemySprite *sprite =  new (std::nothrow) EnemySprite;
-    if (sprite && sprite->initWithFileName(filename, pos, direction, moveSpeed)) {
+    if (sprite && sprite->initWithFileName(filename, pos, direction, moveSpeed, patorolType)) {
         sprite->autorelease();
         return sprite;
     }
@@ -40,13 +41,15 @@ EnemySprite* EnemySprite::create(const std::string& filename, const Vec2& pos, :
     @param pos 敵キャラクターのワールド座標初期位置
     @param direction 敵キャラクターの向き
     @param moveSpeed 敵キャラクターの移動速度
+    @param patorolType 敵キャラクターの巡回タイプ
  */
-bool EnemySprite::initWithFileName(const std::string& filename, const Vec2 &pos, ::directcion direction, float moveSpeed)
+bool EnemySprite::initWithFileName(const std::string& filename, const Vec2 &pos, ::directcion direction, float moveSpeed, ::patorolType patorolType)
 {
     if (!CharacterSprite::initWithFileName(filename, pos, direction, moveSpeed)) {
         return false;
     }
     this->m_initPosition = pos;
+    this->m_patorolType = patorolType;
     this->m_rotateDirectcion = ::turn_right;
     this->m_hp = 5;
     this->m_routeStack = std::vector<Vec2>();
@@ -156,7 +159,7 @@ void EnemySprite::dead()
  */
 void EnemySprite::startPatrol() {
     // 巡回をスケジュール
-    schedule(schedule_selector(EnemySprite::rotatePatrol), 0.5f);
+    schedule(schedule_selector(EnemySprite::patrol), 1.0f);
 }
 
 
@@ -165,7 +168,7 @@ void EnemySprite::startPatrol() {
  */
 void EnemySprite::stopPatrol() {
     // 巡回を中止
-    unschedule(schedule_selector(EnemySprite::rotatePatrol));
+    unschedule(schedule_selector(EnemySprite::patrol));
 }
 
 
@@ -174,23 +177,32 @@ void EnemySprite::stopPatrol() {
     移動できないようになるまで、向いている方向でまっすぐ進む
     移動できなくなったら、設定された方向に回転する
  */
-void EnemySprite::rotatePatrol(float frame) {
+void EnemySprite::patrol(float frame) {
     
     if (this->checkFindPlayer()) {
-        // シーンに通知
-        StageSceneBase* mainScene = (StageSceneBase*)this->getParent();
-        mainScene->enemyFoundPlayer();
-        
         this->stopPatrol();
         this->startShoot();
         this->startChasePlayer();
+        
+        // シーンに通知
+        StageSceneBase* mainScene = (StageSceneBase*)this->getParent();
+        mainScene->enemyFoundPlayer();
         return;
     }
     
     if (this->nextTileGID() == 0) {
         this->moveNextTile();
     } else {
-        this->rotate();
+        switch (this->m_patorolType) {
+            case ::patorol_lookback:
+                this->lookBack();
+                break;
+            case ::patorol_rotate:
+                this->rotate();
+                break;
+            default:
+                break;
+        }
     }
 }
 
@@ -234,6 +246,30 @@ void EnemySprite::rotate() {
             default:
                 break;
         }
+    }
+}
+
+
+/**
+    反対方向を向く
+ */
+void EnemySprite::lookBack()
+{
+    switch (this->m_directcion) {
+        case ::front:
+            this->setDirectcion(::back);
+            break;
+        case ::right:
+            this->setDirectcion(::left);
+            break;
+        case ::back:
+            this->setDirectcion(::front);
+            break;
+        case ::left:
+            this->setDirectcion(::right);
+            break;
+        default:
+            break;
     }
 }
 
@@ -458,12 +494,12 @@ void EnemySprite::loseSightOfPlayer()
     
     // プレイヤーがいれば再度追跡する
     if (this->checkFindPlayer()) {
+        this->startShoot();
+        this->startChasePlayer();
+        
         // シーンに通知
         StageSceneBase* mainScene = (StageSceneBase*)this->getParent();
         mainScene->enemyFoundPlayer();
-        
-        this->startShoot();
-        this->startChasePlayer();
     }
     // 完全に見失った
     else {

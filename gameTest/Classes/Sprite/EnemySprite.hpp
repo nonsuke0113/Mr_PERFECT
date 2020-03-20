@@ -19,11 +19,17 @@ typedef enum {
     turn_left
 } rotateDirectcion;
 
+// パトロールの種類
+typedef enum {
+    patorol_lookback,
+    patorol_rotate
+} patorolType;
 
 class EnemySprite : public CharacterSprite
 {
 protected:
     Vec2 m_initPosition; // 初期座標
+    ::patorolType m_patorolType; // 巡回の種類
     ::rotateDirectcion m_rotateDirectcion; // 巡回時の回転方向
     std::vector<Vec2> m_routeStack; // 経路
     int m_routeStackIndex; // 経路の進捗を管理するインデックス
@@ -34,16 +40,17 @@ protected:
     void setDirectcion(::directcion direction);
     void hitToBullet(int damage, ::directcion bulletDirection);
     void dead();
-    void rotatePatrol(float frame);
+    void patrol(float frame);
     void rotate();
+    void lookBack();
     bool checkFindPlayer();
     void moveAccordingToRouteStack(float frame);
     void chasePlayer(float frame);
     void shoot(float frame);
     
 public:
-    static EnemySprite* create(const std::string& filename, const Vec2 &pos, ::directcion direction, float moveSpeed);
-    virtual bool initWithFileName(const std::string& filename, const Vec2 &pos, ::directcion direction, float moveSpeed);
+    static EnemySprite* create(const std::string& filename, const Vec2 &pos, ::directcion direction, float moveSpeed, ::patorolType patorolType);
+    virtual bool initWithFileName(const std::string& filename, const Vec2 &pos, ::directcion direction, float moveSpeed, ::patorolType patorolType);
     void startPatrol();
     void stopPatrol();
     void moveToPos(const Vec2 &pos);
