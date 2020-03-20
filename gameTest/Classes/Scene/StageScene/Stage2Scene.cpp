@@ -46,7 +46,7 @@ void Stage2Scene::initCharactors()
     this->addChild(this->m_player);
     
     // 敵キャラクター
-    EnemySprite* mob = EnemySprite::create("enemy1.png", Vec2(7.0f, 19.0f), ::left, 0.1f);
+    EnemySprite* mob = EnemySprite::create("enemy1.png", Vec2(7.0f, 19.0f), ::left, 0.1f, patorol_rotate);
     mob->setName(StringUtils::format("mob"));
     mob->setAnchorPoint(Vec2(0.0f, 0.0f));
     this->addChild(mob);
