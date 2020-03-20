@@ -183,6 +183,16 @@ Vector<EnemySprite*> StageSceneBase::enemysVector() {
  */
 void StageSceneBase::touchAEvent(Ref *pSender, ui::Widget::TouchEventType type)
 {
+    this->touchA();
+}
+
+
+/**
+    Aボタン押下時に呼び出される処理
+    子クラスにて必要に応じて呼び出す
+ */
+void StageSceneBase::touchA()
+{
     if (!this->m_mdController->isVisibleMessageDialog()) {
         // Messageテスト
         int nextTileGID = this->m_player->nextTileGID();
@@ -209,9 +219,19 @@ void StageSceneBase::touchAEvent(Ref *pSender, ui::Widget::TouchEventType type)
 
 
 /**
-    Bボタン押下時のイベント
+    Bボタン押下時に呼び出される処理
+    子クラスにて必要に応じて呼び出す
  */
 void StageSceneBase::touchBEvent(Ref *pSender, ui::Widget::TouchEventType type)
+{
+    this->touchB();
+}
+
+
+/**
+    Bボタン押下時のイベント
+ */
+void StageSceneBase::touchB()
 {
     this->m_player->shootBullet();
     

@@ -60,6 +60,8 @@ protected:
     virtual void initMap();
     virtual void initCharactors();
     void allNodeUnschedule();
+    virtual void touchA();
+    virtual void touchB();
     virtual void stageClear();
     virtual void setupResult();
     virtual void update(float delta);
