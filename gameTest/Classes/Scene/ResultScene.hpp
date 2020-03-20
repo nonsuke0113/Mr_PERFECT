@@ -20,6 +20,7 @@ class ResultScene : public Layer
 {
 private:
     ::resultInfo *m_resultInfo; // リザルト情報
+    bool m_isViewedRank; // ランク画像表示済みかどうか
     
     void onTouchesBegan(const std::vector<Touch*>& touches, Event *unused_event);
     static std::string convertRankStr(::clearRank clearRank);

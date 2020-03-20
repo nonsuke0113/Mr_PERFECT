@@ -56,6 +56,8 @@ bool ResultScene::init(::resultInfo *resultInfo)
         return false;
     }
     
+    this->m_isViewedRank = false;
+    
     // リザルト設定
     this->m_resultInfo = resultInfo;
     
@@ -129,6 +131,12 @@ bool ResultScene::init(::resultInfo *resultInfo)
  */
 void ResultScene::onTouchesBegan(const std::vector<Touch *> &touches, cocos2d::Event *unused_event)
 {
+    // 一回表示済みなら何もしない
+    if (this->m_isViewedRank) {
+        return;
+    }
+    this->m_isViewedRank = true;
+    
     Sprite *userRank = nullptr;
     int totalRank = (int)this->m_resultInfo->timeRank + (int)this->m_resultInfo->hpRank + (int)this->m_resultInfo->foundRank;
     if (totalRank == 0) {
