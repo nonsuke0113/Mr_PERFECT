@@ -146,7 +146,8 @@ bool GameSpriteBase::canMovePos(Vec2& pos)
     TMXLayer* layer = scene->m_map->getLayer("MAP");
     if (pos.x < 0.0f || pos.x >= MAP_TILE_WIDTH ||
         pos.y < 0.0f || pos.y >= MAP_TILE_HEGHT ||
-        layer->getTileGIDAt(pos) - 1.0f != 0) {
+        !(layer->getTileGIDAt(pos) - 1.0f == 0 ||
+        layer->getTileGIDAt(pos) - 1.0f == 3)) {
         return false;
     }
     return true;
