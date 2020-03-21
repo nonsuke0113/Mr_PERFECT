@@ -11,6 +11,7 @@
 #include "Stage1Scene.hpp"
 #include "Stage2Scene.hpp"
 #include "Stage3Scene.hpp"
+#include "Stage4Scene.hpp"
 
 #pragma mark -
 #pragma mark Init
@@ -63,7 +64,7 @@ bool SelectMissonScene::init()
         std::string key = StringUtils::format("mission%s", std::to_string(i).c_str());
         std::string clear = userDefault->getStringForKey(key.c_str());
         if (i != 0 && clear.empty()) {
-            missionButton->setVisible(false);
+//            missionButton->setVisible(false);
         }
     }
     
@@ -102,6 +103,13 @@ void SelectMissonScene::touchMissionEvent(Ref *pSender, ui::Widget::TouchEventTy
                 {
                     Scene *stage3Scene = Stage3Scene::createScene();
                     TransitionFade* fade = TransitionFade::create(1.0f, stage3Scene);
+                    Director::getInstance()->replaceScene(fade);
+                    break;
+                }
+                case 4:
+                {
+                    Scene *stage4Scene = Stage4Scene::createScene();
+                    TransitionFade* fade = TransitionFade::create(1.0f, stage4Scene);
                     Director::getInstance()->replaceScene(fade);
                     break;
                 }
