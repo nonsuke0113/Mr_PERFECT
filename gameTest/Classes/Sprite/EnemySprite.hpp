@@ -22,7 +22,8 @@ typedef enum {
 // パトロールの種類
 typedef enum {
     patorol_lookback,
-    patorol_rotate
+    patorol_rotate,
+    patorol_none
 } patorolType;
 
 // 吹き出しの種類

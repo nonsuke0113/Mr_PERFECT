@@ -429,7 +429,7 @@ void EnemySprite::moveAccordingToRouteStack(float frame)
             this->moveToPos(this->m_initPosition);
         }
         // 巡回を再開する
-        else {
+        else if (this->m_patorolType != ::patorol_none) {
             this->startPatrol();
         }
         
