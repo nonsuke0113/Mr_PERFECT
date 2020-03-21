@@ -420,12 +420,19 @@ void EnemySprite::stopMoveAccordingToRouteStack()
 void EnemySprite::moveAccordingToRouteStack(float frame)
 {
     if (this->m_routeStack.empty() || this->m_routeStack.size() <= this->m_routeStackIndex) {
+        this->stopMoveAccordingToRouteStack();
+        
+        // 音が聞こえた位置まで移動終わったら、？マーク出して、初期位置に戻る
         if (this->m_movingHeardSoundPoint) {
             this->m_movingHeardSoundPoint = false;
             this->showSpeechBubble(::question);
+            this->moveToPos(this->m_initPosition);
         }
-        this->stopMoveAccordingToRouteStack();
-        this->startPatrol();
+        // 巡回を再開する
+        else {
+            this->startPatrol();
+        }
+        
         return;
     }
     
