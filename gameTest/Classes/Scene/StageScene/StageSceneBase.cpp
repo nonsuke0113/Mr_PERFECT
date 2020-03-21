@@ -333,6 +333,9 @@ void StageSceneBase::doContinue()
  */
 void StageSceneBase::stageClear()
 {
+    // BGMを停止
+    experimental::AudioEngine::stopAll();
+    
     // 全てのスケジュールを中止
     this->allNodeUnschedule();
     
