@@ -45,6 +45,11 @@
 		52B47A471A53D09C004E4C60 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 52B47A461A53D09B004E4C60 /* Security.framework */; };
 		8262943E1AAF051F00CB7CF7 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8262943D1AAF051F00CB7CF7 /* Security.framework */; };
 		8610B8ED2425F5060013E21B /* Stage4Scene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8610B8EB2425F5060013E21B /* Stage4Scene.cpp */; };
+		8610B8F5242683D80013E21B /* Stage6Scene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8610B8F3242683D80013E21B /* Stage6Scene.cpp */; };
+		8610B8F9242683F20013E21B /* Stage7Scene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8610B8F7242683F20013E21B /* Stage7Scene.cpp */; };
+		8610B8FC242684070013E21B /* Stage8Scene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8610B8FA242684070013E21B /* Stage8Scene.cpp */; };
+		8610B8FF2426841E0013E21B /* Stage9Scene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8610B8FD2426841E0013E21B /* Stage9Scene.cpp */; };
+		8610B902242684390013E21B /* Stage10Scene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8610B900242684390013E21B /* Stage10Scene.cpp */; };
 		86114BE0240AB31E00864BEA /* StageLeftUILayer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 86114BDE240AB31E00864BEA /* StageLeftUILayer.cpp */; };
 		86114BE5240AB95700864BEA /* StageRightUILayer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 86114BE3240AB95700864BEA /* StageRightUILayer.cpp */; };
 		861B748E239F37A6007068AB /* BulletSprite.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 861B748C239F37A6007068AB /* BulletSprite.cpp */; };
@@ -176,6 +181,16 @@
 		8262943D1AAF051F00CB7CF7 /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
 		8610B8EB2425F5060013E21B /* Stage4Scene.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Stage4Scene.cpp; sourceTree = "<group>"; };
 		8610B8EC2425F5060013E21B /* Stage4Scene.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Stage4Scene.hpp; sourceTree = "<group>"; };
+		8610B8F3242683D80013E21B /* Stage6Scene.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Stage6Scene.cpp; sourceTree = "<group>"; };
+		8610B8F4242683D80013E21B /* Stage6Scene.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Stage6Scene.hpp; sourceTree = "<group>"; };
+		8610B8F7242683F20013E21B /* Stage7Scene.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Stage7Scene.cpp; sourceTree = "<group>"; };
+		8610B8F8242683F20013E21B /* Stage7Scene.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Stage7Scene.hpp; sourceTree = "<group>"; };
+		8610B8FA242684070013E21B /* Stage8Scene.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Stage8Scene.cpp; sourceTree = "<group>"; };
+		8610B8FB242684070013E21B /* Stage8Scene.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Stage8Scene.hpp; sourceTree = "<group>"; };
+		8610B8FD2426841E0013E21B /* Stage9Scene.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Stage9Scene.cpp; sourceTree = "<group>"; };
+		8610B8FE2426841E0013E21B /* Stage9Scene.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Stage9Scene.hpp; sourceTree = "<group>"; };
+		8610B900242684390013E21B /* Stage10Scene.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Stage10Scene.cpp; sourceTree = "<group>"; };
+		8610B901242684390013E21B /* Stage10Scene.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Stage10Scene.hpp; sourceTree = "<group>"; };
 		86114BDE240AB31E00864BEA /* StageLeftUILayer.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = StageLeftUILayer.cpp; sourceTree = "<group>"; };
 		86114BDF240AB31E00864BEA /* StageLeftUILayer.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = StageLeftUILayer.hpp; sourceTree = "<group>"; };
 		86114BE3240AB95700864BEA /* StageRightUILayer.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = StageRightUILayer.cpp; sourceTree = "<group>"; };
@@ -478,6 +493,16 @@
 				8610B8EB2425F5060013E21B /* Stage4Scene.cpp */,
 				E97BDD142426106200BAAE25 /* Stage5Scene.hpp */,
 				E97BDD132426106200BAAE25 /* Stage5Scene.cpp */,
+				8610B8F4242683D80013E21B /* Stage6Scene.hpp */,
+				8610B8F3242683D80013E21B /* Stage6Scene.cpp */,
+				8610B8F8242683F20013E21B /* Stage7Scene.hpp */,
+				8610B8F7242683F20013E21B /* Stage7Scene.cpp */,
+				8610B8FB242684070013E21B /* Stage8Scene.hpp */,
+				8610B8FA242684070013E21B /* Stage8Scene.cpp */,
+				8610B8FE2426841E0013E21B /* Stage9Scene.hpp */,
+				8610B8FD2426841E0013E21B /* Stage9Scene.cpp */,
+				8610B901242684390013E21B /* Stage10Scene.hpp */,
+				8610B900242684390013E21B /* Stage10Scene.cpp */,
 			);
 			path = StageScene;
 			sourceTree = "<group>";
@@ -663,6 +688,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				E9A5211521A90C6F00DB44EA /* CharacterSprite.cpp in Sources */,
+				8610B8F9242683F20013E21B /* Stage7Scene.cpp in Sources */,
 				86114BE5240AB95700864BEA /* StageRightUILayer.cpp in Sources */,
 				8664737F23A8B58900ADCC59 /* StageSceneBase.cpp in Sources */,
 				1AF87B781F6F77F7007BE51C /* AppController.mm in Sources */,
@@ -672,6 +698,7 @@
 				86C1AEC723EFE2A7003F61B7 /* Stage2Scene.cpp in Sources */,
 				8610B8ED2425F5060013E21B /* Stage4Scene.cpp in Sources */,
 				865D5A6E23E10BAC008A7C6D /* PlayerSprite.cpp in Sources */,
+				8610B8FF2426841E0013E21B /* Stage9Scene.cpp in Sources */,
 				8648AA8423F2D43700365B62 /* AStarUtils.cpp in Sources */,
 				1AF87B8B1F6F782A007BE51C /* RootViewController.mm in Sources */,
 				46880B8819C43A87006E1F66 /* AppDelegate.cpp in Sources */,
@@ -682,12 +709,15 @@
 				E9A5210E21A90B8C00DB44EA /* TitleScene.cpp in Sources */,
 				ABBA36B721BA6A3500A02928 /* MessageDialog.cpp in Sources */,
 				86114BE0240AB31E00864BEA /* StageLeftUILayer.cpp in Sources */,
+				8610B8FC242684070013E21B /* Stage8Scene.cpp in Sources */,
 				864FC468237527FE00DDF5E8 /* EnemySprite.cpp in Sources */,
 				86F5F18A2406A8A90051060B /* StageUILayer.cpp in Sources */,
 				8639393D2417CFC4001679EA /* ResultScene.cpp in Sources */,
 				86DA7CC423E4364900B495AB /* SelectMissonScene.cpp in Sources */,
+				8610B8F5242683D80013E21B /* Stage6Scene.cpp in Sources */,
 				861B7492239F516C007068AB /* GameSpriteBase.cpp in Sources */,
 				E97BDD152426106200BAAE25 /* Stage5Scene.cpp in Sources */,
+				8610B902242684390013E21B /* Stage10Scene.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
