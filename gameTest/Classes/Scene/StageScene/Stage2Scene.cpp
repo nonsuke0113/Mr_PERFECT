@@ -146,7 +146,7 @@ void Stage2Scene::createTutorialMessage2()
     
     std::vector<std::string> messages = std::vector<std::string>();
     messages.push_back("「敵が道を塞いでいるな。」");
-    messages.push_back("「ナツを刺激しなくては。」");
+    messages.push_back("「音を出して敵をひきつけよう。」");
     this->m_mdController->setMessages(messages);
     this->m_mdController->setMessageCallback([this](){
     });
