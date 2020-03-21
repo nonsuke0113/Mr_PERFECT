@@ -140,13 +140,13 @@ void ResultScene::onTouchesBegan(const std::vector<Touch *> &touches, cocos2d::E
     Sprite *userRank = nullptr;
     int totalRank = (int)this->m_resultInfo->timeRank + (int)this->m_resultInfo->hpRank + (int)this->m_resultInfo->foundRank;
     if (totalRank == 0) {
-        userRank = Sprite::create("pRank.png");
+        userRank = Sprite::create("rank_P.png");
     } else if (totalRank == 1) {
-        userRank = Sprite::create("aRank.png");
+        userRank = Sprite::create("rank_A.png");
     } else if (totalRank < 4) {
-        userRank = Sprite::create("bRank.png");
+        userRank = Sprite::create("rank_B.png");
     } else {
-        userRank = Sprite::create("cRank.png");
+        userRank = Sprite::create("rank_C.png");
     }
     userRank->setAnchorPoint(Vec2(0.0f, 1.0f));
     userRank->setPosition(Vec2(-userRank->getContentSize().width, 180.0f));
