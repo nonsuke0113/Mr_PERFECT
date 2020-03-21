@@ -195,11 +195,17 @@ void Stage1Scene::createTutorialMessage1()
     }
     this->m_isTutorialMessage1 = true;
     
+    // キャラクターの動きを一時停止
+    this->gamePause();
+    this->m_uiLayer->resume();
+    this->m_mdController->m_dialog->resume();
+    
     std::vector<std::string> messages = std::vector<std::string>();
     messages.push_back("「見張りが巡回しているな。」");
     messages.push_back("「隠れながら進もう。」");
     this->m_mdController->setMessages(messages);
-    this->m_mdController->setMessageCallback([this](){
+    this->m_mdController->setMessageCallback([this]() {
+        this->gameResume();
     });
     this->m_mdController->displayMessageDialog();
 }

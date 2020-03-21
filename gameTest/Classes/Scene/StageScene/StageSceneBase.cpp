@@ -245,7 +245,7 @@ void StageSceneBase::gameStart()
  */
 void StageSceneBase::gamePause()
 {
-    for (Node *node : this->enemysVector()) {
+    for (Node *node : this->getChildren()) {
         node->pause();
     }
 }
@@ -256,7 +256,7 @@ void StageSceneBase::gamePause()
  */
 void StageSceneBase::gameResume()
 {
-    for (Node *node : this->enemysVector()) {
+    for (Node *node : this->getChildren()) {
         node->resume();
     }
 }
