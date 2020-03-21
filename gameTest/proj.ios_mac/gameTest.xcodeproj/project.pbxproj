@@ -44,6 +44,7 @@
 		521A8EAA19F11F5000D177D7 /* fonts in Resources */ = {isa = PBXBuildFile; fileRef = 521A8EA819F11F5000D177D7 /* fonts */; };
 		52B47A471A53D09C004E4C60 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 52B47A461A53D09B004E4C60 /* Security.framework */; };
 		8262943E1AAF051F00CB7CF7 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8262943D1AAF051F00CB7CF7 /* Security.framework */; };
+		8610B8ED2425F5060013E21B /* Stage4Scene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8610B8EB2425F5060013E21B /* Stage4Scene.cpp */; };
 		86114BE0240AB31E00864BEA /* StageLeftUILayer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 86114BDE240AB31E00864BEA /* StageLeftUILayer.cpp */; };
 		86114BE5240AB95700864BEA /* StageRightUILayer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 86114BE3240AB95700864BEA /* StageRightUILayer.cpp */; };
 		861B748E239F37A6007068AB /* BulletSprite.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 861B748C239F37A6007068AB /* BulletSprite.cpp */; };
@@ -172,6 +173,8 @@
 		521A8EA819F11F5000D177D7 /* fonts */ = {isa = PBXFileReference; lastKnownFileType = folder; path = fonts; sourceTree = "<group>"; };
 		52B47A461A53D09B004E4C60 /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS.sdk/System/Library/Frameworks/Security.framework; sourceTree = DEVELOPER_DIR; };
 		8262943D1AAF051F00CB7CF7 /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
+		8610B8EB2425F5060013E21B /* Stage4Scene.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Stage4Scene.cpp; sourceTree = "<group>"; };
+		8610B8EC2425F5060013E21B /* Stage4Scene.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Stage4Scene.hpp; sourceTree = "<group>"; };
 		86114BDE240AB31E00864BEA /* StageLeftUILayer.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = StageLeftUILayer.cpp; sourceTree = "<group>"; };
 		86114BDF240AB31E00864BEA /* StageLeftUILayer.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = StageLeftUILayer.hpp; sourceTree = "<group>"; };
 		86114BE3240AB95700864BEA /* StageRightUILayer.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = StageRightUILayer.cpp; sourceTree = "<group>"; };
@@ -468,6 +471,8 @@
 				86C1AEC523EFE2A7003F61B7 /* Stage2Scene.cpp */,
 				E92B76CF2425B0AD00FD5EAC /* Stage3Scene.hpp */,
 				E92B76CE2425B0AD00FD5EAC /* Stage3Scene.cpp */,
+				8610B8EC2425F5060013E21B /* Stage4Scene.hpp */,
+				8610B8EB2425F5060013E21B /* Stage4Scene.cpp */,
 			);
 			path = StageScene;
 			sourceTree = "<group>";
@@ -660,6 +665,7 @@
 				8648AA8023F294F200365B62 /* AStarNode.cpp in Sources */,
 				861B748E239F37A6007068AB /* BulletSprite.cpp in Sources */,
 				86C1AEC723EFE2A7003F61B7 /* Stage2Scene.cpp in Sources */,
+				8610B8ED2425F5060013E21B /* Stage4Scene.cpp in Sources */,
 				865D5A6E23E10BAC008A7C6D /* PlayerSprite.cpp in Sources */,
 				8648AA8423F2D43700365B62 /* AStarUtils.cpp in Sources */,
 				1AF87B8B1F6F782A007BE51C /* RootViewController.mm in Sources */,
