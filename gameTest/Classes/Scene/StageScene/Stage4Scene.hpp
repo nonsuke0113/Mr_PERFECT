@@ -13,8 +13,6 @@
 class Stage4Scene : public StageSceneBase
 {
 private:
-    bool m_isTutorialMessage4; // チュートリアルメッセージ4表示済みかどうか
-    
     void initMap();
     void initCharactors();
     void gameStart();
