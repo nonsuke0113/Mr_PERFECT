@@ -146,11 +146,11 @@ void EnemySprite::hitToBullet(int damage, ::directcion bulletDirection)
 
 
 /**
-    音が聞こえた際の処理
+    吹き出しを表示する
  */
-void EnemySprite::heardSound()
+void EnemySprite::showSpeechBubble(const std::string& filename)
 {
-    GameSpriteBase *exclamation = GameSpriteBase::create("exclamation.png", Vec2 { this->m_worldPosition.x, this->m_worldPosition.y - 1.0f }, this->directcion());
+    GameSpriteBase *exclamation = GameSpriteBase::create(filename, Vec2 { this->m_worldPosition.x, this->m_worldPosition.y - 1.0f }, this->directcion());
     exclamation->setAnchorPoint(Vec2(0.0f, 0.0f));
     this->getParent()->addChild(exclamation);
     
@@ -408,6 +408,7 @@ void EnemySprite::stopMoveAccordingToRouteStack()
 void EnemySprite::moveAccordingToRouteStack(float frame)
 {
     if (this->m_routeStack.empty() || this->m_routeStack.size() <= this->m_routeStackIndex) {
+        this->showSpeechBubble("question.png");
         this->stopMoveAccordingToRouteStack();
         this->startPatrol();
         return;
@@ -525,6 +526,7 @@ void EnemySprite::loseSightOfPlayer()
     }
     // 完全に見失った
     else {
+        this->showSpeechBubble("question.png");
         // 初期座標まで最短経路で戻る
         this->moveToPos(this->m_initPosition);
     }
