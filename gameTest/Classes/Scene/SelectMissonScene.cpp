@@ -69,6 +69,22 @@ bool SelectMissonScene::init()
         }
     }
     
+    for (int i = 5; i < 10; i++) {
+        ui::Button *missionButton = ui::Button::create(StringUtils::format("mission%s.png", std::to_string(i+1).c_str()));
+        missionButton->setTag(i+1);
+        missionButton->setAnchorPoint(Vec2(0,0));
+        missionButton->setPosition(Vec2(568, 480 - (70 * (i - 5))));
+        missionButton->addTouchEventListener(CC_CALLBACK_2(SelectMissonScene::touchMissionEvent, this));
+        this->addChild(missionButton);
+        
+        UserDefault *userDefault = UserDefault::getInstance();
+        std::string key = StringUtils::format("mission%s", std::to_string(i).c_str());
+        std::string clear = userDefault->getStringForKey(key.c_str());
+        if (i != 0 && clear.empty()) {
+            //            missionButton->setVisible(false);
+        }
+    }
+    
     return true;
 }
     
