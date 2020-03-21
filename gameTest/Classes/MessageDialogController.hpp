@@ -33,6 +33,7 @@ public:
     void next();
     void createTestMessage(int tileGID);
     void createStartSeekMissonMessage(std::function<void()> completedAction);
+    void createStartKillMissonMessage(std::function<void()> completedAction);
     void createMissionFailedMessage();
     void createEnemyFoundPlayerMessage();
 };
