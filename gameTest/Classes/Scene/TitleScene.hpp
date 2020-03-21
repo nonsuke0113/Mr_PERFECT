@@ -27,6 +27,7 @@ private:
     void touchStartEvent(Ref *pSender, cocos2d::ui::Widget::TouchEventType type);
     void touchMissionModeEvent(Ref *pSender, cocos2d::ui::Widget::TouchEventType type);
     void touchHowToPlayEvent(Ref *pSender, cocos2d::ui::Widget::TouchEventType type);
+    void touchBackEvent(Ref *pSender, ui::Widget::TouchEventType type);
     
 public:
     static Scene* createScene();

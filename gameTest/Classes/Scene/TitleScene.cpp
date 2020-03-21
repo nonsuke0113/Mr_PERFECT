@@ -135,10 +135,36 @@ void TitleScene::touchHowToPlayEvent(Ref *pSender, ui::Widget::TouchEventType ty
             Size visibleSize { Director::getInstance()->getVisibleSize() };
             
             // 遊び方スプライト配置
-            Sprite *howToPlay { Sprite::create("title_background.png") };
+            Sprite *howToPlay = Sprite::create("howto_pic.png");
             howToPlay->setPosition(visibleSize / 2);
             this->addChild(howToPlay);
             
+            // 戻るボタン
+            ui::Button *backButton = ui::Button::create("backw_button.png");
+            backButton->setAnchorPoint(Vec2(0,0));
+            backButton->setPosition(Vec2(50, 50));
+            backButton->addTouchEventListener(CC_CALLBACK_2(TitleScene::touchBackEvent, this));
+            this->addChild(backButton);
+            
+            break;
+        }
+        default:
+            break;
+    }
+}
+
+
+/**
+    戻るボタン押下時のイベント
+ */
+void TitleScene::touchBackEvent(Ref *pSender, ui::Widget::TouchEventType type)
+{
+    switch (type)
+    {
+        case ui::Widget::TouchEventType::BEGAN:
+        {
+            Scene *titleScene = TitleScene::createScene();
+            Director::getInstance()->replaceScene(titleScene);
             break;
         }
         default:
