@@ -8,6 +8,21 @@
 #ifndef Stage6Scene_hpp
 #define Stage6Scene_hpp
 
-#include <stdio.h>
+#include "StageSceneBase.hpp"
+
+class Stage6Scene : public StageSceneBase
+{
+private:
+    void initMap();
+    void initCharactors();
+    void gameStart();
+    void doContinue();
+    void checkState();
+    void stageClear();
+    
+public:
+    static Stage6Scene *createScene();
+    
+};
 
 #endif /* Stage6Scene_hpp */
