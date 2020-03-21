@@ -123,6 +123,39 @@ void PlayerSprite::hitToBullet(int damage, ::directcion bulletDirection)
 
 
 /**
+    壁を叩いた処理
+ */
+void PlayerSprite::knockWall()
+{
+    GameSpriteBase *knock = nullptr;
+    switch (this->directcion()) {
+        case ::front:
+            knock = GameSpriteBase::create("knock_under.png", this->nextTilePosition(), this->directcion());
+            break;
+        case ::right:
+            knock = GameSpriteBase::create("knock_right.png", this->nextTilePosition(), this->directcion());
+            break;
+        case ::back:
+            knock = GameSpriteBase::create("knock_up.png", this->nextTilePosition(), this->directcion());
+            break;
+        case ::left:
+            knock = GameSpriteBase::create("knock_left.png", this->nextTilePosition(), this->directcion());
+            break;
+        default:
+            break;
+    }
+    knock->setAnchorPoint(Vec2(0.0f, 0.0f));
+    this->getParent()->addChild(knock);
+    
+    Vector<FiniteTimeAction *> actionAry;
+    actionAry.pushBack(MoveTo::create(0.3f, knock->getPosition()));
+    actionAry.pushBack(RemoveSelf::create());
+    Sequence *actions { Sequence::create(actionAry) };
+    knock->runAction(actions);
+}
+
+
+/**
     死亡処理
  */
 void PlayerSprite::dead()

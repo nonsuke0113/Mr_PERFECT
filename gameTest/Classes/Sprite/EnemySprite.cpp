@@ -144,6 +144,24 @@ void EnemySprite::hitToBullet(int damage, ::directcion bulletDirection)
     }
 }
 
+
+/**
+    音が聞こえた際の処理
+ */
+void EnemySprite::heardSound()
+{
+    GameSpriteBase *exclamation = GameSpriteBase::create("exclamation.png", Vec2 { this->m_worldPosition.x, this->m_worldPosition.y - 1.0f }, this->directcion());
+    exclamation->setAnchorPoint(Vec2(0.0f, 0.0f));
+    this->getParent()->addChild(exclamation);
+    
+    Vector<FiniteTimeAction *> actionAry;
+    actionAry.pushBack(MoveTo::create(0.3f, exclamation->getPosition()));
+    actionAry.pushBack(RemoveSelf::create());
+    Sequence *actions { Sequence::create(actionAry) };
+    exclamation->runAction(actions);
+}
+
+
 /**
     死亡処理
  */
@@ -402,6 +420,10 @@ void EnemySprite::moveAccordingToRouteStack(float frame)
         this->stopMoveAccordingToRouteStack();
         this->startShoot();
         this->startChasePlayer();
+        
+        // シーンに通知
+        StageSceneBase* mainScene = (StageSceneBase*)this->getParent();
+        mainScene->enemyFoundPlayer();
         return;
     }
     

@@ -23,7 +23,7 @@ public:
     static PlayerSprite* create(const std::string& filename, const Vec2& pos, ::directcion direction, float moveSpeed);
     void setDirectcion(::directcion direction);
     void hitToBullet(int damage, ::directcion bulletDirection);
-    
+    void knockWall();
 };
 
 #endif /* PlayerSprite_hpp */

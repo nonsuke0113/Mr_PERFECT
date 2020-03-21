@@ -179,41 +179,17 @@ void StageSceneBase::touchA()
     // 壁叩き
     int nextTileGID = this->m_player->nextTileGID();
     if (nextTileGID == 1 || nextTileGID == 2) {
-        this->knockWall();
+        this->playerKnockWall();
     }
 }
 
 
 /**
-    壁叩きの処理
+    プレイヤーが壁を叩いた
  */
-void StageSceneBase::knockWall()
+void StageSceneBase::playerKnockWall()
 {
-    GameSpriteBase *knock = nullptr;
-    switch (this->m_player->directcion()) {
-        case ::front:
-            knock = GameSpriteBase::create("knock_under.png", this->m_player->nextTilePosition(), this->m_player->directcion());
-            break;
-        case ::right:
-            knock = GameSpriteBase::create("knock_right.png", this->m_player->nextTilePosition(), this->m_player->directcion());
-            break;
-        case ::back:
-            knock = GameSpriteBase::create("knock_up.png", this->m_player->nextTilePosition(), this->m_player->directcion());
-            break;
-        case ::left:
-            knock = GameSpriteBase::create("knock_left.png", this->m_player->nextTilePosition(), this->m_player->directcion());
-            break;
-        default:
-            break;
-    }
-    knock->setAnchorPoint(Vec2(0.0f, 0.0f));
-    this->addChild(knock);
-    
-    Vector<FiniteTimeAction *> actionAry;
-    actionAry.pushBack(MoveTo::create(0.3f, knock->getPosition()));
-    actionAry.pushBack(RemoveSelf::create());
-    Sequence *actions { Sequence::create(actionAry) };
-    knock->runAction(actions);
+    this->m_player->knockWall();
     
     Vector<EnemySprite*> enemies = this->enemysVector();
     for (int i = 0; i < enemies.size(); i++) {
@@ -222,6 +198,7 @@ void StageSceneBase::knockWall()
             continue;
             
         }
+        enemies.at(i)->heardSound();
         enemies.at(i)->moveToPos(this->m_player->worldPosition());
     }
 }

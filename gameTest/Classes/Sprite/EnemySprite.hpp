@@ -51,6 +51,7 @@ protected:
 public:
     static EnemySprite* create(const std::string& filename, const Vec2 &pos, ::directcion direction, float moveSpeed, ::patorolType patorolType);
     virtual bool initWithFileName(const std::string& filename, const Vec2 &pos, ::directcion direction, float moveSpeed, ::patorolType patorolType);
+    void heardSound();
     void startPatrol();
     void stopPatrol();
     void moveToPos(const Vec2 &pos);
