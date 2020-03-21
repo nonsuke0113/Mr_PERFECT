@@ -223,6 +223,11 @@ void StageSceneBase::touchBEvent(Ref *pSender, ui::Widget::TouchEventType type)
  */
 void StageSceneBase::touchB()
 {
+    // メッセージダイアログ表示中であれば何もしない
+    if (this->m_mdController->isVisibleMessageDialog()) {
+        return;
+    }
+    
     this->m_player->shootBullet();
     
     Vector<EnemySprite*> enemies = this->enemysVector();
