@@ -77,7 +77,7 @@ void Stage5Scene::doContinue()
 /**
     座標の判定
  */
-void Stage5Scene::checkPosition()
+void Stage5Scene::checkState()
 {
     // クリア判定
     if (this->m_player->worldPosition() == Vec2(13.0f, 24.0f)) {
