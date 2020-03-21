@@ -179,15 +179,50 @@ void StageSceneBase::touchA()
     // 壁叩き
     int nextTileGID = this->m_player->nextTileGID();
     if (nextTileGID == 1 || nextTileGID == 2) {
-        Vector<EnemySprite*> enemies = this->enemysVector();
-        for (int i = 0; i < enemies.size(); i++) {
-            // 遠い箇所の音は移動しない
-            if (AStarUtils::calculateECost(this->m_player->worldPosition(), enemies.at(i)->worldPosition()) > 5.0) {
-                continue;
-                
-            }
-            enemies.at(i)->moveToPos(this->m_player->worldPosition());
+        this->knockWall();
+    }
+}
+
+
+/**
+    壁叩きの処理
+ */
+void StageSceneBase::knockWall()
+{
+    GameSpriteBase *knock = nullptr;
+    switch (this->m_player->directcion()) {
+        case ::front:
+            knock = GameSpriteBase::create("knock_under.png", this->m_player->nextTilePosition(), this->m_player->directcion());
+            break;
+        case ::right:
+            knock = GameSpriteBase::create("knock_right.png", this->m_player->nextTilePosition(), this->m_player->directcion());
+            break;
+        case ::back:
+            knock = GameSpriteBase::create("knock_up.png", this->m_player->nextTilePosition(), this->m_player->directcion());
+            break;
+        case ::left:
+            knock = GameSpriteBase::create("knock_left.png", this->m_player->nextTilePosition(), this->m_player->directcion());
+            break;
+        default:
+            break;
+    }
+    knock->setAnchorPoint(Vec2(0.0f, 0.0f));
+    this->addChild(knock);
+    
+    Vector<FiniteTimeAction *> actionAry;
+    actionAry.pushBack(MoveTo::create(0.3f, knock->getPosition()));
+    actionAry.pushBack(RemoveSelf::create());
+    Sequence *actions { Sequence::create(actionAry) };
+    knock->runAction(actions);
+    
+    Vector<EnemySprite*> enemies = this->enemysVector();
+    for (int i = 0; i < enemies.size(); i++) {
+        // 遠い箇所の音は移動しない
+        if (AStarUtils::calculateECost(this->m_player->worldPosition(), enemies.at(i)->worldPosition()) > 5.0) {
+            continue;
+            
         }
+        enemies.at(i)->moveToPos(this->m_player->worldPosition());
     }
 }
 

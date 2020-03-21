@@ -64,6 +64,7 @@ protected:
     void allNodeUnschedule();
     virtual void touchA();
     virtual void touchB();
+    void knockWall();
     virtual void stageClear();
     virtual void setupResult();
     virtual void update(float delta);
