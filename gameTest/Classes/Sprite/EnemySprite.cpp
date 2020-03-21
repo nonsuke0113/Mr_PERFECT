@@ -54,6 +54,7 @@ bool EnemySprite::initWithFileName(const std::string& filename, const Vec2 &pos,
     this->m_hp = 5;
     this->m_routeStack = std::vector<Vec2>();
     this->m_routeStackIndex = 0;
+    this->m_movingHeardSoundPoint = false;
     return true;
 }
 
@@ -148,17 +149,28 @@ void EnemySprite::hitToBullet(int damage, ::directcion bulletDirection)
 /**
     吹き出しを表示する
  */
-void EnemySprite::showSpeechBubble(const std::string& filename)
+void EnemySprite::showSpeechBubble(::speechBubbleType speechBubbleType)
 {
-    GameSpriteBase *exclamation = GameSpriteBase::create(filename, Vec2 { this->m_worldPosition.x, this->m_worldPosition.y - 1.0f }, this->directcion());
-    exclamation->setAnchorPoint(Vec2(0.0f, 0.0f));
-    this->getParent()->addChild(exclamation);
+    GameSpriteBase *speechBubble = nullptr;
+    switch (speechBubbleType) {
+        case ::exclamation:
+            speechBubble = GameSpriteBase::create("exclamation.png", Vec2 { this->m_worldPosition.x, this->m_worldPosition.y - 1.0f }, this->directcion());
+            this->m_movingHeardSoundPoint = true;
+            break;
+        case ::question:
+            speechBubble = GameSpriteBase::create("question.png", Vec2 { this->m_worldPosition.x, this->m_worldPosition.y - 1.0f }, this->directcion());
+            break;
+        default:
+            break;
+    }
+    speechBubble->setAnchorPoint(Vec2(0.0f, 0.0f));
+    this->getParent()->addChild(speechBubble);
     
     Vector<FiniteTimeAction *> actionAry;
-    actionAry.pushBack(MoveTo::create(0.3f, exclamation->getPosition()));
+    actionAry.pushBack(MoveTo::create(0.3f, speechBubble->getPosition()));
     actionAry.pushBack(RemoveSelf::create());
     Sequence *actions { Sequence::create(actionAry) };
-    exclamation->runAction(actions);
+    speechBubble->runAction(actions);
 }
 
 
@@ -408,7 +420,10 @@ void EnemySprite::stopMoveAccordingToRouteStack()
 void EnemySprite::moveAccordingToRouteStack(float frame)
 {
     if (this->m_routeStack.empty() || this->m_routeStack.size() <= this->m_routeStackIndex) {
-        this->showSpeechBubble("question.png");
+        if (this->m_movingHeardSoundPoint) {
+            this->m_movingHeardSoundPoint = false;
+            this->showSpeechBubble(::question);
+        }
         this->stopMoveAccordingToRouteStack();
         this->startPatrol();
         return;
@@ -526,7 +541,7 @@ void EnemySprite::loseSightOfPlayer()
     }
     // 完全に見失った
     else {
-        this->showSpeechBubble("question.png");
+        this->showSpeechBubble(::question);
         // 初期座標まで最短経路で戻る
         this->moveToPos(this->m_initPosition);
     }

@@ -198,7 +198,7 @@ void StageSceneBase::playerKnockWall()
             continue;
             
         }
-        enemies.at(i)->showSpeechBubble("exclamation.png");
+        enemies.at(i)->showSpeechBubble(::exclamation);
         enemies.at(i)->moveToPos(this->m_player->worldPosition());
     }
 }

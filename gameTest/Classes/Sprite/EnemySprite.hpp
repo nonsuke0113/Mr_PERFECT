@@ -25,6 +25,12 @@ typedef enum {
     patorol_rotate
 } patorolType;
 
+// 吹き出しの種類
+typedef enum {
+    exclamation,
+    question
+} speechBubbleType;
+
 class EnemySprite : public CharacterSprite
 {
 protected:
@@ -35,6 +41,7 @@ protected:
     int m_routeStackIndex; // 経路の進捗を管理するインデックス
     Vec2 m_playerLostPoint; // プレイヤーを最後に発見した座標
     Vec2 m_playerLostNextPoint; // プレイヤーを見失った際に見た次の座標
+    bool m_movingHeardSoundPoint; // 聞こえた位置に移動中
     
     void setupAnimationCache();
     void setDirectcion(::directcion direction);
@@ -51,7 +58,7 @@ protected:
 public:
     static EnemySprite* create(const std::string& filename, const Vec2 &pos, ::directcion direction, float moveSpeed, ::patorolType patorolType);
     virtual bool initWithFileName(const std::string& filename, const Vec2 &pos, ::directcion direction, float moveSpeed, ::patorolType patorolType);
-    void showSpeechBubble(const std::string& filename);
+    void showSpeechBubble(::speechBubbleType speechBubbleType);
     void startPatrol();
     void stopPatrol();
     void moveToPos(const Vec2 &pos);
