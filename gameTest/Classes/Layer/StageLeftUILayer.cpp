@@ -23,7 +23,7 @@ bool StageLeftUILayer::init()
     }
     
     // 背景
-    this->m_background = { Sprite::create("side.png") };
+    this->m_background = { Sprite::create("side_left.png") };
     this->m_background->setAnchorPoint(Vec2(0.0f, 0.0f));
     this->m_background->setPosition(Vec2(0.0f, 0.0f));
     this->addChild(this->m_background);

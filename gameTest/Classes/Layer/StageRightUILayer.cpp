@@ -21,7 +21,7 @@ bool StageRightUILayer::init()
     }
     
     // 背景
-    this->m_background = { Sprite::create("side.png") };
+    this->m_background = { Sprite::create("side_right.png") };
     this->m_background->setAnchorPoint(Vec2(0.0f, 0.0f));
     this->m_background->setPosition(Vec2(0.0f, 0.0f));
     this->addChild(this->m_background);
@@ -45,14 +45,14 @@ bool StageRightUILayer::init()
     // Aボタン
     this->m_aButton = ui::Button::create("aButton.png");
     this->m_aButton->setAnchorPoint(Vec2(0.0f, 0.0f));
-    this->m_aButton->setPosition(Vec2(84.0f, 340.0f));
+    this->m_aButton->setPosition(Vec2(124.0f, 340.0f));
     this->m_aButton->addTouchEventListener(CC_CALLBACK_2(StageRightUILayer::touchAEvent, this));
     this->addChild(this->m_aButton);
     
     // Bボタン
     this->m_bButton = ui::Button::create("bButton.png");
     this->m_bButton->setAnchorPoint(Vec2(0.0f, 0.0f));
-    this->m_bButton->setPosition(Vec2(84.0f, 220.0f));
+    this->m_bButton->setPosition(Vec2(24.0f, 220.0f));
     this->m_bButton->addTouchEventListener(CC_CALLBACK_2(StageRightUILayer::touchBEvent, this));
     this->addChild(this->m_bButton);
     
