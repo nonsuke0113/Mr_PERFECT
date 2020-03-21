@@ -16,7 +16,8 @@
 // 回転方向
 typedef enum {
     turn_right,
-    turn_left
+    turn_left,
+    turn_none
 } rotateDirectcion;
 
 // パトロールの種類
@@ -37,7 +38,7 @@ class EnemySprite : public CharacterSprite
 protected:
     Vec2 m_initPosition; // 初期座標
     ::patorolType m_patorolType; // 巡回の種類
-    ::rotateDirectcion m_rotateDirectcion; // 巡回時の回転方向
+    ::rotateDirectcion m_rotateDirection; // 巡回時の回転方向
     std::vector<Vec2> m_routeStack; // 経路
     int m_routeStackIndex; // 経路の進捗を管理するインデックス
     Vec2 m_playerLostPoint; // プレイヤーを最後に発見した座標
@@ -59,6 +60,7 @@ protected:
 public:
     static EnemySprite* create(const std::string& filename, const Vec2 &pos, ::directcion direction, float moveSpeed, ::patorolType patorolType);
     virtual bool initWithFileName(const std::string& filename, const Vec2 &pos, ::directcion direction, float moveSpeed, ::patorolType patorolType);
+    void setRotateDirectcion(::rotateDirectcion rotateDirection);
     void showSpeechBubble(::speechBubbleType speechBubbleType);
     void startPatrol();
     void stopPatrol();

@@ -50,7 +50,7 @@ bool EnemySprite::initWithFileName(const std::string& filename, const Vec2 &pos,
     }
     this->m_initPosition = pos;
     this->m_patorolType = patorolType;
-    this->m_rotateDirectcion = ::turn_right;
+    this->m_rotateDirection = ::turn_none;
     this->m_hp = 5;
     this->m_routeStack = std::vector<Vec2>();
     this->m_routeStackIndex = 0;
@@ -126,6 +126,15 @@ void EnemySprite::setDirectcion(::directcion direction) {
     RepeatForever *action = RepeatForever::create( Animate::create(animation) );
     action->setTag(animate);
     this->runAction(action);
+}
+
+
+/**
+    巡回の方向セッター
+ */
+void EnemySprite::setRotateDirectcion(::rotateDirectcion rotateDirection)
+{
+    this->m_rotateDirection = rotateDirection;
 }
 
 
@@ -242,7 +251,7 @@ void EnemySprite::patrol(float frame) {
  */
 void EnemySprite::rotate() {
     
-    if (this->m_rotateDirectcion == ::turn_right) {
+    if (this->m_rotateDirection == ::turn_left) {
         switch (this->m_directcion) {
             case ::front:
                 this->setDirectcion(::right);
