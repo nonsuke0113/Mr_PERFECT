@@ -12,6 +12,7 @@
 #include <typeinfo>
 #include "AStarUtils.hpp"
 #include "ResultScene.hpp"
+#include <AudioEngine.h>
 
 #pragma mark -
 #pragma mark Init
@@ -191,6 +192,9 @@ void StageSceneBase::playerKnockWall()
 {
     this->m_player->knockWall();
     
+    // SE再生
+    experimental::AudioEngine::play2d("_sound_various_mp3_door-iron-knock1.mp3", false);
+    
     Vector<EnemySprite*> enemies = this->enemysVector();
     for (int i = 0; i < enemies.size(); i++) {
         // 遠い箇所の音は移動しない
@@ -223,6 +227,7 @@ void StageSceneBase::touchB()
     
     Vector<EnemySprite*> enemies = this->enemysVector();
     for (int i = 0; i < enemies.size(); i++) {
+        enemies.at(i)->showSpeechBubble(::exclamation);
         enemies.at(i)->moveToPos(this->m_player->worldPosition());
     }
 }
@@ -246,6 +251,9 @@ void StageSceneBase::gameStart()
     actionAry.pushBack(Hide::create());
     Sequence *actions { Sequence::create(actionAry) };
     start->runAction(actions);
+    
+    // BGMを開始
+    experimental::AudioEngine::play2d("0017_Spy-Mission.mp3", true);
     
     // 更新処理をスケジュール
     this->scheduleUpdate();
@@ -293,6 +301,9 @@ void StageSceneBase::allNodeUnschedule()
  */
 void StageSceneBase::gameover()
 {
+    // BGMを停止
+    experimental::AudioEngine::stopAll();
+    
     // 広告を表示
     AdMobHelper::launchInterstitial();
     
@@ -309,6 +320,8 @@ void StageSceneBase::gameover()
  */
 void StageSceneBase::doContinue()
 {
+    // BGMを停止
+    experimental::AudioEngine::stopAll();
     // 広告を表示
     AdMobHelper::launchInterstitial();
     return;

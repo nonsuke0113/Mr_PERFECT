@@ -8,6 +8,7 @@
 #include "StageSceneBase.hpp"
 #include "CharacterSprite.hpp"
 #include "BulletSprite.hpp"
+#include <AudioEngine.h>
 
 #pragma mark -
 #pragma mark Init
@@ -143,6 +144,9 @@ void CharacterSprite::shootBullet()
     if (this->m_bullet != nullptr) {
         return;
     }
+    
+    // SE再生
+    experimental::AudioEngine::play2d("handgun-firing1.mp3", false);
     
     BulletSprite* bullet = BulletSprite::create(this->nextTilePosition(), this->directcion(), this, 0.1f);
     this->m_bullet = bullet;
