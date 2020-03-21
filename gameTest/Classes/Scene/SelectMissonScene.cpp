@@ -10,6 +10,7 @@
 #include "StageSceneBase.hpp"
 #include "Stage1Scene.hpp"
 #include "Stage2Scene.hpp"
+#include "Stage3Scene.hpp"
 
 #pragma mark -
 #pragma mark Init
@@ -85,15 +86,22 @@ void SelectMissonScene::touchMissionEvent(Ref *pSender, ui::Widget::TouchEventTy
             switch (button->getTag()) {
                 case 1:
                 {
-                    Scene *stage1Scene { Stage1Scene::createScene() };
+                    Scene *stage1Scene = Stage1Scene::createScene();
                     TransitionFade* fade = TransitionFade::create(1.0f, stage1Scene);
                     Director::getInstance()->replaceScene(fade);
                     break;
                 }
                 case 2:
                 {
-                    Scene *stage1Scene { Stage2Scene::createScene() };
-                    TransitionFade* fade = TransitionFade::create(1.0f, stage1Scene);
+                    Scene *stage2Scene = Stage2Scene::createScene();
+                    TransitionFade* fade = TransitionFade::create(1.0f, stage2Scene);
+                    Director::getInstance()->replaceScene(fade);
+                    break;
+                }
+                case 3:
+                {
+                    Scene *stage3Scene = Stage3Scene::createScene();
+                    TransitionFade* fade = TransitionFade::create(1.0f, stage3Scene);
                     Director::getInstance()->replaceScene(fade);
                     break;
                 }
