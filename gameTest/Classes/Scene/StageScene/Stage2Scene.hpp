@@ -13,12 +13,17 @@
 class Stage2Scene : public StageSceneBase
 {
 private:
+    bool m_isTutorialMessage2; // チュートリアルメッセージ2表示済みかどうか
+    
     void initMap();
     void initCharactors();
+    void gameStart();
+    void touchB();
     void doContinue();
     void checkPosition();
     void stageClear();
-    
+    void createTutorialMessage2();
+
 public:
     static Stage2Scene *createScene();
     
