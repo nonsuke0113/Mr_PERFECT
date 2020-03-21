@@ -101,7 +101,14 @@ void BulletSprite::shootBullet(::directcion direction)
  */
 void BulletSprite::updatePosition(float frame)
 {
+    // 敵キャラクターの撃った弾は敵キャラクターに当たらないようにする
+    StageSceneBase* mainScene = (StageSceneBase*)this->getParent();
     CharacterSprite* hitCharacter = this->validateHit();
+    if ((this->m_shootCharactor != mainScene->m_player) &&
+        hitCharacter != mainScene->m_player) {
+        hitCharacter = nullptr;
+    }
+    
     // 被弾処理
     if (hitCharacter != nullptr) {
         hitCharacter->hitToBullet(this->power(), this->directcion());
