@@ -169,27 +169,25 @@ void StageSceneBase::touchAEvent(Ref *pSender, ui::Widget::TouchEventType type)
  */
 void StageSceneBase::touchA()
 {
-    if (!this->m_mdController->isVisibleMessageDialog()) {
-        // Messageテスト
-        int nextTileGID = this->m_player->nextTileGID();
-        if (nextTileGID != 1) {
-            this->m_mdController->createTestMessage(nextTileGID);
-        }
-        // 壁叩き
-        else {
-            Vector<EnemySprite*> enemies = this->enemysVector();
-            for (int i = 0; i < enemies.size(); i++) {
-                // 遠い箇所の音は移動しない
-                if (AStarUtils::calculateECost(this->m_player->worldPosition(), enemies.at(i)->worldPosition()) > 5.0) {
-                    continue;
-                }
-                enemies.at(i)->moveToPos(this->m_player->worldPosition());
-            }
-        }
-    }
-    else {
+    // メッセージダイアログ表示中であれば、文字送りをして終了
+    if (this->m_mdController->isVisibleMessageDialog()) {
         // 文字送りを実行する
         this->m_mdController->next();
+        return;
+    }
+    
+    // 壁叩き
+    int nextTileGID = this->m_player->nextTileGID();
+    if (nextTileGID == 1 || nextTileGID == 2) {
+        Vector<EnemySprite*> enemies = this->enemysVector();
+        for (int i = 0; i < enemies.size(); i++) {
+            // 遠い箇所の音は移動しない
+            if (AStarUtils::calculateECost(this->m_player->worldPosition(), enemies.at(i)->worldPosition()) > 5.0) {
+                continue;
+                
+            }
+            enemies.at(i)->moveToPos(this->m_player->worldPosition());
+        }
     }
 }
 
