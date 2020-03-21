@@ -49,18 +49,22 @@ void Stage4Scene::initCharactors()
     EnemySprite* enemy1 = EnemySprite::create("enemy1.png", Vec2(9.0f, 25.0f), ::left, 0.1f, patorol_none);
     enemy1->setAnchorPoint(Vec2(0.0f, 0.0f));
     this->addChild(enemy1);
+    enemy1->startPatrol();
     
     EnemySprite* enemy2 = EnemySprite::create("enemy1.png", Vec2(7.0f, 24.0f), ::right, 0.1f, patorol_none);
     enemy2->setAnchorPoint(Vec2(0.0f, 0.0f));
     this->addChild(enemy2);
+    enemy2->startPatrol();
     
     EnemySprite* enemy3 = EnemySprite::create("enemy1.png", Vec2(9.0f, 23.0f), ::left, 0.1f, patorol_none);
     enemy3->setAnchorPoint(Vec2(0.0f, 0.0f));
     this->addChild(enemy3);
+    enemy3->startPatrol();
     
     EnemySprite* enemy4 = EnemySprite::create("enemy1.png", Vec2(11.0f, 15.0f), ::left, 0.1f, patorol_none);
     enemy4->setAnchorPoint(Vec2(0.0f, 0.0f));
     this->addChild(enemy4);
+    enemy4->startPatrol();
 }
 
 
@@ -72,7 +76,7 @@ void Stage4Scene::initCharactors()
 void Stage4Scene::gameStart()
 {
     // ミッション開始のメッセージ表示後、ゲームスタート
-    this->m_mdController->createStartSeekMissonMessage([this]() {
+    this->m_mdController->createStartReachMissonMessage([this]() {
         StageSceneBase::gameStart();
         this->m_mdController->m_dialog->setCompleteAction(nullptr);
     });

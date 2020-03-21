@@ -229,6 +229,10 @@ void EnemySprite::patrol(float frame) {
         return;
     }
     
+    if (this->m_patorolType == patorol_none) {
+        return;
+    }
+    
     if (this->nextTileGID() == 0) {
         this->moveNextTile();
     } else {
