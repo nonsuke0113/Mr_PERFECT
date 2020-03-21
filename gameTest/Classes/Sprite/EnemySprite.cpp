@@ -253,7 +253,11 @@ void EnemySprite::patrol(float frame) {
 /**
     設定された回転方向に応じて、向いている方向を変える
  */
-void EnemySprite::rotate() {
+void EnemySprite::rotate()
+{
+    if (this->m_rotateDirection == ::turn_none) {
+        return;
+    }
     
     if (this->m_rotateDirection == ::turn_left) {
         switch (this->m_directcion) {
