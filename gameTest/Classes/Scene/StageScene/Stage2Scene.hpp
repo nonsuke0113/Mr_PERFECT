@@ -18,6 +18,7 @@ private:
     void initMap();
     void initCharactors();
     void gameStart();
+    void enemyFoundPlayer();
     void touchB();
     void doContinue();
     void checkPosition();
