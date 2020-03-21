@@ -430,7 +430,7 @@ void StageSceneBase::heartOff(int i)
 void StageSceneBase::update(float delta)
 {
     this->updateTime();
-    this->checkPosition();
+    this->checkState();
     
     // 座標更新は0.5秒(30/60フレーム)毎に判定
     if (fmod(this->m_time, 30) == 0) {
@@ -449,10 +449,10 @@ void StageSceneBase::updateTime()
 }
 
 /**
-    座標の判定
+    状況の判定
     子クラスにて実装する
  */
-void StageSceneBase::checkPosition()
+void StageSceneBase::checkState()
 {
     return;
 }

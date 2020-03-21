@@ -121,11 +121,11 @@ void Stage1Scene::doContinue()
 
 
 /**
-    座標の判定
+    状況の判定
  */
-void Stage1Scene::checkPosition()
+void Stage1Scene::checkState()
 {
-    // クリア判定
+    // クリア座標の判定
     if (this->m_player->worldPosition() == Vec2(4.0f, 20.0f)) {
         this->stageClear();
     }

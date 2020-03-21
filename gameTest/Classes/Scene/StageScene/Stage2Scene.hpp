@@ -21,7 +21,7 @@ private:
     void enemyFoundPlayer();
     void touchB();
     void doContinue();
-    void checkPosition();
+    void checkState();
     void stageClear();
     void createTutorialMessage2();
 

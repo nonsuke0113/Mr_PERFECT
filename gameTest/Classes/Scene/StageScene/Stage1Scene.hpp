@@ -22,7 +22,7 @@ private:
     void touchB();
     void enemyFoundPlayer();
     void doContinue();
-    void checkPosition();
+    void checkState();
     void stageClear();
     void setupResult();
     void createTutorialMessage1();

@@ -68,7 +68,7 @@ protected:
     virtual void stageClear();
     virtual void setupResult();
     virtual void update(float delta);
-    virtual void checkPosition();
+    virtual void checkState();
     
 public:
     TMXTiledMap *m_map; // MAP

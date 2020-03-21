@@ -109,11 +109,11 @@ void Stage2Scene::doContinue()
 
 
 /**
-    座標の判定
+    状況の判定
  */
-void Stage2Scene::checkPosition()
+void Stage2Scene::checkState()
 {
-    // クリア判定
+    // クリア座標判定
     if (this->m_player->worldPosition() == Vec2(8.0f, 20.0f)) {
         this->stageClear();
     }

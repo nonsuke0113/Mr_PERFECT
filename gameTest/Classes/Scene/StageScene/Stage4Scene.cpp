@@ -36,7 +36,7 @@ void Stage4Scene::initMap()
 
 
 /**
- キャラクターの初期化処理
+    キャラクターの初期化処理
  */
 void Stage4Scene::initCharactors()
 {
@@ -96,9 +96,9 @@ void Stage4Scene::doContinue()
 /**
     座標の判定
  */
-void Stage4Scene::checkPosition()
+void Stage4Scene::checkState()
 {
-    // クリア判定
+    // クリア座標判定
     if (this->m_player->worldPosition() == Vec2(9.0f, 14.0f)) {
         this->stageClear();
     }

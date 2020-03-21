@@ -128,10 +128,10 @@ void Stage3Scene::doContinue()
 /**
     座標の判定
  */
-void Stage3Scene::checkPosition()
+void Stage3Scene::checkState()
 {
     // クリア判定
-    if (this->m_player->worldPosition() == Vec2(8.0f, 20.0f)) {
+    if (this->enemysVector().size() == 0) {
         this->stageClear();
     }
     

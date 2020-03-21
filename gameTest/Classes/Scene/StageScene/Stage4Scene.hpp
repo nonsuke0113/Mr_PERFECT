@@ -17,7 +17,7 @@ private:
     void initCharactors();
     void gameStart();
     void doContinue();
-    void checkPosition();
+    void checkState();
     void stageClear();
     void createTutorialMessage2();
     
