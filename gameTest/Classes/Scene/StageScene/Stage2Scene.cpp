@@ -41,12 +41,12 @@ void Stage2Scene::initMap()
 void Stage2Scene::initCharactors()
 {
     // プレイヤー
-    this->m_player = PlayerSprite::create("player.png", Vec2(8.0f, 29.0f), ::back, 0.1f);
+    this->m_player = PlayerSprite::create("player_back1.png", Vec2(8.0f, 29.0f), ::back, 0.1f);
     this->m_player->setAnchorPoint(Vec2(0.0f, 0.0f));
     this->addChild(this->m_player);
     
     // 敵キャラクター
-    EnemySprite* mob = EnemySprite::create("enemy1.png", Vec2(8.0f, 22.0f), ::front, 0.1f, patorol_rotate);
+    EnemySprite* mob = EnemySprite::create("enemy1.png", Vec2(8.0f, 22.0f), ::front, 0.1f, patorol_none);
     mob->setName(StringUtils::format("mob"));
     mob->setAnchorPoint(Vec2(0.0f, 0.0f));
     this->addChild(mob);

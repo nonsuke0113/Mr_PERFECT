@@ -41,7 +41,7 @@ void Stage5Scene::initMap()
 void Stage5Scene::initCharactors()
 {
     // プレイヤー
-    this->m_player = PlayerSprite::create("player.png", Vec2(8.0f, 29.0f), ::back, 0.1f);
+    this->m_player = PlayerSprite::create("player_back1.png", Vec2(8.0f, 29.0f), ::back, 0.1f);
     this->m_player->setAnchorPoint(Vec2(0.0f, 0.0f));
     this->addChild(this->m_player);
     

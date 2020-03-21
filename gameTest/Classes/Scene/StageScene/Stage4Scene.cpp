@@ -41,24 +41,24 @@ void Stage4Scene::initMap()
 void Stage4Scene::initCharactors()
 {
     // プレイヤー
-    this->m_player = PlayerSprite::create("player.png", Vec2(8.0f, 29.0f), ::back, 0.1f);
+    this->m_player = PlayerSprite::create("player_back1.png", Vec2(8.0f, 29.0f), ::back, 0.1f);
     this->m_player->setAnchorPoint(Vec2(0.0f, 0.0f));
     this->addChild(this->m_player);
     
     // 敵キャラクター
-    EnemySprite* enemy1 = EnemySprite::create("enemy1.png", Vec2(9.0f, 25.0f), ::left, 0.1f, patorol_rotate);
+    EnemySprite* enemy1 = EnemySprite::create("enemy1.png", Vec2(9.0f, 25.0f), ::left, 0.1f, patorol_none);
     enemy1->setAnchorPoint(Vec2(0.0f, 0.0f));
     this->addChild(enemy1);
     
-    EnemySprite* enemy2 = EnemySprite::create("enemy1.png", Vec2(7.0f, 24.0f), ::right, 0.1f, patorol_rotate);
+    EnemySprite* enemy2 = EnemySprite::create("enemy1.png", Vec2(7.0f, 24.0f), ::right, 0.1f, patorol_none);
     enemy2->setAnchorPoint(Vec2(0.0f, 0.0f));
     this->addChild(enemy2);
     
-    EnemySprite* enemy3 = EnemySprite::create("enemy1.png", Vec2(9.0f, 23.0f), ::left, 0.1f, patorol_rotate);
+    EnemySprite* enemy3 = EnemySprite::create("enemy1.png", Vec2(9.0f, 23.0f), ::left, 0.1f, patorol_none);
     enemy3->setAnchorPoint(Vec2(0.0f, 0.0f));
     this->addChild(enemy3);
     
-    EnemySprite* enemy4 = EnemySprite::create("enemy1.png", Vec2(11.0f, 15.0f), ::left, 0.1f, patorol_rotate);
+    EnemySprite* enemy4 = EnemySprite::create("enemy1.png", Vec2(11.0f, 15.0f), ::left, 0.1f, patorol_none);
     enemy4->setAnchorPoint(Vec2(0.0f, 0.0f));
     this->addChild(enemy4);
 }
