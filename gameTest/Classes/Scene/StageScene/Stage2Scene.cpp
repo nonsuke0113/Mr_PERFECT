@@ -50,9 +50,18 @@ void Stage2Scene::initCharactors()
     mob->setName(StringUtils::format("mob"));
     mob->setAnchorPoint(Vec2(0.0f, 0.0f));
     this->addChild(mob);
-//    mob->startPatrol();
 }
 
+
+/**
+//敵に見つかったときの処理
+ */
+
+void Stage2Scene::enemyFoundPlayer()
+{
+    this->allNodeUnschedule();
+    this->m_mdController->createEnemyFoundPlayerMessage();
+}
 
 #pragma mark -
 #pragma mark ButtonEvent
