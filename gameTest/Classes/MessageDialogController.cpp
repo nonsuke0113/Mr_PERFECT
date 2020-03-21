@@ -166,6 +166,20 @@ void MessageDialogController::createStartKillMissonMessage(std::function<void()>
 
 
 /**
+    開始時に、目的地への到達がゴールことであるメッセージを作成して表示する
+ */
+void MessageDialogController::createStartReachMissonMessage(std::function<void()> completedAction)
+{
+    std::vector<std::string> messages = std::vector<std::string>();
+    messages.push_back("MISSON:");
+    messages.push_back("目的地へたどり着け");
+    this->setMessages(messages);
+    this->setMessageCallback(completedAction);
+    this->displayMessageDialog();
+}
+
+
+/**
     ミッション失敗時のメッセージダイアログを作成して表示する
  */
 void MessageDialogController::createMissionFailedMessage()
