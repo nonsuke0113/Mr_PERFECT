@@ -15,6 +15,7 @@
 #include "Stage5Scene.hpp"
 #include "Stage7Scene.hpp"
 #include "Stage8Scene.hpp"
+#include "Stage9Scene.hpp"
 
 #pragma mark -
 #pragma mark Init
@@ -150,6 +151,13 @@ void SelectMissonScene::touchMissionEvent(Ref *pSender, ui::Widget::TouchEventTy
                 {
                     Scene *stage8Scene = Stage8Scene::createScene();
                     TransitionFade* fade = TransitionFade::create(1.0f, stage8Scene);
+                    Director::getInstance()->replaceScene(fade);
+                    break;
+                }
+                case 9:
+                {
+                    Scene *stage9Scene = Stage9Scene::createScene();
+                    TransitionFade* fade = TransitionFade::create(1.0f, stage9Scene);
                     Director::getInstance()->replaceScene(fade);
                     break;
                 }
