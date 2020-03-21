@@ -54,7 +54,7 @@ void Stage2Scene::initCharactors()
 
 
 /**
-//敵に見つかったときの処理
+    敵に見つかったときの処理
  */
 
 void Stage2Scene::enemyFoundPlayer()
@@ -62,6 +62,7 @@ void Stage2Scene::enemyFoundPlayer()
     this->allNodeUnschedule();
     this->m_mdController->createEnemyFoundPlayerMessage();
 }
+
 
 #pragma mark -
 #pragma mark ButtonEvent
