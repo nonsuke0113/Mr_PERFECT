@@ -375,6 +375,9 @@ void StageSceneBase::stageClear()
     }));
     Sequence *actions = Sequence::create(actionAry);
     complete->runAction(actions);
+    
+    // SE再生
+    experimental::AudioEngine::play2d("jazzjingle.mp3", false);
 }
 
 
@@ -414,6 +417,9 @@ void StageSceneBase::missionFailed()
     }));
     Sequence *actions { Sequence::create(actionAry) };
     failed->runAction(actions);
+    
+    // SE再生
+    experimental::AudioEngine::play2d("bossyuu.mp3", false);
 }
 
 
