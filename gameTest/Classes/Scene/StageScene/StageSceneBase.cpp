@@ -446,6 +446,7 @@ void StageSceneBase::update(float delta)
 {
     this->updateTime();
     this->checkState();
+    this->updatePlayerDirection();
     
     // 座標更新は0.5秒(30/60フレーム)毎に判定
     if (fmod(this->m_time, 30) == 0) {
@@ -465,6 +466,7 @@ void StageSceneBase::updateTime()
     this->m_shootBulletInterval++;
 }
 
+
 /**
     状況の判定
     子クラスにて実装する
@@ -476,9 +478,9 @@ void StageSceneBase::checkState()
 
 
 /**
-    座標更新処理
+    プレイヤーの向きを更新
  */
-void StageSceneBase::updatePosition()
+void StageSceneBase::updatePlayerDirection()
 {
     ::padState padState = this->padState();
     switch (padState) {
@@ -497,9 +499,16 @@ void StageSceneBase::updatePosition()
         default:
             break;
     }
-    
-    // 十字キーが押されてなかったり、行けない道だったら何もしない
-    if ((padState == padNone) ||
+}
+
+
+/**
+    座標更新処理
+ */
+void StageSceneBase::updatePosition()
+{
+    // ゲームパッドが真ん中だったり、行けない道だったら何もしない
+    if ((this->padState() == padNone) ||
         (this->m_mdController->isVisibleMessageDialog()) ||
         (this->m_map->getNumberOfRunningActions() > 0) ||
         (this->m_player->getActionByTag(::move) != nullptr) ||

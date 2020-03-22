@@ -45,6 +45,7 @@ private:
     void initCamera();
     void initUI();
     void updateTime();
+    void updatePlayerDirection();
     void updatePosition();
     void updateCameraPosition();
     
