@@ -81,7 +81,6 @@
 		E92CE849220679F900E123FD /* EventKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E92CE847220679F900E123FD /* EventKit.framework */; };
 		E92CE84A220679F900E123FD /* EventKitUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E92CE848220679F900E123FD /* EventKitUI.framework */; };
 		E92CE84C22067A1800E123FD /* MessageUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E92CE84B22067A1800E123FD /* MessageUI.framework */; };
-		E92CE84E22067BE600E123FD /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E92CE84D22067BE600E123FD /* StoreKit.framework */; };
 		E92CE85022067BF700E123FD /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E92CE84F22067BF600E123FD /* SystemConfiguration.framework */; };
 		E92CE85C2206814400E123FD /* GoogleMobileAds.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E92CE85A2206814400E123FD /* GoogleMobileAds.framework */; };
 		E92CE85D2206814400E123FD /* README.txt in Resources */ = {isa = PBXBuildFile; fileRef = E92CE85B2206814400E123FD /* README.txt */; };
@@ -266,7 +265,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				E92CE85022067BF700E123FD /* SystemConfiguration.framework in Frameworks */,
-				E92CE84E22067BE600E123FD /* StoreKit.framework in Frameworks */,
 				E92CE84C22067A1800E123FD /* MessageUI.framework in Frameworks */,
 				E92CE849220679F900E123FD /* EventKit.framework in Frameworks */,
 				E92CE84A220679F900E123FD /* EventKitUI.framework in Frameworks */,
@@ -781,6 +779,8 @@
 				OTHER_LDFLAGS = (
 					"$(_COCOS_LIB_IOS_BEGIN)",
 					"$(_COCOS_LIB_IOS_END)",
+					"-framework",
+					StoreKit,
 				);
 				SDKROOT = iphoneos;
 				STRIP_PNG_TEXT = NO;
@@ -820,6 +820,8 @@
 				OTHER_LDFLAGS = (
 					"$(_COCOS_LIB_IOS_BEGIN)",
 					"$(_COCOS_LIB_IOS_END)",
+					"-framework",
+					StoreKit,
 				);
 				SDKROOT = iphoneos;
 				STRIP_PNG_TEXT = NO;
