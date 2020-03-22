@@ -50,6 +50,7 @@
 		8610B8FC242684070013E21B /* Stage8Scene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8610B8FA242684070013E21B /* Stage8Scene.cpp */; };
 		8610B8FF2426841E0013E21B /* Stage9Scene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8610B8FD2426841E0013E21B /* Stage9Scene.cpp */; };
 		8610B902242684390013E21B /* Stage10Scene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8610B900242684390013E21B /* Stage10Scene.cpp */; };
+		8610B906242725080013E21B /* splash.png in Resources */ = {isa = PBXBuildFile; fileRef = 8610B905242725080013E21B /* splash.png */; };
 		86114BE0240AB31E00864BEA /* StageLeftUILayer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 86114BDE240AB31E00864BEA /* StageLeftUILayer.cpp */; };
 		86114BE5240AB95700864BEA /* StageRightUILayer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 86114BE3240AB95700864BEA /* StageRightUILayer.cpp */; };
 		861B748E239F37A6007068AB /* BulletSprite.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 861B748C239F37A6007068AB /* BulletSprite.cpp */; };
@@ -191,6 +192,7 @@
 		8610B8FE2426841E0013E21B /* Stage9Scene.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Stage9Scene.hpp; sourceTree = "<group>"; };
 		8610B900242684390013E21B /* Stage10Scene.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Stage10Scene.cpp; sourceTree = "<group>"; };
 		8610B901242684390013E21B /* Stage10Scene.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Stage10Scene.hpp; sourceTree = "<group>"; };
+		8610B905242725080013E21B /* splash.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = splash.png; sourceTree = "<group>"; };
 		86114BDE240AB31E00864BEA /* StageLeftUILayer.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = StageLeftUILayer.cpp; sourceTree = "<group>"; };
 		86114BDF240AB31E00864BEA /* StageLeftUILayer.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = StageLeftUILayer.hpp; sourceTree = "<group>"; };
 		86114BE3240AB95700864BEA /* StageRightUILayer.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = StageRightUILayer.cpp; sourceTree = "<group>"; };
@@ -333,6 +335,7 @@
 		1AF87B461F6F77D6007BE51C /* ios */ = {
 			isa = PBXGroup;
 			children = (
+				8610B905242725080013E21B /* splash.png */,
 				1A88B2631FC3D9C9005C14AE /* Images.xcassets */,
 				1AF87B471F6F77D6007BE51C /* AppController.h */,
 				1AF87B481F6F77D6007BE51C /* AppController.mm */,
@@ -659,6 +662,7 @@
 				E92CE85D2206814400E123FD /* README.txt in Resources */,
 				1A88B2641FC3D9C9005C14AE /* Images.xcassets in Resources */,
 				46880B7D19C43A67006E1F66 /* CloseSelected.png in Resources */,
+				8610B906242725080013E21B /* splash.png in Resources */,
 				521A8EA919F11F5000D177D7 /* fonts in Resources */,
 				3EACC98F19EE6D4300EB3C5E /* res in Resources */,
 				1AF87B891F6F781D007BE51C /* LaunchScreenBackground.png in Resources */,
