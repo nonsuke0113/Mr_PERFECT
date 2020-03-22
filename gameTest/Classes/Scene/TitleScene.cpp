@@ -45,14 +45,32 @@ bool TitleScene::init()
     
     // ロゴ
     this->m_logo = Sprite::create("title_logo.png");
-    this->m_logo->setPosition(Vec2(visibleSize.width / 2, 480));
+    this->m_logo->setAnchorPoint(Vec2(0.0f, 1.0f));
+    this->m_logo->setPosition(Vec2(207.0f, 418.0f));
     this->addChild(this->m_logo);
 
     // スタートボタン
     this->m_startButton = ui::Button::create("start_button.png");
-    this->m_startButton->setPosition(Vec2(visibleSize.width / 2, 160));
+    this->m_startButton->setAnchorPoint(Vec2(0.0f, 1.0f));
+    this->m_startButton->setPosition(Vec2(422.0f, 145.0f));
     this->addChild(this->m_startButton);
     this->m_startButton->addTouchEventListener(CC_CALLBACK_2(TitleScene::touchStartEvent, this));
+    
+    // プレイヤー
+    this->m_playerSprite = PlayerSprite::create("player_right1.png", Vec2(0.0f, 0.0f), ::right, 0.1f);
+    this->m_playerSprite->setAnchorPoint(Vec2(0.0f, 1.0f));
+    this->m_playerSprite->setPosition(Vec2(593.0f, 320.0f));
+    this->m_playerSprite->setScale(2.0f);
+    this->addChild(this->m_playerSprite);
+    
+    // 敵
+    this->m_enemySprite = EnemySprite::create("enemy1.png", Vec2(0.0f, 0.0f), ::right, 0.1f, ::patorol_none);
+    this->m_enemySprite->setAnchorPoint(Vec2(0.0f, 1.0f));
+    this->m_enemySprite->setPosition(Vec2(415.0f, 320.0f));
+    this->m_enemySprite->setScale(2.0f);
+    this->addChild(this->m_enemySprite);
+    
+    scheduleUpdate();
     
     return true;
 }
@@ -77,18 +95,17 @@ void TitleScene::touchStartEvent(Ref *pSender, ui::Widget::TouchEventType type)
         {
             this->m_startButton->setVisible(false);
             
-            // 画面サイズ取得
-            Size visibleSize { Director::getInstance()->getVisibleSize() };
-            
             // ミッションモードボタン
             this->m_menu1Button = ui::Button::create("main_menu1.png");
-            this->m_menu1Button->setPosition(Vec2(visibleSize.width / 2, 220));
+            this->m_menu1Button->setAnchorPoint(Vec2(0.0f, 1.0f));
+            this->m_menu1Button->setPosition(Vec2(136.0f, 145.0f));
             this->addChild(this->m_menu1Button);
             this->m_menu1Button->addTouchEventListener(CC_CALLBACK_2(TitleScene::touchMissionModeEvent, this));
             
             // 遊び方ボタン
             this->m_menu2Button = ui::Button::create("main_menu2.png");
-            this->m_menu2Button->setPosition(Vec2(visibleSize.width / 2, 100));
+            this->m_menu2Button->setAnchorPoint(Vec2(0.0f, 1.0f));
+            this->m_menu2Button->setPosition(Vec2(648.0f, 145.0f));
             this->addChild(this->m_menu2Button);
             this->m_menu2Button->addTouchEventListener(CC_CALLBACK_2(TitleScene::touchHowToPlayEvent, this));
             
@@ -167,6 +184,60 @@ void TitleScene::touchBackEvent(Ref *pSender, ui::Widget::TouchEventType type)
             Director::getInstance()->replaceScene(titleScene);
             break;
         }
+        default:
+            break;
+    }
+}
+
+
+#pragma mark -
+#pragma mark Update
+/**
+    定期処理
+*/
+void TitleScene::update(float delta)
+{
+    this->updateCharactorPosition(this->m_playerSprite);
+    this->updateCharactorPosition(this->m_enemySprite);
+}
+
+
+/**
+    キャラクター座標更新
+ 
+    @param charactor 座標を更新するキャラクター
+ */
+void TitleScene::updateCharactorPosition(CharacterSprite *charactor)
+{
+    switch (charactor->directcion()) {
+        case ::right:
+            if (charactor->getPosition().x < 939.0f) {
+                charactor->setPosition(Vec2(charactor->getPosition().x + 5, charactor->getPosition().y));
+            } else {
+                charactor->setDirectcion(::back);
+            }
+            break;
+        case ::back:
+            if (charactor->getPosition().y < 556.0f) {
+                charactor->setPosition(Vec2(charactor->getPosition().x, charactor->getPosition().y + 5));
+            } else {
+                charactor->setDirectcion(::left);
+            }
+            break;
+        case ::left:
+            if (charactor->getPosition().x > 69.0f) {
+                charactor->setPosition(Vec2(charactor->getPosition().x - 5, charactor->getPosition().y));
+            } else {
+                charactor->setDirectcion(::front);
+            }
+            break;
+        case ::front:
+            if (charactor->getPosition().y > 320.0f) {
+                charactor->setPosition(Vec2(charactor->getPosition().x, charactor->getPosition().y - 5));
+            } else {
+                charactor->setDirectcion(::right);
+            }
+            break;
         default:
             break;
     }

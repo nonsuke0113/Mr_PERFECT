@@ -15,6 +15,8 @@ USING_NS_CC;
 
 #include "cocos2d.h"
 #include "ui/CocosGUI.h"
+#include "PlayerSprite.hpp"
+#include "EnemySprite.hpp"
 
 class TitleScene : public Layer
 {
@@ -23,11 +25,15 @@ private:
     ui::Button *m_startButton; // スタートボタン
     ui::Button *m_menu1Button; // ミッションモードボタン
     ui::Button *m_menu2Button; // 遊び方ボタン
+    PlayerSprite *m_playerSprite; // プレイヤーキャラクター
+    EnemySprite *m_enemySprite; // 敵キャラクター
     
     void touchStartEvent(Ref *pSender, cocos2d::ui::Widget::TouchEventType type);
     void touchMissionModeEvent(Ref *pSender, cocos2d::ui::Widget::TouchEventType type);
     void touchHowToPlayEvent(Ref *pSender, cocos2d::ui::Widget::TouchEventType type);
     void touchBackEvent(Ref *pSender, ui::Widget::TouchEventType type);
+    void update(float delta);
+    void updateCharactorPosition(CharacterSprite *charactor);
     
 public:
     static Scene* createScene();
