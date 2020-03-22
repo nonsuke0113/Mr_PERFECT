@@ -50,6 +50,7 @@ bool StageSceneBase::init()
     this->addChild(this->m_mdController->m_dialog);
     
     this->m_time = 0.0f;
+    this->m_shootBulletInterval = 0.0f;
     this->m_enemyFoundPlayerCount = 0;
     
     this->gameStart();
@@ -228,6 +229,12 @@ void StageSceneBase::touchB()
         return;
     }
     
+    // 1秒以内は撃てない
+    if (this->m_shootBulletInterval <= 60.0f) {
+        return;
+    }
+    this->m_shootBulletInterval = 0.0f;
+    
     this->m_player->shootBullet();
     
     Vector<EnemySprite*> enemies = this->enemysVector();
@@ -345,16 +352,16 @@ void StageSceneBase::stageClear()
     this->allNodeUnschedule();
     
     // コンプリート表示処理
-    Sprite *complate { Sprite::create("mission_complate.png") };
+    Sprite *complete { Sprite::create("mission_complete.png") };
     Size visibleSize { Director::getInstance()->getVisibleSize() };
-    complate->setPosition(Vec2(0.0f, visibleSize.height/2));
-    complate->setCameraMask((unsigned short)CameraFlag::USER1);
-    this->addChild(complate);
+    complete->setPosition(Vec2(0.0f, visibleSize.height/2));
+    complete->setCameraMask((unsigned short)CameraFlag::USER1);
+    this->addChild(complete);
     
     Vector<FiniteTimeAction *> actionAry;
     actionAry.pushBack(MoveTo::create(1.0f, Vec2(visibleSize.width/2, visibleSize.height/2)));
     actionAry.pushBack(MoveTo::create(1.0f, Vec2(visibleSize.width/2, visibleSize.height/2)));
-    actionAry.pushBack(MoveTo::create(0.5f, Vec2(visibleSize.width + complate->getContentSize().width, visibleSize.height/2)));
+    actionAry.pushBack(MoveTo::create(0.5f, Vec2(visibleSize.width + complete->getContentSize().width, visibleSize.height/2)));
     actionAry.pushBack(Hide::create());
     
     // リザルトの設定
@@ -367,7 +374,7 @@ void StageSceneBase::stageClear()
         Director::getInstance()->replaceScene(fade);
     }));
     Sequence *actions = Sequence::create(actionAry);
-    complate->runAction(actions);
+    complete->runAction(actions);
 }
 
 
@@ -440,8 +447,8 @@ void StageSceneBase::update(float delta)
     this->updateTime();
     this->checkState();
     
-    // 座標更新は0.33秒(20/60フレーム)毎に判定
-    if (fmod(this->m_time, 20) == 0) {
+    // 座標更新は0.5秒(30/60フレーム)毎に判定
+    if (fmod(this->m_time, 30) == 0) {
         this->updatePosition();
     }
 }
@@ -453,7 +460,9 @@ void StageSceneBase::update(float delta)
 void StageSceneBase::updateTime()
 {
     this->m_time++;
-    this->m_uiLayer->updateTime(this->m_time / 30.0f);
+    this->m_uiLayer->updateTime(this->m_time / 60.0f);
+    
+    this->m_shootBulletInterval++;
 }
 
 /**

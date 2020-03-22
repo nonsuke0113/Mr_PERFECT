@@ -50,6 +50,7 @@ private:
     
 protected:
     float m_time; // 経過時間
+    float m_shootBulletInterval; // 弾丸を撃てない間隔
     int m_enemyFoundPlayerCount; // 敵がプレイヤーを発見した回数
     Camera *m_camera; // スクロール用カメラ
     MessageDialogController *m_mdController; // メッセージダイアログコントローラー
