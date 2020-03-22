@@ -198,7 +198,7 @@ void EnemySprite::dead()
  */
 void EnemySprite::startPatrol() {
     // 巡回をスケジュール
-    schedule(schedule_selector(EnemySprite::patrol), 1.0f);
+    schedule(schedule_selector(EnemySprite::patrol), 0.5f);
 }
 
 
