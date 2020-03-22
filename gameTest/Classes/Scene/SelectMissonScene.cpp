@@ -13,9 +13,11 @@
 #include "Stage3Scene.hpp"
 #include "Stage4Scene.hpp"
 #include "Stage5Scene.hpp"
+#include "Stage6Scene.hpp"
 #include "Stage7Scene.hpp"
 #include "Stage8Scene.hpp"
 #include "Stage9Scene.hpp"
+#include "Stage10Scene.hpp"
 
 #pragma mark -
 #pragma mark Init
@@ -104,66 +106,63 @@ void SelectMissonScene::touchMissionEvent(Ref *pSender, ui::Widget::TouchEventTy
         case ui::Widget::TouchEventType::BEGAN:
         {
             ui::Button *button = (ui::Button*)pSender;
+            Scene * stageScene = nullptr;
             switch (button->getTag()) {
                 case 1:
                 {
-                    Scene *stage1Scene = Stage1Scene::createScene();
-                    TransitionFade* fade = TransitionFade::create(1.0f, stage1Scene);
-                    Director::getInstance()->replaceScene(fade);
+                    stageScene = Stage1Scene::createScene();
                     break;
                 }
                 case 2:
                 {
-                    Scene *stage2Scene = Stage2Scene::createScene();
-                    TransitionFade* fade = TransitionFade::create(1.0f, stage2Scene);
-                    Director::getInstance()->replaceScene(fade);
+                    stageScene = Stage2Scene::createScene();
                     break;
                 }
                 case 3:
                 {
-                    Scene *stage3Scene = Stage3Scene::createScene();
-                    TransitionFade* fade = TransitionFade::create(1.0f, stage3Scene);
-                    Director::getInstance()->replaceScene(fade);
+                    stageScene = Stage3Scene::createScene();
                     break;
                 }
                 case 4:
                 {
-                    Scene *stage4Scene = Stage4Scene::createScene();
-                    TransitionFade* fade = TransitionFade::create(1.0f, stage4Scene);
-                    Director::getInstance()->replaceScene(fade);
+                    stageScene = Stage4Scene::createScene();
                     break;
                 }
                 case 5:
                 {
-                    Scene *stage5Scene = Stage5Scene::createScene();
-                    TransitionFade* fade = TransitionFade::create(1.0f, stage5Scene);
-                    Director::getInstance()->replaceScene(fade);
+                    stageScene = Stage5Scene::createScene();
+                    break;
+                }
+                case 6:
+                {
+                    stageScene = Stage6Scene::createScene();
                     break;
                 }
                 case 7:
                 {
-                    Scene *stage7Scene = Stage7Scene::createScene();
-                    TransitionFade* fade = TransitionFade::create(1.0f, stage7Scene);
-                    Director::getInstance()->replaceScene(fade);
+                    stageScene = Stage7Scene::createScene();
                     break;
                 }
                 case 8:
                 {
-                    Scene *stage8Scene = Stage8Scene::createScene();
-                    TransitionFade* fade = TransitionFade::create(1.0f, stage8Scene);
-                    Director::getInstance()->replaceScene(fade);
+                    stageScene = Stage8Scene::createScene();
                     break;
                 }
                 case 9:
                 {
-                    Scene *stage9Scene = Stage9Scene::createScene();
-                    TransitionFade* fade = TransitionFade::create(1.0f, stage9Scene);
-                    Director::getInstance()->replaceScene(fade);
+                    stageScene = Stage9Scene::createScene();
+                    break;
+                }
+                case 10:
+                {
+                    stageScene = Stage10Scene::createScene();
                     break;
                 }
                 default:
                     break;
             }
+            TransitionFade* fade = TransitionFade::create(1.0f, stageScene);
+            Director::getInstance()->replaceScene(fade);
             break;
         }
         default:
