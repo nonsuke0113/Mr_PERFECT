@@ -523,6 +523,7 @@ void EnemySprite::chasePlayer(float frame)
         if (this->worldPosition() == this->m_playerLostPoint) {
             this->stopChasePlayer();
             this->loseSightOfPlayer();
+            return;
         }
     }
     
