@@ -25,6 +25,7 @@ typedef enum {
     patorol_roundtrip, // 往復
     patorol_rotate, // 巡回
     patorol_chase, // 追跡中
+    patorol_according, // 経路に沿って移動中
     patorol_nomove, // 移動なし
     patorol_none // 警備なし
 } patorolType;
@@ -53,12 +54,14 @@ protected:
     void setDirectcion(::directcion direction);
     void hitToBullet(int damage, ::directcion bulletDirection);
     void dead();
+    
     virtual void update(float delta);
     virtual void foundPlayer();
     virtual void losePlayer();
     virtual void patrolRoundTrip();
     virtual void patrolRotate();
     virtual void patrolChase();
+    void moveToPos2(Vec2 const& pos);
     
     void patrol(float frame);
     void rotate();
