@@ -47,7 +47,7 @@ public:
     void moveWorld(float duration, const Vec2& newPosition);
     Vec2 nextTilePosition();
     int nextTileGID();
-    bool canMovePos(Vec2& pos);
+    bool canMovePos(Vec2 const& pos);
     void facingNextPos(Vec2& pos);
     
 };
