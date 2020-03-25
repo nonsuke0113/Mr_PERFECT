@@ -244,20 +244,35 @@ void EnemySprite::update(float delta)
  */
 void EnemySprite::foundPlayer()
 {
-    // インターバルが経過していなければ何もしない
     StageSceneBase *mainScene = (StageSceneBase*)this->getParent();
-    if (fmod(mainScene->m_time, 30) != 0) {
-        return;
-    }
     
-    // 弾を撃つ
-    this->shootBullet();
+    // プレイヤーを最後に見つけた位置を保持
+    this->m_playerLostPoint = mainScene->m_player->worldPosition();
+    
+    // 警備タイプ更新
+    this->m_patorolType = patorol_chase;
     
     // シーンに通知
     if (!this->m_isFoundPlayer) {
         this->m_isFoundPlayer = true;
         mainScene->enemyFoundPlayer();
     }
+}
+
+
+/**
+    プレイヤーを見失った際の処理
+ */
+void EnemySprite::losePlayer()
+{
+    if (this->m_isFoundPlayer) {
+        this->m_isFoundPlayer = false;
+        
+        
+        
+    }
+    
+    
 }
 
 
@@ -323,6 +338,28 @@ void EnemySprite::patrolRotate()
     // 進めなかったら向きを回転する
     else {
         this->rotate();
+    }
+}
+
+
+/**
+    警備する
+    プレイヤーを追跡する
+ */
+void EnemySprite::patrolChase()
+{
+    // インターバルが経過していなければ何もしない
+    StageSceneBase *mainScene = (StageSceneBase*)this->getParent();
+    if (fmod(mainScene->m_time, 30) != 0) {
+        return;
+    }
+    
+    // 弾を撃つ
+    this->shootBullet();
+    
+    // 真っ直ぐ進む
+    if (this->canMovePos(this->nextTilePosition())) {
+        this->moveNextTile();
     }
 }
 
