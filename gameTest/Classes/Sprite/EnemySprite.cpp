@@ -265,14 +265,29 @@ void EnemySprite::foundPlayer()
  */
 void EnemySprite::losePlayer()
 {
-    if (this->m_isFoundPlayer) {
-        this->m_isFoundPlayer = false;
-        
-        
-        
+    // 追跡中でなければ何もしない
+    if (this->m_patorolType != patorol_chase) {
+        return;
     }
     
+    StageSceneBase *mainScene = (StageSceneBase*)this->getParent();
     
+    if (this->m_isFoundPlayer) {
+        this->m_isFoundPlayer = false;
+        // 見失った直後のプレイヤー座標を保持
+        this->m_playerLostNextPoint = mainScene->m_player->worldPosition();
+    }
+    
+    // 見失った地点まで辿り着いた
+    if (this->worldPosition() == this->m_playerLostPoint) {
+        // プレイヤーの進んだ方向を向く
+        this->facingNextPos(this->m_playerLostNextPoint);
+        // 完全に見失った
+        if (!this->checkFindPlayer()) {
+            // 初期位置に戻る
+            this->moveToPos2(this->m_initPosition);
+        }
+    }
 }
 
 
@@ -362,6 +377,28 @@ void EnemySprite::patrolChase()
         this->moveNextTile();
     }
 }
+
+
+/**
+    与えられた座標に最短経路で移動する
+    
+    @param pos 移動する座標
+*/
+void EnemySprite::moveToPos2(Vec2 const& pos)
+{
+    if (!this->m_routeStack.empty()) {
+        this->m_routeStack.clear();
+    }
+    this->m_routeStackIndex = 0;
+    
+    // 最短経路計算
+    this->m_routeStack = AStarUtils::shortestRouteStack(this, this->worldPosition(), pos);
+    
+    // 移動開始
+    this->m_patorolType = ::patorol_according;
+}
+
+
 
 
 /**
