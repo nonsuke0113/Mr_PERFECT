@@ -39,6 +39,7 @@ typedef struct {
     ::clearRank foundRank;
 } resultInfo;
 
+
 class StageSceneBase : public Scene
 {
 private:
@@ -50,7 +51,6 @@ private:
     void updateCameraPosition();
     
 protected:
-    float m_time; // 経過時間
     float m_shootBulletInterval; // 弾丸を撃てない間隔
     int m_enemyFoundPlayerCount; // 敵がプレイヤーを発見した回数
     Camera *m_camera; // スクロール用カメラ
@@ -73,6 +73,7 @@ protected:
     virtual void checkState();
     
 public:
+    float m_time; // 経過時間
     TMXTiledMap *m_map; // MAP
     PlayerSprite *m_player; // 操作キャラクター
     
