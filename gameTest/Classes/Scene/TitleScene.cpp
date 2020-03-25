@@ -64,7 +64,7 @@ bool TitleScene::init()
     this->addChild(this->m_playerSprite);
     
     // 敵
-    this->m_enemySprite = EnemySprite::create("enemy1.png", Vec2(0.0f, 0.0f), ::back, 0.1f, ::patorol_none);
+    this->m_enemySprite = EnemySprite::create("enemy1.png", Vec2(0.0f, 0.0f), ::back, 0.1f, ::patorol_nomove);
     this->m_enemySprite->setAnchorPoint(Vec2(0.0f, 1.0f));
     this->m_enemySprite->setPosition(Vec2(939.0f, 435.0f));
     this->m_enemySprite->setScale(2.0f);

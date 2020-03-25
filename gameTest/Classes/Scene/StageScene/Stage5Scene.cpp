@@ -46,17 +46,17 @@ void Stage5Scene::initCharactors()
     this->addChild(this->m_player);
     
     // 敵キャラクター
-    EnemySprite* enemy1 = EnemySprite::create("enemy1.png", Vec2(8.0f, 23.0f), ::right, 0.1f, patorol_none);
+    EnemySprite* enemy1 = EnemySprite::create("enemy1.png", Vec2(8.0f, 23.0f), ::right, 0.1f, patorol_nomove);
     enemy1->setAnchorPoint(Vec2(0.0f, 0.0f));
     this->addChild(enemy1);
     enemy1->startPatrol();
     
-    EnemySprite* enemy2 = EnemySprite::create("enemy1.png", Vec2(9.0f, 24.0f), ::left, 0.1f, patorol_none);
+    EnemySprite* enemy2 = EnemySprite::create("enemy1.png", Vec2(9.0f, 24.0f), ::left, 0.1f, patorol_nomove);
     enemy2->setAnchorPoint(Vec2(0.0f, 0.0f));
     this->addChild(enemy2);
     enemy2->startPatrol();
     
-    EnemySprite* enemy3 = EnemySprite::create("enemy1.png", Vec2(12.0f, 25.0f), ::left, 0.1f, patorol_none);
+    EnemySprite* enemy3 = EnemySprite::create("enemy1.png", Vec2(12.0f, 25.0f), ::left, 0.1f, patorol_nomove);
     enemy3->setAnchorPoint(Vec2(0.0f, 0.0f));
     this->addChild(enemy3);
     enemy3->startPatrol();

@@ -46,7 +46,7 @@ void Stage8Scene::initCharactors()
     this->addChild(this->m_player);
     
     // 敵キャラクター
-    EnemySprite* enemy1 = EnemySprite::create("enemy1.png", Vec2(11.0f, 26.0f), ::left, 0.1f, patorol_none);
+    EnemySprite* enemy1 = EnemySprite::create("enemy1.png", Vec2(11.0f, 26.0f), ::left, 0.1f, patorol_nomove);
     enemy1->setAnchorPoint(Vec2(0.0f, 0.0f));
     this->addChild(enemy1);
     enemy1->startPatrol();
