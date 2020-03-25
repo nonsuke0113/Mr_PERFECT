@@ -20,11 +20,12 @@ typedef enum {
     turn_none
 } rotateDirectcion;
 
-// パトロールの種類
+// 警備の種類
 typedef enum {
-    patorol_lookback,
-    patorol_rotate,
-    patorol_none
+    patorol_roundtrip, // 往復
+    patorol_rotate, // 巡回
+    patorol_nomove, // 移動なし
+    patorol_none // 警備なし
 } patorolType;
 
 // 吹き出しの種類
@@ -32,6 +33,7 @@ typedef enum {
     exclamation,
     question
 } speechBubbleType;
+
 
 class EnemySprite : public CharacterSprite
 {
@@ -44,14 +46,20 @@ protected:
     Vec2 m_playerLostPoint; // プレイヤーを最後に発見した座標
     Vec2 m_playerLostNextPoint; // プレイヤーを見失った際に見た次の座標
     bool m_movingHeardSoundPoint; // 聞こえた位置に移動中
+    bool m_isFoundPlayer; // プレイヤー発見中
     
     void setupAnimationCache();
     void setDirectcion(::directcion direction);
     void hitToBullet(int damage, ::directcion bulletDirection);
     void dead();
+    virtual void update(float delta);
+    virtual void foundPlayer();
+    virtual void patrolRoundTrip();
+    virtual void patrolRotate();
+    
     void patrol(float frame);
     void rotate();
-    void lookBack();
+    void lookback();
     bool checkFindPlayer();
     void moveAccordingToRouteStack(float frame);
     void chasePlayer(float frame);
