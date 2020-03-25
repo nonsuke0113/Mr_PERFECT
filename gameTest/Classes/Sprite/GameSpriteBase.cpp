@@ -143,6 +143,12 @@ Vec2 GameSpriteBase::nextTilePosition()  {
 bool GameSpriteBase::canMovePos(Vec2 const& pos)
 {
     StageSceneBase* scene = (StageSceneBase*)this->getParent();
+    for (CharacterSprite *chara : scene->charactersVector()) {
+        if (pos == chara->worldPosition()) {
+            return false;
+        }
+    }
+    
     TMXLayer* layer = scene->m_map->getLayer("MAP");
     if (pos.x < 0.0f || pos.x >= MAP_TILE_WIDTH ||
         pos.y < 0.0f || pos.y >= MAP_TILE_HEGHT ||

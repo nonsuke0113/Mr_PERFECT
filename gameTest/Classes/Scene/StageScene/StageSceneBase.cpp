@@ -269,6 +269,11 @@ void StageSceneBase::gameStart()
     
     // 更新処理をスケジュール
     this->scheduleUpdate();
+    
+    for (EnemySprite *enemy : this->enemysVector()) {
+        enemy->startPatrol();
+    }
+    
 }
 
 

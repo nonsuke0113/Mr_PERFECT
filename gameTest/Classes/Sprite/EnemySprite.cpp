@@ -210,7 +210,7 @@ void EnemySprite::update(float delta)
     if (this->checkFindPlayer()) {
         this->foundPlayer();
     } else {
-        
+        this->losePlayer();
     }
     
     // 移動なし、インターバル経過していなければ移動しない
@@ -230,7 +230,15 @@ void EnemySprite::update(float delta)
         case ::patorol_roundtrip:
             this->patrolRoundTrip();
             break;
-            
+        case ::patorol_rotate:
+            this->patrolRotate();
+            break;
+        case ::patorol_chase:
+            this->patrolChase();
+            break;
+        case ::patorol_according:
+            // TODO: 経路移動の処理
+            break;
         default:
             break;
     }
@@ -333,14 +341,43 @@ void EnemySprite::patrolRotate()
     
     // TODO: 回転方向に応じた隣の座標を取得(右or左)
     Vec2 nextRotatePos = Vec2(0.0f, 0.0f);
-    switch (this->m_rotateDirection) {
-        case ::turn_right:
-            break;
-        case ::turn_left:
-            break;
-        default:
-            break;
+    if (this->m_rotateDirection == ::turn_right) {
+        switch (this->directcion()) {
+            case ::front:
+                nextRotatePos = Vec2(this->worldPosition().x - 1, this->worldPosition().y);
+                break;
+            case ::right:
+                nextRotatePos = Vec2(this->worldPosition().x, this->worldPosition().y + 1);
+                break;
+            case ::back:
+                nextRotatePos = Vec2(this->worldPosition().x + 1, this->worldPosition().y);
+                break;
+            case ::left:
+                nextRotatePos = Vec2(this->worldPosition().x, this->worldPosition().y - 1);
+                break;
+            default:
+                break;
+        }
     }
+    else if (this->m_rotateDirection == ::turn_left) {
+        switch (this->directcion()) {
+            case ::front:
+                nextRotatePos = Vec2(this->worldPosition().x + 1, this->worldPosition().y);
+                break;
+            case ::right:
+                nextRotatePos = Vec2(this->worldPosition().x, this->worldPosition().y - 1);
+                break;
+            case ::back:
+                nextRotatePos = Vec2(this->worldPosition().x - 1, this->worldPosition().y);
+                break;
+            case ::left:
+                nextRotatePos = Vec2(this->worldPosition().x, this->worldPosition().y + 1);
+                break;
+            default:
+                break;
+        }
+    }
+    
     
     // 回転した隣に進めるなら向きを回転する
     if (this->canMovePos(nextRotatePos)) {
@@ -406,7 +443,9 @@ void EnemySprite::moveToPos2(Vec2 const& pos)
  */
 void EnemySprite::startPatrol() {
     // 巡回をスケジュール
-    schedule(schedule_selector(EnemySprite::patrol), 0.5f);
+//    schedule(schedule_selector(EnemySprite::patrol), 0.5f);
+    
+    this->scheduleUpdate();
 }
 
 
@@ -544,44 +583,44 @@ bool EnemySprite::checkFindPlayer() {
         case ::front:
             for (int i = 1; this->m_worldPosition.y + i < MAP_TILE_HEGHT; i++) {
                 checkTilePosition = Vec2 { this->m_worldPosition.x, this->m_worldPosition.y + i };
-                if (!this->canMovePos(checkTilePosition)) {
-                    return false;
-                }
                 if (player->worldPosition() == checkTilePosition) {
                     return true;
+                }
+                if (!this->canMovePos(checkTilePosition)) {
+                    return false;
                 }
             }
             break;
         case ::right:
             for (int i = 1; this->m_worldPosition.x + i < MAP_TILE_WIDTH; i++) {
                 checkTilePosition = Vec2 { this->m_worldPosition.x + i, this->m_worldPosition.y };
-                if (!this->canMovePos(checkTilePosition)) {
-                    return false;
-                }
                 if (player->worldPosition() == checkTilePosition) {
                     return true;
+                }
+                if (!this->canMovePos(checkTilePosition)) {
+                    return false;
                 }
             }
             break;
         case ::back:
             for (int i = 1; this->m_worldPosition.y - i > 0; i++) {
                 checkTilePosition = Vec2 { this->m_worldPosition.x, this->m_worldPosition.y - i };
-                if (!this->canMovePos(checkTilePosition)) {
-                    return false;
-                }
                 if (player->worldPosition() == checkTilePosition) {
                     return true;
+                }
+                if (!this->canMovePos(checkTilePosition)) {
+                    return false;
                 }
             }
             break;
         case ::left:
             for (int i = 1; this->m_worldPosition.x - i > 0; i++) {
                 checkTilePosition = Vec2 { this->m_worldPosition.x - i, this->m_worldPosition.y };
-                if (!this->canMovePos(checkTilePosition)) {
-                    return false;
-                }
                 if (player->worldPosition() == checkTilePosition) {
                     return true;
+                }
+                if (!this->canMovePos(checkTilePosition)) {
+                    return false;
                 }
             }
             break;
