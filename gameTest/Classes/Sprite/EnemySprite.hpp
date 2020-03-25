@@ -24,6 +24,7 @@ typedef enum {
 typedef enum {
     patorol_roundtrip, // 往復
     patorol_rotate, // 巡回
+    patorol_chase, // 追跡中
     patorol_nomove, // 移動なし
     patorol_none // 警備なし
 } patorolType;
@@ -54,8 +55,10 @@ protected:
     void dead();
     virtual void update(float delta);
     virtual void foundPlayer();
+    virtual void losePlayer();
     virtual void patrolRoundTrip();
     virtual void patrolRotate();
+    virtual void patrolChase();
     
     void patrol(float frame);
     void rotate();
