@@ -140,7 +140,7 @@ Vec2 GameSpriteBase::nextTilePosition()  {
     @param pos 対象の座標
     @return 移動可能かどうか
  */
-bool GameSpriteBase::canMovePos(Vec2& pos)
+bool GameSpriteBase::canMovePos(Vec2 const& pos)
 {
     StageSceneBase* scene = (StageSceneBase*)this->getParent();
     TMXLayer* layer = scene->m_map->getLayer("MAP");
