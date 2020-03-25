@@ -46,12 +46,12 @@ void Stage10Scene::initCharactors()
     this->addChild(this->m_player);
     
     // 敵キャラクター
-    EnemySprite* enemy1 = EnemySprite::create("enemy1.png", Vec2(6.0f, 26.0f), ::front, 0.1f, patorol_lookback);
+    EnemySprite* enemy1 = EnemySprite::create("enemy1.png", Vec2(6.0f, 26.0f), ::front, 0.1f, patorol_roundtrip);
     enemy1->setAnchorPoint(Vec2(0.0f, 0.0f));
     this->addChild(enemy1);
     enemy1->startPatrol();
     
-    EnemySprite* enemy2 = EnemySprite::create("enemy1.png", Vec2(10.0f, 26.0f), ::back, 0.1f, patorol_lookback);
+    EnemySprite* enemy2 = EnemySprite::create("enemy1.png", Vec2(10.0f, 26.0f), ::back, 0.1f, patorol_roundtrip);
     enemy2->setAnchorPoint(Vec2(0.0f, 0.0f));
     this->addChild(enemy2);
     enemy2->startPatrol();
@@ -62,22 +62,22 @@ void Stage10Scene::initCharactors()
     this->addChild(enemy3);
     enemy3->startPatrol();
     
-    EnemySprite* enemy4 = EnemySprite::create("enemy1.png", Vec2(8.0f, 24.0f), ::right, 0.1f, patorol_lookback);
+    EnemySprite* enemy4 = EnemySprite::create("enemy1.png", Vec2(8.0f, 24.0f), ::right, 0.1f, patorol_roundtrip);
     enemy4->setAnchorPoint(Vec2(0.0f, 0.0f));
     this->addChild(enemy4);
     enemy4->startPatrol();
     
-    EnemySprite* enemy5 = EnemySprite::create("enemy1.png", Vec2(8.0f, 22.0f), ::left, 0.1f, patorol_lookback);
+    EnemySprite* enemy5 = EnemySprite::create("enemy1.png", Vec2(8.0f, 22.0f), ::left, 0.1f, patorol_roundtrip);
     enemy5->setAnchorPoint(Vec2(0.0f, 0.0f));
     this->addChild(enemy5);
     enemy5->startPatrol();
     
-    EnemySprite* enemy6 = EnemySprite::create("enemy1.png", Vec2(6.0f, 22.0f), ::front, 0.1f, patorol_lookback);
+    EnemySprite* enemy6 = EnemySprite::create("enemy1.png", Vec2(6.0f, 22.0f), ::front, 0.1f, patorol_roundtrip);
     enemy6->setAnchorPoint(Vec2(0.0f, 0.0f));
     this->addChild(enemy6);
     enemy6->startPatrol();
     
-    EnemySprite* enemy7 = EnemySprite::create("enemy1.png", Vec2(10.0f, 21.0f), ::back, 0.1f, patorol_lookback);
+    EnemySprite* enemy7 = EnemySprite::create("enemy1.png", Vec2(10.0f, 21.0f), ::back, 0.1f, patorol_roundtrip);
     enemy7->setAnchorPoint(Vec2(0.0f, 0.0f));
     this->addChild(enemy7);
     enemy7->startPatrol();

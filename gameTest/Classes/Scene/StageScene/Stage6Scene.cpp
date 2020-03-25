@@ -52,7 +52,7 @@ void Stage6Scene::initCharactors()
     this->addChild(enemy1);
     enemy1->startPatrol();
     
-    EnemySprite* enemy2 = EnemySprite::create("enemy1.png", Vec2(8.0f, 24.0f), ::back, 0.1f, patorol_lookback);
+    EnemySprite* enemy2 = EnemySprite::create("enemy1.png", Vec2(8.0f, 24.0f), ::back, 0.1f, patorol_roundtrip);
     enemy2->setAnchorPoint(Vec2(0.0f, 0.0f));
     this->addChild(enemy2);
     enemy2->startPatrol();
@@ -63,12 +63,12 @@ void Stage6Scene::initCharactors()
     this->addChild(enemy3);
     enemy3->startPatrol();
     
-    EnemySprite* enemy4 = EnemySprite::create("enemy1.png", Vec2(11.0f, 22.0f), ::back, 0.1f, patorol_lookback);
+    EnemySprite* enemy4 = EnemySprite::create("enemy1.png", Vec2(11.0f, 22.0f), ::back, 0.1f, patorol_roundtrip);
     enemy4->setAnchorPoint(Vec2(0.0f, 0.0f));
     this->addChild(enemy4);
     enemy4->startPatrol();
     
-    EnemySprite* enemy5 = EnemySprite::create("enemy1.png", Vec2(11.0f, 28.0f), ::front, 0.1f, patorol_lookback);
+    EnemySprite* enemy5 = EnemySprite::create("enemy1.png", Vec2(11.0f, 28.0f), ::front, 0.1f, patorol_roundtrip);
     enemy5->setAnchorPoint(Vec2(0.0f, 0.0f));
     this->addChild(enemy5);
     enemy5->startPatrol();
