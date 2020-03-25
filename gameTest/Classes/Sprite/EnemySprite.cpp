@@ -157,6 +157,8 @@ void EnemySprite::hitToBullet(int damage, ::directcion bulletDirection)
 
 /**
     吹き出しを表示する
+ 
+    @param speechBubbleType 「！」or「？」
  */
 void EnemySprite::showSpeechBubble(::speechBubbleType speechBubbleType)
 {
@@ -193,6 +195,138 @@ void EnemySprite::dead()
 
 
 #pragma mark -
+#pragma mark Update
+/**
+    定期処理
+ */
+void EnemySprite::update(float delta)
+{
+    // 警備中ではない
+    if (this->m_patorolType == ::patorol_none) {
+        return;
+    }
+    
+    // 警備中に、プレイヤーを発見
+    if (this->checkFindPlayer()) {
+        this->foundPlayer();
+    } else {
+        
+    }
+    
+    // 移動なし、インターバル経過していなければ移動しない
+//    StageSceneBase* mainScene = (StageSceneBase*)this->getParent();
+//    if (this->m_patorolType == ::patorol_nomove &&
+//        fmod(mainScene->m_time, 30) == 0) {
+//        return;
+//    }
+//
+//
+//    if (this->canMovePos(this->nextTilePosition())) {
+//        this->moveNextTile();
+//    }
+    
+    //
+    switch (this->m_patorolType) {
+        case ::patorol_roundtrip:
+            this->patrolRoundTrip();
+            break;
+            
+        default:
+            break;
+    }
+    
+}
+
+
+
+/**
+    プレイヤー発見時の処理
+ */
+void EnemySprite::foundPlayer()
+{
+    // インターバルが経過していなければ何もしない
+    StageSceneBase *mainScene = (StageSceneBase*)this->getParent();
+    if (fmod(mainScene->m_time, 30) != 0) {
+        return;
+    }
+    
+    // 弾を撃つ
+    this->shootBullet();
+    
+    // シーンに通知
+    if (!this->m_isFoundPlayer) {
+        this->m_isFoundPlayer = true;
+        mainScene->enemyFoundPlayer();
+    }
+}
+
+
+/**
+    警備する
+    進めなくなったら折り返す
+ */
+void EnemySprite::patrolRoundTrip()
+{
+    // インターバルが経過していなければ何もしない
+    StageSceneBase *mainScene = (StageSceneBase*)this->getParent();
+    if (fmod(mainScene->m_time, 30) != 0) {
+        return;
+    }
+    
+    // 真っ直ぐ進む
+    if (this->canMovePos(this->nextTilePosition())) {
+        this->moveNextTile();
+    }
+    // 進めなかったら向きを反転する
+    else {
+        this->lookback();
+    }
+}
+
+
+/**
+    警備する
+    決まった方向に巡回する
+ */
+void EnemySprite::patrolRotate()
+{
+    // インターバルが経過していなければ何もしない
+    StageSceneBase *mainScene = (StageSceneBase*)this->getParent();
+    if (fmod(mainScene->m_time, 30) != 0) {
+        return;
+    }
+    
+    // 回転方向がセットされていなければ何もしない
+    if (this->m_rotateDirection == turn_none) {
+        return;
+    }
+    
+    // TODO: 回転方向に応じた隣の座標を取得(右or左)
+    Vec2 nextRotatePos = Vec2(0.0f, 0.0f);
+    switch (this->m_rotateDirection) {
+        case ::turn_right:
+            break;
+        case ::turn_left:
+            break;
+        default:
+            break;
+    }
+    
+    // 回転した隣に進めるなら向きを回転する
+    if (this->canMovePos(nextRotatePos)) {
+        this->facingNextPos(nextRotatePos);
+    }
+    // 真っ直ぐ進む
+    if (this->canMovePos(this->nextTilePosition())) {
+        this->moveNextTile();
+    }
+    // 進めなかったら向きを回転する
+    else {
+        this->rotate();
+    }
+}
+
+
 /**
     巡回をスケジュール
  */
@@ -229,7 +363,7 @@ void EnemySprite::patrol(float frame) {
         return;
     }
     
-    if (this->m_patorolType == patorol_none) {
+    if (this->m_patorolType == patorol_nomove) {
         return;
     }
     
@@ -237,8 +371,8 @@ void EnemySprite::patrol(float frame) {
         this->moveNextTile();
     } else {
         switch (this->m_patorolType) {
-            case ::patorol_lookback:
-                this->lookBack();
+            case ::patorol_roundtrip:
+                this->lookback();
                 break;
             case ::patorol_rotate:
                 this->rotate();
@@ -300,7 +434,7 @@ void EnemySprite::rotate()
 /**
     反対方向を向く
  */
-void EnemySprite::lookBack()
+void EnemySprite::lookback()
 {
     switch (this->m_directcion) {
         case ::front:
@@ -446,7 +580,7 @@ void EnemySprite::moveAccordingToRouteStack(float frame)
             this->moveToPos(this->m_initPosition);
         }
         // 巡回を再開する
-        else if (this->m_patorolType != ::patorol_none) {
+        else if (this->m_patorolType != ::patorol_nomove) {
             this->startPatrol();
         }
         
