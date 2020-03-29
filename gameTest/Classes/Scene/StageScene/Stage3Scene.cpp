@@ -46,53 +46,13 @@ void Stage3Scene::initCharactors()
     this->addChild(this->m_player);
     
     // 敵キャラクター
-    EnemySprite* enemy1 = EnemySprite::create("enemy1.png", Vec2(5.0f, 23.0f), ::right, 0.1f, patorol_nomove);
+    EnemySprite* enemy1 = EnemySprite::create("enemy1_back1.png", Vec2(5.0f, 22.0f), ::right, 0.1f, patorol_nomove);
     enemy1->setAnchorPoint(Vec2(0.0f, 0.0f));
     this->addChild(enemy1);
-    enemy1->startPatrol();
     
-    EnemySprite* enemy2 = EnemySprite::create("enemy1.png", Vec2(10.0f, 22.0f), ::back, 0.1f, patorol_nomove);
+    EnemySprite* enemy2 = EnemySprite::create("enemy1_left1.png", Vec2(10.0f, 22.0f), ::back, 0.1f, patorol_nomove);
     enemy2->setAnchorPoint(Vec2(0.0f, 0.0f));
     this->addChild(enemy2);
-    enemy2->startPatrol();
-}
-
-
-#pragma mark -
-#pragma mark Message
-/**
-    初めてBボタンを押した時
- */
-void Stage3Scene::touchB()
-{
-    StageSceneBase::touchB();
-    this->firstshootMessage();
-}
-
-
-/**
-    始めて銃を撃った時のメッセージを表示する
- */
-void Stage3Scene::firstshootMessage()
-{
-    if (this->m_isfirstShootMessage) {
-        return;
-    }
-    this->m_isfirstShootMessage = true;
-    
-    // キャラクターの動きを一時停止
-    this->gamePause();
-    this->m_uiLayer->resume();
-    this->m_mdController->m_dialog->resume();
-    
-    std::vector<std::string> messages = std::vector<std::string>();
-    messages.push_back("「音で全ての敵に気づかれたようだ。」");
-    messages.push_back("「一度隠れてやりすごそう。」");
-    this->m_mdController->setMessages(messages);
-    this->m_mdController->setMessageCallback([this](){
-        this->gameResume();
-    });
-    this->m_mdController->displayMessageDialog();
 }
 
 
@@ -128,7 +88,7 @@ void Stage3Scene::doContinue()
 
 
 /**
-    座標の判定
+    状況の判定
  */
 void Stage3Scene::checkState()
 {
@@ -175,9 +135,12 @@ void Stage3Scene::createTutorialMessage3()
     
     std::vector<std::string> messages = std::vector<std::string>();
     messages.push_back("「油断している敵は一撃で倒せそうだ。」");
-    messages.push_back("「Bボタンの銃弾で、後ろから敵を倒そう。」");
+    messages.push_back("「Bボタンで銃を撃って、後ろから敵を倒そう。」");
+    messages.push_back("「ただし銃声がすると全ての敵に気づかれる。」");
+    messages.push_back("「撃った後は、一度隠れてやりすごそう。」");
     this->m_mdController->setMessages(messages);
     this->m_mdController->setMessageCallback([this](){
     });
     this->m_mdController->displayMessageDialog();
 }
+

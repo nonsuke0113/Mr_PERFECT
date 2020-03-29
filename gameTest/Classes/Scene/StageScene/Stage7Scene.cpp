@@ -49,18 +49,15 @@ void Stage7Scene::initCharactors()
     EnemySprite* enemy1 = EnemySprite::create("enemy1.png", Vec2(6.0f, 25.0f), ::right, 0.1f, patorol_roundtrip);
     enemy1->setAnchorPoint(Vec2(0.0f, 0.0f));
     this->addChild(enemy1);
-    enemy1->startPatrol();
     
     EnemySprite* enemy2 = EnemySprite::create("enemy1.png", Vec2(10.0f, 25.0f), ::left, 0.1f, patorol_roundtrip);
     enemy2->setAnchorPoint(Vec2(0.0f, 0.0f));
     this->addChild(enemy2);
-    enemy2->startPatrol();
     
     EnemySprite* enemy3 = EnemySprite::create("enemy1.png", Vec2(8.0f, 26.0f), ::left, 0.1f, patorol_rotate);
     enemy3->setAnchorPoint(Vec2(0.0f, 0.0f));
     enemy3->setRotateDirectcion(turn_right);
     this->addChild(enemy3);
-    enemy3->startPatrol();
 }
 
 
@@ -94,7 +91,7 @@ void Stage7Scene::doContinue()
 
 
 /**
-    座標の判定
+    状況の判定
  */
 void Stage7Scene::checkState()
 {

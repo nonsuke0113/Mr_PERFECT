@@ -14,7 +14,6 @@ class Stage3Scene : public StageSceneBase
 {
 private:
     bool m_isTutorialMessage3; // チュートリアルメッセージ3表示済みかどうか
-    bool m_isfirstShootMessage; // 始めて銃を撃った時
     
     void initMap();
     void initCharactors();
@@ -23,8 +22,6 @@ private:
     void checkState();
     void stageClear();
     void createTutorialMessage3();
-    void firstshootMessage();
-    void touchB();
     
 public:
     static Stage3Scene *createScene();
