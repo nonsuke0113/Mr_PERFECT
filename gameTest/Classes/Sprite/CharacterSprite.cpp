@@ -108,7 +108,7 @@ void CharacterSprite::moveNextTile()
 {
     // 移動できなかったら何もしない
     Vec2 nextTilePosition = this->nextTilePosition();
-    if (this->nextCharacter() != nullptr || !this->canMovePos(nextTilePosition)) {
+    if (!this->canMovePos(nextTilePosition)) {
         return;
     }
     

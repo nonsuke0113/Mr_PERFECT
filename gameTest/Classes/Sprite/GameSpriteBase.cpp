@@ -47,7 +47,7 @@ bool GameSpriteBase::initWithFileName(const std::string& filename, const Vec2 &p
     this->m_worldPosition = pos;
     this->setPosition(Vec2(pos.x * PER_TILE_SIZE, (MAP_TILE_HEGHT - pos.y - 1) * PER_TILE_SIZE));
     this->m_initDirectcion = direction;
-    this->m_directcion = direction;
+    this->setDirectcion(direction);
     return true;
 }
 
