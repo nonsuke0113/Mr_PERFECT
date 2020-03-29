@@ -263,8 +263,11 @@ void EnemySprite::update(float delta)
         case ::patorol_roundtrip:
             this->patrolRoundTrip();
             break;
-        case ::patorol_rotate:
-            this->patrolRotate();
+        case ::patorol_rotateifpossible:
+            this->patrolRotateIfPossible();
+            break;
+        case ::patorol_rotatehitwall:
+            this->patrolRotateHitWall();
             break;
         case ::patorol_chase:
             this->patrolChase();
@@ -442,9 +445,9 @@ void EnemySprite::patrolRoundTrip()
 
 /**
     警備する
-    決まった方向に巡回する
+    可能なら、決まった方向に回転する
  */
-void EnemySprite::patrolRotate()
+void EnemySprite::patrolRotateIfPossible()
 {
     // インターバルが経過していなければ何もしない
     StageSceneBase *mainScene = (StageSceneBase*)this->getParent();
@@ -471,6 +474,29 @@ void EnemySprite::patrolRotate()
     if (this->canMovePos(nextRotatePos)) {
         this->facingNextPos(nextRotatePos);
     }
+    // 真っ直ぐ進む
+    if (this->canMovePos(this->nextTilePosition())) {
+        this->moveNextTile();
+    }
+    // 進めなかったら向きを回転する
+    else {
+        this->rotate();
+    }
+}
+
+
+/**
+    警備する
+    まっすぐ進み、壁にぶつかったら、決まった方向に回る
+ */
+void EnemySprite::patrolRotateHitWall()
+{
+    // インターバルが経過していなければ何もしない
+    StageSceneBase *mainScene = (StageSceneBase*)this->getParent();
+    if (fmod(mainScene->m_time, 30) != 0) {
+        return;
+    }
+    
     // 真っ直ぐ進む
     if (this->canMovePos(this->nextTilePosition())) {
         this->moveNextTile();

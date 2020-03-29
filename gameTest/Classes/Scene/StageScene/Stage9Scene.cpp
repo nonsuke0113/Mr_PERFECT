@@ -50,12 +50,12 @@ void Stage9Scene::initCharactors()
     enemy1->setAnchorPoint(Vec2(0.0f, 0.0f));
     this->addChild(enemy1);
     
-    EnemySprite* enemy2 = EnemySprite::create("enemy1.png", Vec2(10.0f, 24.0f), ::right, 0.1f, patorol_rotate);
+    EnemySprite* enemy2 = EnemySprite::create("enemy1.png", Vec2(10.0f, 24.0f), ::right, 0.1f, patorol_rotatehitwall);
     enemy2->setAnchorPoint(Vec2(0.0f, 0.0f));
     enemy2->setRotateDirectcion(turn_right);
     this->addChild(enemy2);
     
-    EnemySprite* enemy3 = EnemySprite::create("enemy1.png", Vec2(10.0f, 28.0f), ::left, 0.1f, patorol_rotate);
+    EnemySprite* enemy3 = EnemySprite::create("enemy1.png", Vec2(10.0f, 28.0f), ::left, 0.1f, patorol_rotatehitwall);
     enemy3->setAnchorPoint(Vec2(0.0f, 0.0f));
     enemy3->setRotateDirectcion(turn_right);
     this->addChild(enemy3);

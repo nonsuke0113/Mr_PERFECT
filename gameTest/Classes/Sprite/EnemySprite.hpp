@@ -23,7 +23,8 @@ typedef enum {
 // 警備の種類
 typedef enum {
     patorol_roundtrip, // 往復
-    patorol_rotate, // 巡回
+    patorol_rotateifpossible, // 巡回(曲がれるなら曲がる)
+    patorol_rotatehitwall, // 巡回(壁にぶつかったら曲がる)
     patorol_chase, // 追跡中
     patorol_according, // 経路に沿って移動中
     patorol_nomove, // 移動なし
@@ -60,7 +61,8 @@ protected:
     virtual void losePlayer();
     bool checkFindPlayer();
     virtual void patrolRoundTrip();
-    virtual void patrolRotate();
+    virtual void patrolRotateIfPossible();
+    virtual void patrolRotateHitWall();
     virtual void patrolChase();
     virtual void patrolAccording();
     
