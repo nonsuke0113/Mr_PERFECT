@@ -48,7 +48,7 @@ bool EnemySprite::initWithFileName(const std::string& filename, const Vec2 &pos,
     if (!CharacterSprite::initWithFileName(filename, pos, direction, moveSpeed)) {
         return false;
     }
-    this->m_initPosition = pos;
+    this->m_initPatorolType = patorolType;
     this->m_patorolType = patorolType;
     this->m_rotateDirection = ::turn_none;
     this->m_hp = 5;
@@ -139,6 +139,7 @@ void EnemySprite::setRotateDirectcion(::rotateDirectcion rotateDirection)
 
 
 #pragma mark -
+#pragma mark Behavior
 /**
     被弾処理
  
@@ -186,6 +187,46 @@ void EnemySprite::showSpeechBubble(::speechBubbleType speechBubbleType)
 
 
 /**
+    与えられた座標に最短経路で移動する
+    
+    @param pos 移動する座標
+*/
+void EnemySprite::moveToPos(Vec2 const& pos)
+{
+    // 経路情報を初期化する
+    if (!this->m_routeStack.empty()) {
+        this->m_routeStack.clear();
+    }
+    this->m_routeStackIndex = 0;
+    
+    // 最短経路計算
+    this->m_routeStack = AStarUtils::shortestRouteStack(this, this->worldPosition(), pos);
+    
+    // 移動開始
+    this->m_patorolType = ::patorol_according;
+}
+
+
+/**
+    設定された回転方向に応じて、向いている方向を変える
+ */
+void EnemySprite::rotate()
+{
+    switch (this->m_rotateDirection) {
+        case ::turn_right:
+            this->turnRight();
+            break;
+        case ::turn_left:
+            this->turnLeft();
+            break;
+        case ::turn_none:
+        default:
+            break;
+    }
+}
+
+
+/**
     死亡処理
  */
 void EnemySprite::dead()
@@ -209,23 +250,13 @@ void EnemySprite::update(float delta)
     // 警備中に、プレイヤーを発見
     if (this->checkFindPlayer()) {
         this->foundPlayer();
-    } else {
+    }
+    // プレイヤーを未発見
+    else {
         this->losePlayer();
     }
     
-    // 移動なし、インターバル経過していなければ移動しない
-//    StageSceneBase* mainScene = (StageSceneBase*)this->getParent();
-//    if (this->m_patorolType == ::patorol_nomove &&
-//        fmod(mainScene->m_time, 30) == 0) {
-//        return;
-//    }
-//
-//
-//    if (this->canMovePos(this->nextTilePosition())) {
-//        this->moveNextTile();
-//    }
-    
-    //
+    // 警備タイプに応じた処理
     switch (this->m_patorolType) {
         case ::patorol_roundtrip:
             this->patrolRoundTrip();
@@ -237,7 +268,7 @@ void EnemySprite::update(float delta)
             this->patrolChase();
             break;
         case ::patorol_according:
-            // TODO: 経路移動の処理
+            this->patrolAccording();
             break;
         default:
             break;
@@ -292,10 +323,95 @@ void EnemySprite::losePlayer()
         this->facingNextPos(this->m_playerLostNextPoint);
         // 完全に見失った
         if (!this->checkFindPlayer()) {
+            this->showSpeechBubble(::question);
             // 初期位置に戻る
-            this->moveToPos2(this->m_initPosition);
+            this->moveToPos(this->m_initWorldPosition);
         }
     }
+}
+
+
+#pragma mark -
+#pragma mark Patrol
+/**
+    警備開始
+ */
+void EnemySprite::startPatrol() {
+    // 更新処理開始
+    this->scheduleUpdate();
+}
+
+
+/**
+    警備中止
+ */
+void EnemySprite::stopPatrol() {
+    // 警備を中止
+    this->m_patorolType = ::patorol_none;
+}
+
+
+/**
+    敵キャラクターが向いている方向に、プレイヤーがいるかどうかを確認する
+ 
+    @return プレイヤーを発見したかどうか
+ */
+bool EnemySprite::checkFindPlayer() {
+    
+    Vec2 checkTilePosition;
+    StageSceneBase* mainScene = (StageSceneBase*)this->getParent();
+    CharacterSprite* player = mainScene->m_player;
+    
+    switch (this->m_directcion) {
+        case ::front:
+            for (int i = 1; this->m_worldPosition.y + i < MAP_TILE_HEGHT; i++) {
+                checkTilePosition = Vec2 { this->m_worldPosition.x, this->m_worldPosition.y + i };
+                if (!this->canMovePos(checkTilePosition)) {
+                    return false;
+                }
+                if (player->worldPosition() == checkTilePosition) {
+                    return true;
+                }
+            }
+            break;
+        case ::right:
+            for (int i = 1; this->m_worldPosition.x + i < MAP_TILE_WIDTH; i++) {
+                checkTilePosition = Vec2 { this->m_worldPosition.x + i, this->m_worldPosition.y };
+                if (!this->canMovePos(checkTilePosition)) {
+                    return false;
+                }
+                if (player->worldPosition() == checkTilePosition) {
+                    return true;
+                }
+            }
+            break;
+        case ::back:
+            for (int i = 1; this->m_worldPosition.y - i > 0; i++) {
+                checkTilePosition = Vec2 { this->m_worldPosition.x, this->m_worldPosition.y - i };
+                if (!this->canMovePos(checkTilePosition)) {
+                    return false;
+                }
+                if (player->worldPosition() == checkTilePosition) {
+                    return true;
+                }
+            }
+            break;
+        case ::left:
+            for (int i = 1; this->m_worldPosition.x - i > 0; i++) {
+                checkTilePosition = Vec2 { this->m_worldPosition.x - i, this->m_worldPosition.y };
+                if (!this->canMovePos(checkTilePosition)) {
+                    return false;
+                }
+                if (player->worldPosition() == checkTilePosition) {
+                    return true;
+                }
+            }
+            break;
+        default:
+            break;
+    }
+    
+    return false;
 }
 
 
@@ -334,50 +450,20 @@ void EnemySprite::patrolRotate()
         return;
     }
     
-    // 回転方向がセットされていなければ何もしない
-    if (this->m_rotateDirection == turn_none) {
-        return;
-    }
-    
-    // TODO: 回転方向に応じた隣の座標を取得(右or左)
+    // 回転方向に応じた隣の座標を取得(右or左)
     Vec2 nextRotatePos = Vec2(0.0f, 0.0f);
-    if (this->m_rotateDirection == ::turn_right) {
-        switch (this->directcion()) {
-            case ::front:
-                nextRotatePos = Vec2(this->worldPosition().x - 1, this->worldPosition().y);
-                break;
-            case ::right:
-                nextRotatePos = Vec2(this->worldPosition().x, this->worldPosition().y + 1);
-                break;
-            case ::back:
-                nextRotatePos = Vec2(this->worldPosition().x + 1, this->worldPosition().y);
-                break;
-            case ::left:
-                nextRotatePos = Vec2(this->worldPosition().x, this->worldPosition().y - 1);
-                break;
-            default:
-                break;
-        }
+    switch (this->m_rotateDirection) {
+        case ::turn_right:
+            nextRotatePos = this->rightTilePosition();
+            break;
+        case ::turn_left:
+            nextRotatePos = this->leftTilePosition();
+            break;
+        case ::turn_none:
+            return;
+        default:
+            break;
     }
-    else if (this->m_rotateDirection == ::turn_left) {
-        switch (this->directcion()) {
-            case ::front:
-                nextRotatePos = Vec2(this->worldPosition().x + 1, this->worldPosition().y);
-                break;
-            case ::right:
-                nextRotatePos = Vec2(this->worldPosition().x, this->worldPosition().y - 1);
-                break;
-            case ::back:
-                nextRotatePos = Vec2(this->worldPosition().x - 1, this->worldPosition().y);
-                break;
-            case ::left:
-                nextRotatePos = Vec2(this->worldPosition().x, this->worldPosition().y + 1);
-                break;
-            default:
-                break;
-        }
-    }
-    
     
     // 回転した隣に進めるなら向きを回転する
     if (this->canMovePos(nextRotatePos)) {
@@ -407,7 +493,9 @@ void EnemySprite::patrolChase()
     }
     
     // 弾を撃つ
-    this->shootBullet();
+    if (fmod(mainScene->m_time, 60) == 0) {
+        this->shootBullet();
+    }
     
     // 真っ直ぐ進む
     if (this->canMovePos(this->nextTilePosition())) {
@@ -417,433 +505,39 @@ void EnemySprite::patrolChase()
 
 
 /**
-    与えられた座標に最短経路で移動する
-    
-    @param pos 移動する座標
-*/
-void EnemySprite::moveToPos2(Vec2 const& pos)
+    警備する。
+    セットされた経路に従って移動する。
+ */
+void EnemySprite::patrolAccording()
 {
-    if (!this->m_routeStack.empty()) {
-        this->m_routeStack.clear();
-    }
-    this->m_routeStackIndex = 0;
-    
-    // 最短経路計算
-    this->m_routeStack = AStarUtils::shortestRouteStack(this, this->worldPosition(), pos);
-    
-    // 移動開始
-    this->m_patorolType = ::patorol_according;
-}
-
-
-
-
-/**
-    巡回をスケジュール
- */
-void EnemySprite::startPatrol() {
-    // 巡回をスケジュール
-//    schedule(schedule_selector(EnemySprite::patrol), 0.5f);
-    
-    this->scheduleUpdate();
-}
-
-
-/**
-    巡回を中止
- */
-void EnemySprite::stopPatrol() {
-    // 巡回を中止
-    unschedule(schedule_selector(EnemySprite::patrol));
-}
-
-
-/**
-    巡回する
-    移動できないようになるまで、向いている方向でまっすぐ進む
-    移動できなくなったら、設定された方向に回転する
- */
-void EnemySprite::patrol(float frame) {
-    
-    if (this->checkFindPlayer()) {
-        this->stopPatrol();
-        this->startShoot();
-        this->startChasePlayer();
-        
-        // シーンに通知
-        StageSceneBase* mainScene = (StageSceneBase*)this->getParent();
-        mainScene->enemyFoundPlayer();
+    // インターバルが経過していなければ何もしない
+    StageSceneBase *mainScene = (StageSceneBase*)this->getParent();
+    if (fmod(mainScene->m_time, 30) != 0) {
         return;
     }
     
-    if (this->m_patorolType == patorol_nomove) {
-        return;
-    }
-    
-    if (this->nextTileGID() == 0) {
-        this->moveNextTile();
-    } else {
-        switch (this->m_patorolType) {
-            case ::patorol_roundtrip:
-                this->lookback();
-                break;
-            case ::patorol_rotate:
-                this->rotate();
-                break;
-            default:
-                break;
-        }
-    }
-}
-
-
-/**
-    設定された回転方向に応じて、向いている方向を変える
- */
-void EnemySprite::rotate()
-{
-    if (this->m_rotateDirection == ::turn_none) {
-        return;
-    }
-    
-    if (this->m_rotateDirection == ::turn_left) {
-        switch (this->m_directcion) {
-            case ::front:
-                this->setDirectcion(::right);
-                break;
-            case ::right:
-                this->setDirectcion(::back);
-                break;
-            case ::back:
-                this->setDirectcion(::left);
-                break;
-            case ::left:
-                this->setDirectcion(::front);
-                break;
-            default:
-                break;
-        }
-    } else {
-        switch (this->m_directcion) {
-            case ::front:
-                this->setDirectcion(::left);
-                break;
-            case ::right:
-                this->setDirectcion(::front);
-                break;
-            case ::back:
-                this->setDirectcion(::right);
-                break;
-            case ::left:
-                this->setDirectcion(::back);
-                break;
-            default:
-                break;
-        }
-    }
-}
-
-
-/**
-    反対方向を向く
- */
-void EnemySprite::lookback()
-{
-    switch (this->m_directcion) {
-        case ::front:
-            this->setDirectcion(::back);
-            break;
-        case ::right:
-            this->setDirectcion(::left);
-            break;
-        case ::back:
-            this->setDirectcion(::front);
-            break;
-        case ::left:
-            this->setDirectcion(::right);
-            break;
-        default:
-            break;
-    }
-}
-
-
-/**
-    敵キャラクターが向いている方向に、プレイヤーがいるかどうかを確認する
- 
-    @return プレイヤーを発見したかどうか
- */
-bool EnemySprite::checkFindPlayer() {
-    
-    Vec2 checkTilePosition;
-    StageSceneBase* mainScene = (StageSceneBase*)this->getParent();
-    CharacterSprite* player = mainScene->m_player;
-    
-    switch (this->m_directcion) {
-        case ::front:
-            for (int i = 1; this->m_worldPosition.y + i < MAP_TILE_HEGHT; i++) {
-                checkTilePosition = Vec2 { this->m_worldPosition.x, this->m_worldPosition.y + i };
-                if (player->worldPosition() == checkTilePosition) {
-                    return true;
-                }
-                if (!this->canMovePos(checkTilePosition)) {
-                    return false;
-                }
-            }
-            break;
-        case ::right:
-            for (int i = 1; this->m_worldPosition.x + i < MAP_TILE_WIDTH; i++) {
-                checkTilePosition = Vec2 { this->m_worldPosition.x + i, this->m_worldPosition.y };
-                if (player->worldPosition() == checkTilePosition) {
-                    return true;
-                }
-                if (!this->canMovePos(checkTilePosition)) {
-                    return false;
-                }
-            }
-            break;
-        case ::back:
-            for (int i = 1; this->m_worldPosition.y - i > 0; i++) {
-                checkTilePosition = Vec2 { this->m_worldPosition.x, this->m_worldPosition.y - i };
-                if (player->worldPosition() == checkTilePosition) {
-                    return true;
-                }
-                if (!this->canMovePos(checkTilePosition)) {
-                    return false;
-                }
-            }
-            break;
-        case ::left:
-            for (int i = 1; this->m_worldPosition.x - i > 0; i++) {
-                checkTilePosition = Vec2 { this->m_worldPosition.x - i, this->m_worldPosition.y };
-                if (player->worldPosition() == checkTilePosition) {
-                    return true;
-                }
-                if (!this->canMovePos(checkTilePosition)) {
-                    return false;
-                }
-            }
-            break;
-        default:
-            break;
-    }
-    
-    return false;
-}
-
-
-/**
-    与えられた座標まで、最短経路で移動する
- 
-    @param pos 移動する座標
- */
-void EnemySprite::moveToPos(const Vec2 &pos)
-{
-    if (!this->m_routeStack.empty()) {
-        this->stopMoveAccordingToRouteStack();
-    }
-    
-    // 指定された座標まで最短経路で移動する
-    std::vector<Vec2> routeStack = AStarUtils::shortestRouteStack(this, this->worldPosition(), pos);
-    this->startMoveAccordingToRouteStack(routeStack);
-}
-
-
-/**
-    与えられた経路で移動を開始する
- 
-    @param routeStack 移動経路
- */
-void EnemySprite::startMoveAccordingToRouteStack(const std::vector<Vec2>& routeStack)
-{
-    // 巡回は中断する
-    this->stopPatrol();
-    
-    std::copy(routeStack.begin(), routeStack.end(), std::back_inserter(this->m_routeStack));
-    this->m_routeStackIndex = 0;
-    schedule(schedule_selector(EnemySprite::moveAccordingToRouteStack), 0.5f);
-}
-
-
-/**
-    経路に従う移動を停止する
- */
-void EnemySprite::stopMoveAccordingToRouteStack()
-{
-    if (!this->m_routeStack.empty()) {
-        this->m_routeStack.clear();
-    }
-    this->m_routeStackIndex = 0;
-    unschedule(schedule_selector(EnemySprite::moveAccordingToRouteStack));
-}
-
-
-/**
-    経路に従って移動する
- */
-void EnemySprite::moveAccordingToRouteStack(float frame)
-{
+    // 経路移動完了
     if (this->m_routeStack.empty() || this->m_routeStack.size() <= this->m_routeStackIndex) {
-        this->stopMoveAccordingToRouteStack();
-        
-        // 音が聞こえた位置まで移動終わったら、？マーク出して、初期位置に戻る
+        // 音が聞こえた位置まで移動したら、初期位置に戻る
         if (this->m_movingHeardSoundPoint) {
             this->m_movingHeardSoundPoint = false;
             this->showSpeechBubble(::question);
-            this->moveToPos(this->m_initPosition);
+            this->moveToPos(this->m_initWorldPosition);
         }
-        // 巡回を再開する
-        else if (this->m_patorolType != ::patorol_nomove) {
-            this->startPatrol();
+        // 初期位置に戻ってきた
+        else {
+            this->m_patorolType = this->m_initPatorolType;
+            this->m_directcion = this->m_initDirectcion;
         }
-        
         return;
     }
     
+    // 真っ直ぐ進む
     Vec2 nextPos = this->m_routeStack.at(this->m_routeStackIndex);
     this->facingNextPos(nextPos);
-    
-    if (this->checkFindPlayer()) {
-        this->stopMoveAccordingToRouteStack();
-        this->startShoot();
-        this->startChasePlayer();
-        
-        // シーンに通知
-        StageSceneBase* mainScene = (StageSceneBase*)this->getParent();
-        mainScene->enemyFoundPlayer();
-        return;
-    }
-    
-    this->moveWorld(this->m_moveSpeed, nextPos);
-    this->m_routeStackIndex++;
-}
-
-
-#pragma mark -
-#pragma mark Chase
-/**
-    プレイヤーの追跡を開始する
- */
-void EnemySprite::startChasePlayer()
-{
-    // 巡回は中断する
-    this->stopPatrol();
-    
-    // 保持しているプレイヤーの座標情報リセット
-    StageSceneBase* mainScene = (StageSceneBase*)this->getParent();
-    CharacterSprite* player = mainScene->m_player;
-    this->m_playerLostPoint = player->worldPosition();
-    this->m_playerLostNextPoint = Vec2(-1, -1);
-    
-    schedule(schedule_selector(EnemySprite::chasePlayer), 0.5f);
-}
-
-
-/**
-    プレイヤーの追跡を中止する
- */
-void EnemySprite::stopChasePlayer()
-{
-    unschedule(schedule_selector(EnemySprite::chasePlayer));
-}
-
-
-/**
-    プレイヤーを追跡し続ける
- */
-void EnemySprite::chasePlayer(float frame)
-{
-    StageSceneBase* mainScene = (StageSceneBase*)this->getParent();
-    CharacterSprite* player = mainScene->m_player;
-    
-    if (this->checkFindPlayer()) {
-        // プレイヤーを最後に見つけた位置を保持
-        this->m_playerLostPoint = player->worldPosition();
-    }
-    else {
-        // 見失った地点から、プレイヤーが次に進んだ地点を保持
-        if (this->m_playerLostNextPoint == Vec2(-1, -1)) {
-            this->m_playerLostNextPoint = player->worldPosition();
-            this->stopShoot();
-        }
-        // 見失った地点まで移動した
-        if (this->worldPosition() == this->m_playerLostPoint) {
-            this->stopChasePlayer();
-            this->loseSightOfPlayer();
-            return;
-        }
-    }
-    
-    // まっすぐプレイヤーに近づく
-    if (this->nextCharacter() != player) {
+    if (this->canMovePos(nextPos)) {
         this->moveNextTile();
+        this->m_routeStackIndex++;
     }
 }
 
-
-/**
-    プレイヤーを見失った際の処理
- */
-void EnemySprite::loseSightOfPlayer()
-{
-    // プレイヤーが逃げた方を向く
-    bool isMoveUpdown = this->worldPosition().x == this->m_playerLostNextPoint.x;
-    if (isMoveUpdown) {
-        if (this->worldPosition().y > this->m_playerLostNextPoint.y) {
-            this->setDirectcion(back);
-        } else {
-            this->setDirectcion(front);
-        }
-    } else {
-        if (this->worldPosition().x > this->m_playerLostNextPoint.x) {
-            this->setDirectcion(left);
-        } else {
-            this->setDirectcion(right);
-        }
-    }
-    
-    // プレイヤーがいれば再度追跡する
-    if (this->checkFindPlayer()) {
-        this->startShoot();
-        this->startChasePlayer();
-        
-        // シーンに通知
-        StageSceneBase* mainScene = (StageSceneBase*)this->getParent();
-        mainScene->enemyFoundPlayer();
-    }
-    // 完全に見失った
-    else {
-        this->showSpeechBubble(::question);
-        // 初期座標まで最短経路で戻る
-        this->moveToPos(this->m_initPosition);
-    }
-}
-
-
-#pragma mark -
-#pragma mark Shoot
-/**
-    銃撃を開始する
- */
-void EnemySprite::startShoot()
-{
-    schedule(schedule_selector(EnemySprite::shoot), 0.5f);
-}
-
-
-/**
-    銃撃を中止する
- */
-void EnemySprite::stopShoot()
-{
-    unschedule(schedule_selector(EnemySprite::shoot));
-}
-
-
-/**
-    銃撃し続ける
- */
-void EnemySprite::shoot(float frame)
-{
-    this->shootBullet();
-}

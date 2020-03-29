@@ -34,7 +34,9 @@ typedef enum {
 class GameSpriteBase : public Sprite
 {
 protected:
+    Vec2 m_initWorldPosition; // 初期座標
     Vec2 m_worldPosition; // ワールド座標
+    ::directcion m_initDirectcion; // スプライトの初期の向き
     ::directcion m_directcion; // スプライトの向き
     
 public:
@@ -46,6 +48,11 @@ public:
     virtual void setDirectcion(::directcion direction);
     void moveWorld(float duration, const Vec2& newPosition);
     Vec2 nextTilePosition();
+    Vec2 rightTilePosition();
+    Vec2 leftTilePosition();
+    void turnRight();
+    void turnLeft();
+    void lookback();
     int nextTileGID();
     bool canMovePos(Vec2 const& pos);
     void facingNextPos(Vec2& pos);

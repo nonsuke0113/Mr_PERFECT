@@ -40,8 +40,8 @@ typedef enum {
 class EnemySprite : public CharacterSprite
 {
 protected:
-    Vec2 m_initPosition; // 初期座標
-    ::patorolType m_patorolType; // 巡回の種類
+    ::patorolType m_initPatorolType; // 初期警備タイプ
+    ::patorolType m_patorolType; // 警備タイプ
     ::rotateDirectcion m_rotateDirection; // 巡回時の回転方向
     std::vector<Vec2> m_routeStack; // 経路
     int m_routeStackIndex; // 経路の進捗を管理するインデックス
@@ -53,39 +53,25 @@ protected:
     void setupAnimationCache();
     void setDirectcion(::directcion direction);
     void hitToBullet(int damage, ::directcion bulletDirection);
+    void rotate();
     void dead();
-    
     virtual void update(float delta);
     virtual void foundPlayer();
     virtual void losePlayer();
+    bool checkFindPlayer();
     virtual void patrolRoundTrip();
     virtual void patrolRotate();
     virtual void patrolChase();
-    void moveToPos2(Vec2 const& pos);
-    
-    void patrol(float frame);
-    void rotate();
-    void lookback();
-    bool checkFindPlayer();
-    void moveAccordingToRouteStack(float frame);
-    void chasePlayer(float frame);
-    void shoot(float frame);
+    virtual void patrolAccording();
     
 public:
     static EnemySprite* create(const std::string& filename, const Vec2 &pos, ::directcion direction, float moveSpeed, ::patorolType patorolType);
     virtual bool initWithFileName(const std::string& filename, const Vec2 &pos, ::directcion direction, float moveSpeed, ::patorolType patorolType);
     void setRotateDirectcion(::rotateDirectcion rotateDirection);
     void showSpeechBubble(::speechBubbleType speechBubbleType);
+    void moveToPos(Vec2 const& pos);
     void startPatrol();
     void stopPatrol();
-    void moveToPos(const Vec2 &pos);
-    void startMoveAccordingToRouteStack(const std::vector<Vec2>& routeStack);
-    void stopMoveAccordingToRouteStack();
-    void startChasePlayer();
-    void stopChasePlayer();
-    void startShoot();
-    void stopShoot();
-    void loseSightOfPlayer();
     
 };
 
