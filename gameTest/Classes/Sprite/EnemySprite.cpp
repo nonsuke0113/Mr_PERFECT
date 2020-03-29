@@ -54,6 +54,7 @@ bool EnemySprite::initWithFileName(const std::string& filename, const Vec2 &pos,
     this->m_hp = 5;
     this->m_routeStack = std::vector<Vec2>();
     this->m_routeStackIndex = 0;
+    this->m_isFoundPlayer = false;
     this->m_movingHeardSoundPoint = false;
     return true;
 }
@@ -193,17 +194,18 @@ void EnemySprite::showSpeechBubble(::speechBubbleType speechBubbleType)
 */
 void EnemySprite::moveToPos(Vec2 const& pos)
 {
-    // 経路情報を初期化する
-    if (!this->m_routeStack.empty()) {
-        this->m_routeStack.clear();
-    }
-    this->m_routeStackIndex = 0;
-    
-    // 最短経路計算
-    this->m_routeStack = AStarUtils::shortestRouteStack(this, this->worldPosition(), pos);
-    
-    // 移動開始
-    this->m_patorolType = ::patorol_according;
+    this->runAction(Sequence::create(DelayTime::create(0.5f), CallFunc::create([=](){
+        // 経路情報を初期化する
+        if (!this->m_routeStack.empty()) {
+            this->m_routeStack.clear();
+        }
+        this->m_routeStackIndex = 0;
+        // 最短経路計算
+        this->m_routeStack = AStarUtils::shortestRouteStack(this, this->worldPosition(), pos);
+        // 移動開始
+        this->m_patorolType = ::patorol_according;
+        
+    }),nullptr));
 }
 
 
@@ -492,14 +494,15 @@ void EnemySprite::patrolChase()
         return;
     }
     
+    // 真っ直ぐ進む
+    if (this->canMovePos(this->nextTilePosition()) &&
+        this->nextCharacter() != mainScene->m_player) {
+        this->moveNextTile();
+    }
+    
     // 弾を撃つ
     if (fmod(mainScene->m_time, 60) == 0) {
         this->shootBullet();
-    }
-    
-    // 真っ直ぐ進む
-    if (this->canMovePos(this->nextTilePosition())) {
-        this->moveNextTile();
     }
 }
 
@@ -517,7 +520,7 @@ void EnemySprite::patrolAccording()
     }
     
     // 経路移動完了
-    if (this->m_routeStack.empty() || this->m_routeStack.size() <= this->m_routeStackIndex) {
+    if (this->m_routeStack.size() <= this->m_routeStackIndex) {
         // 音が聞こえた位置まで移動したら、初期位置に戻る
         if (this->m_movingHeardSoundPoint) {
             this->m_movingHeardSoundPoint = false;
@@ -525,9 +528,9 @@ void EnemySprite::patrolAccording()
             this->moveToPos(this->m_initWorldPosition);
         }
         // 初期位置に戻ってきた
-        else {
+        else if(this->worldPosition() == this->m_initWorldPosition) {
             this->m_patorolType = this->m_initPatorolType;
-            this->m_directcion = this->m_initDirectcion;
+            this->setDirectcion(this->m_initDirectcion);
         }
         return;
     }
@@ -535,9 +538,11 @@ void EnemySprite::patrolAccording()
     // 真っ直ぐ進む
     Vec2 nextPos = this->m_routeStack.at(this->m_routeStackIndex);
     this->facingNextPos(nextPos);
-    if (this->canMovePos(nextPos)) {
+    if (this->canMovePos(nextPos) && this->nextCharacter() != mainScene->m_player) {
         this->moveNextTile();
-        this->m_routeStackIndex++;
+        if (this->worldPosition() == nextPos) {
+            this->m_routeStackIndex++;
+        }
     }
 }
 
