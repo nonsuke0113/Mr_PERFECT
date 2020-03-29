@@ -50,7 +50,6 @@ void Stage2Scene::initCharactors()
     enemy1->setName(StringUtils::format("mob"));
     enemy1->setAnchorPoint(Vec2(0.0f, 0.0f));
     this->addChild(enemy1);
-    enemy1->startPatrol();
 }
 
 
