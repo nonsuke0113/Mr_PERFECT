@@ -203,8 +203,9 @@ void EnemySprite::moveToPos(Vec2 const& pos)
         // 最短経路計算
         this->m_routeStack = AStarUtils::shortestRouteStack(this, this->worldPosition(), pos);
         // 移動開始
-        this->m_patorolType = ::patorol_according;
-        
+        if (!this->m_routeStack.empty()) {
+            this->m_patorolType = ::patorol_according;
+        }
     }),nullptr));
 }
 
