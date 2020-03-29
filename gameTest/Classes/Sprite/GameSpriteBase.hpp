@@ -44,9 +44,9 @@ public:
     virtual bool initWithFileName(const std::string& filename, const Vec2 &pos, ::directcion direction);
     Vec2& worldPosition();
     directcion directcion();
-    void setWorldPosition(Vec2& worldPos);
+    void setWorldPosition(Vec2 const& worldPos);
     virtual void setDirectcion(::directcion direction);
-    void moveWorld(float duration, const Vec2& newPosition);
+    void moveWorld(float duration, Vec2 const& newPosition);
     Vec2 nextTilePosition();
     Vec2 rightTilePosition();
     Vec2 leftTilePosition();

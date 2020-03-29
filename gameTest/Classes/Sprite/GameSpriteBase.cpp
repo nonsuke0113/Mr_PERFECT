@@ -79,7 +79,7 @@ directcion GameSpriteBase::directcion() {
 /**
     ワールド座標セッター
  */
-void GameSpriteBase::setWorldPosition(Vec2& worldPos) {
+void GameSpriteBase::setWorldPosition(Vec2 const& worldPos) {
     this->m_worldPosition = worldPos;
 }
 
@@ -100,7 +100,7 @@ void GameSpriteBase::setDirectcion(::directcion direction) {
     @param duration 移動時間
     @param newPosition 移動する座標(ワールド座標)
  */
-void GameSpriteBase::moveWorld(float duration, const Vec2& newPosition) {
+void GameSpriteBase::moveWorld(float duration, Vec2 const& newPosition) {
     this->m_worldPosition = newPosition;
     MoveTo *actionMove = MoveTo::create(duration, Vec2(newPosition.x * PER_TILE_SIZE,  (MAP_TILE_HEGHT - newPosition.y - 1) * PER_TILE_SIZE));
     actionMove->setTag(::move);
