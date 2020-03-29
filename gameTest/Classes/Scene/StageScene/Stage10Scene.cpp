@@ -108,7 +108,7 @@ void Stage10Scene::doContinue()
 void Stage10Scene::checkState()
 {
     // クリア座標判定
-    if (this->m_player->worldPosition() == Vec2(8.0f, 18.0f)) {
+    if (this->m_player->worldPosition() == Vec2(12.0f, 12.0f)) {
         this->stageClear();
     }
     
