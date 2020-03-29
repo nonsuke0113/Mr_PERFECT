@@ -55,6 +55,9 @@
 		86114BE5240AB95700864BEA /* StageRightUILayer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 86114BE3240AB95700864BEA /* StageRightUILayer.cpp */; };
 		861B748E239F37A6007068AB /* BulletSprite.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 861B748C239F37A6007068AB /* BulletSprite.cpp */; };
 		861B7492239F516C007068AB /* GameSpriteBase.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 861B7490239F516C007068AB /* GameSpriteBase.cpp */; };
+		8625D24A24309D1E00BD2249 /* Stage11Scene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8625D24824309D1E00BD2249 /* Stage11Scene.cpp */; };
+		8625D2502430BDC900BD2249 /* TwitterLauncher.mm in Sources */ = {isa = PBXBuildFile; fileRef = 8625D24E2430BDC900BD2249 /* TwitterLauncher.mm */; };
+		8625D2522430D35C00BD2249 /* Social.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8625D2512430D35C00BD2249 /* Social.framework */; };
 		8639393D2417CFC4001679EA /* ResultScene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8639393B2417CFC4001679EA /* ResultScene.cpp */; };
 		8648AA8023F294F200365B62 /* AStarNode.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8648AA7E23F294F200365B62 /* AStarNode.cpp */; };
 		8648AA8423F2D43700365B62 /* AStarUtils.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8648AA8223F2D43700365B62 /* AStarUtils.cpp */; };
@@ -200,6 +203,12 @@
 		861B748D239F37A6007068AB /* BulletSprite.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = BulletSprite.hpp; sourceTree = "<group>"; };
 		861B7490239F516C007068AB /* GameSpriteBase.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = GameSpriteBase.cpp; sourceTree = "<group>"; };
 		861B7491239F516C007068AB /* GameSpriteBase.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = GameSpriteBase.hpp; sourceTree = "<group>"; };
+		8625D24824309D1E00BD2249 /* Stage11Scene.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Stage11Scene.cpp; sourceTree = "<group>"; };
+		8625D24924309D1E00BD2249 /* Stage11Scene.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Stage11Scene.hpp; sourceTree = "<group>"; };
+		8625D24C2430BD9000BD2249 /* Twitter.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Twitter.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS13.2.sdk/System/Library/Frameworks/Twitter.framework; sourceTree = DEVELOPER_DIR; };
+		8625D24E2430BDC900BD2249 /* TwitterLauncher.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = TwitterLauncher.mm; sourceTree = "<group>"; };
+		8625D24F2430BDC900BD2249 /* TwitterLauncher.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TwitterLauncher.h; sourceTree = "<group>"; };
+		8625D2512430D35C00BD2249 /* Social.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Social.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS13.2.sdk/System/Library/Frameworks/Social.framework; sourceTree = DEVELOPER_DIR; };
 		8639393B2417CFC4001679EA /* ResultScene.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = ResultScene.cpp; sourceTree = "<group>"; };
 		8639393C2417CFC4001679EA /* ResultScene.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = ResultScene.hpp; sourceTree = "<group>"; };
 		8648AA7E23F294F200365B62 /* AStarNode.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = AStarNode.cpp; sourceTree = "<group>"; };
@@ -286,6 +295,7 @@
 				D44C620C132DFF330009C878 /* OpenAL.framework in Frameworks */,
 				D44C620E132DFF430009C878 /* AVFoundation.framework in Frameworks */,
 				D44C6210132DFF4E0009C878 /* AudioToolbox.framework in Frameworks */,
+				8625D2522430D35C00BD2249 /* Social.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -368,6 +378,8 @@
 		29B97323FDCFA39411CA2CEA /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				8625D2512430D35C00BD2249 /* Social.framework */,
+				8625D24C2430BD9000BD2249 /* Twitter.framework */,
 				E92CE84F22067BF600E123FD /* SystemConfiguration.framework */,
 				E92CE84D22067BE600E123FD /* StoreKit.framework */,
 				E92CE84B22067A1800E123FD /* MessageUI.framework */,
@@ -430,6 +442,8 @@
 				ABB249B82420C01B005018AB /* MessageDialogController.cpp */,
 				ABBA36B621BA6A3500A02928 /* MessageDialog.hpp */,
 				ABBA36B521BA6A3500A02928 /* MessageDialog.cpp */,
+				8625D24F2430BDC900BD2249 /* TwitterLauncher.h */,
+				8625D24E2430BDC900BD2249 /* TwitterLauncher.mm */,
 			);
 			name = Classes;
 			path = ../Classes;
@@ -504,6 +518,8 @@
 				8610B8FD2426841E0013E21B /* Stage9Scene.cpp */,
 				8610B901242684390013E21B /* Stage10Scene.hpp */,
 				8610B900242684390013E21B /* Stage10Scene.cpp */,
+				8625D24924309D1E00BD2249 /* Stage11Scene.hpp */,
+				8625D24824309D1E00BD2249 /* Stage11Scene.cpp */,
 			);
 			path = StageScene;
 			sourceTree = "<group>";
@@ -690,10 +706,12 @@
 			buildActionMask = 2147483647;
 			files = (
 				E9A5211521A90C6F00DB44EA /* CharacterSprite.cpp in Sources */,
+				8625D2502430BDC900BD2249 /* TwitterLauncher.mm in Sources */,
 				8610B8F9242683F20013E21B /* Stage7Scene.cpp in Sources */,
 				86114BE5240AB95700864BEA /* StageRightUILayer.cpp in Sources */,
 				8664737F23A8B58900ADCC59 /* StageSceneBase.cpp in Sources */,
 				1AF87B781F6F77F7007BE51C /* AppController.mm in Sources */,
+				8625D24A24309D1E00BD2249 /* Stage11Scene.cpp in Sources */,
 				ABB249BA2420C01B005018AB /* MessageDialogController.cpp in Sources */,
 				8648AA8023F294F200365B62 /* AStarNode.cpp in Sources */,
 				861B748E239F37A6007068AB /* BulletSprite.cpp in Sources */,

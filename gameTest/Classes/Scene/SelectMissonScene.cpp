@@ -16,8 +16,9 @@
 #include "Stage6Scene.hpp"
 #include "Stage7Scene.hpp"
 #include "Stage8Scene.hpp"
-#include "Stage9Scene.hpp"
+#include "Stage11Scene.hpp"
 #include "Stage10Scene.hpp"
+#include "TwitterLauncher.h"
 
 #pragma mark -
 #pragma mark Init
@@ -145,12 +146,13 @@ void SelectMissonScene::touchMissionEvent(Ref *pSender, ui::Widget::TouchEventTy
                 }
                 case 8:
                 {
-                    stageScene = Stage8Scene::createScene();
+                    TwitterLauncher::openTweetDialog("test");
+                    return;
                     break;
                 }
                 case 9:
                 {
-                    stageScene = Stage9Scene::createScene();
+                    stageScene = Stage11Scene::createScene();
                     break;
                 }
                 case 10:
