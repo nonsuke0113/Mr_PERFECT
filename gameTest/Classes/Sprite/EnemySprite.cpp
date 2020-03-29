@@ -520,15 +520,15 @@ void EnemySprite::patrolChase()
         return;
     }
     
+    // 弾を撃つ
+    if (fmod(mainScene->m_time, 60) == 0) {
+        this->shootBullet();
+    }
+    
     // 真っ直ぐ進む
     if (this->canMovePos(this->nextTilePosition()) &&
         this->nextCharacter() != mainScene->m_player) {
         this->moveNextTile();
-    }
-    
-    // 弾を撃つ
-    if (fmod(mainScene->m_time, 60) == 0) {
-        this->shootBullet();
     }
 }
 
