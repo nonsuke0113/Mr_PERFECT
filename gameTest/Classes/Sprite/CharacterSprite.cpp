@@ -106,10 +106,13 @@ void CharacterSprite::dead()
  */
 void CharacterSprite::moveNextTile()
 {
+    // 移動できなかったら何もしない
     Vec2 nextTilePosition = this->nextTilePosition();
-    if (this->canMovePos(nextTilePosition)) {
-        this->moveWorld(this->m_moveSpeed, this->nextTilePosition());
+    if (this->nextCharacter() != nullptr || !this->canMovePos(nextTilePosition)) {
+        return;
     }
+    
+    this->moveWorld(this->m_moveSpeed, this->nextTilePosition());
 }
 
 

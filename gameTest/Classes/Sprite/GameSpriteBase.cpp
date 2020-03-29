@@ -43,9 +43,11 @@ bool GameSpriteBase::initWithFileName(const std::string& filename, const Vec2 &p
     if (!Sprite::initWithFile(filename)) {
         return false;
     }
+    this->m_initWorldPosition = pos;
     this->m_worldPosition = pos;
     this->setPosition(Vec2(pos.x * PER_TILE_SIZE, (MAP_TILE_HEGHT - pos.y - 1) * PER_TILE_SIZE));
-    this->setDirectcion(direction);
+    this->m_initDirectcion = direction;
+    this->m_directcion = direction;
     return true;
 }
 
@@ -111,7 +113,7 @@ void GameSpriteBase::moveWorld(float duration, const Vec2& newPosition) {
     スプライトが向いている方向の次のタイルのワールド座標を返す
     端にいた場合、-1,-1で返す
  
-    @return Vec2 スプライトが向いている方向の次のタイルのワールド座標
+    @return スプライトが向いている方向の次のタイルのワールド座標
  */
 Vec2 GameSpriteBase::nextTilePosition()  {
     
@@ -135,6 +137,106 @@ Vec2 GameSpriteBase::nextTilePosition()  {
 
 
 /**
+    スプライトの右隣のワールド座標を返す
+ 
+    @return スプライトが向いている方向の右隣のワールド座標
+ */
+Vec2 GameSpriteBase::rightTilePosition()
+{
+    Vec2 rightTilePosition;
+    switch (this->m_directcion) {
+        case ::back:
+            rightTilePosition = Vec2 { this->m_worldPosition.x + 1.0f, this->m_worldPosition.y };
+            break;
+        case ::right:
+            rightTilePosition = Vec2 { this->m_worldPosition.x, this->m_worldPosition.y + 1.0f };
+            break;
+        case ::front:
+            rightTilePosition = Vec2 { this->m_worldPosition.x - 1.0f , this->m_worldPosition.y };
+            break;
+        case ::left:
+            rightTilePosition = Vec2 { this->m_worldPosition.x, this->m_worldPosition.y - 1.0f };
+            break;
+        default:
+            break;
+    }
+    return rightTilePosition;
+}
+
+
+/**
+    スプライトの左隣のワールド座標を返す
+ 
+    @return スプライトが向いている方向の左隣のワールド座標
+ */
+Vec2 GameSpriteBase::leftTilePosition()
+{
+    Vec2 leftTilePosition;
+    switch (this->m_directcion) {
+        case ::back:
+            leftTilePosition = Vec2 { this->m_worldPosition.x - 1.0f, this->m_worldPosition.y };
+            break;
+        case ::right:
+            leftTilePosition = Vec2 { this->m_worldPosition.x, this->m_worldPosition.y - 1.0f };
+            break;
+        case ::front:
+            leftTilePosition = Vec2 { this->m_worldPosition.x + 1.0f , this->m_worldPosition.y };
+            break;
+        case ::left:
+            leftTilePosition = Vec2 { this->m_worldPosition.x, this->m_worldPosition.y + 1.0f };
+            break;
+        default:
+            break;
+    }
+    return leftTilePosition;
+}
+
+
+/**
+    右に回転する
+ */
+void GameSpriteBase::turnRight()
+{
+    Vec2 rightTilePosition = this->rightTilePosition();
+    this->facingNextPos(rightTilePosition);
+}
+
+
+/**
+    左に回転する
+ */
+void GameSpriteBase::turnLeft()
+{
+    Vec2 leftTilePosition = this->leftTilePosition();
+    this->facingNextPos(leftTilePosition);
+}
+
+
+/**
+    反対方向を向く
+ */
+void GameSpriteBase::lookback()
+{
+    switch (this->m_directcion) {
+        case ::front:
+            this->setDirectcion(::back);
+            break;
+        case ::right:
+            this->setDirectcion(::left);
+            break;
+        case ::back:
+            this->setDirectcion(::front);
+            break;
+        case ::left:
+            this->setDirectcion(::right);
+            break;
+        default:
+            break;
+    }
+}
+
+
+/**
     与えられた座標が移動可能かどうか
  
     @param pos 対象の座標
@@ -143,12 +245,6 @@ Vec2 GameSpriteBase::nextTilePosition()  {
 bool GameSpriteBase::canMovePos(Vec2 const& pos)
 {
     StageSceneBase* scene = (StageSceneBase*)this->getParent();
-    for (CharacterSprite *chara : scene->charactersVector()) {
-        if (pos == chara->worldPosition()) {
-            return false;
-        }
-    }
-    
     TMXLayer* layer = scene->m_map->getLayer("MAP");
     if (pos.x < 0.0f || pos.x >= MAP_TILE_WIDTH ||
         pos.y < 0.0f || pos.y >= MAP_TILE_HEGHT ||

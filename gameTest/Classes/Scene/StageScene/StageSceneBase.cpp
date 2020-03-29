@@ -523,8 +523,7 @@ void StageSceneBase::updatePosition()
         (this->m_mdController->isVisibleMessageDialog()) ||
         (this->m_map->getNumberOfRunningActions() > 0) ||
         (this->m_player->getActionByTag(::move) != nullptr) ||
-        (!((this->m_player->nextTileGID() == 0) || (this->m_player->nextTileGID() == 3))) ||
-        this->m_player->nextCharacter() != nullptr) {
+        (!this->m_player->canMovePos(this->m_player->nextTilePosition()))) {
         return;
     }
     
