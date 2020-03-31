@@ -57,14 +57,14 @@ bool TitleScene::init()
     this->m_startButton->addTouchEventListener(CC_CALLBACK_2(TitleScene::touchStartEvent, this));
     
     // プレイヤー
-    this->m_playerSprite = PlayerSprite::create("player_right1.png", Vec2(0.0f, 0.0f), ::front, 0.1f);
+    this->m_playerSprite = PlayerSprite::create("player_front1.png", Vec2(0.0f, 0.0f), ::front, 0.1f);
     this->m_playerSprite->setAnchorPoint(Vec2(0.0f, 1.0f));
     this->m_playerSprite->setPosition(Vec2(69.0f, 435.0f));
     this->m_playerSprite->setScale(2.0f);
     this->addChild(this->m_playerSprite);
     
     // 敵
-    this->m_enemySprite = EnemySprite::create("enemy1.png", Vec2(0.0f, 0.0f), ::back, 0.1f, ::patorol_nomove);
+    this->m_enemySprite = EnemySprite::create("enemy1_back1.png", Vec2(0.0f, 0.0f), ::back, 0.1f, ::patorol_nomove);
     this->m_enemySprite->setAnchorPoint(Vec2(0.0f, 1.0f));
     this->m_enemySprite->setPosition(Vec2(939.0f, 435.0f));
     this->m_enemySprite->setScale(2.0f);
