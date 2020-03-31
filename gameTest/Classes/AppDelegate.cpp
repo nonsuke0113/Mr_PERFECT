@@ -95,7 +95,11 @@ bool AppDelegate::applicationDidFinishLaunching() {
     director->setAnimationInterval(1.0 / 60);
     
     // リソースフォルダを設定
-    FileUtils::getInstance()->addSearchPath("res");
+    FileUtils::getInstance()->addSearchPath("res/image/UI/");
+    FileUtils::getInstance()->addSearchPath("res/image/StageScene/");
+    FileUtils::getInstance()->addSearchPath("res/map/");
+    FileUtils::getInstance()->addSearchPath("res/sound/BGM/");
+    FileUtils::getInstance()->addSearchPath("res/sound/SE/");
     
     // create a scene. it's an autorelease object
     // 最初のシーンを設定
