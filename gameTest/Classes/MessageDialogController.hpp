@@ -20,6 +20,7 @@ class MessageDialogController : public Ref
 {
 protected:
     void initMessageDialog();
+    void createMessage(std::vector<std::string> messages, std::function<void()> completedAction);
     
 public:
     MessageDialog* m_dialog; // メッセージダイアログ

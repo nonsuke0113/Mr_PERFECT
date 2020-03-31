@@ -122,6 +122,20 @@ void MessageDialogController::next()
 #pragma mark -
 #pragma mark CreateMessage
 /**
+    メッセージダイアログを作成して表示する
+ 
+    @param messages 追加するメッセージの配列
+    @param completedAction メッセージ表示後に実行する処理
+ */
+void MessageDialogController::createMessage(std::vector<std::string> messages, std::function<void()> completedAction)
+{
+    this->setMessages(messages);
+    this->setMessageCallback(completedAction);
+    this->displayMessageDialog();
+}
+
+
+/**
     テスト用のメッセージダイアログを作成して表示する
  
     @param tileGID タイルID
@@ -132,50 +146,49 @@ void MessageDialogController::createTestMessage(int tileGID)
     messages.push_back("メッセージを開始します。");
     messages.push_back(StringUtils::format("タイルID:%d", tileGID));
     messages.push_back("メッセージを終了します。");
-    this->setMessages(messages);
-    this->displayMessageDialog();
+    this->createMessage(messages, NULL);
 }
 
 
 /**
     敵に見つからずに進むミッション開始時のメッセージを作成して表示する
+ 
+    @param completedAction メッセージ表示後に実行する処理
  */
 void MessageDialogController::createStartSeekMissonMessage(std::function<void()> completedAction)
 {
     std::vector<std::string> messages = std::vector<std::string>();
     messages.push_back("MISSON:");
     messages.push_back("敵に見つからずに脱出しろ");
-    this->setMessages(messages);
-    this->setMessageCallback(completedAction);
-    this->displayMessageDialog();
+    this->createMessage(messages, completedAction);
 }
 
 
 /**
     開始時に、目的は敵を全滅させることであるメッセージを作成して表示する
+ 
+    @param completedAction メッセージ表示後に実行する処理
  */
 void MessageDialogController::createStartKillMissonMessage(std::function<void()> completedAction)
 {
     std::vector<std::string> messages = std::vector<std::string>();
     messages.push_back("MISSON:");
     messages.push_back("敵を全滅させろ");
-    this->setMessages(messages);
-    this->setMessageCallback(completedAction);
-    this->displayMessageDialog();
+    this->createMessage(messages, completedAction);
 }
 
 
 /**
-    開始時に、目的地への到達がゴールことであるメッセージを作成して表示する
+    開始時に、目的は脱出することであるメッセージを作成して表示する
+ 
+    @param completedAction メッセージ表示後に実行する処理
  */
 void MessageDialogController::createStartReachMissonMessage(std::function<void()> completedAction)
 {
     std::vector<std::string> messages = std::vector<std::string>();
     messages.push_back("MISSON:");
-    messages.push_back("目的地へたどり着け");
-    this->setMessages(messages);
-    this->setMessageCallback(completedAction);
-    this->displayMessageDialog();
+    messages.push_back("脱出しろ");
+    this->createMessage(messages, completedAction);
 }
 
 
@@ -186,8 +199,7 @@ void MessageDialogController::createMissionFailedMessage()
 {
     std::vector<std::string> messages = std::vector<std::string>();
     messages.push_back("コンティニュー？$");
-    this->setMessages(messages);
-    this->setMessageCallback([this]() {
+    this->createMessage(messages, [this]() {
         // シーンに通知
         StageSceneBase* mainScene = (StageSceneBase*)this->m_dialog->getParent();
         if (this->m_dialog->userChoice()) {
@@ -196,7 +208,6 @@ void MessageDialogController::createMissionFailedMessage()
             mainScene->gameover();
         }
     });
-    this->displayMessageDialog();
 }
 
 
@@ -209,8 +220,7 @@ void MessageDialogController::createEnemyFoundPlayerMessage()
     messages.push_back("「何者だ！」");
     messages.push_back("見つかってしまった...");
     messages.push_back("コンティニュー？$");
-    this->setMessages(messages);
-    this->setMessageCallback([this]() {
+    this->createMessage(messages, [this]() {
         // シーンに通知
         StageSceneBase* mainScene = (StageSceneBase*)this->m_dialog->getParent();
         if (this->m_dialog->userChoice()) {
@@ -219,5 +229,4 @@ void MessageDialogController::createEnemyFoundPlayerMessage()
             mainScene->gameover();
         }
     });
-    this->displayMessageDialog();
 }
