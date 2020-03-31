@@ -95,6 +95,7 @@ MessageDialog::~MessageDialog() {
  */
 void MessageDialog::closeSelf()
 {
+    this->stopAllowBlink();
     this->runAction(
                     Sequence::create(
                                      ScaleTo::create(0.1f, 0, 0.05f, 1),
@@ -106,6 +107,11 @@ void MessageDialog::closeSelf()
     this->m_messageList.clear();
     this->m_messageList.shrink_to_fit();
     this->m_isVisible = false;
+    
+    // ハンドラが有れば文字送りの完了を通知
+    if (this->m_completedAction != nullptr) {
+        this->m_completedAction();
+    }
 }
 
 
@@ -185,13 +191,11 @@ void MessageDialog::start() {
 void MessageDialog::next()
 {
     // 最後のメッセージまで進んでいれば終了する
-    if (!this->m_isSending && this->m_messageIndex >= this->m_messageList.size()) {
-        this->stopAllowBlink();
+    if (!(this->m_isNeedChoice && this->m_userChoiceArrow == nullptr) &&
+        !this->m_isSending &&
+        this->m_messageIndex >= this->m_messageList.size())
+    {
         this->closeSelf();
-        // ハンドラが有れば文字送りの完了を通知
-        if (this->m_completedAction != nullptr) {
-            this->m_completedAction();
-        }
         return;
     }
     
@@ -206,6 +210,10 @@ void MessageDialog::next()
         // 問いかけメッセージの場合は、EditBoxを生成
         if(this->m_isNeedInput && this->m_editBox == nullptr) {
             this->createEditBox();
+        }
+        // 選択メッセージの場合は、2択選択を表示
+        else if (this->m_isNeedChoice) {
+            this->createChoice();
         }
     }
     // それ以外の場合は、次のメッセージの文字送りを開始する
