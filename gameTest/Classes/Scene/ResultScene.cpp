@@ -71,47 +71,58 @@ bool ResultScene::init(::resultInfo *resultInfo)
     
     // リザルト
     Sprite *resultSprite = Sprite::create("result.png");
-    resultSprite->setAnchorPoint(Vec2(0.5f, 0.0f));
-    resultSprite->setPosition(Vec2(568.f, 480.0f));
+    resultSprite->setAnchorPoint(Vec2(0.5f, 1.0f));
+    resultSprite->setPosition(Vec2(568.f, 540.0f));
     this->addChild(resultSprite);
     
     // 経過時間
     Sprite *timeSprite = Sprite::create("time.png");
     timeSprite->setAnchorPoint(Vec2(0.0f, 0.0f));
-    timeSprite->setPosition(Vec2(356.0f, 360.0f));
+    timeSprite->setPosition(Vec2(240.0f, 388.0f));
     this->addChild(timeSprite);
-    Label *timeLabel = Label::createWithTTF(StringUtils::format("%03d       %s", this->m_resultInfo->clearTime, this->convertRankStr(this->m_resultInfo->timeRank).c_str()), "fonts/PixelMplus12-Regular.ttf", 30);
+    Label *timeLabel = Label::createWithTTF(StringUtils::format("%03d       %05d       %s", this->m_resultInfo->clearTime, this->m_resultInfo->timeScore, this->convertRankStr(this->m_resultInfo->timeScore).c_str()), "fonts/PixelMplus12-Regular.ttf", 30);
     timeLabel->setAnchorPoint(Vec2(0,0));
-    timeLabel->setPosition(Vec2(600.0f, 360.0f));
+    timeLabel->setPosition(Vec2(468.0f, 388.0f));
     timeLabel->setColor(Color3B(0, 0, 0));
     this->addChild(timeLabel);
     
     // HP
     Sprite *hpSprite = Sprite::create("hp.png");
     hpSprite->setAnchorPoint(Vec2(0.0f, 0.0f));
-    hpSprite->setPosition(Vec2(384.0f, 300.0f));
+    hpSprite->setPosition(Vec2(270.0f, 324.0f));
     this->addChild(hpSprite);
-    Label *hpLabel = Label::createWithTTF(StringUtils::format("%d/3       %s", this->m_resultInfo->clearHp, this->convertRankStr(this->m_resultInfo->hpRank).c_str()), "fonts/PixelMplus12-Regular.ttf", 30);
+    Label *hpLabel = Label::createWithTTF(StringUtils::format("%d/3       %05d       %s", this->m_resultInfo->clearHp, this->m_resultInfo->hpScore, this->convertRankStr(this->m_resultInfo->hpScore).c_str()), "fonts/PixelMplus12-Regular.ttf", 30);
     hpLabel->setAnchorPoint(Vec2(0,0));
-    hpLabel->setPosition(Vec2(600.0f, 300.0f));
+    hpLabel->setPosition(Vec2(468.0f, 324.0f));
     hpLabel->setColor(Color3B(0, 0, 0));
     this->addChild(hpLabel);
     
     // 敵に見つかった数
     Sprite *foundSprite = Sprite::create("found.png");
     foundSprite->setAnchorPoint(Vec2(0.0f, 0.0f));
-    foundSprite->setPosition(Vec2(350.0f, 240.0f));
+    foundSprite->setPosition(Vec2(225.0f, 258.0f));
     this->addChild(foundSprite);
-    Label *foundLabel = Label::createWithTTF(StringUtils::format("%03d       %s", this->m_resultInfo->clearFoundCount, this->convertRankStr(this->m_resultInfo->foundRank).c_str()), "fonts/PixelMplus12-Regular.ttf", 30);
+    Label *foundLabel = Label::createWithTTF(StringUtils::format("%03d       %05d       %s", this->m_resultInfo->clearFoundCount, this->m_resultInfo->foundScore,  this->convertRankStr(this->m_resultInfo->foundScore).c_str()), "fonts/PixelMplus12-Regular.ttf", 30);
     foundLabel->setAnchorPoint(Vec2(0,0));
-    foundLabel->setPosition(Vec2(600.0f, 240.0f));
+    foundLabel->setPosition(Vec2(468.0f, 258.0f));
     foundLabel->setColor(Color3B(0, 0, 0));
     this->addChild(foundLabel);
 
+    // スコア
+    Sprite *scoreSprite = Sprite::create("score.png");
+    scoreSprite->setAnchorPoint(Vec2(0.0f, 0.0f));
+    scoreSprite->setPosition(Vec2(420.0f, 170.0f));
+    this->addChild(scoreSprite);
+    Label *scoreLabel = Label::createWithTTF(StringUtils::format("%d", this->m_resultInfo->timeScore + this->m_resultInfo->hpScore + this->m_resultInfo->foundScore), "fonts/PixelMplus12-Regular.ttf", 30);
+    scoreLabel->setAnchorPoint(Vec2(0.0f, 0.0f));
+    scoreLabel->setPosition(Vec2(620.0f, 170.0f));
+    scoreLabel->setColor(Color3B(0, 0, 0));
+    this->addChild(scoreLabel);
+    
     // ランク
     Sprite *rankSprite = Sprite::create("rank.png");
-    rankSprite->setAnchorPoint(Vec2(0.0f, 1.0f));
-    rankSprite->setPosition(Vec2(400.0f, 160.0f));
+    rankSprite->setAnchorPoint(Vec2(0.0f, 0.0f));
+    rankSprite->setPosition(Vec2(420.0f, 100.0f));
     this->addChild(rankSprite);
     
     // イベントリスナーを設定
@@ -138,27 +149,27 @@ void ResultScene::onTouchesBegan(const std::vector<Touch *> &touches, cocos2d::E
     this->m_isViewedRank = true;
     
     Sprite *userRank = nullptr;
-    int totalRank = (int)this->m_resultInfo->timeRank + (int)this->m_resultInfo->hpRank + (int)this->m_resultInfo->foundRank;
-    if (totalRank == 0) {
+    int totalScore = (int)this->m_resultInfo->timeScore + (int)this->m_resultInfo->hpScore + (int)this->m_resultInfo->foundScore;
+    if (totalScore >= 9000) {
         userRank = Sprite::create("rank_P.png");
-    } else if (totalRank == 1) {
+    } else if (totalScore >= 6000) {
         userRank = Sprite::create("rank_A.png");
-    } else if (totalRank < 4) {
+    } else if (totalScore >= 3000) {
         userRank = Sprite::create("rank_B.png");
     } else {
         userRank = Sprite::create("rank_C.png");
     }
-    userRank->setAnchorPoint(Vec2(0.0f, 1.0f));
-    userRank->setPosition(Vec2(-userRank->getContentSize().width, 180.0f));
+    userRank->setAnchorPoint(Vec2(0.0f, 0.0f));
+    userRank->setPosition(Vec2(-userRank->getContentSize().width, 80.0f));
     this->addChild(userRank);
     
     // 画面サイズ取得
     Size visibleSize = Director::getInstance()->getVisibleSize();
     
     Vector<FiniteTimeAction *> actionAry;
-    actionAry.pushBack(MoveTo::create(0.5f, Vec2(630.0f, 180.0f)));
-    actionAry.pushBack(MoveTo::create(1.0f, Vec2(630.0f, 180.0f)));
-    actionAry.pushBack(MoveTo::create(0.3f, Vec2(visibleSize.width + userRank->getContentSize().width, 180.0f)));
+    actionAry.pushBack(MoveTo::create(0.5f, Vec2(616.0f, 80.0f)));
+    actionAry.pushBack(MoveTo::create(1.0f, Vec2(616.0f, 80.0f)));
+//    actionAry.pushBack(MoveTo::create(0.3f, Vec2(visibleSize.width + userRank->getContentSize().width, 100.0f)));
     actionAry.pushBack(Hide::create());
     
     // ミッション選択シーンに遷移
@@ -175,26 +186,21 @@ void ResultScene::onTouchesBegan(const std::vector<Touch *> &touches, cocos2d::E
 
 #pragma mark -
 /**
-    クリアランクを文字列に変換する
+    スコアを文字列に変換する
  
-    @param clearRank クリアランク
+    @param score スコア
     @return 変換した文字列
  */
-std::string ResultScene::convertRankStr(::clearRank clearRank)
+std::string ResultScene::convertRankStr(int score)
 {
     std::string rankStr = "";
-    switch (clearRank) {
-        case ::clearRank::A:
-            rankStr = "A";
-            break;
-        case ::clearRank::B:
-            rankStr = "B";
-            break;
-        case ::clearRank::C:
-            rankStr = "C";
-            break;
-        default:
-            break;
+    if (score >= 3000) {
+        rankStr = "A";
+    } else if (score >= 2000) {
+        rankStr = "B";
+    } else {
+        rankStr = "C";
     }
+    
     return rankStr;
 }

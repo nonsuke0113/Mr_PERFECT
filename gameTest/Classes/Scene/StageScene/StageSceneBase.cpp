@@ -395,7 +395,7 @@ void StageSceneBase::setupResult()
     this->m_resultInfo.clearTime = (int)this->m_time / 60;
     this->m_resultInfo.clearHp = this->m_player->hp();
     this->m_resultInfo.clearFoundCount = this->m_enemyFoundPlayerCount;
-    this->m_resultInfo.hpRank = (::clearRank)(3 - this->m_player->hp());
+    this->m_resultInfo.hpScore = this->m_player->hp() * 1000;
 }
 
 

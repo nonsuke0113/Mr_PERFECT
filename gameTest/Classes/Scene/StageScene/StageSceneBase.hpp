@@ -34,9 +34,9 @@ typedef struct {
     int clearTime;
     int clearHp;
     int clearFoundCount;
-    ::clearRank timeRank;
-    ::clearRank hpRank;
-    ::clearRank foundRank;
+    int timeScore;
+    int hpScore;
+    int foundScore;
 } resultInfo;
 
 

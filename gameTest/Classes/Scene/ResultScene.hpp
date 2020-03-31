@@ -23,7 +23,7 @@ private:
     bool m_isViewedRank; // ランク画像表示済みかどうか
     
     void onTouchesBegan(const std::vector<Touch*>& touches, Event *unused_event);
-    static std::string convertRankStr(::clearRank clearRank);
+    static std::string convertRankStr(int score);
     
 public:
     static Scene* createScene(::resultInfo *resultInfo);

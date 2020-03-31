@@ -160,20 +160,20 @@ void Stage1Scene::setupResult()
     // timeRank設定
     int time = (int)this->m_time / 60;
     if (time < 10) {
-        this->m_resultInfo.timeRank = ::clearRank::A;
+        this->m_resultInfo.timeScore = 3000;
     } else if (time < 20) {
-        this->m_resultInfo.timeRank = ::clearRank::B;
+        this->m_resultInfo.timeScore = 2000;
     } else {
-        this->m_resultInfo.timeRank = ::clearRank::C;
+        this->m_resultInfo.timeScore = 1000;
     }
     
     // foundRank設定
     if (this->m_enemyFoundPlayerCount == 0) {
-        this->m_resultInfo.foundRank = ::clearRank::A;
+        this->m_resultInfo.foundScore = 3000;
     } else if (this->m_enemyFoundPlayerCount <= 2) {
-        this->m_resultInfo.foundRank = ::clearRank::B;
+        this->m_resultInfo.foundScore = 2000;
     } else {
-        this->m_resultInfo.foundRank = ::clearRank::C;
+        this->m_resultInfo.foundScore = 1000;
     }
     
     // 親のリザルト設定処理を呼び出す
