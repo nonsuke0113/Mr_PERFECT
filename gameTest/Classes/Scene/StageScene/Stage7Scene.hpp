@@ -19,6 +19,7 @@ private:
     void doContinue();
     void checkState();
     void stageClear();
+    void setupResult();
     
 public:
     static Stage7Scene *createScene();

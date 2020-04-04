@@ -116,3 +116,34 @@ void Stage7Scene::stageClear()
     // 親のクリア処理を呼び出す
     StageSceneBase::stageClear();
 }
+
+
+/**
+    リザルトを設定する
+ */
+void Stage7Scene::setupResult()
+{
+    // timeRank設定
+    int time = (int)this->m_time / 60;
+    if (time < 10) {
+        this->m_resultInfo.timeScore = 3000;
+    } else if (time < 20) {
+        this->m_resultInfo.timeScore = 2000;
+    } else {
+        this->m_resultInfo.timeScore = 1000;
+    }
+    
+    // foundRank設定
+    if (this->m_enemyFoundPlayerCount == 0) {
+        this->m_resultInfo.foundScore = 3000;
+    } else if (this->m_enemyFoundPlayerCount <= 2) {
+        this->m_resultInfo.foundScore = 2000;
+    } else {
+        this->m_resultInfo.foundScore = 1000;
+    }
+    
+    this->m_resultInfo.clearStage = 7;
+    
+    // 親のリザルト設定処理を呼び出す
+    StageSceneBase::setupResult();
+}
