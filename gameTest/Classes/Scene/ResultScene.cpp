@@ -72,58 +72,64 @@ bool ResultScene::init(::resultInfo *resultInfo)
     // リザルト
     Sprite *resultSprite = Sprite::create("result.png");
     resultSprite->setAnchorPoint(Vec2(0.5f, 1.0f));
-    resultSprite->setPosition(Vec2(568.f, 540.0f));
+    resultSprite->setPosition(Vec2(568.f, 576.0f));
     this->addChild(resultSprite);
     
     // 経過時間
     Sprite *timeSprite = Sprite::create("time.png");
-    timeSprite->setAnchorPoint(Vec2(0.0f, 0.0f));
-    timeSprite->setPosition(Vec2(240.0f, 388.0f));
+    timeSprite->setAnchorPoint(Vec2(1.0f, 0.0f));
+    timeSprite->setPosition(Vec2(300.0f, 400.0f));
     this->addChild(timeSprite);
-    Label *timeLabel = Label::createWithTTF(StringUtils::format("%03d       %05d       %s", this->m_resultInfo->clearTime, this->m_resultInfo->timeScore, this->convertRankStr(this->m_resultInfo->timeScore).c_str()), "fonts/PixelMplus12-Regular.ttf", 30);
-    timeLabel->setAnchorPoint(Vec2(0,0));
-    timeLabel->setPosition(Vec2(468.0f, 388.0f));
+    Label *timeLabel = Label::createWithTTF(StringUtils::format("%03d     %05d     %s", this->m_resultInfo->clearTime, this->m_resultInfo->timeScore, this->convertRankStr(this->m_resultInfo->timeScore).c_str()), "fonts/PixelMplus12-Regular.ttf", 30);
+    timeLabel->setAnchorPoint(Vec2(0.0f, 0.0f));
+    timeLabel->setPosition(Vec2(360.0f, 403.0f));
     timeLabel->setColor(Color3B(0, 0, 0));
     this->addChild(timeLabel);
     
     // HP
     Sprite *hpSprite = Sprite::create("hp.png");
-    hpSprite->setAnchorPoint(Vec2(0.0f, 0.0f));
-    hpSprite->setPosition(Vec2(270.0f, 324.0f));
+    hpSprite->setAnchorPoint(Vec2(1.0f, 0.0f));
+    hpSprite->setPosition(Vec2(300.0f, 316.0f));
     this->addChild(hpSprite);
-    Label *hpLabel = Label::createWithTTF(StringUtils::format("%d/3       %05d       %s", this->m_resultInfo->clearHp, this->m_resultInfo->hpScore, this->convertRankStr(this->m_resultInfo->hpScore).c_str()), "fonts/PixelMplus12-Regular.ttf", 30);
-    hpLabel->setAnchorPoint(Vec2(0,0));
-    hpLabel->setPosition(Vec2(468.0f, 324.0f));
+    Label *hpLabel = Label::createWithTTF(StringUtils::format("%d/3     %05d     %s", this->m_resultInfo->clearHp, this->m_resultInfo->hpScore, this->convertRankStr(this->m_resultInfo->hpScore).c_str()), "fonts/PixelMplus12-Regular.ttf", 30);
+    hpLabel->setAnchorPoint(Vec2(0.0f, 0.0f));
+    hpLabel->setPosition(Vec2(360.0f, 320.0f));
     hpLabel->setColor(Color3B(0, 0, 0));
     this->addChild(hpLabel);
     
     // 敵に見つかった数
     Sprite *foundSprite = Sprite::create("found.png");
-    foundSprite->setAnchorPoint(Vec2(0.0f, 0.0f));
-    foundSprite->setPosition(Vec2(225.0f, 258.0f));
+    foundSprite->setAnchorPoint(Vec2(1.0f, 0.0f));
+    foundSprite->setPosition(Vec2(300.0f, 225.0f));
     this->addChild(foundSprite);
-    Label *foundLabel = Label::createWithTTF(StringUtils::format("%03d       %05d       %s", this->m_resultInfo->clearFoundCount, this->m_resultInfo->foundScore,  this->convertRankStr(this->m_resultInfo->foundScore).c_str()), "fonts/PixelMplus12-Regular.ttf", 30);
+    Label *foundLabel = Label::createWithTTF(StringUtils::format("%03d     %05d     %s", this->m_resultInfo->clearFoundCount, this->m_resultInfo->foundScore,  this->convertRankStr(this->m_resultInfo->foundScore).c_str()), "fonts/PixelMplus12-Regular.ttf", 30);
     foundLabel->setAnchorPoint(Vec2(0,0));
-    foundLabel->setPosition(Vec2(468.0f, 258.0f));
+    foundLabel->setPosition(Vec2(360.0f, 230.0f));
     foundLabel->setColor(Color3B(0, 0, 0));
     this->addChild(foundLabel);
 
     // スコア
-    Sprite *scoreSprite = Sprite::create("score.png");
-    scoreSprite->setAnchorPoint(Vec2(0.0f, 0.0f));
-    scoreSprite->setPosition(Vec2(420.0f, 170.0f));
+    Sprite *scoreSprite = Sprite::create("totalscore.png");
+    scoreSprite->setAnchorPoint(Vec2(1.0f, 0.0f));
+    scoreSprite->setPosition(Vec2(404.0f, 64.0f));
     this->addChild(scoreSprite);
-    Label *scoreLabel = Label::createWithTTF(StringUtils::format("%d", this->m_resultInfo->timeScore + this->m_resultInfo->hpScore + this->m_resultInfo->foundScore), "fonts/PixelMplus12-Regular.ttf", 30);
+    Label *scoreLabel = Label::createWithTTF(StringUtils::format("%05d", this->m_resultInfo->timeScore + this->m_resultInfo->hpScore + this->m_resultInfo->foundScore), "fonts/PixelMplus12-Regular.ttf", 30);
     scoreLabel->setAnchorPoint(Vec2(0.0f, 0.0f));
-    scoreLabel->setPosition(Vec2(620.0f, 170.0f));
+    scoreLabel->setPosition(Vec2(478.0f, 64.0f));
     scoreLabel->setColor(Color3B(0, 0, 0));
     this->addChild(scoreLabel);
     
     // ランク
     Sprite *rankSprite = Sprite::create("rank.png");
     rankSprite->setAnchorPoint(Vec2(0.0f, 0.0f));
-    rankSprite->setPosition(Vec2(420.0f, 100.0f));
+    rankSprite->setPosition(Vec2(756.0f, 400.0f));
     this->addChild(rankSprite);
+    
+    // シェア
+    Sprite *shareSprite = Sprite::create("share.png");
+    shareSprite->setAnchorPoint(Vec2(1.0f, 1.0f));
+    shareSprite->setPosition(Vec2(1136.0f, 640.0f));
+    this->addChild(shareSprite);
     
     // イベントリスナーを設定
     auto listener = EventListenerTouchAllAtOnce::create();
@@ -150,7 +156,7 @@ void ResultScene::onTouchesBegan(const std::vector<Touch *> &touches, cocos2d::E
     
     Sprite *userRank = nullptr;
     int totalScore = (int)this->m_resultInfo->timeScore + (int)this->m_resultInfo->hpScore + (int)this->m_resultInfo->foundScore;
-    if (totalScore >= 9000) {
+    if (totalScore < 9000) {
         userRank = Sprite::create("rank_P.png");
     } else if (totalScore >= 6000) {
         userRank = Sprite::create("rank_A.png");
@@ -159,24 +165,25 @@ void ResultScene::onTouchesBegan(const std::vector<Touch *> &touches, cocos2d::E
     } else {
         userRank = Sprite::create("rank_C.png");
     }
+    userRank->setScale(3.0f);
     userRank->setAnchorPoint(Vec2(0.0f, 0.0f));
-    userRank->setPosition(Vec2(-userRank->getContentSize().width, 80.0f));
+    userRank->setPosition(Vec2(-userRank->getContentSize().width, 64.0f));
     this->addChild(userRank);
     
     // 画面サイズ取得
     Size visibleSize = Director::getInstance()->getVisibleSize();
     
     Vector<FiniteTimeAction *> actionAry;
-    actionAry.pushBack(MoveTo::create(0.5f, Vec2(616.0f, 80.0f)));
-    actionAry.pushBack(MoveTo::create(1.0f, Vec2(616.0f, 80.0f)));
+    actionAry.pushBack(MoveTo::create(0.5f, Vec2(790.0f, 64.0f)));
+    actionAry.pushBack(MoveTo::create(1.0f, Vec2(790.0f, 64.0f)));
 //    actionAry.pushBack(MoveTo::create(0.3f, Vec2(visibleSize.width + userRank->getContentSize().width, 100.0f)));
-    actionAry.pushBack(Hide::create());
+//    actionAry.pushBack(Hide::create());
     
     // ミッション選択シーンに遷移
     actionAry.pushBack(CallFunc::create([this]() {
         Scene *selectMissionScene = SelectMissonScene::createScene();
         TransitionFade* fade = TransitionFade::create(1.0f, selectMissionScene);
-        Director::getInstance()->replaceScene(fade);
+//        Director::getInstance()->replaceScene(fade);
     }));
     Sequence *actions = Sequence::create(actionAry);
     userRank->runAction(actions);
