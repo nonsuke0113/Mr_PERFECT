@@ -31,6 +31,7 @@ typedef enum {
 
 // リザルト情報
 typedef struct {
+    int clearStage;
     int clearTime;
     int clearHp;
     int clearFoundCount;

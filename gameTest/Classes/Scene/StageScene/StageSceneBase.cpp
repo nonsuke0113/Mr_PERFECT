@@ -374,7 +374,7 @@ void StageSceneBase::stageClear()
     
     // リザルトシーンに遷移
     actionAry.pushBack(CallFunc::create([this]() {
-        Scene *resultScene = ResultScene::createScene(&this->m_resultInfo);
+        Scene *resultScene = ResultScene::createScene(this->m_resultInfo);
         TransitionFade* fade = TransitionFade::create(1.0f, resultScene);
         Director::getInstance()->replaceScene(fade);
     }));

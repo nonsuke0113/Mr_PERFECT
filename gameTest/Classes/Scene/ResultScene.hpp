@@ -19,16 +19,17 @@ USING_NS_CC;
 class ResultScene : public Layer
 {
 private:
-    ::resultInfo *m_resultInfo; // リザルト情報
-    bool m_isViewedRank; // ランク画像表示済みかどうか
+    ::resultInfo m_resultInfo; // リザルト情報
+    Sprite *m_userRankSprite; // ランク画像
     
     void onTouchesBegan(const std::vector<Touch*>& touches, Event *unused_event);
+    void touchShareEvent(Ref *pSender, ui::Widget::TouchEventType type);
     static std::string convertRankStr(int score);
     
 public:
-    static Scene* createScene(::resultInfo *resultInfo);
-    static ResultScene* create(::resultInfo *resultInfo);
-    virtual bool init(::resultInfo *resultInfo);
+    static Scene* createScene(::resultInfo resultInfo);
+    static ResultScene* create(::resultInfo resultInfo);
+    virtual bool init(::resultInfo resultInfo);
     
 };
 

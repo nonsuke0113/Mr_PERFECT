@@ -53,6 +53,7 @@
 		8610B906242725080013E21B /* splash.png in Resources */ = {isa = PBXBuildFile; fileRef = 8610B905242725080013E21B /* splash.png */; };
 		86114BE0240AB31E00864BEA /* StageLeftUILayer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 86114BDE240AB31E00864BEA /* StageLeftUILayer.cpp */; };
 		86114BE5240AB95700864BEA /* StageRightUILayer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 86114BE3240AB95700864BEA /* StageRightUILayer.cpp */; };
+		8619C96A2438B4BC00956209 /* ShareLauncher.mm in Sources */ = {isa = PBXBuildFile; fileRef = 8619C9682438B4BC00956209 /* ShareLauncher.mm */; };
 		861B748E239F37A6007068AB /* BulletSprite.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 861B748C239F37A6007068AB /* BulletSprite.cpp */; };
 		861B7492239F516C007068AB /* GameSpriteBase.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 861B7490239F516C007068AB /* GameSpriteBase.cpp */; };
 		8639393D2417CFC4001679EA /* ResultScene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8639393B2417CFC4001679EA /* ResultScene.cpp */; };
@@ -196,6 +197,8 @@
 		86114BDF240AB31E00864BEA /* StageLeftUILayer.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = StageLeftUILayer.hpp; sourceTree = "<group>"; };
 		86114BE3240AB95700864BEA /* StageRightUILayer.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = StageRightUILayer.cpp; sourceTree = "<group>"; };
 		86114BE4240AB95700864BEA /* StageRightUILayer.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = StageRightUILayer.hpp; sourceTree = "<group>"; };
+		8619C9682438B4BC00956209 /* ShareLauncher.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = ShareLauncher.mm; sourceTree = "<group>"; };
+		8619C9692438B4BC00956209 /* ShareLauncher.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ShareLauncher.h; sourceTree = "<group>"; };
 		861B748C239F37A6007068AB /* BulletSprite.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = BulletSprite.cpp; sourceTree = "<group>"; };
 		861B748D239F37A6007068AB /* BulletSprite.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = BulletSprite.hpp; sourceTree = "<group>"; };
 		861B7490239F516C007068AB /* GameSpriteBase.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = GameSpriteBase.cpp; sourceTree = "<group>"; };
@@ -430,6 +433,8 @@
 				ABB249B82420C01B005018AB /* MessageDialogController.cpp */,
 				ABBA36B621BA6A3500A02928 /* MessageDialog.hpp */,
 				ABBA36B521BA6A3500A02928 /* MessageDialog.cpp */,
+				8619C9692438B4BC00956209 /* ShareLauncher.h */,
+				8619C9682438B4BC00956209 /* ShareLauncher.mm */,
 			);
 			name = Classes;
 			path = ../Classes;
@@ -696,6 +701,7 @@
 				1AF87B781F6F77F7007BE51C /* AppController.mm in Sources */,
 				ABB249BA2420C01B005018AB /* MessageDialogController.cpp in Sources */,
 				8648AA8023F294F200365B62 /* AStarNode.cpp in Sources */,
+				8619C96A2438B4BC00956209 /* ShareLauncher.mm in Sources */,
 				861B748E239F37A6007068AB /* BulletSprite.cpp in Sources */,
 				86C1AEC723EFE2A7003F61B7 /* Stage2Scene.cpp in Sources */,
 				8610B8ED2425F5060013E21B /* Stage4Scene.cpp in Sources */,
