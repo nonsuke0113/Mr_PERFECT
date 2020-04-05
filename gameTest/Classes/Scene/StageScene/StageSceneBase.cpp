@@ -278,6 +278,8 @@ void StageSceneBase::gameStart()
     Sequence *actions { Sequence::create(actionAry) };
     start->runAction(actions);
     
+    // BGMを停止
+    experimental::AudioEngine::stopAll();
     // BGMを開始
     experimental::AudioEngine::play2d("0017_Spy-Mission.mp3", true);
     

@@ -9,6 +9,7 @@
 #include "TitleScene.hpp"
 #include "SelectMissonScene.hpp"
 #include "CreditScene.hpp"
+#include <AudioEngine.h>
 
 #pragma mark -
 #pragma mark Init
@@ -68,6 +69,11 @@ bool TitleScene::init()
     this->m_enemySprite->setPosition(Vec2(939.0f, 435.0f));
     this->m_enemySprite->setScale(2.0f);
     this->addChild(this->m_enemySprite);
+    
+    // BGMを停止
+    experimental::AudioEngine::stopAll();
+    // BGMを開始
+    experimental::AudioEngine::play2d("loop_127.wav", true);
     
     scheduleUpdate();
     

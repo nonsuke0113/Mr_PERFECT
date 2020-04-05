@@ -8,6 +8,7 @@
 #include "SelectMissonScene.hpp"
 #include "TitleScene.hpp"
 #include "StageSceneBase.hpp"
+#include <AudioEngine.h>
 #include "Stage1Scene.hpp"
 #include "Stage2Scene.hpp"
 #include "Stage3Scene.hpp"
@@ -161,6 +162,10 @@ void SelectMissonScene::touchMissionEvent(Ref *pSender, ui::Widget::TouchEventTy
                 default:
                     break;
             }
+            
+            // BGMを停止
+            experimental::AudioEngine::stopAll();
+            
             TransitionFade* fade = TransitionFade::create(1.0f, stageScene);
             Director::getInstance()->replaceScene(fade);
             break;
