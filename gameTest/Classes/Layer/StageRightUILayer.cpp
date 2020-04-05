@@ -56,6 +56,13 @@ bool StageRightUILayer::init()
     this->m_bButton->addTouchEventListener(CC_CALLBACK_2(StageRightUILayer::touchBEvent, this));
     this->addChild(this->m_bButton);
     
+    // 一時停止ボタン
+    this->m_bButton = ui::Button::create("pause.png");
+    this->m_bButton->setAnchorPoint(Vec2(0.5f, 0.0f));
+    this->m_bButton->setPosition(Vec2(124.0f, 40.0f));
+    this->m_bButton->addTouchEventListener(CC_CALLBACK_2(StageRightUILayer::touchPauseEvent, this));
+    this->addChild(this->m_bButton);
+    
     return true;
 }
 
@@ -92,6 +99,26 @@ void StageRightUILayer::touchBEvent(Ref *pSender, ui::Widget::TouchEventType typ
             // 親に通知
             StageUILayer *parent = (StageUILayer*)this->getParent();
             parent->touchBEvent(pSender, type);
+        }
+            
+        case ui::Widget::TouchEventType::MOVED:
+        case ui::Widget::TouchEventType::ENDED:
+        case ui::Widget::TouchEventType::CANCELED:
+            break;
+    }
+}
+
+
+/**
+    一時停止ボタン押下時のイベント
+ */
+void StageRightUILayer::touchPauseEvent(Ref *pSender, ui::Widget::TouchEventType type)
+{
+    switch (type) {
+        case ui::Widget::TouchEventType::BEGAN: {
+            // 親に通知
+            StageUILayer *parent = (StageUILayer*)this->getParent();
+            parent->touchPauseEvent(pSender, type);
         }
             
         case ui::Widget::TouchEventType::MOVED:

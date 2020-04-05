@@ -64,7 +64,6 @@ protected:
     virtual void initCharactors();
     virtual void gameStart();
     void gamePause();
-    void gameResume();
     void allNodeUnschedule();
     virtual void touchA();
     virtual void touchB();
@@ -86,8 +85,11 @@ public:
     Vector<EnemySprite*> enemysVector();
     void touchAEvent(Ref *pSender, ui::Widget::TouchEventType type);
     void touchBEvent(Ref *pSender, ui::Widget::TouchEventType type);
+    void touchPauseEvent(Ref *pSender, ui::Widget::TouchEventType type);
     virtual void doContinue();
     void gameover();
+    void gameResume();
+    void backMissionSelectScene();
     void missionFailed();
     virtual void enemyFoundPlayer();
     void heartOff(int i);

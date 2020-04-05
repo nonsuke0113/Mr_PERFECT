@@ -12,6 +12,7 @@
 #include <typeinfo>
 #include "AStarUtils.hpp"
 #include "ResultScene.hpp"
+#include "SelectMissonScene.hpp"
 #include <AudioEngine.h>
 
 #pragma mark -
@@ -246,6 +247,18 @@ void StageSceneBase::touchB()
 }
 
 
+/**
+    一時停止ボタン押下時のイベント
+ */
+void StageSceneBase::touchPauseEvent(Ref *pSender, ui::Widget::TouchEventType type)
+{
+    this->gamePause();
+    this->m_uiLayer->resume();
+    this->m_mdController->m_dialog->resume();
+    this->m_mdController->createPauseMessage();
+}
+
+
 #pragma mark -
 /**
     ゲームを開始する処理
@@ -399,6 +412,22 @@ void StageSceneBase::setupResult()
     this->m_resultInfo.clearHp = this->m_player->hp();
     this->m_resultInfo.clearFoundCount = this->m_enemyFoundPlayerCount;
     this->m_resultInfo.hpScore = this->m_player->hp() * 1000;
+}
+
+/**
+    ミッション選択シーンに戻る
+ */
+void StageSceneBase::backMissionSelectScene()
+{
+    // BGMを停止
+    experimental::AudioEngine::stopAll();
+    
+    // 全てのスケジュールを中止
+    this->allNodeUnschedule();
+    
+    Scene *resultScene = SelectMissonScene::createScene();
+    TransitionFade* fade = TransitionFade::create(1.0f, resultScene);
+    Director::getInstance()->replaceScene(fade);
 }
 
 

@@ -38,6 +38,7 @@ public:
     void createStartReachMissonMessage(std::function<void()> completedAction);
     void createMissionFailedMessage();
     void createEnemyFoundPlayerMessage();
+    void createPauseMessage();
 };
 
 #endif /* MessageDialogController_hpp */

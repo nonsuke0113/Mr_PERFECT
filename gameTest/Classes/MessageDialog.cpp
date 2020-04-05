@@ -297,12 +297,7 @@ Label* MessageDialog::createMessageLabel(const std::string &message)
  */
 void MessageDialog::resetMessage()
 {
-    if (this->m_label != nullptr) {
-        this->m_label->removeFromParentAndCleanup(true);
-    }
-    if (this->m_editBox != nullptr) {
-        this->m_editBox->removeFromParentAndCleanup(true);
-    }
+    this->m_frame->removeAllChildren();
     this->m_charIndex = 0;
     this->m_distance = 0;
     this->m_isSending = false;

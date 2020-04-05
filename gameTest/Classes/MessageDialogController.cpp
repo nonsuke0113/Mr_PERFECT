@@ -212,7 +212,7 @@ void MessageDialogController::createMissionFailedMessage()
 
 
 /**
-    敵に見つからないでゴールするミッションにて、敵に見つかってしまった際のメッセージ
+    敵に見つからないでゴールするミッションにて、敵に見つかってしまった際のメッセージを作成して表示する
  */
 void MessageDialogController::createEnemyFoundPlayerMessage()
 {
@@ -227,6 +227,25 @@ void MessageDialogController::createEnemyFoundPlayerMessage()
             mainScene->doContinue();
         } else {
             mainScene->gameover();
+        }
+    });
+}
+
+
+/**
+    一時停止ボタン押下時のメッセージを作成して表示する
+ */
+void MessageDialogController::createPauseMessage()
+{
+    std::vector<std::string> messages = std::vector<std::string>();
+    messages.push_back("ミッション選択に戻りますか？$");
+    this->createMessage(messages, [this]() {
+        // シーンに通知
+        StageSceneBase* mainScene = (StageSceneBase*)this->m_dialog->getParent();
+        if (this->m_dialog->userChoice()) {
+            mainScene->backMissionSelectScene();
+        } else {
+            mainScene->gameResume();
         }
     });
 }

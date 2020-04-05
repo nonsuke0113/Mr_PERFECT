@@ -22,9 +22,11 @@ private:
     Label *m_timeValueLabel; // 時間
     ui::Button *m_aButton; // Aボタン
     ui::Button *m_bButton; // Bボタン
+    ui::Button *m_pauseButton; // 一時停止ボタン
     
     void touchAEvent(Ref *pSender, ui::Widget::TouchEventType type);
     void touchBEvent(Ref *pSender, ui::Widget::TouchEventType type);
+    void touchPauseEvent(Ref *pSender, ui::Widget::TouchEventType type);
 
 public:
     CREATE_FUNC(StageRightUILayer);

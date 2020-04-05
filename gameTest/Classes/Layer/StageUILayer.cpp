@@ -73,6 +73,17 @@ void StageUILayer::touchBEvent(Ref *pSender, ui::Widget::TouchEventType type)
 }
 
 
+/**
+    一時停止ボタン押下時のイベント
+ */
+void StageUILayer::touchPauseEvent(Ref *pSender, ui::Widget::TouchEventType type)
+{
+    // 親に通知する
+    StageSceneBase *parent = (StageSceneBase*)this->getParent();
+    parent->touchPauseEvent(pSender, type);
+}
+
+
 #pragma mark -
 #pragma mark GameEvent
 /**
