@@ -7,9 +7,8 @@
 //
 
 #include "TitleScene.hpp"
-#include "StageSceneBase.hpp"
-#include "Stage1Scene.hpp"
 #include "SelectMissonScene.hpp"
+#include "CreditScene.hpp"
 
 #pragma mark -
 #pragma mark Init
@@ -109,6 +108,13 @@ void TitleScene::touchStartEvent(Ref *pSender, ui::Widget::TouchEventType type)
             this->addChild(this->m_menu2Button);
             this->m_menu2Button->addTouchEventListener(CC_CALLBACK_2(TitleScene::touchHowToPlayEvent, this));
             
+            // 遊び方ボタン
+            this->m_menu3Button = ui::Button::create("credit.png");
+            this->m_menu3Button->setAnchorPoint(Vec2(1.0f, 0.0f));
+            this->m_menu3Button->setPosition(Vec2(1136.0f, 0.0f));
+            this->addChild(this->m_menu3Button);
+            this->m_menu3Button->addTouchEventListener(CC_CALLBACK_2(TitleScene::touchCreditEvent, this));
+            
             break;
         }
         default:
@@ -163,6 +169,25 @@ void TitleScene::touchHowToPlayEvent(Ref *pSender, ui::Widget::TouchEventType ty
             backButton->addTouchEventListener(CC_CALLBACK_2(TitleScene::touchBackEvent, this));
             this->addChild(backButton);
             
+            break;
+        }
+        default:
+            break;
+    }
+}
+
+
+/**
+    クレジットボタン押下時のイベント
+ */
+void TitleScene::touchCreditEvent(Ref *pSender, cocos2d::ui::Widget::TouchEventType type)
+{
+    switch (type)
+    {
+        case ui::Widget::TouchEventType::BEGAN:
+        {
+            Scene *creditScene = CreditScene::createScene();
+            Director::getInstance()->replaceScene(creditScene);
             break;
         }
         default:

@@ -63,6 +63,7 @@
 		8659988923AA030F002EB428 /* Stage1Scene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8659988723AA030F002EB428 /* Stage1Scene.cpp */; };
 		865D5A6E23E10BAC008A7C6D /* PlayerSprite.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 865D5A6C23E10BAC008A7C6D /* PlayerSprite.cpp */; };
 		8664737F23A8B58900ADCC59 /* StageSceneBase.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8664737D23A8B58900ADCC59 /* StageSceneBase.cpp */; };
+		867B070B2439A1D4006106FC /* CreditScene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 867B07092439A1D4006106FC /* CreditScene.cpp */; };
 		86C1AEC723EFE2A7003F61B7 /* Stage2Scene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 86C1AEC523EFE2A7003F61B7 /* Stage2Scene.cpp */; };
 		86DA7CC423E4364900B495AB /* SelectMissonScene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 86DA7CC223E4364900B495AB /* SelectMissonScene.cpp */; };
 		86F5F18A2406A8A90051060B /* StageUILayer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 86F5F1882406A8A90051060B /* StageUILayer.cpp */; };
@@ -217,6 +218,8 @@
 		865D5A6D23E10BAC008A7C6D /* PlayerSprite.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = PlayerSprite.hpp; sourceTree = "<group>"; };
 		8664737D23A8B58900ADCC59 /* StageSceneBase.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = StageSceneBase.cpp; sourceTree = "<group>"; };
 		8664737E23A8B58900ADCC59 /* StageSceneBase.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = StageSceneBase.hpp; sourceTree = "<group>"; };
+		867B07092439A1D4006106FC /* CreditScene.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = CreditScene.cpp; sourceTree = "<group>"; };
+		867B070A2439A1D4006106FC /* CreditScene.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = CreditScene.hpp; sourceTree = "<group>"; };
 		86C1AEC523EFE2A7003F61B7 /* Stage2Scene.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Stage2Scene.cpp; sourceTree = "<group>"; };
 		86C1AEC623EFE2A7003F61B7 /* Stage2Scene.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Stage2Scene.hpp; sourceTree = "<group>"; };
 		86DA7CC223E4364900B495AB /* SelectMissonScene.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = SelectMissonScene.cpp; sourceTree = "<group>"; };
@@ -523,6 +526,8 @@
 				86DA7CC223E4364900B495AB /* SelectMissonScene.cpp */,
 				8639393C2417CFC4001679EA /* ResultScene.hpp */,
 				8639393B2417CFC4001679EA /* ResultScene.cpp */,
+				867B070A2439A1D4006106FC /* CreditScene.hpp */,
+				867B07092439A1D4006106FC /* CreditScene.cpp */,
 			);
 			path = Scene;
 			sourceTree = "<group>";
@@ -704,6 +709,7 @@
 				8619C96A2438B4BC00956209 /* ShareLauncher.mm in Sources */,
 				861B748E239F37A6007068AB /* BulletSprite.cpp in Sources */,
 				86C1AEC723EFE2A7003F61B7 /* Stage2Scene.cpp in Sources */,
+				867B070B2439A1D4006106FC /* CreditScene.cpp in Sources */,
 				8610B8ED2425F5060013E21B /* Stage4Scene.cpp in Sources */,
 				865D5A6E23E10BAC008A7C6D /* PlayerSprite.cpp in Sources */,
 				8610B8FF2426841E0013E21B /* Stage9Scene.cpp in Sources */,

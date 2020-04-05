@@ -25,12 +25,14 @@ private:
     ui::Button *m_startButton; // スタートボタン
     ui::Button *m_menu1Button; // ミッションモードボタン
     ui::Button *m_menu2Button; // 遊び方ボタン
+    ui::Button *m_menu3Button; // 遊び方ボタン
     PlayerSprite *m_playerSprite; // プレイヤーキャラクター
     EnemySprite *m_enemySprite; // 敵キャラクター
     
     void touchStartEvent(Ref *pSender, cocos2d::ui::Widget::TouchEventType type);
     void touchMissionModeEvent(Ref *pSender, cocos2d::ui::Widget::TouchEventType type);
     void touchHowToPlayEvent(Ref *pSender, cocos2d::ui::Widget::TouchEventType type);
+    void touchCreditEvent(Ref *pSender, cocos2d::ui::Widget::TouchEventType type);
     void touchBackEvent(Ref *pSender, ui::Widget::TouchEventType type);
     void update(float delta);
     void updateCharactorPosition(CharacterSprite *charactor);
