@@ -7,6 +7,7 @@
 
 #include "CreditScene.hpp"
 #include "TitleScene.hpp"
+#include "ShareLauncher.h"
 
 #pragma mark -
 #pragma mark Init
@@ -39,10 +40,28 @@ bool CreditScene::init()
     auto bgColor = LayerColor::create(Color4B(219, 189, 15, 255), visibleSize.width, visibleSize.height);
     this->addChild(bgColor);
     
+    // ラベル
+    Label *bgmLabel1 = Label::createWithTTF(StringUtils::format("BGM：ADDMUSIC"), "fonts/PixelMplus12-Regular.ttf", 30);
+    bgmLabel1->setAnchorPoint(Vec2(0.0f, 0.0f));
+    bgmLabel1->setPosition(Vec2(160.0f, 540.0f));
+    bgmLabel1->setColor(Color3B(0, 0, 0));
+    this->addChild(bgmLabel1);
+    
+    Label *bgmLabel2 = Label::createWithTTF(StringUtils::format("BGM：hitoshi by Senses Circuit"), "fonts/PixelMplus12-Regular.ttf", 30);
+    bgmLabel2->setColor(Color3B(0, 0, 0));
+    MenuItemLabel *menuLabel = MenuItemLabel::create(bgmLabel2, [](Ref * label) {
+        ShareLauncher::openURL("https://www.senses-circuit.com");
+    });
+    menuLabel->setAnchorPoint(Vec2(0.0f, 0.0f));
+    menuLabel->setPosition(Vec2(160.0f, 500.0f));
+    Menu *menu = Menu::create(menuLabel, NULL);
+    menu->setPosition(Vec2(0.0f, 0.0f));
+    this->addChild(menu);
+    
     // 戻るボタン
     ui::Button *backButton = ui::Button::create("back_button.png");
-    backButton->setAnchorPoint(Vec2(0,0));
-    backButton->setPosition(Vec2(160, 100));
+    backButton->setAnchorPoint(Vec2(0.0f, 0.0f));
+    backButton->setPosition(Vec2(160.0f, 100.0f));
     backButton->addTouchEventListener(CC_CALLBACK_2(CreditScene::touchBackEvent, this));
     this->addChild(backButton);
     
