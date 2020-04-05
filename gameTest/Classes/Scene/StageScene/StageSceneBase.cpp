@@ -52,6 +52,7 @@ bool StageSceneBase::init()
     this->m_time = 0.0f;
     this->m_shootBulletInterval = 0.0f;
     this->m_enemyFoundPlayerCount = 0;
+    this->m_pause = false;
     
     this->gameStart();
     
@@ -282,6 +283,7 @@ void StageSceneBase::gameStart()
  */
 void StageSceneBase::gamePause()
 {
+    this->m_pause = true;
     for (Node *node : this->getChildren()) {
         node->pause();
     }
@@ -293,6 +295,7 @@ void StageSceneBase::gamePause()
  */
 void StageSceneBase::gameResume()
 {
+    this->m_pause = false;
     for (Node *node : this->getChildren()) {
         node->resume();
     }
@@ -471,6 +474,10 @@ void StageSceneBase::update(float delta)
  */
 void StageSceneBase::updateTime()
 {
+    // 一時停止中は更新しない
+    if (this->m_pause) {
+        return;
+    }
     this->m_time++;
     this->m_uiLayer->updateTime(this->m_time / 60.0f);
     
