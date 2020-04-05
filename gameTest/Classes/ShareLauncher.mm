@@ -24,3 +24,16 @@ void ShareLauncher::openShareDialog(std::string text, std::string imagePath)
     UIActivityViewController *activityController = [[UIActivityViewController alloc] initWithActivityItems:activityItems applicationActivities:nil];
     [myViewController presentViewController:activityController animated:YES completion:nil];
 }
+
+
+/**
+    外部ブラウザ表示
+ 
+    @param path 表示するURL
+ */
+void ShareLauncher::openURL(std::string path)
+{
+    NSString *pathStr = [NSString stringWithUTF8String:path.c_str()];
+    NSURL *url = [NSURL URLWithString:pathStr];
+    [[UIApplication sharedApplication] openURL:url];
+}

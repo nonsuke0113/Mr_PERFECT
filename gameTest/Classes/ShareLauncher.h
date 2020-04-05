@@ -12,5 +12,6 @@ class ShareLauncher
 {
 public:
     static void openShareDialog(std::string text, std::string imagePath);
+    static void openURL(std::string path);
 
 };
