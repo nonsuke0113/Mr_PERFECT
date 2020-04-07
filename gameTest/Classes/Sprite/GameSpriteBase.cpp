@@ -263,16 +263,24 @@ bool GameSpriteBase::canMovePos(Vec2 const& pos)
  */
 void GameSpriteBase::facingNextPos(Vec2& pos)
 {
-    if (this->worldPosition().x == pos.x && this->worldPosition().y - 1 == pos.y) {
+    if (this->worldPosition().x == pos.x &&
+        this->worldPosition().y - 1 == pos.y &&
+        this->directcion() != ::back) {
         this->setDirectcion(back);
     }
-    else if (this->worldPosition().x + 1 == pos.x && this->worldPosition().y == pos.y) {
+    else if (this->worldPosition().x + 1 == pos.x &&
+             this->worldPosition().y == pos.y &&
+             this->directcion() != ::right) {
         this->setDirectcion(right);
     }
-    else if (this->worldPosition().x == pos.x && this->worldPosition().y + 1 == pos.y) {
+    else if (this->worldPosition().x == pos.x &&
+             this->worldPosition().y + 1 == pos.y &&
+             this->directcion() != ::front) {
         this->setDirectcion(front);
     }
-    else if (this->worldPosition().x - 1== pos.x && this->worldPosition().y == pos.y) {
+    else if (this->worldPosition().x - 1== pos.x &&
+             this->worldPosition().y == pos.y &&
+             this->directcion() != ::left) {
         this->setDirectcion(left);
     }
 }
