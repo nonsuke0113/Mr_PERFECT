@@ -53,41 +53,42 @@ bool SelectMissonScene::init()
     
     // 戻るボタン
     ui::Button *backButton = ui::Button::create("back_button.png");
-    backButton->setAnchorPoint(Vec2(0,0));
-    backButton->setPosition(Vec2(160, 100));
+    backButton->setAnchorPoint(Vec2(0.0f, 0.0f));
+    backButton->setPosition(Vec2(100.0f, 100.0f));
     backButton->addTouchEventListener(CC_CALLBACK_2(SelectMissonScene::touchBackEvent, this));
     this->addChild(backButton);
     
-    // ミッションボタン
-    for (int i = 0; i < 5; i++) {
-        ui::Button *missionButton = ui::Button::create(StringUtils::format("mission%s.png", std::to_string(i+1).c_str()));
-        missionButton->setTag(i+1);
-        missionButton->setAnchorPoint(Vec2(0,0));
-        missionButton->setPosition(Vec2(160, 480 - (70 * i)));
-        missionButton->addTouchEventListener(CC_CALLBACK_2(SelectMissonScene::touchMissionEvent, this));
-        this->addChild(missionButton);
-        
-        UserDefault *userDefault = UserDefault::getInstance();
-        std::string key = StringUtils::format("mission%s", std::to_string(i).c_str());
-        std::string clear = userDefault->getStringForKey(key.c_str());
-        if (i != 0 && clear.empty()) {
-//            missionButton->setVisible(false);
-        }
-    }
-    
-    for (int i = 5; i < 10; i++) {
-        ui::Button *missionButton = ui::Button::create(StringUtils::format("mission%s.png", std::to_string(i+1).c_str()));
-        missionButton->setTag(i+1);
-        missionButton->setAnchorPoint(Vec2(0,0));
-        missionButton->setPosition(Vec2(568, 480 - (70 * (i - 5))));
-        missionButton->addTouchEventListener(CC_CALLBACK_2(SelectMissonScene::touchMissionEvent, this));
-        this->addChild(missionButton);
-        
-        UserDefault *userDefault = UserDefault::getInstance();
-        std::string key = StringUtils::format("mission%s", std::to_string(i).c_str());
-        std::string clear = userDefault->getStringForKey(key.c_str());
-        if (i != 0 && clear.empty()) {
+    for (int i = 0; i < 2; i++) {
+        for (int j = 0; j < 5; j++) {
+            // クリア情報の確認
+            UserDefault *userDefault = UserDefault::getInstance();
+                    std::string key = StringUtils::format("mission%s", std::to_string(j).c_str());
+                    std::string clear = userDefault->getStringForKey(key.c_str());
+                    if (j != 0 && clear.empty()) {
             //            missionButton->setVisible(false);
+                    }
+            
+            // ミッションボタン
+            ui::Button *missionButton = ui::Button::create(StringUtils::format("mission%s.png", std::to_string(j + 1 + (i * 5)).c_str()));
+            missionButton->setTag(j + 1 + (i * 5));
+            missionButton->setAnchorPoint(Vec2(0.0f, 1.0f));
+            missionButton->setPosition(Vec2(100.0f + (i * 516.0f), 540.0f - (75.0f * j)));
+            missionButton->addTouchEventListener(CC_CALLBACK_2(SelectMissonScene::touchMissionEvent, this));
+            this->addChild(missionButton);
+            
+            // スコアラベル
+            Label *scoreLabel = Label::createWithTTF(StringUtils::format("%05d", 12000).c_str(), "fonts/PixelMplus12-Regular.ttf", 30);
+            scoreLabel->setAnchorPoint(Vec2(0.0f, 1.0f));
+            scoreLabel->setPosition(Vec2(385.0f + (i * 516.0f), (540.0f - (75.0f * j) - 5.0f)));
+            scoreLabel->setColor(Color3B(0, 0, 0));
+            this->addChild(scoreLabel);
+            
+            // ランク画像
+            Sprite *rankSprite = Sprite::create("rank_P.png");
+            rankSprite->setScale(0.5f);
+            rankSprite->setAnchorPoint(Vec2(0.0f, 1.0f));
+            rankSprite->setPosition(Vec2(480.0f + (i * 516.0f), 540.0f - (75.0f * j)));
+            this->addChild(rankSprite);
         }
     }
     
