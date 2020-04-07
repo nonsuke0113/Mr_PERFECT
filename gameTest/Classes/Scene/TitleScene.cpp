@@ -38,10 +38,9 @@ bool TitleScene::init()
     // 画面サイズ取得
     Size visibleSize { Director::getInstance()->getVisibleSize() };
     
-    // 背景
-    Sprite *bgSprite { Sprite::create("title_background.png") };
-    bgSprite->setPosition(visibleSize / 2);
-    this->addChild(bgSprite);
+    // 背景色を設定
+    auto bgColor = LayerColor::create(Color4B(219, 189, 15, 255), visibleSize.width, visibleSize.height);
+    this->addChild(bgColor);
     
     // ロゴ
     this->m_logo = Sprite::create("title_logo.png");
