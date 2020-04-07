@@ -252,6 +252,11 @@ void StageSceneBase::touchB()
  */
 void StageSceneBase::touchPauseEvent(Ref *pSender, ui::Widget::TouchEventType type)
 {
+    // すでにメッセージ表示中であれば何もしない
+    if (this->m_mdController->m_dialog->isVisible()) {
+        return;
+    }
+    // 中断する
     this->gamePause();
     this->m_uiLayer->resume();
     this->m_mdController->m_dialog->resume();
