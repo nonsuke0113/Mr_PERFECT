@@ -18,7 +18,16 @@ USING_NS_CC;
 class SelectMissonScene : public Layer
 {
 private:
+    int m_page; // ページ
+    ui::Button *m_nextButton; // 進むボタン
+    ui::Button *m_backButton; // 戻るボタン
+    Vector<ui::Button*> m_missionButtons; // ミッション選択ボタンの配列
+    Vector<Label*> m_scoreLabels; // スコアラベルの配列
+    Vector<Sprite*> m_rankSprites; // ランク画像の配列
+    
+    void updateView();
     void touchMissionEvent(Ref *pSender, cocos2d::ui::Widget::TouchEventType type);
+    void touchNextEvent(Ref *pSender, ui::Widget::TouchEventType type);
     void touchBackEvent(Ref *pSender, ui::Widget::TouchEventType type);
     
 public:

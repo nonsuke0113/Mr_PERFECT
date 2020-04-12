@@ -51,50 +51,117 @@ bool SelectMissonScene::init()
     auto bgColor = LayerColor::create(Color4B(219, 189, 15, 255), visibleSize.width, visibleSize.height);
     this->addChild(bgColor);
     
-    // 戻るボタン
-    ui::Button *backButton = ui::Button::create("back_button.png");
-    backButton->setAnchorPoint(Vec2(0.0f, 0.0f));
-    backButton->setPosition(Vec2(100.0f, 100.0f));
-    backButton->addTouchEventListener(CC_CALLBACK_2(SelectMissonScene::touchBackEvent, this));
-    this->addChild(backButton);
+    // ページ設定
+    this->m_page = 1;
     
+    // 進むボタン
+    this->m_nextButton = ui::Button::create("back_button.png");
+    this->m_nextButton->setAnchorPoint(Vec2(1.0f, 0.0f));
+    this->m_nextButton->setPosition(Vec2(1036.0f, 100.0f));
+    this->m_nextButton->addTouchEventListener(CC_CALLBACK_2(SelectMissonScene::touchNextEvent, this));
+    this->addChild(this->m_nextButton);
+    
+    // 戻るボタン
+    this->m_backButton = ui::Button::create("back_button.png");
+    this->m_backButton->setAnchorPoint(Vec2(0.0f, 0.0f));
+    this->m_backButton->setPosition(Vec2(100.0f, 100.0f));
+    this->m_backButton->addTouchEventListener(CC_CALLBACK_2(SelectMissonScene::touchBackEvent, this));
+    this->addChild(this->m_backButton);
+    
+    //
     for (int i = 0; i < 2; i++) {
-        for (int j = 0; j < 5; j++) {
-            // クリア情報の確認
-            UserDefault *userDefault = UserDefault::getInstance();
-                    std::string key = StringUtils::format("mission%s", std::to_string(j).c_str());
-                    std::string clear = userDefault->getStringForKey(key.c_str());
-                    if (j != 0 && clear.empty()) {
-            //            missionButton->setVisible(false);
-                    }
-            
-            // ミッションボタン
-            ui::Button *missionButton = ui::Button::create(StringUtils::format("mission%s.png", std::to_string(j + 1 + (i * 5)).c_str()));
-            missionButton->setTag(j + 1 + (i * 5));
-            missionButton->setAnchorPoint(Vec2(0.0f, 1.0f));
-            missionButton->setPosition(Vec2(100.0f + (i * 516.0f), 540.0f - (75.0f * j)));
-            missionButton->addTouchEventListener(CC_CALLBACK_2(SelectMissonScene::touchMissionEvent, this));
-            this->addChild(missionButton);
-            
-            // スコアラベル
-            Label *scoreLabel = Label::createWithTTF(StringUtils::format("%05d", 12000).c_str(), "fonts/PixelMplus12-Regular.ttf", 30);
-            scoreLabel->setAnchorPoint(Vec2(0.0f, 1.0f));
-            scoreLabel->setPosition(Vec2(385.0f + (i * 516.0f), (540.0f - (75.0f * j) - 5.0f)));
-            scoreLabel->setColor(Color3B(0, 0, 0));
-            this->addChild(scoreLabel);
-            
-            // ランク画像
-            Sprite *rankSprite = Sprite::create("rank_P.png");
-            rankSprite->setScale(0.5f);
-            rankSprite->setAnchorPoint(Vec2(0.0f, 1.0f));
-            rankSprite->setPosition(Vec2(480.0f + (i * 516.0f), 540.0f - (75.0f * j)));
-            this->addChild(rankSprite);
+        for (int j = 0; j < 2; j++) {
+            for (int k = 0; k < 5; k++) {
+                // ミッションボタン
+                ui::Button *missionButton = ui::Button::create(StringUtils::format("mission%s.png", std::to_string(k + 1 + (j * 5) + (i * 10)).c_str()));
+                missionButton->setTag(k + 1 + (j * 5) + (i * 10));
+                missionButton->setAnchorPoint(Vec2(0.0f, 1.0f));
+                missionButton->setPosition(Vec2(100.0f + (j * 516.0f), 540.0f - (75.0f * k)));
+                missionButton->addTouchEventListener(CC_CALLBACK_2(SelectMissonScene::touchMissionEvent, this));
+                missionButton->setVisible(false);
+                this->addChild(missionButton);
+                this->m_missionButtons.pushBack(missionButton);
+                
+                // スコアラベル
+                Label *scoreLabel = Label::createWithTTF(StringUtils::format("%05d", 12000).c_str(), "fonts/PixelMplus12-Regular.ttf", 30);
+                scoreLabel->setAnchorPoint(Vec2(0.0f, 1.0f));
+                scoreLabel->setPosition(Vec2(385.0f + (j * 516.0f), (540.0f - (75.0f * k) - 5.0f)));
+                scoreLabel->setColor(Color3B(0, 0, 0));
+                scoreLabel->setVisible(false);
+                this->addChild(scoreLabel);
+                this->m_scoreLabels.pushBack(scoreLabel);
+                
+                // ランク画像
+                Sprite *rankSprite = Sprite::create("rank_P.png");
+                rankSprite->setScale(0.5f);
+                rankSprite->setAnchorPoint(Vec2(0.0f, 1.0f));
+                rankSprite->setPosition(Vec2(480.0f + (j * 516.0f), 540.0f - (75.0f * k)));
+                rankSprite->setVisible(false);
+                this->addChild(rankSprite);
+                this->m_rankSprites.pushBack(rankSprite);
+            }
         }
     }
     
+    this->updateView();
     return true;
 }
+
+
+#pragma mark -
+#pragma mark Update
+/**
+    表示内容の更新
+ */
+void SelectMissonScene::updateView()
+{
+    // 進むボタンの表示
+    UserDefault *userDefault = UserDefault::getInstance();
+    if (this->m_page == 1 && userDefault->getIntegerForKey("score10") != 0) {
+        this->m_nextButton->setVisible(true);
+    } else {
+        this->m_nextButton->setVisible(false);
+    }
     
+    for (int i = 0; i < 20; i++) {
+        
+        if ((i < ((this->m_page - 1) * 10)) ||
+            (i >= (this->m_page * 10)))
+        {
+            this->m_missionButtons.at(i)->setVisible(false);
+            this->m_scoreLabels.at(i)->setVisible(false);
+            this->m_rankSprites.at(i)->setVisible(false);
+            continue;
+        }
+        
+        // ページごと初期表示
+        if (i == (this->m_page - 1) * 10) {
+            this->m_missionButtons.at(i)->setVisible(true);
+        }
+        
+        // クリア情報の確認
+        std::string key = StringUtils::format("score%s", std::to_string(i + 1).c_str());
+        int score = userDefault->getIntegerForKey(key.c_str());
+        
+        // 表示
+        if (score != 0) {
+            this->m_missionButtons.at(i + 1)->setVisible(true);
+            Label *scoreLabel = this->m_scoreLabels.at(i);
+            scoreLabel->setString(StringUtils::format("%05d", score).c_str());
+            scoreLabel->setVisible(true);
+            Sprite *rankSprite = this->m_rankSprites.at(i);
+            if (score < 9000 && score >= 6000) {
+                rankSprite->setTexture("rank_A.png");
+            } else if (score < 6000 && score >= 3000) {
+                rankSprite->setTexture("rank_B.png");
+            } else {
+                rankSprite->setTexture("rank_C.png");
+            }
+            rankSprite->setVisible(true);
+        }
+    }
+}
+
 
 #pragma mark -
 #pragma mark ButtonEvent
@@ -178,6 +245,25 @@ void SelectMissonScene::touchMissionEvent(Ref *pSender, ui::Widget::TouchEventTy
 
 
 /**
+    進むボタン押下時のイベント
+ */
+void SelectMissonScene::touchNextEvent(Ref *pSender, ui::Widget::TouchEventType type)
+{
+    switch (type)
+    {
+        case ui::Widget::TouchEventType::BEGAN:
+        {
+            this->m_page++;
+            this->updateView();
+            break;
+        }
+        default:
+            break;
+    }
+}
+
+
+/**
     戻るボタン押下時のイベント
  */
 void SelectMissonScene::touchBackEvent(Ref *pSender, ui::Widget::TouchEventType type)
@@ -186,8 +272,13 @@ void SelectMissonScene::touchBackEvent(Ref *pSender, ui::Widget::TouchEventType 
     {
         case ui::Widget::TouchEventType::BEGAN:
         {
-            Scene *titleScene { TitleScene::createScene() };
-            Director::getInstance()->replaceScene(titleScene);
+            if (this->m_page == 1) {
+                Scene *titleScene = TitleScene::createScene();
+                Director::getInstance()->replaceScene(titleScene);
+            } else {
+                this->m_page--;
+                this->updateView();
+            }
             break;
         }
         default:

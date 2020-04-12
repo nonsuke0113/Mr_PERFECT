@@ -23,6 +23,7 @@ private:
     void doContinue();
     void checkState();
     void stageClear();
+    void setupResult();
     void createTutorialMessage2();
 
 public:

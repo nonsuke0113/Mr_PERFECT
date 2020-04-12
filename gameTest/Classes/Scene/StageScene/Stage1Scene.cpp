@@ -143,12 +143,12 @@ void Stage1Scene::checkState()
  */
 void Stage1Scene::stageClear()
 {
-    // クリア情報を保存
-    UserDefault* userDefault = UserDefault::getInstance();
-    userDefault->setStringForKey("mission1", "clear");
-    
     // 親のクリア処理を呼び出す
     StageSceneBase::stageClear();
+    
+    // クリア情報を保存
+    UserDefault* userDefault = UserDefault::getInstance();
+    userDefault->setIntegerForKey("score1", this->m_resultInfo.timeScore + this->m_resultInfo.hpScore + this->m_resultInfo.foundScore);
 }
 
 

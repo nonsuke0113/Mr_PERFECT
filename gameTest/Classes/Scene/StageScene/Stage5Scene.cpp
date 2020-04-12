@@ -93,12 +93,12 @@ void Stage5Scene::checkState()
  */
 void Stage5Scene::stageClear()
 {
-    // クリア情報を保存
-    UserDefault* userDefault = UserDefault::getInstance();
-    userDefault->setStringForKey("mission5", "clear");
-    
     // 親のクリア処理を呼び出す
     StageSceneBase::stageClear();
+    
+    // クリア情報を保存
+    UserDefault* userDefault = UserDefault::getInstance();
+    userDefault->setIntegerForKey("score5", this->m_resultInfo.timeScore + this->m_resultInfo.hpScore + this->m_resultInfo.foundScore);
 }
 
 
