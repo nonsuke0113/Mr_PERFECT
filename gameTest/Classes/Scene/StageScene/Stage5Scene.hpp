@@ -16,6 +16,7 @@ private:
     
     void initMap();
     void initCharactors();
+    void initScoreStandard();
     void gameStart();
     void doContinue();
     void checkState();

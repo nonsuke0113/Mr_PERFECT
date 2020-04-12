@@ -40,9 +40,11 @@ protected:
     MessageDialogController *m_mdController; // メッセージダイアログコントローラー
     StageUILayer *m_uiLayer; // UIレイヤー
     ::resultInfo m_resultInfo; // リザルト用の情報
+    ::scoreStandard m_scoreStandard; // スコア基準値
     
     virtual void initMap();
     virtual void initCharactors();
+    virtual void initScoreStandard();
     virtual void gameStart();
     void gamePause();
     void allNodeUnschedule();
@@ -50,7 +52,7 @@ protected:
     virtual void touchB();
     void playerKnockWall();
     virtual void stageClear();
-    virtual void setupResult();
+    void setupResult();
     virtual void update(float delta);
     virtual void checkState();
     

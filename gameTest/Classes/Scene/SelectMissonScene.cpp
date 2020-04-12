@@ -150,11 +150,11 @@ void SelectMissonScene::updateView()
             scoreLabel->setString(StringUtils::format("%05d", score).c_str());
             scoreLabel->setVisible(true);
             Sprite *rankSprite = this->m_rankSprites.at(i);
-            if (score < 9000 && score >= 6000) {
+            if (score < TOTAL_SCORE_P_STANDARD && score >= TOTAL_SCORE_A_STANDARD) {
                 rankSprite->setTexture("rank_A.png");
-            } else if (score < 6000 && score >= 3000) {
+            } else if (score < TOTAL_SCORE_A_STANDARD && score >= TOTAL_SCORE_B_STANDARD) {
                 rankSprite->setTexture("rank_B.png");
-            } else {
+            } else if (score < TOTAL_SCORE_B_STANDARD) {
                 rankSprite->setTexture("rank_C.png");
             }
             rankSprite->setVisible(true);

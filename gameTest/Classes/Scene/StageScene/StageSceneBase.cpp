@@ -44,6 +44,7 @@ bool StageSceneBase::init()
     this->initUI();
     this->initMap();
     this->initCharactors();
+    this->initScoreStandard();
     
     this->m_mdController = MessageDialogController::create();
     this->m_mdController->retain();
@@ -102,6 +103,16 @@ void StageSceneBase::initMap()
     子クラスにて実装する
  */
 void StageSceneBase::initCharactors()
+{
+    return;
+}
+
+
+/**
+    スコア基準値の初期化処理
+    子クラスにて実装する
+ */
+void StageSceneBase::initScoreStandard()
 {
     return;
 }
@@ -414,10 +425,32 @@ void StageSceneBase::stageClear()
  */
 void StageSceneBase::setupResult()
 {
+    // 実際の値を設定
     this->m_resultInfo.clearTime = (int)this->m_time / 60;
     this->m_resultInfo.clearHp = this->m_player->hp();
     this->m_resultInfo.clearFoundCount = this->m_enemyFoundPlayerCount;
+    
+    // 値を元にスコアを計算
+    // タイムスコア = ステージごとの基準値に応じて設定 + (ランク基準値 - クリアタイム) * 50のボーナス
+    if (this->m_resultInfo.clearTime <= this->m_scoreStandard.timeScoreStandardA) {
+        this->m_resultInfo.timeScore = SCORE_A_STANDARD_BY_ITEM;
+        this->m_resultInfo.timeScore += (this->m_scoreStandard.timeScoreStandardA - this->m_resultInfo.clearTime) * TIME_SCORE_BONUS_PS;
+    } else if (this->m_resultInfo.clearTime <= this->m_scoreStandard.timeScoreStandardB) {
+        this->m_resultInfo.timeScore = SCORE_B_STANDARD_BY_ITEM;
+        this->m_resultInfo.timeScore += (this->m_scoreStandard.timeScoreStandardB - this->m_resultInfo.clearTime) * TIME_SCORE_BONUS_PS;
+    } else {
+        this->m_resultInfo.timeScore = SCORE_C_STANDARD_BY_ITEM;
+    }
+    // HPスコア = 残HP * 1000
     this->m_resultInfo.hpScore = this->m_player->hp() * HP_SCORE_MAGNIGICATION;
+    // 発見数スコア = ステージごとの基準値に応じて設定
+    if (this->m_resultInfo.clearFoundCount <= this->m_scoreStandard.foundScoreStandardA) {
+        this->m_resultInfo.foundScore = SCORE_A_STANDARD_BY_ITEM;
+    } else if (this->m_resultInfo.clearFoundCount <= this->m_scoreStandard.foundScoreStandardB) {
+        this->m_resultInfo.foundScore = SCORE_B_STANDARD_BY_ITEM;
+    } else {
+        this->m_resultInfo.foundScore = SCORE_C_STANDARD_BY_ITEM;
+    }
 }
 
 /**

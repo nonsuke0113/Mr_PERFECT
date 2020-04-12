@@ -47,3 +47,10 @@ int const MESSAGE_FONT_SIZE = 40;
 #pragma mark -
 #pragma mark Result
 int const HP_SCORE_MAGNIGICATION = 1000;
+int const TIME_SCORE_BONUS_PS = 50;
+int const TOTAL_SCORE_P_STANDARD = 9000;
+int const TOTAL_SCORE_A_STANDARD = 6000;
+int const TOTAL_SCORE_B_STANDARD = 3000;
+int const SCORE_A_STANDARD_BY_ITEM = 3000;
+int const SCORE_B_STANDARD_BY_ITEM = 2000;
+int const SCORE_C_STANDARD_BY_ITEM = 1000;

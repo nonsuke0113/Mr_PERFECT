@@ -52,6 +52,18 @@ void Stage8Scene::initCharactors()
 }
 
 
+/**
+   スコア基準値の初期化処理
+*/
+void Stage8Scene::initScoreStandard()
+{
+    this->m_scoreStandard.timeScoreStandardA = 30;
+    this->m_scoreStandard.timeScoreStandardA = 45;
+    this->m_scoreStandard.foundScoreStandardA = 0;
+    this->m_scoreStandard.foundScoreStandardB = 1;
+}
+
+
 #pragma mark -
 #pragma mark GameEvent
 /**
@@ -59,6 +71,8 @@ void Stage8Scene::initCharactors()
  */
 void Stage8Scene::gameStart()
 {
+    this->m_resultInfo.clearStage = 8;
+    
     // ミッション開始のメッセージ表示後、ゲームスタート
     this->m_mdController->createStartReachMissonMessage([this]() {
         StageSceneBase::gameStart();

@@ -15,11 +15,11 @@ class Stage7Scene : public StageSceneBase
 private:
     void initMap();
     void initCharactors();
+    void initScoreStandard();
     void gameStart();
     void doContinue();
     void checkState();
     void stageClear();
-    void setupResult();
     
 public:
     static Stage7Scene *createScene();

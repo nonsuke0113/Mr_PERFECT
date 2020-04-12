@@ -52,16 +52,38 @@ extern int const MESSAGE_FONT_SIZE;
 #pragma mark Result
 /// リザルト情報
 typedef struct {
-    int clearStage;
-    int clearTime;
-    int clearHp;
-    int clearFoundCount;
-    int timeScore;
-    int hpScore;
-    int foundScore;
+    int clearStage; // ステージ情報
+    int clearTime; // クリア時間
+    int clearHp; // クリア時のHP
+    int clearFoundCount; // 敵に見つかった回数
+    int timeScore; // タイムスコア
+    int hpScore; // HPスコア
+    int foundScore; // 発見数スコア
 } resultInfo;
+
+/// ステージごとのスコア基準値
+typedef struct {
+    int timeScoreStandardA; // タイムスコアAの基準値
+    int timeScoreStandardB; // タイムスコアBの基準値
+    int foundScoreStandardA; // 発見数スコアAの基準値
+    int foundScoreStandardB; // 発見数スコアBの基準値
+} scoreStandard;
 
 /// HP1つあたりのスコア倍率
 extern int const HP_SCORE_MAGNIGICATION;
+/// タイムスコアAの基準値を更に上回った際のボーナス(1秒ごと)
+extern int const TIME_SCORE_BONUS_PS;
+/// トータルスコアPの基準値
+extern int const TOTAL_SCORE_P_STANDARD;
+/// トータルスコアAの基準値
+extern int const TOTAL_SCORE_A_STANDARD;
+/// トータルスコアBの基準値
+extern int const TOTAL_SCORE_B_STANDARD;
+/// 項目別スコアAの基準値
+extern int const SCORE_A_STANDARD_BY_ITEM;
+/// 項目別スコアBの基準値
+extern int const SCORE_B_STANDARD_BY_ITEM;
+/// 項目別スコアCの基準値
+extern int const SCORE_C_STANDARD_BY_ITEM;
 
 #endif /* GameConst_hpp */

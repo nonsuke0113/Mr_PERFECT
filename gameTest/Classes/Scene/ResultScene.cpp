@@ -133,11 +133,11 @@ bool ResultScene::init(::resultInfo resultInfo)
     rankSprite->setAnchorPoint(Vec2(0.0f, 0.0f));
     rankSprite->setPosition(Vec2(756.0f, 370.0f));
     this->addChild(rankSprite);
-    if (totalScore < 9000) {
+    if (totalScore >= TOTAL_SCORE_P_STANDARD) {
         this->m_userRankSprite = Sprite::create("rank_P.png");
-    } else if (totalScore >= 6000) {
+    } else if (totalScore >= TOTAL_SCORE_A_STANDARD) {
         this->m_userRankSprite = Sprite::create("rank_A.png");
-    } else if (totalScore >= 3000) {
+    } else if (totalScore >= TOTAL_SCORE_B_STANDARD) {
         this->m_userRankSprite = Sprite::create("rank_B.png");
     } else {
         this->m_userRankSprite = Sprite::create("rank_C.png");
@@ -225,9 +225,9 @@ void ResultScene::touchShareEvent(Ref *pSender, ui::Widget::TouchEventType type)
 std::string ResultScene::convertRankStr(int score)
 {
     std::string rankStr = "";
-    if (score >= 3000) {
+    if (score >= SCORE_A_STANDARD_BY_ITEM) {
         rankStr = "A";
-    } else if (score >= 2000) {
+    } else if (score >= SCORE_B_STANDARD_BY_ITEM) {
         rankStr = "B";
     } else {
         rankStr = "C";

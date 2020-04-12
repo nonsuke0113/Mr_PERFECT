@@ -17,6 +17,7 @@ private:
     
     void initMap();
     void initCharactors();
+    void initScoreStandard();
     void gameStart();
     void touchA();
     void touchB();
@@ -24,7 +25,6 @@ private:
     void doContinue();
     void checkState();
     void stageClear();
-    void setupResult();
     void createTutorialMessage1();
     
 public:

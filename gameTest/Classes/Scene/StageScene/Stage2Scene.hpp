@@ -17,13 +17,13 @@ private:
     
     void initMap();
     void initCharactors();
+    void initScoreStandard();
     void gameStart();
     void enemyFoundPlayer();
     void touchB();
     void doContinue();
     void checkState();
     void stageClear();
-    void setupResult();
     void createTutorialMessage2();
 
 public:

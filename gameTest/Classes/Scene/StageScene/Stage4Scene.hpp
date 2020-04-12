@@ -15,6 +15,7 @@ class Stage4Scene : public StageSceneBase
 private:
     void initMap();
     void initCharactors();
+    void initScoreStandard();
     void gameStart();
     void doContinue();
     void checkState();
