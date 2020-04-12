@@ -14,7 +14,7 @@ USING_NS_CC;
 
 #include "cocos2d.h"
 #include "ui/CocosGUI.h"
-#include "Const.hpp"
+#include "GameConst.hpp"
 
 // 向き
 typedef enum {

@@ -56,6 +56,7 @@ bool EnemySprite::initWithFileName(const std::string& filename, const Vec2 &pos,
     this->m_routeStackIndex = 0;
     this->m_isFoundPlayer = false;
     this->m_movingHeardSoundPoint = false;
+    this->m_hearableRange = 5;
     return true;
 }
 
@@ -136,6 +137,17 @@ void EnemySprite::setDirectcion(::directcion direction) {
 void EnemySprite::setRotateDirectcion(::rotateDirectcion rotateDirection)
 {
     this->m_rotateDirection = rotateDirection;
+}
+
+
+#pragma mark -
+#pragma mark Getter
+/**
+    壁叩きの音が聞こえる範囲ゲッター
+ */
+int EnemySprite::hearableRange()
+{
+    return this->m_hearableRange;
 }
 
 

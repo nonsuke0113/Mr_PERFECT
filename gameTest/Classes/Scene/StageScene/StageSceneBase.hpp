@@ -15,31 +15,12 @@ USING_NS_CC;
 #include <vector>
 #include "cocos2d.h"
 #include "ui/CocosGUI.h"
+#include "GameConst.hpp"
 #include "PlayerSprite.hpp"
 #include "EnemySprite.hpp"
 #include "MessageDialogController.hpp"
 #include "AdMobHelper.h"
 #include "StageUILayer.hpp"
-
-
-// クリアランク
-typedef enum {
-    A,
-    B,
-    C
-} clearRank;
-
-// リザルト情報
-typedef struct {
-    int clearStage;
-    int clearTime;
-    int clearHp;
-    int clearFoundCount;
-    int timeScore;
-    int hpScore;
-    int foundScore;
-} resultInfo;
-
 
 class StageSceneBase : public Scene
 {

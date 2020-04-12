@@ -63,6 +63,7 @@
 		8659988923AA030F002EB428 /* Stage1Scene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8659988723AA030F002EB428 /* Stage1Scene.cpp */; };
 		865D5A6E23E10BAC008A7C6D /* PlayerSprite.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 865D5A6C23E10BAC008A7C6D /* PlayerSprite.cpp */; };
 		8664737F23A8B58900ADCC59 /* StageSceneBase.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8664737D23A8B58900ADCC59 /* StageSceneBase.cpp */; };
+		8678AB6F2443089B00BA1717 /* GameConst.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8678AB6D2443089B00BA1717 /* GameConst.cpp */; };
 		867B070B2439A1D4006106FC /* CreditScene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 867B07092439A1D4006106FC /* CreditScene.cpp */; };
 		86C1AEC723EFE2A7003F61B7 /* Stage2Scene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 86C1AEC523EFE2A7003F61B7 /* Stage2Scene.cpp */; };
 		86DA7CC423E4364900B495AB /* SelectMissonScene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 86DA7CC223E4364900B495AB /* SelectMissonScene.cpp */; };
@@ -218,6 +219,8 @@
 		865D5A6D23E10BAC008A7C6D /* PlayerSprite.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = PlayerSprite.hpp; sourceTree = "<group>"; };
 		8664737D23A8B58900ADCC59 /* StageSceneBase.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = StageSceneBase.cpp; sourceTree = "<group>"; };
 		8664737E23A8B58900ADCC59 /* StageSceneBase.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = StageSceneBase.hpp; sourceTree = "<group>"; };
+		8678AB6D2443089B00BA1717 /* GameConst.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = GameConst.cpp; sourceTree = "<group>"; };
+		8678AB6E2443089B00BA1717 /* GameConst.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = GameConst.hpp; sourceTree = "<group>"; };
 		867B07092439A1D4006106FC /* CreditScene.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = CreditScene.cpp; sourceTree = "<group>"; };
 		867B070A2439A1D4006106FC /* CreditScene.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = CreditScene.hpp; sourceTree = "<group>"; };
 		86C1AEC523EFE2A7003F61B7 /* Stage2Scene.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Stage2Scene.cpp; sourceTree = "<group>"; };
@@ -260,7 +263,6 @@
 		E9A5210D21A90B8C00DB44EA /* TitleScene.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = TitleScene.hpp; sourceTree = "<group>"; };
 		E9A5211321A90C6F00DB44EA /* CharacterSprite.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = CharacterSprite.cpp; sourceTree = "<group>"; };
 		E9A5211421A90C6F00DB44EA /* CharacterSprite.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = CharacterSprite.hpp; sourceTree = "<group>"; };
-		E9A5211721AECC9900DB44EA /* Const.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Const.hpp; sourceTree = "<group>"; };
 		ED545A7B1B68A1F400C3958E /* libiconv.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libiconv.dylib; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS.sdk/usr/lib/libiconv.dylib; sourceTree = DEVELOPER_DIR; };
 		ED545A7D1B68A1FA00C3958E /* libiconv.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libiconv.dylib; path = usr/lib/libiconv.dylib; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
@@ -430,7 +432,6 @@
 				86114BE2240AB8E600864BEA /* Layer */,
 				AB42A26723A37A5E00B927DC /* Sprite */,
 				8648AA8523F2DDF700365B62 /* AStar */,
-				E9A5211721AECC9900DB44EA /* Const.hpp */,
 				E945438E21F49F4900C11542 /* StringUtil.h */,
 				ABB249B92420C01B005018AB /* MessageDialogController.hpp */,
 				ABB249B82420C01B005018AB /* MessageDialogController.cpp */,
@@ -438,6 +439,8 @@
 				ABBA36B521BA6A3500A02928 /* MessageDialog.cpp */,
 				8619C9692438B4BC00956209 /* ShareLauncher.h */,
 				8619C9682438B4BC00956209 /* ShareLauncher.mm */,
+				8678AB6E2443089B00BA1717 /* GameConst.hpp */,
+				8678AB6D2443089B00BA1717 /* GameConst.cpp */,
 			);
 			name = Classes;
 			path = ../Classes;
@@ -704,6 +707,7 @@
 				86114BE5240AB95700864BEA /* StageRightUILayer.cpp in Sources */,
 				8664737F23A8B58900ADCC59 /* StageSceneBase.cpp in Sources */,
 				1AF87B781F6F77F7007BE51C /* AppController.mm in Sources */,
+				8678AB6F2443089B00BA1717 /* GameConst.cpp in Sources */,
 				ABB249BA2420C01B005018AB /* MessageDialogController.cpp in Sources */,
 				8648AA8023F294F200365B62 /* AStarNode.cpp in Sources */,
 				8619C96A2438B4BC00956209 /* ShareLauncher.mm in Sources */,

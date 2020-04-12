@@ -7,7 +7,7 @@
 
 #include "MessageDialog.hpp"
 #include "StringUtil.h"
-#include "Const.hpp"
+#include "GameConst.hpp"
 #include "StageSceneBase.hpp"
 
 const float INTERVAL = 0.1f; // 文字と文字を表示する間隔

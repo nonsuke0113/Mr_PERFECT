@@ -6,7 +6,6 @@
 //
 
 #include "StageSceneBase.hpp"
-#include "Const.hpp"
 #include "TitleScene.hpp"
 #include "ui/UIScale9Sprite.h"
 #include <typeinfo>
@@ -182,7 +181,7 @@ void StageSceneBase::touchA()
     
     // 壁叩き
     int nextTileGID = this->m_player->nextTileGID();
-    if (nextTileGID == 1 || nextTileGID == 2) {
+    if (isWallTileGID(nextTileGID)) {
         this->playerKnockWall();
     }
 }
@@ -201,7 +200,7 @@ void StageSceneBase::playerKnockWall()
     Vector<EnemySprite*> enemies = this->enemysVector();
     for (int i = 0; i < enemies.size(); i++) {
         // 遠い箇所の音は移動しない
-        if (AStarUtils::calculateECost(this->m_player->worldPosition(), enemies.at(i)->worldPosition()) > 5.0) {
+        if (AStarUtils::calculateECost(this->m_player->worldPosition(), enemies.at(i)->worldPosition()) > enemies.at(i)->hearableRange()) {
             continue;
             
         }
@@ -232,7 +231,7 @@ void StageSceneBase::touchB()
     }
     
     // 1秒以内は撃てない
-    if (this->m_shootBulletInterval <= 60.0f) {
+    if (this->m_shootBulletInterval <= SHOOT_BULLET_INTERVAL) {
         return;
     }
     this->m_shootBulletInterval = 0.0f;
@@ -418,7 +417,7 @@ void StageSceneBase::setupResult()
     this->m_resultInfo.clearTime = (int)this->m_time / 60;
     this->m_resultInfo.clearHp = this->m_player->hp();
     this->m_resultInfo.clearFoundCount = this->m_enemyFoundPlayerCount;
-    this->m_resultInfo.hpScore = this->m_player->hp() * 1000;
+    this->m_resultInfo.hpScore = this->m_player->hp() * HP_SCORE_MAGNIGICATION;
 }
 
 /**
@@ -515,7 +514,7 @@ void StageSceneBase::updateTime()
         return;
     }
     this->m_time++;
-    this->m_uiLayer->updateTime(this->m_time / 60.0f);
+    this->m_uiLayer->updateTime(this->m_time / 60);
     
     this->m_shootBulletInterval++;
 }
@@ -566,7 +565,7 @@ void StageSceneBase::updatePosition()
         (this->m_mdController->isVisibleMessageDialog()) ||
         (this->m_map->getNumberOfRunningActions() > 0) ||
         (this->m_player->getActionByTag(::move) != nullptr) ||
-        (!((this->m_player->nextTileGID() == 0) || (this->m_player->nextTileGID() == 3))) ||
+        (!(isCanEnterTileGID(this->m_player->nextTileGID()))) ||
         this->m_player->nextCharacter() != nullptr) {
         return;
     }
@@ -599,7 +598,7 @@ void StageSceneBase::updateCameraPosition()
     // 右ボタン押下中
     else if ((padState == padRight)
              && (newCameraPosition.x != (PER_TILE_SIZE * MAP_TILE_WIDTH) - VIEW_WIDTH/2 + SIDE_BAR_WIDTH - PER_TILE_SIZE/2)
-             // 56 = VIEW_WIDTH/2 - 基準となるx座標
+             // 56 = VIEW_WIDTH/2 - プレイヤーの初期x座標
              && (newCameraPosition.x == this->m_player->getPosition().x + 56))
     {
         newCameraPosition.x += PER_TILE_SIZE;

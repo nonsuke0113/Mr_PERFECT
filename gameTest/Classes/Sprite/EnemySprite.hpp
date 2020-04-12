@@ -50,6 +50,7 @@ protected:
     Vec2 m_playerLostNextPoint; // プレイヤーを見失った際に見た次の座標
     bool m_movingHeardSoundPoint; // 聞こえた位置に移動中
     bool m_isFoundPlayer; // プレイヤー発見中
+    int m_hearableRange; // 壁叩きの音が聞こえる範囲
     
     void setupAnimationCache();
     void setDirectcion(::directcion direction);
@@ -71,6 +72,7 @@ public:
     virtual bool initWithFileName(const std::string& filename, const Vec2 &pos, ::directcion direction, float moveSpeed, ::patorolType patorolType);
     void setRotateDirectcion(::rotateDirectcion rotateDirection);
     void showSpeechBubble(::speechBubbleType speechBubbleType);
+    int hearableRange();
     void moveToPos(Vec2 const& pos);
     void startPatrol();
     void stopPatrol();
