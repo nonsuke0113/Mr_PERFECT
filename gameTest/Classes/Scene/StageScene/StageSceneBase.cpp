@@ -542,8 +542,8 @@ void StageSceneBase::update(float delta)
  */
 void StageSceneBase::updateTime()
 {
-    // 一時停止中は更新しない
-    if (this->m_pause) {
+    // メッセージダイアログ表示中は更新しない
+    if (this->m_mdController->isVisibleMessageDialog()) {
         return;
     }
     this->m_time++;
