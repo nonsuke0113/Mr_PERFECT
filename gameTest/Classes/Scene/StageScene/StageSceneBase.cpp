@@ -172,8 +172,8 @@ Vector<EnemySprite*> StageSceneBase::enemysVector() {
  */
 void StageSceneBase::touchAEvent(Ref *pSender, ui::Widget::TouchEventType type)
 {
-    // ゲーム進行中以外は何もしない
-    if (this->m_state != GameState::InProgress) {
+    // ゲーム終了時は何もしない
+    if (this->m_state == GameState::End) {
         return;
     }
     this->touchA();
