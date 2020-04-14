@@ -33,7 +33,7 @@ private:
     void updateCameraPosition();
     
 protected:
-    bool m_pause; // 一時停止中かどうか
+    GameState m_state; // ゲームの状態
     float m_shootBulletInterval; // 弾丸を撃てない間隔
     int m_enemyFoundPlayerCount; // 敵がプレイヤーを発見した回数
     Camera *m_camera; // スクロール用カメラ
