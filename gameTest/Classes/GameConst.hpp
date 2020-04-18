@@ -9,6 +9,15 @@
 #define GameConst_hpp
 
 #pragma mark -
+#pragma mark Game
+/// ゲームの状態
+enum class GameState {
+    InProgress, // 進行中
+    Pause, // 一時停止中
+    End // 終了
+};
+
+#pragma mark -
 #pragma mark UILayout
 /// 画面の高さ(pixel)
 extern float const VIEW_HEGHT;

@@ -53,7 +53,6 @@ bool StageSceneBase::init()
     this->m_time = 0.0f;
     this->m_shootBulletInterval = 0.0f;
     this->m_enemyFoundPlayerCount = 0;
-    this->m_pause = false;
     
     this->gameStart();
     
@@ -173,6 +172,10 @@ Vector<EnemySprite*> StageSceneBase::enemysVector() {
  */
 void StageSceneBase::touchAEvent(Ref *pSender, ui::Widget::TouchEventType type)
 {
+    // ゲーム終了時は何もしない
+    if (this->m_state == GameState::End) {
+        return;
+    }
     this->touchA();
 }
 
@@ -227,6 +230,10 @@ void StageSceneBase::playerKnockWall()
  */
 void StageSceneBase::touchBEvent(Ref *pSender, ui::Widget::TouchEventType type)
 {
+    // ゲーム進行中以外は何もしない
+    if (this->m_state != GameState::InProgress) {
+        return;
+    }
     this->touchB();
 }
 
@@ -262,8 +269,9 @@ void StageSceneBase::touchB()
  */
 void StageSceneBase::touchPauseEvent(Ref *pSender, ui::Widget::TouchEventType type)
 {
-    // すでにメッセージ表示中であれば何もしない
-    if (this->m_mdController->m_dialog->isVisible()) {
+    // ゲーム進行中以外、またはすでにメッセージ表示中であれば何もしない
+    if ((this->m_state != GameState::InProgress) ||
+        (this->m_mdController->m_dialog->isVisible())) {
         return;
     }
     // 中断する
@@ -300,11 +308,11 @@ void StageSceneBase::gameStart()
     
     // 更新処理をスケジュール
     this->scheduleUpdate();
-    
     for (EnemySprite *enemy : this->enemysVector()) {
         enemy->startPatrol();
     }
     
+    this->m_state = GameState::InProgress;
 }
 
 
@@ -313,7 +321,7 @@ void StageSceneBase::gameStart()
  */
 void StageSceneBase::gamePause()
 {
-    this->m_pause = true;
+    this->m_state = GameState::Pause;
     for (Node *node : this->getChildren()) {
         node->pause();
     }
@@ -325,7 +333,7 @@ void StageSceneBase::gamePause()
  */
 void StageSceneBase::gameResume()
 {
-    this->m_pause = false;
+    this->m_state = GameState::InProgress;
     for (Node *node : this->getChildren()) {
         node->resume();
     }
@@ -388,6 +396,9 @@ void StageSceneBase::stageClear()
     
     // 全てのスケジュールを中止
     this->allNodeUnschedule();
+    
+    // ステータス更新
+    this->m_state = GameState::End;
     
     // コンプリート表示処理
     Sprite *complete { Sprite::create("mission_complete.png") };
@@ -542,8 +553,8 @@ void StageSceneBase::update(float delta)
  */
 void StageSceneBase::updateTime()
 {
-    // メッセージダイアログ表示中は更新しない
-    if (this->m_mdController->isVisibleMessageDialog()) {
+    // ゲーム進行中以外は更新しない
+    if (this->m_state != GameState::InProgress) {
         return;
     }
     this->m_time++;
@@ -594,7 +605,8 @@ void StageSceneBase::updatePlayerDirection()
 void StageSceneBase::updatePosition()
 {
     // ゲームパッドが真ん中だったり、行けない道だったら何もしない
-    if ((this->padState() == padNone) ||
+    if ((this->m_state != GameState::InProgress) ||
+        (this->padState() == padNone) ||
         (this->m_mdController->isVisibleMessageDialog()) ||
         (this->m_map->getNumberOfRunningActions() > 0) ||
         (this->m_player->getActionByTag(::move) != nullptr) ||
