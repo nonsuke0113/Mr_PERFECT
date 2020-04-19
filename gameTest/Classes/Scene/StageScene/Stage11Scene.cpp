@@ -107,7 +107,7 @@ void Stage11Scene::doContinue()
  */
 void Stage11Scene::checkState()
 {
-    // クリア座標判定
+    // 敵キャラクター追跡開始
     if (this->m_player->worldPosition() == Vec2(13.0f, 24.0f)) {
         this->enemysVector().at(0)->setPatorolType(::patorol_chaseForever);
     }
