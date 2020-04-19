@@ -130,6 +130,14 @@ void EnemySprite::setDirectcion(::directcion direction) {
     this->runAction(action);
 }
 
+/**
+    巡回タイプセッター
+ */
+void EnemySprite::setPatorolType(::patorolType patorolType)
+{
+    this->m_patorolType = patorolType;
+}
+
 
 /**
     巡回の方向セッター
@@ -259,6 +267,12 @@ void EnemySprite::update(float delta)
 {
     // 警備中ではない
     if (this->m_patorolType == ::patorol_none) {
+        return;
+    }
+    
+    // ずっと追跡中
+    if (this->m_patorolType == ::patorol_chaseForever) {
+        this->patrolChaseForever();
         return;
     }
     
@@ -542,6 +556,50 @@ void EnemySprite::patrolChase()
     if (this->canMovePos(this->nextTilePosition()) &&
         this->nextCharacter() != mainScene->m_player) {
         this->moveNextTile();
+    }
+}
+
+
+/**
+    警備する
+    プレイヤーをずっと追跡する
+ */
+void EnemySprite::patrolChaseForever()
+{
+    StageSceneBase *mainScene = (StageSceneBase*)this->getParent();
+    
+    if (!this->checkFindPlayer() || this->m_routeStack.empty()) {
+        this->m_routeStack.clear();
+        this->m_routeStackIndex = 0;
+        // 最短経路計算
+        this->m_routeStack = AStarUtils::shortestRouteStack(this, this->worldPosition(), mainScene->m_player->worldPosition());
+    }
+    
+    
+    // インターバルが経過していなければ何もしない
+    if (fmod(mainScene->m_time, 30) != 0) {
+        return;
+    }
+    
+    // 弾を撃つ
+    if (fmod(mainScene->m_time, 60) == 0) {
+        this->shootBullet();
+    }
+    
+    // 経路スタックがなければ何もしない
+    if (this->m_routeStack.empty() ||
+        this->m_routeStack.size() <= this->m_routeStackIndex) {
+        return;
+    }
+    
+    // プレイヤーに近づく
+    Vec2 nextPos = this->m_routeStack.at(this->m_routeStackIndex);
+    this->facingNextPos(nextPos);
+    if (this->canMovePos(nextPos) && this->nextCharacter() != mainScene->m_player) {
+        this->moveNextTile();
+        if (this->worldPosition() == nextPos) {
+            this->m_routeStackIndex++;
+        }
     }
 }
 
