@@ -24,6 +24,7 @@ public:
     void setDirectcion(::directcion direction);
     void hitToBullet(int damage, ::directcion bulletDirection);
     void knockWall();
+    bool canMoveNextPos();
 };
 
 #endif /* PlayerSprite_hpp */

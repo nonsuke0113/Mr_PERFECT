@@ -156,6 +156,30 @@ void PlayerSprite::knockWall()
 
 
 /**
+    次の座標に移動可能かどうかを返す
+ 
+    @return 次の座標に移動可能かどうか
+ */
+bool PlayerSprite::canMoveNextPos()
+{
+    // 通れない道
+    if (!isCanEnterTileGID(this->nextTileGID())) {
+        return false;
+    }
+    
+    // 別のゲームスプライトがある
+    StageSceneBase* mainScene = (StageSceneBase*)this->getParent();
+    for (GameSpriteBase *sprite : mainScene->gameSpriteVector()) {
+        if (this->nextTilePosition() == sprite->worldPosition()) {
+            return false;
+        }
+    }
+    
+    return true;
+}
+
+
+/**
     死亡処理
  */
 void PlayerSprite::dead()
