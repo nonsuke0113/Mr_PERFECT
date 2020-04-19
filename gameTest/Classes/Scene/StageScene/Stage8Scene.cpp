@@ -26,6 +26,15 @@ Stage8Scene* Stage8Scene::createScene()
 
 
 /**
+    ステージ情報の初期化処理
+ */
+void Stage8Scene::initStage()
+{
+    this->m_stageNum = 8;
+}
+
+
+/**
     MAPの初期化処理
  */
 void Stage8Scene::initMap()
@@ -71,8 +80,6 @@ void Stage8Scene::initScoreStandard()
  */
 void Stage8Scene::gameStart()
 {
-    this->m_resultInfo.clearStage = 8;
-    
     // ミッション開始のメッセージ表示後、ゲームスタート
     this->m_mdController->createStartReachMissonMessage([this]() {
         StageSceneBase::gameStart();
@@ -106,18 +113,4 @@ void Stage8Scene::checkState()
     }
     
     return;
-}
-
-
-/**
-    ステージクリア時の処理
- */
-void Stage8Scene::stageClear()
-{   
-    // 親のクリア処理を呼び出す
-    StageSceneBase::stageClear();
-    
-    // クリア情報を保存
-    UserDefault* userDefault = UserDefault::getInstance();
-    userDefault->setIntegerForKey("score8", this->m_resultInfo.timeScore + this->m_resultInfo.hpScore + this->m_resultInfo.foundScore);
 }

@@ -13,13 +13,13 @@
 class Stage6Scene : public StageSceneBase
 {
 private:
+    void initStage();
     void initMap();
     void initCharactors();
     void initScoreStandard();
     void gameStart();
     void doContinue();
     void checkState();
-    void stageClear();
     
 public:
     static Stage6Scene *createScene();

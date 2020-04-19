@@ -42,6 +42,7 @@ bool StageSceneBase::init()
     }
     this->initCamera();
     this->initUI();
+    this->initStage();
     this->initMap();
     this->initCharactors();
     this->initScoreStandard();
@@ -84,6 +85,16 @@ void StageSceneBase::initUI()
     this->m_uiLayer = StageUILayer::create();
     this->m_uiLayer->setCameraMask((unsigned short)CameraFlag::USER1);
     this->addChild(this->m_uiLayer);
+}
+
+
+/**
+    ステージ情報の初期化処理
+    子クラスにて実装する
+ */
+void StageSceneBase::initStage()
+{
+    return;
 }
 
 
@@ -415,10 +426,14 @@ void StageSceneBase::stageClear()
     
     // リザルトの設定
     this->setupResult();
+    ResultInfo resultInfo = *this->m_resultInfo;
+    
+    // クリア情報を保存
+    this->saveScore();
     
     // リザルトシーンに遷移
-    actionAry.pushBack(CallFunc::create([this]() {
-        Scene *resultScene = ResultScene::createScene(this->m_resultInfo);
+    actionAry.pushBack(CallFunc::create([=]() {
+        Scene *resultScene = ResultScene::createScene(resultInfo);
         TransitionFade* fade = TransitionFade::create(1.0f, resultScene);
         Director::getInstance()->replaceScene(fade);
     }));
@@ -431,36 +446,52 @@ void StageSceneBase::stageClear()
 
 
 /**
+    スコアを保存する
+ */
+void StageSceneBase::saveScore()
+{
+    UserDefault* userDefault = UserDefault::getInstance();
+    std::string key = StringUtils::format("score%s", std::to_string(this->m_stageNum).c_str());
+    int oldScore = userDefault->getIntegerForKey(key.c_str());
+    if (this->m_resultInfo->totalScore() > oldScore) {
+        userDefault->setIntegerForKey(key.c_str(), this->m_resultInfo->totalScore());
+    }
+}
+
+
+/**
     リザルトを設定する
     timeRankとfoundRankは子クラスにて設定する
  */
 void StageSceneBase::setupResult()
 {
+    this->m_resultInfo = ResultInfo::create(this->m_stageNum);
+    
     // 実際の値を設定
-    this->m_resultInfo.clearTime = (int)this->m_time / 60;
-    this->m_resultInfo.clearHp = this->m_player->hp();
-    this->m_resultInfo.clearFoundCount = this->m_enemyFoundPlayerCount;
+    this->m_resultInfo->m_clearTime = (int)this->m_time / 60;
+    this->m_resultInfo->m_clearHp = this->m_player->hp();
+    this->m_resultInfo->m_clearFoundCount = this->m_enemyFoundPlayerCount;
     
     // 値を元にスコアを計算
     // タイムスコア = ステージごとの基準値に応じて設定 + (ランク基準値 - クリアタイム) * 50のボーナス
-    if (this->m_resultInfo.clearTime <= this->m_scoreStandard.timeScoreStandardA) {
-        this->m_resultInfo.timeScore = SCORE_A_STANDARD_BY_ITEM;
-        this->m_resultInfo.timeScore += (this->m_scoreStandard.timeScoreStandardA - this->m_resultInfo.clearTime) * TIME_SCORE_BONUS_PS;
-    } else if (this->m_resultInfo.clearTime <= this->m_scoreStandard.timeScoreStandardB) {
-        this->m_resultInfo.timeScore = SCORE_B_STANDARD_BY_ITEM;
-        this->m_resultInfo.timeScore += (this->m_scoreStandard.timeScoreStandardB - this->m_resultInfo.clearTime) * TIME_SCORE_BONUS_PS;
+    if (this->m_resultInfo->m_clearTime <= this->m_scoreStandard.timeScoreStandardA) {
+        this->m_resultInfo->m_timeScore = SCORE_A_STANDARD_BY_ITEM;
+        this->m_resultInfo->m_timeScore += (this->m_scoreStandard.timeScoreStandardA - this->m_resultInfo->m_clearTime) * TIME_SCORE_BONUS_PS;
+    } else if (this->m_resultInfo->m_clearTime <= this->m_scoreStandard.timeScoreStandardB) {
+        this->m_resultInfo->m_timeScore = SCORE_B_STANDARD_BY_ITEM;
+        this->m_resultInfo->m_timeScore += (this->m_scoreStandard.timeScoreStandardB - this->m_resultInfo->m_clearTime) * TIME_SCORE_BONUS_PS;
     } else {
-        this->m_resultInfo.timeScore = SCORE_C_STANDARD_BY_ITEM;
+        this->m_resultInfo->m_timeScore = SCORE_C_STANDARD_BY_ITEM;
     }
     // HPスコア = 残HP * 1000
-    this->m_resultInfo.hpScore = this->m_player->hp() * HP_SCORE_MAGNIGICATION;
+    this->m_resultInfo->m_hpScore = this->m_player->hp() * HP_SCORE_MAGNIGICATION;
     // 発見数スコア = ステージごとの基準値に応じて設定
-    if (this->m_resultInfo.clearFoundCount <= this->m_scoreStandard.foundScoreStandardA) {
-        this->m_resultInfo.foundScore = SCORE_A_STANDARD_BY_ITEM;
-    } else if (this->m_resultInfo.clearFoundCount <= this->m_scoreStandard.foundScoreStandardB) {
-        this->m_resultInfo.foundScore = SCORE_B_STANDARD_BY_ITEM;
+    if (this->m_resultInfo->m_clearFoundCount <= this->m_scoreStandard.foundScoreStandardA) {
+        this->m_resultInfo->m_foundScore = SCORE_A_STANDARD_BY_ITEM;
+    } else if (this->m_resultInfo->m_clearFoundCount <= this->m_scoreStandard.foundScoreStandardB) {
+        this->m_resultInfo->m_foundScore = SCORE_B_STANDARD_BY_ITEM;
     } else {
-        this->m_resultInfo.foundScore = SCORE_C_STANDARD_BY_ITEM;
+        this->m_resultInfo->m_foundScore = SCORE_C_STANDARD_BY_ITEM;
     }
 }
 

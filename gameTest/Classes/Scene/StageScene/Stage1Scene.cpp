@@ -26,6 +26,16 @@ Stage1Scene* Stage1Scene::createScene()
 
 
 /**
+    ステージ情報の初期化処理
+ */
+void Stage1Scene::initStage()
+{
+    this->m_stageNum = 1;
+    this->m_isTutorialMessage1 = false;
+}
+
+
+/**
     MAPの初期化処理
  */
 void Stage1Scene::initMap()
@@ -96,9 +106,6 @@ void Stage1Scene::touchB()
  */
 void Stage1Scene::gameStart()
 {
-    this->m_isTutorialMessage1 = false;
-    this->m_resultInfo.clearStage = 1;
-    
     // ミッション開始のメッセージ表示後、ゲームスタート
     this->m_mdController->createStartSeekMissonMessage([this]() {
         StageSceneBase::gameStart();
@@ -148,20 +155,6 @@ void Stage1Scene::checkState()
     }
     
     return;
-}
-
-
-/**
-    ステージクリア時の処理
- */
-void Stage1Scene::stageClear()
-{
-    // 親のクリア処理を呼び出す
-    StageSceneBase::stageClear();
-    
-    // クリア情報を保存
-    UserDefault* userDefault = UserDefault::getInstance();
-    userDefault->setIntegerForKey("score1", this->m_resultInfo.timeScore + this->m_resultInfo.hpScore + this->m_resultInfo.foundScore);
 }
 
 

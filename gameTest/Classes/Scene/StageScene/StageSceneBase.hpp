@@ -21,12 +21,14 @@ USING_NS_CC;
 #include "MessageDialogController.hpp"
 #include "AdMobHelper.h"
 #include "StageUILayer.hpp"
+#include "ResultInfo.hpp"
 
 class StageSceneBase : public Scene
 {
 private:
     void initCamera();
     void initUI();
+    void saveScore();
     void updateTime();
     void updatePlayerDirection();
     void updatePosition();
@@ -34,14 +36,18 @@ private:
     
 protected:
     GameState m_state; // ゲームの状態
+    // ステージ情報
+    int m_stageNum;
     float m_shootBulletInterval; // 弾丸を撃てない間隔
     int m_enemyFoundPlayerCount; // 敵がプレイヤーを発見した回数
     Camera *m_camera; // スクロール用カメラ
     MessageDialogController *m_mdController; // メッセージダイアログコントローラー
     StageUILayer *m_uiLayer; // UIレイヤー
-    ::resultInfo m_resultInfo; // リザルト用の情報
+    /// リザルト用の情報
+    ResultInfo *m_resultInfo;
     ::scoreStandard m_scoreStandard; // スコア基準値
     
+    virtual void initStage();
     virtual void initMap();
     virtual void initCharactors();
     virtual void initScoreStandard();

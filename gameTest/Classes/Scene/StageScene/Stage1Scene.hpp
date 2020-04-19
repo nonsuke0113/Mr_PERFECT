@@ -15,6 +15,7 @@ class Stage1Scene : public StageSceneBase
 private:
     bool m_isTutorialMessage1; // チュートリアルメッセージ1表示済みかどうか
     
+    void initStage();
     void initMap();
     void initCharactors();
     void initScoreStandard();
@@ -24,7 +25,6 @@ private:
     void enemyFoundPlayer();
     void doContinue();
     void checkState();
-    void stageClear();
     void createTutorialMessage1();
     
 public:

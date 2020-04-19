@@ -15,6 +15,7 @@ class Stage2Scene : public StageSceneBase
 private:
     bool m_isTutorialMessage2; // チュートリアルメッセージ2表示済みかどうか
     
+    void initStage();
     void initMap();
     void initCharactors();
     void initScoreStandard();
@@ -23,7 +24,6 @@ private:
     void touchB();
     void doContinue();
     void checkState();
-    void stageClear();
     void createTutorialMessage2();
 
 public:

@@ -19,7 +19,7 @@ USING_NS_CC;
 class ResultScene : public Layer
 {
 private:
-    ::resultInfo m_resultInfo; // リザルト情報
+    ResultInfo m_resultInfo; // リザルト情報
     Sprite *m_userRankSprite; // ランク画像
     
     void onTouchesBegan(const std::vector<Touch*>& touches, Event *unused_event);
@@ -27,9 +27,9 @@ private:
     static std::string convertRankStr(int score);
     
 public:
-    static Scene* createScene(::resultInfo resultInfo);
-    static ResultScene* create(::resultInfo resultInfo);
-    virtual bool init(::resultInfo resultInfo);
+    static Scene* createScene(ResultInfo resultInfo);
+    static ResultScene* create(ResultInfo resultInfo);
+    virtual bool init(ResultInfo resultInfo);
     
 };
 

@@ -17,7 +17,7 @@
     @param resultInfo リザルト情報
     @return シーン
  */
-Scene* ResultScene::createScene(::resultInfo resultInfo)
+Scene* ResultScene::createScene(ResultInfo resultInfo)
 {
     auto scene = Scene::create();
     auto layer = ResultScene::create(resultInfo);
@@ -32,7 +32,7 @@ Scene* ResultScene::createScene(::resultInfo resultInfo)
     @param resultInfo リザルト情報
     @return レイヤー
  */
-ResultScene* ResultScene::create(::resultInfo resultInfo)
+ResultScene* ResultScene::create(ResultInfo resultInfo)
 {
     ResultScene *layer = new (std::nothrow) ResultScene();
     if (layer && layer->init(resultInfo))
@@ -50,14 +50,12 @@ ResultScene* ResultScene::create(::resultInfo resultInfo)
  
     @param resultInfo リザルト情報
  */
-bool ResultScene::init(::resultInfo resultInfo)
+bool ResultScene::init(ResultInfo resultInfo)
 {
     if ( !Layer::init() )
     {
         return false;
     }
-    
-//    this->m_isViewedRank = false;
     
     // リザルト設定
     this->m_resultInfo = resultInfo;
@@ -77,7 +75,7 @@ bool ResultScene::init(::resultInfo resultInfo)
     this->addChild(resultSprite);
         
     // ステージラベル
-    Label *stageLabel = Label::createWithTTF(StringUtils::format("MISSION%d", this->m_resultInfo.clearStage), "fonts/PixelMplus12-Regular.ttf", 30);
+    Label *stageLabel = Label::createWithTTF(StringUtils::format("MISSION%d", this->m_resultInfo.m_stageNum), "fonts/PixelMplus12-Regular.ttf", 30);
     stageLabel->setAnchorPoint(Vec2(0.5f, 1.0f));
     stageLabel->setPosition(Vec2(568.0f, 476.0f));
     stageLabel->setColor(Color3B(0, 0, 0));
@@ -88,7 +86,7 @@ bool ResultScene::init(::resultInfo resultInfo)
     timeSprite->setAnchorPoint(Vec2(1.0f, 0.0f));
     timeSprite->setPosition(Vec2(300.0f, 370.0f));
     this->addChild(timeSprite);
-    Label *timeLabel = Label::createWithTTF(StringUtils::format("%03d     %05d     %s", this->m_resultInfo.clearTime, this->m_resultInfo.timeScore, this->convertRankStr(this->m_resultInfo.timeScore).c_str()), "fonts/PixelMplus12-Regular.ttf", 30);
+    Label *timeLabel = Label::createWithTTF(StringUtils::format("%03d     %05d     %s", this->m_resultInfo.m_clearTime, this->m_resultInfo.m_timeScore, this->convertRankStr(this->m_resultInfo.m_timeScore).c_str()), "fonts/PixelMplus12-Regular.ttf", 30);
     timeLabel->setAnchorPoint(Vec2(0.0f, 0.0f));
     timeLabel->setPosition(Vec2(360.0f, 373.0f));
     timeLabel->setColor(Color3B(0, 0, 0));
@@ -99,7 +97,7 @@ bool ResultScene::init(::resultInfo resultInfo)
     hpSprite->setAnchorPoint(Vec2(1.0f, 0.0f));
     hpSprite->setPosition(Vec2(300.0f, 286.0f));
     this->addChild(hpSprite);
-    Label *hpLabel = Label::createWithTTF(StringUtils::format("%d/3     %05d     %s", this->m_resultInfo.clearHp, this->m_resultInfo.hpScore, this->convertRankStr(this->m_resultInfo.hpScore).c_str()), "fonts/PixelMplus12-Regular.ttf", 30);
+    Label *hpLabel = Label::createWithTTF(StringUtils::format("%d/3     %05d     %s", this->m_resultInfo.m_clearHp, this->m_resultInfo.m_hpScore, this->convertRankStr(this->m_resultInfo.m_hpScore).c_str()), "fonts/PixelMplus12-Regular.ttf", 30);
     hpLabel->setAnchorPoint(Vec2(0.0f, 0.0f));
     hpLabel->setPosition(Vec2(360.0f, 290.0f));
     hpLabel->setColor(Color3B(0, 0, 0));
@@ -110,7 +108,7 @@ bool ResultScene::init(::resultInfo resultInfo)
     foundSprite->setAnchorPoint(Vec2(1.0f, 0.0f));
     foundSprite->setPosition(Vec2(300.0f, 195.0f));
     this->addChild(foundSprite);
-    Label *foundLabel = Label::createWithTTF(StringUtils::format("%03d     %05d     %s", this->m_resultInfo.clearFoundCount, this->m_resultInfo.foundScore,  this->convertRankStr(this->m_resultInfo.foundScore).c_str()), "fonts/PixelMplus12-Regular.ttf", 30);
+    Label *foundLabel = Label::createWithTTF(StringUtils::format("%03d     %05d     %s", this->m_resultInfo.m_clearFoundCount, this->m_resultInfo.m_foundScore,  this->convertRankStr(this->m_resultInfo.m_foundScore).c_str()), "fonts/PixelMplus12-Regular.ttf", 30);
     foundLabel->setAnchorPoint(Vec2(0,0));
     foundLabel->setPosition(Vec2(360.0f, 200.0f));
     foundLabel->setColor(Color3B(0, 0, 0));
@@ -121,7 +119,7 @@ bool ResultScene::init(::resultInfo resultInfo)
     scoreSprite->setAnchorPoint(Vec2(1.0f, 0.0f));
     scoreSprite->setPosition(Vec2(404.0f, 64.0f));
     this->addChild(scoreSprite);
-    int totalScore = (int)this->m_resultInfo.timeScore + (int)this->m_resultInfo.hpScore + (int)this->m_resultInfo.foundScore;
+    int totalScore = (int)this->m_resultInfo.m_timeScore + (int)this->m_resultInfo.m_hpScore + (int)this->m_resultInfo.m_foundScore;
     Label *scoreLabel = Label::createWithTTF(StringUtils::format("%05d", totalScore), "fonts/PixelMplus12-Regular.ttf", 30);
     scoreLabel->setAnchorPoint(Vec2(0.0f, 0.0f));
     scoreLabel->setPosition(Vec2(478.0f, 64.0f));
@@ -204,7 +202,7 @@ void ResultScene::touchShareEvent(Ref *pSender, ui::Widget::TouchEventType type)
             // 取得したテクスチャを保存する
             texture->saveToFile("screenshot.png", Image::Format::PNG, true, [&](RenderTexture* rt, const std::string& path) {
                 // 保存完了のコールバック処理
-                std::string text = StringUtils::format("MIISION%dをクリア！ #MrPerfect", this->m_resultInfo.clearStage);
+                std::string text = StringUtils::format("MIISION%dをクリア！ #MrPerfect", this->m_resultInfo.m_stageNum);
                 ShareLauncher::openShareDialog(text, path);
             });
             break;
