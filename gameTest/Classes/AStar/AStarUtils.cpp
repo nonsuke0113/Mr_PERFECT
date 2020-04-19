@@ -91,15 +91,6 @@ AStarNode* AStarUtils::findGoalNode(std::vector<AStarNode*>& openNodes,
     }
     
     // 経路探索
-    // 上
-    AStarNode *upNode = AStarNode::create(Vec2{ currentNode->m_pos.x, currentNode->m_pos.y - 1.0f }, goalPos, currentNode);
-    if (sprite->canMovePos(upNode->m_pos) &&
-        !AStarUtils::findNodeFromVector(openNodes, upNode) &&
-        !AStarUtils::findNodeFromVector(closeNodes, upNode))
-    {
-        openNodes.push_back(upNode);
-    }
-    
     // 右
     AStarNode *rightNode = AStarNode::create(Vec2{ currentNode->m_pos.x + 1.0f, currentNode->m_pos.y }, goalPos, currentNode);
     if (sprite->canMovePos(rightNode->m_pos) &&
@@ -108,16 +99,6 @@ AStarNode* AStarUtils::findGoalNode(std::vector<AStarNode*>& openNodes,
     {
         openNodes.push_back(rightNode);
     }
-    
-    // 下
-    AStarNode *downNode = AStarNode::create(Vec2{ currentNode->m_pos.x, currentNode->m_pos.y + 1.0f }, goalPos, currentNode);
-    if (sprite->canMovePos(downNode->m_pos) &&
-        !AStarUtils::findNodeFromVector(openNodes, downNode) &&
-        !AStarUtils::findNodeFromVector(closeNodes, downNode))
-    {
-        openNodes.push_back(downNode);
-    }
-    
     // 左
     AStarNode *leftNode = AStarNode::create(Vec2{ currentNode->m_pos.x - 1.0f, currentNode->m_pos.y }, goalPos, currentNode);
     if (sprite->canMovePos(leftNode->m_pos) &&
@@ -125,6 +106,22 @@ AStarNode* AStarUtils::findGoalNode(std::vector<AStarNode*>& openNodes,
         !AStarUtils::findNodeFromVector(closeNodes, leftNode))
     {
         openNodes.push_back(leftNode);
+    }
+    // 上
+    AStarNode *upNode = AStarNode::create(Vec2{ currentNode->m_pos.x, currentNode->m_pos.y - 1.0f }, goalPos, currentNode);
+    if (sprite->canMovePos(upNode->m_pos) &&
+        !AStarUtils::findNodeFromVector(openNodes, upNode) &&
+        !AStarUtils::findNodeFromVector(closeNodes, upNode))
+    {
+        openNodes.push_back(upNode);
+    }
+    // 下
+    AStarNode *downNode = AStarNode::create(Vec2{ currentNode->m_pos.x, currentNode->m_pos.y + 1.0f }, goalPos, currentNode);
+    if (sprite->canMovePos(downNode->m_pos) &&
+        !AStarUtils::findNodeFromVector(openNodes, downNode) &&
+        !AStarUtils::findNodeFromVector(closeNodes, downNode))
+    {
+        openNodes.push_back(downNode);
     }
     
     // 上下左右の検証が終わったら、現在検証中のノードを検証済みとする
