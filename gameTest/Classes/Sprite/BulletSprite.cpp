@@ -16,10 +16,10 @@
     @param pos 弾のワールド座標初期位置
     @param direction 弾の向き
     @param charactor 発砲したキャラクター
-    @param moveSpeed 弾の移動速度
+    @param updatePosFrame 弾の移動速度
     @return 弾のSprite
  */
-BulletSprite* BulletSprite::create(const Vec2& pos, ::directcion direction, CharacterSprite* charactor, float speed)
+BulletSprite* BulletSprite::create(const Vec2& pos, ::directcion direction, CharacterSprite* charactor, float updatePosFrame)
 {
     // 向きに応じてファイル名を設定
     std::string filename;
@@ -41,7 +41,7 @@ BulletSprite* BulletSprite::create(const Vec2& pos, ::directcion direction, Char
     }
     
     BulletSprite *sprite =  new (std::nothrow) BulletSprite;
-    if (sprite && sprite->initWithFileName(filename, pos, direction, charactor, speed)) {
+    if (sprite && sprite->initWithFileName(filename, pos, direction, charactor, updatePosFrame)) {
         return sprite;
     }
     CC_SAFE_DELETE(sprite);
@@ -56,16 +56,16 @@ BulletSprite* BulletSprite::create(const Vec2& pos, ::directcion direction, Char
     @param pos 弾のワールド座標初期位置
     @param direction 画像の向き
     @param charactor 発砲したキャラクター
-    @param moveSpeed 弾の移動速度
+    @param updatePosFrame 弾の座標更新のフレーム
  */
-bool BulletSprite::initWithFileName(const std::string& filename, const Vec2 &pos, ::directcion direction, CharacterSprite* charactor, float speed)
+bool BulletSprite::initWithFileName(const std::string& filename, const Vec2 &pos, ::directcion direction, CharacterSprite* charactor, float updatePosFrame)
 {
     if (!GameSpriteBase::initWithFileName(filename, pos, direction)) {
         return false;
     }
     this->m_shootCharactor = charactor;
     this->m_power = 1;
-    this->m_speed = speed;
+    this->m_updatePosFrame = updatePosFrame;
     return true;
 }
 
@@ -91,7 +91,7 @@ int BulletSprite::power() {
 void BulletSprite::shootBullet(::directcion direction)
 {
     this->setDirectcion(direction);
-    schedule(schedule_selector(BulletSprite::updatePosition), this->m_speed);
+    schedule(schedule_selector(BulletSprite::updatePosition), this->m_updatePosFrame);
 }
 
 
@@ -122,7 +122,7 @@ void BulletSprite::updatePosition(float frame)
         return;
     }
     
-    this->moveWorld(0.1f, this->nextTilePosition());
+    this->moveWorld(this->nextTilePosition());
 }
 
 

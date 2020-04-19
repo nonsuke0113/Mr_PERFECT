@@ -22,14 +22,15 @@ class BulletSprite : public GameSpriteBase
 protected:
     CharacterSprite* m_shootCharactor; // 撃ったキャラクター
     int m_power; // 威力
-    float m_speed; // 弾の速度
+    /// 座標更新のフレーム
+    float m_updatePosFrame;
     
     void updatePosition(float frame);
     CharacterSprite* validateHit();
     
 public:
-    static BulletSprite* create(const Vec2 &pos, ::directcion direction, CharacterSprite* charactor, float speed);
-    virtual bool initWithFileName(const std::string& filename, const Vec2 &pos, ::directcion direction, CharacterSprite* charactor, float speed);
+    static BulletSprite* create(const Vec2 &pos, ::directcion direction, CharacterSprite* charactor, float updatePosFrame);
+    virtual bool initWithFileName(const std::string& filename, const Vec2 &pos, ::directcion direction, CharacterSprite* charactor, float updatePosFrame);
     int power();
     void shootBullet(::directcion direction);
     
