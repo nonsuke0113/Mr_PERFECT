@@ -46,6 +46,11 @@ bool isCanEnterTileGID(int gid);
 bool isWallTileGID(int gid);
 
 #pragma mark -
+#pragma mark GameSprite
+/// ゲーム画像の移動速度
+extern float const SPRITE_MOVE_SPEED;
+
+#pragma mark -
 #pragma mark Charactor
 /// キャラクターのアニメーション切り替え速度
 extern float const CHARACTER_ANIMATION_SPEED;

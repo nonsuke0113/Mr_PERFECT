@@ -36,8 +36,13 @@ bool isWallTileGID(int gid)
 }
 
 #pragma mark -
+#pragma mark GameSprite
+float const SPRITE_MOVE_SPEED = 0.1f;
+
+#pragma mark -
 #pragma mark Charactor
 float const CHARACTER_ANIMATION_SPEED = 0.5f;
+
 float const SHOOT_BULLET_INTERVAL = 60.0f;
 
 #pragma mark -
