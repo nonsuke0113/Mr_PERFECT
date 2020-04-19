@@ -25,8 +25,9 @@ typedef enum {
     patorol_roundtrip, // 往復
     patorol_rotateifpossible, // 巡回(曲がれるなら曲がる)
     patorol_rotatehitwall, // 巡回(壁にぶつかったら曲がる)
+    patorol_random, // 巡回(ランダム移動)
     patorol_chase, // 追跡中
-    patorol_chaseForever, // 追跡中
+    patorol_chaseForever, // 追跡中(繰り返し)
     patorol_according, // 経路に沿って移動中
     patorol_nomove, // 移動なし
     patorol_none // 警備なし
@@ -65,13 +66,14 @@ protected:
     virtual void patrolRoundTrip();
     virtual void patrolRotateIfPossible();
     virtual void patrolRotateHitWall();
+    virtual void patrolRandom();
     virtual void patrolChase();
     virtual void patrolChaseForever();
     virtual void patrolAccording();
     
 public:
-    static EnemySprite* create(const std::string& filename, const Vec2 &pos, ::directcion direction, float moveSpeed, ::patorolType patorolType);
-    virtual bool initWithFileName(const std::string& filename, const Vec2 &pos, ::directcion direction, float moveSpeed, ::patorolType patorolType);
+    static EnemySprite* create(const std::string& filename, const Vec2 &pos, ::directcion direction, float updatePosFrame, ::patorolType patorolType);
+    virtual bool initWithFileName(const std::string& filename, const Vec2 &pos, ::directcion direction, float updatePosFrame, ::patorolType patorolType);
     void setPatorolType(::patorolType patorolType);
     void setRotateDirectcion(::rotateDirectcion rotateDirection);
     void showSpeechBubble(::speechBubbleType speechBubbleType);

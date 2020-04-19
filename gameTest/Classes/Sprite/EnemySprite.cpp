@@ -10,6 +10,7 @@
 #include <algorithm>
 #include <unistd.h>
 #include "AStarUtils.hpp"
+#include <random>
 
 #pragma mark -
 #pragma mark Init
@@ -19,14 +20,14 @@
     @param filename 敵キャラクターの画像リソース名
     @param pos 敵キャラクターのワールド座標初期位置
     @param direction 敵キャラクターの向き
-    @param moveSpeed 敵キャラクターの移動速度
+    @param updatePosFrame 敵キャラクターの座標更新のフレーム
     @param patorolType 敵キャラクターの巡回タイプ
     @return 敵キャラクターのSprite
  */
-EnemySprite* EnemySprite::create(const std::string& filename, const Vec2& pos, ::directcion direction, float moveSpeed, ::patorolType patorolType)
+EnemySprite* EnemySprite::create(const std::string& filename, const Vec2& pos, ::directcion direction, float updatePosFrame, ::patorolType patorolType)
 {
     EnemySprite *sprite =  new (std::nothrow) EnemySprite;
-    if (sprite && sprite->initWithFileName(filename, pos, direction, moveSpeed, patorolType)) {
+    if (sprite && sprite->initWithFileName(filename, pos, direction, updatePosFrame, patorolType)) {
         sprite->autorelease();
         return sprite;
     }
@@ -40,12 +41,12 @@ EnemySprite* EnemySprite::create(const std::string& filename, const Vec2& pos, :
     @param filename 敵キャラクターの画像リソース名
     @param pos 敵キャラクターのワールド座標初期位置
     @param direction 敵キャラクターの向き
-    @param moveSpeed 敵キャラクターの移動速度
+    @param updatePosFrame 敵キャラクターの座標更新のフレーム
     @param patorolType 敵キャラクターの巡回タイプ
  */
-bool EnemySprite::initWithFileName(const std::string& filename, const Vec2 &pos, ::directcion direction, float moveSpeed, ::patorolType patorolType)
+bool EnemySprite::initWithFileName(const std::string& filename, const Vec2 &pos, ::directcion direction, float updatePosFrame, ::patorolType patorolType)
 {
-    if (!CharacterSprite::initWithFileName(filename, pos, direction, moveSpeed)) {
+    if (!CharacterSprite::initWithFileName(filename, pos, direction, updatePosFrame)) {
         return false;
     }
     this->m_initPatorolType = patorolType;
@@ -296,6 +297,9 @@ void EnemySprite::update(float delta)
         case ::patorol_rotatehitwall:
             this->patrolRotateHitWall();
             break;
+        case ::patorol_random:
+            this->patrolRandom();
+            break;
         case ::patorol_chase:
             this->patrolChase();
             break;
@@ -455,7 +459,7 @@ void EnemySprite::patrolRoundTrip()
 {
     // インターバルが経過していなければ何もしない
     StageSceneBase *mainScene = (StageSceneBase*)this->getParent();
-    if (fmod(mainScene->m_time, 30) != 0) {
+    if (fmod(mainScene->m_time, this->m_updatePosFrame) != 0) {
         return;
     }
     
@@ -478,7 +482,7 @@ void EnemySprite::patrolRotateIfPossible()
 {
     // インターバルが経過していなければ何もしない
     StageSceneBase *mainScene = (StageSceneBase*)this->getParent();
-    if (fmod(mainScene->m_time, 30) != 0) {
+    if (fmod(mainScene->m_time, this->m_updatePosFrame) != 0) {
         return;
     }
     
@@ -520,7 +524,7 @@ void EnemySprite::patrolRotateHitWall()
 {
     // インターバルが経過していなければ何もしない
     StageSceneBase *mainScene = (StageSceneBase*)this->getParent();
-    if (fmod(mainScene->m_time, 30) != 0) {
+    if (fmod(mainScene->m_time, this->m_updatePosFrame) != 0) {
         return;
     }
     
@@ -537,18 +541,40 @@ void EnemySprite::patrolRotateHitWall()
 
 /**
     警備する
+    移動の方向はランダム
+ */
+void EnemySprite::patrolRandom()
+{
+    // インターバルが経過していなければ何もしない
+    StageSceneBase *mainScene = (StageSceneBase*)this->getParent();
+    if (fmod(mainScene->m_time, this->m_updatePosFrame) != 0) {
+        return;
+    }
+    
+    // ランダムに移動する
+    std::random_device rnd;
+    int random = rand() % 4 + 1;
+    this->setDirectcion((::directcion)random);
+    if (this->canMovePos(this->nextTilePosition())) {
+        this->moveNextTile();
+    }
+}
+
+
+/**
+    警備する
     プレイヤーを追跡する
  */
 void EnemySprite::patrolChase()
 {
     // インターバルが経過していなければ何もしない
     StageSceneBase *mainScene = (StageSceneBase*)this->getParent();
-    if (fmod(mainScene->m_time, 30) != 0) {
+    if (fmod(mainScene->m_time, this->m_updatePosFrame) != 0) {
         return;
     }
     
     // 弾を撃つ
-    if (fmod(mainScene->m_time, 60) == 0) {
+    if (fmod(mainScene->m_time, this->m_updatePosFrame * 2) == 0) {
         this->shootBullet();
     }
     
@@ -577,12 +603,12 @@ void EnemySprite::patrolChaseForever()
     
     
     // インターバルが経過していなければ何もしない
-    if (fmod(mainScene->m_time, 30) != 0) {
+    if (fmod(mainScene->m_time, this->m_updatePosFrame) != 0) {
         return;
     }
     
     // 弾を撃つ
-    if (fmod(mainScene->m_time, 60) == 0) {
+    if (fmod(mainScene->m_time, this->m_updatePosFrame * 2) == 0) {
         this->shootBullet();
     }
     
@@ -612,7 +638,7 @@ void EnemySprite::patrolAccording()
 {
     // インターバルが経過していなければ何もしない
     StageSceneBase *mainScene = (StageSceneBase*)this->getParent();
-    if (fmod(mainScene->m_time, 30) != 0) {
+    if (fmod(mainScene->m_time, this->m_updatePosFrame) != 0) {
         return;
     }
     
