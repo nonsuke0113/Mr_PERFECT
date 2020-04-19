@@ -553,11 +553,11 @@ void EnemySprite::patrolRandom()
     
     // ランダムに移動する
     std::random_device rnd;
-    int random = rand() % 4 + 1;
-    this->setDirectcion((::directcion)random);
-    if (this->canMovePos(this->nextTilePosition())) {
-        this->moveNextTile();
-    }
+    do {
+        int random = rand() % 4;
+        this->setDirectcion((::directcion)random);
+    } while (!this->canMovePos(this->nextTilePosition()) || this->nextCharacter() == mainScene->m_player);
+    this->moveNextTile();
 }
 
 
