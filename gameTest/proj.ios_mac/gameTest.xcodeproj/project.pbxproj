@@ -60,6 +60,7 @@
 		864650EE244ACDF100C53D6C /* ResultInfo.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 864650EB244ACDF000C53D6C /* ResultInfo.cpp */; };
 		864650F9244BF1CD00C53D6C /* Stage11Scene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 864650F7244BF1CD00C53D6C /* Stage11Scene.cpp */; };
 		864650FD244C3DAA00C53D6C /* Stage12Scene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 864650FB244C3DAA00C53D6C /* Stage12Scene.cpp */; };
+		86465100244C5DF800C53D6C /* Stage13Scene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 864650FE244C5DF800C53D6C /* Stage13Scene.cpp */; };
 		8648AA8023F294F200365B62 /* AStarNode.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8648AA7E23F294F200365B62 /* AStarNode.cpp */; };
 		8648AA8423F2D43700365B62 /* AStarUtils.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8648AA8223F2D43700365B62 /* AStarUtils.cpp */; };
 		864FC468237527FE00DDF5E8 /* EnemySprite.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 864FC466237527FE00DDF5E8 /* EnemySprite.cpp */; };
@@ -216,6 +217,8 @@
 		864650F8244BF1CD00C53D6C /* Stage11Scene.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Stage11Scene.hpp; sourceTree = "<group>"; };
 		864650FB244C3DAA00C53D6C /* Stage12Scene.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Stage12Scene.cpp; sourceTree = "<group>"; };
 		864650FC244C3DAA00C53D6C /* Stage12Scene.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Stage12Scene.hpp; sourceTree = "<group>"; };
+		864650FE244C5DF800C53D6C /* Stage13Scene.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Stage13Scene.cpp; sourceTree = "<group>"; };
+		864650FF244C5DF800C53D6C /* Stage13Scene.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Stage13Scene.hpp; sourceTree = "<group>"; };
 		8648AA7E23F294F200365B62 /* AStarNode.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = AStarNode.cpp; sourceTree = "<group>"; };
 		8648AA7F23F294F200365B62 /* AStarNode.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = AStarNode.hpp; sourceTree = "<group>"; };
 		8648AA8223F2D43700365B62 /* AStarUtils.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = AStarUtils.cpp; sourceTree = "<group>"; };
@@ -530,6 +533,8 @@
 				864650F7244BF1CD00C53D6C /* Stage11Scene.cpp */,
 				864650FC244C3DAA00C53D6C /* Stage12Scene.hpp */,
 				864650FB244C3DAA00C53D6C /* Stage12Scene.cpp */,
+				864650FF244C5DF800C53D6C /* Stage13Scene.hpp */,
+				864650FE244C5DF800C53D6C /* Stage13Scene.cpp */,
 			);
 			path = StageScene;
 			sourceTree = "<group>";
@@ -728,6 +733,7 @@
 				864650EE244ACDF100C53D6C /* ResultInfo.cpp in Sources */,
 				8619C96A2438B4BC00956209 /* ShareLauncher.mm in Sources */,
 				864650FD244C3DAA00C53D6C /* Stage12Scene.cpp in Sources */,
+				86465100244C5DF800C53D6C /* Stage13Scene.cpp in Sources */,
 				861B748E239F37A6007068AB /* BulletSprite.cpp in Sources */,
 				86C1AEC723EFE2A7003F61B7 /* Stage2Scene.cpp in Sources */,
 				867B070B2439A1D4006106FC /* CreditScene.cpp in Sources */,
