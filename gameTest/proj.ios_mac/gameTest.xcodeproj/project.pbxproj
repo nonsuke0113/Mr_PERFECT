@@ -61,6 +61,7 @@
 		864650F9244BF1CD00C53D6C /* Stage11Scene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 864650F7244BF1CD00C53D6C /* Stage11Scene.cpp */; };
 		864650FD244C3DAA00C53D6C /* Stage12Scene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 864650FB244C3DAA00C53D6C /* Stage12Scene.cpp */; };
 		86465100244C5DF800C53D6C /* Stage13Scene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 864650FE244C5DF800C53D6C /* Stage13Scene.cpp */; };
+		86465103244C5FAC00C53D6C /* Stage14Scene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 86465101244C5FAC00C53D6C /* Stage14Scene.cpp */; };
 		8648AA8023F294F200365B62 /* AStarNode.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8648AA7E23F294F200365B62 /* AStarNode.cpp */; };
 		8648AA8423F2D43700365B62 /* AStarUtils.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8648AA8223F2D43700365B62 /* AStarUtils.cpp */; };
 		864FC468237527FE00DDF5E8 /* EnemySprite.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 864FC466237527FE00DDF5E8 /* EnemySprite.cpp */; };
@@ -219,6 +220,8 @@
 		864650FC244C3DAA00C53D6C /* Stage12Scene.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Stage12Scene.hpp; sourceTree = "<group>"; };
 		864650FE244C5DF800C53D6C /* Stage13Scene.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Stage13Scene.cpp; sourceTree = "<group>"; };
 		864650FF244C5DF800C53D6C /* Stage13Scene.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Stage13Scene.hpp; sourceTree = "<group>"; };
+		86465101244C5FAC00C53D6C /* Stage14Scene.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Stage14Scene.cpp; sourceTree = "<group>"; };
+		86465102244C5FAC00C53D6C /* Stage14Scene.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Stage14Scene.hpp; sourceTree = "<group>"; };
 		8648AA7E23F294F200365B62 /* AStarNode.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = AStarNode.cpp; sourceTree = "<group>"; };
 		8648AA7F23F294F200365B62 /* AStarNode.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = AStarNode.hpp; sourceTree = "<group>"; };
 		8648AA8223F2D43700365B62 /* AStarUtils.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = AStarUtils.cpp; sourceTree = "<group>"; };
@@ -535,6 +538,8 @@
 				864650FB244C3DAA00C53D6C /* Stage12Scene.cpp */,
 				864650FF244C5DF800C53D6C /* Stage13Scene.hpp */,
 				864650FE244C5DF800C53D6C /* Stage13Scene.cpp */,
+				86465102244C5FAC00C53D6C /* Stage14Scene.hpp */,
+				86465101244C5FAC00C53D6C /* Stage14Scene.cpp */,
 			);
 			path = StageScene;
 			sourceTree = "<group>";
@@ -755,6 +760,7 @@
 				86F5F18A2406A8A90051060B /* StageUILayer.cpp in Sources */,
 				864650F9244BF1CD00C53D6C /* Stage11Scene.cpp in Sources */,
 				8639393D2417CFC4001679EA /* ResultScene.cpp in Sources */,
+				86465103244C5FAC00C53D6C /* Stage14Scene.cpp in Sources */,
 				86DA7CC423E4364900B495AB /* SelectMissonScene.cpp in Sources */,
 				8610B8F5242683D80013E21B /* Stage6Scene.cpp in Sources */,
 				861B7492239F516C007068AB /* GameSpriteBase.cpp in Sources */,
