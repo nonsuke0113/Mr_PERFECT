@@ -50,32 +50,32 @@ void Stage10Scene::initMap()
 void Stage10Scene::initCharactors()
 {
     // プレイヤー
-    this->m_player = PlayerSprite::create("player_back1.png", Vec2(5.0f, 29.0f), ::back, 0.1f);
+    this->m_player = PlayerSprite::create("player_back1.png", Vec2(5.0f, 29.0f), ::back, 30.0f);
     this->m_player->setAnchorPoint(Vec2(0.0f, 0.0f));
     this->addChild(this->m_player);
     
     // 敵キャラクター
-    EnemySprite* enemy1 = EnemySprite::create("enemy1.png", Vec2(11.0f, 25.0f), ::left, 0.1f, patorol_rotateifpossible);
+    EnemySprite* enemy1 = EnemySprite::create("enemy1.png", Vec2(11.0f, 25.0f), ::left, 30.0f, patorol_rotateifpossible);
     enemy1->setAnchorPoint(Vec2(0.0f, 0.0f));
     this->addChild(enemy1);
     enemy1->setRotateDirectcion(turn_left);
     
-    EnemySprite* enemy2 = EnemySprite::create("enemy1.png", Vec2(7.0f, 22.0f), ::right, 0.1f, patorol_rotateifpossible);
+    EnemySprite* enemy2 = EnemySprite::create("enemy1.png", Vec2(7.0f, 22.0f), ::right, 30.0f, patorol_rotateifpossible);
     enemy2->setAnchorPoint(Vec2(0.0f, 0.0f));
     this->addChild(enemy2);
     enemy2->setRotateDirectcion(turn_right);
     
-    EnemySprite* enemy3 = EnemySprite::create("enemy1.png", Vec2(11.0f, 19.0f), ::left, 0.1f, patorol_rotateifpossible);
+    EnemySprite* enemy3 = EnemySprite::create("enemy1.png", Vec2(11.0f, 19.0f), ::left, 30.0f, patorol_rotateifpossible);
     enemy3->setAnchorPoint(Vec2(0.0f, 0.0f));
     this->addChild(enemy3);
     enemy3->setRotateDirectcion(turn_left);
     
-    EnemySprite* enemy4 = EnemySprite::create("enemy1.png", Vec2(7.0f, 16.0f), ::right, 0.1f, patorol_rotateifpossible);
+    EnemySprite* enemy4 = EnemySprite::create("enemy1.png", Vec2(7.0f, 16.0f), ::right, 30.0f, patorol_rotateifpossible);
     enemy4->setAnchorPoint(Vec2(0.0f, 0.0f));
     this->addChild(enemy4);
     enemy4->setRotateDirectcion(turn_right);
     
-    EnemySprite* enemy5 = EnemySprite::create("enemy1.png", Vec2(11.0f, 13.0f), ::left, 0.1f, patorol_rotateifpossible);
+    EnemySprite* enemy5 = EnemySprite::create("enemy1.png", Vec2(11.0f, 13.0f), ::left, 30.0f, patorol_rotateifpossible);
     enemy5->setAnchorPoint(Vec2(0.0f, 0.0f));
     this->addChild(enemy5);
     enemy5->setRotateDirectcion(turn_left);

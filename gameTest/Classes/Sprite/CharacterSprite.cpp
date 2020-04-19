@@ -18,13 +18,13 @@
     @param filename キャラクターの画像リソース名
     @param pos キャラクターのワールド座標初期位置
     @param direction キャラクターの向き
-    @param moveSpeed キャラクターの移動速度
+    @param updatePosFrame キャラクターの座標更新のフレーム
     @return キャラクターのSprite
  */
-CharacterSprite* CharacterSprite::create(const std::string& filename, const Vec2& pos, ::directcion direction, float moveSpeed)
+CharacterSprite* CharacterSprite::create(const std::string& filename, const Vec2& pos, ::directcion direction, float updatePosFrame)
 {
     CharacterSprite *sprite =  new (std::nothrow) CharacterSprite;
-    if (sprite && sprite->initWithFileName(filename, pos, direction, moveSpeed)) {
+    if (sprite && sprite->initWithFileName(filename, pos, direction, updatePosFrame)) {
         sprite->autorelease();
         return sprite;
     }
@@ -39,16 +39,16 @@ CharacterSprite* CharacterSprite::create(const std::string& filename, const Vec2
     @param filename キャラクターの画像リソース名
     @param pos キャラクターのワールド座標初期位置
     @param direction キャラクターの向き
-    @param moveSpeed キャラクターの移動速度
+    @param updatePosFrame キャラクターの座標更新のフレーム
  */
-bool CharacterSprite::initWithFileName(const std::string& filename, const Vec2 &pos, ::directcion direction, float moveSpeed)
+bool CharacterSprite::initWithFileName(const std::string& filename, const Vec2 &pos, ::directcion direction, float updatePosFrame)
 {
     this->setupAnimationCache();
     if (!GameSpriteBase::initWithFileName(filename, pos, direction)) {
         return false;
     }
     this->m_hp = 3;
-    this->m_moveSpeed = moveSpeed;
+    this->m_updatePosFrame = updatePosFrame;
     this->m_bullet = nullptr;
     return true;
 }
@@ -112,7 +112,7 @@ void CharacterSprite::moveNextTile()
         return;
     }
     
-    this->moveWorld(this->m_moveSpeed, this->nextTilePosition());
+    this->moveWorld(this->nextTilePosition());
 }
 
 

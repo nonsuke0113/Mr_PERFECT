@@ -20,16 +20,17 @@ class CharacterSprite : public GameSpriteBase
 {
 protected:
     int m_hp; // HP
-    float m_moveSpeed; // 移動速度
     
     virtual void setupAnimationCache();
     virtual void dead();
     
 public:
     Sprite *m_bullet; // 発砲した弾丸
+    /// 座標更新のフレーム
+    float m_updatePosFrame;
     
-    static CharacterSprite* create(const std::string& filename, const Vec2 &pos, ::directcion direction, float moveSpeed);
-    virtual bool initWithFileName(const std::string& filename, const Vec2 &pos, ::directcion direction, float moveSpeed);
+    static CharacterSprite* create(const std::string& filename, const Vec2 &pos, ::directcion direction, float updatePosFrame);
+    virtual bool initWithFileName(const std::string& filename, const Vec2 &pos, ::directcion direction, float updatePosFrame);
     int hp();
     void setHp(int hp);
     void moveNextTile();

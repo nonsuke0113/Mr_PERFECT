@@ -16,13 +16,13 @@
     @param filename 操作キャラクターの画像リソース名
     @param pos 操作キャラクターのワールド座標初期位置
     @param direction 操作キャラクターの向き
-    @param moveSpeed 操作キャラクターの移動速度
+    @param updatePosFrame 操作キャラクターの座標更新のフレーム
     @return 操作キャラクターのSprite
  */
-PlayerSprite* PlayerSprite::create(const std::string& filename, const Vec2& pos, ::directcion direction, float moveSpeed)
+PlayerSprite* PlayerSprite::create(const std::string& filename, const Vec2& pos, ::directcion direction, float updatePosFrame)
 {
     PlayerSprite *sprite =  new (std::nothrow) PlayerSprite;
-    if (sprite && sprite->initWithFileName(filename, pos, direction, moveSpeed)) {
+    if (sprite && sprite->initWithFileName(filename, pos, direction, updatePosFrame)) {
         sprite->autorelease();
         return sprite;
     }

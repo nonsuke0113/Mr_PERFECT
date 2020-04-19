@@ -20,7 +20,7 @@ protected:
     void dead();
     
 public:
-    static PlayerSprite* create(const std::string& filename, const Vec2& pos, ::directcion direction, float moveSpeed);
+    static PlayerSprite* create(const std::string& filename, const Vec2& pos, ::directcion direction, float updatePosFrame);
     void setDirectcion(::directcion direction);
     void hitToBullet(int damage, ::directcion bulletDirection);
     void knockWall();

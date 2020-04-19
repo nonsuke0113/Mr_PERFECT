@@ -51,16 +51,16 @@ void Stage3Scene::initMap()
 void Stage3Scene::initCharactors()
 {
     // プレイヤー
-    this->m_player = PlayerSprite::create("player_back1.png", Vec2(8.0f, 29.0f), ::back, 0.1f);
+    this->m_player = PlayerSprite::create("player_back1.png", Vec2(8.0f, 29.0f), ::back, 30.0f);
     this->m_player->setAnchorPoint(Vec2(0.0f, 0.0f));
     this->addChild(this->m_player);
     
     // 敵キャラクター
-    EnemySprite* enemy1 = EnemySprite::create("enemy1_back1.png", Vec2(5.0f, 22.0f), ::right, 0.1f, patorol_nomove);
+    EnemySprite* enemy1 = EnemySprite::create("enemy1_back1.png", Vec2(5.0f, 22.0f), ::right, 30.0f, patorol_nomove);
     enemy1->setAnchorPoint(Vec2(0.0f, 0.0f));
     this->addChild(enemy1);
     
-    EnemySprite* enemy2 = EnemySprite::create("enemy1_left1.png", Vec2(10.0f, 22.0f), ::back, 0.1f, patorol_nomove);
+    EnemySprite* enemy2 = EnemySprite::create("enemy1_left1.png", Vec2(10.0f, 22.0f), ::back, 30.0f, patorol_nomove);
     enemy2->setAnchorPoint(Vec2(0.0f, 0.0f));
     this->addChild(enemy2);
 }
