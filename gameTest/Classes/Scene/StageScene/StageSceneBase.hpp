@@ -70,6 +70,7 @@ public:
     static StageSceneBase *createScene();
     virtual bool init();
     ::padState padState();
+    Vector<GameSpriteBase*> gameSpriteVector();
     Vector<CharacterSprite*> charactersVector();
     Vector<EnemySprite*> enemysVector();
     void touchAEvent(Ref *pSender, ui::Widget::TouchEventType type);

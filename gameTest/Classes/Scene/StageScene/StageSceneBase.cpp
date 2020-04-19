@@ -142,6 +142,24 @@ void StageSceneBase::initScoreStandard()
 
 
 /**
+    ゲームスプライトの一覧を返す
+ 
+    @return ゲームスプライトの一覧
+ */
+Vector<GameSpriteBase*> StageSceneBase::gameSpriteVector() {
+    Vector<Node*> nodes = this->getChildren();
+    Vector<GameSpriteBase*> characters;
+    for (Node *node : nodes) {
+        GameSpriteBase *sprite = dynamic_cast<GameSpriteBase*>(node);
+        if (sprite != nullptr){
+            characters.pushBack(sprite);
+        }
+    }
+    return characters;
+}
+
+
+/**
     キャラクターの一覧を返す
  
     @return キャラクターの一覧
@@ -641,8 +659,7 @@ void StageSceneBase::updatePosition()
         (this->m_mdController->isVisibleMessageDialog()) ||
         (this->m_map->getNumberOfRunningActions() > 0) ||
         (this->m_player->getActionByTag(::move) != nullptr) ||
-        (!(isCanEnterTileGID(this->m_player->nextTileGID()))) ||
-        this->m_player->nextCharacter() != nullptr) {
+        (!this->m_player->canMoveNextPos())) {
         return;
     }
     
