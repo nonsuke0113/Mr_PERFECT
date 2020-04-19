@@ -46,7 +46,7 @@ public:
     directcion directcion();
     void setWorldPosition(Vec2 const& worldPos);
     virtual void setDirectcion(::directcion direction);
-    void moveWorld(float duration, Vec2 const& newPosition);
+    void moveWorld(Vec2 const& newPosition);
     Vec2 nextTilePosition();
     Vec2 rightTilePosition();
     Vec2 leftTilePosition();

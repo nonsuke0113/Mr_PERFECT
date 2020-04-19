@@ -95,14 +95,13 @@ void GameSpriteBase::setDirectcion(::directcion direction) {
 #pragma mark -
 #pragma mark Position
 /**
-    指定された秒数をかけて、新しいワールド座標に移動する
+    新しいワールド座標に移動する
  
-    @param duration 移動時間
     @param newPosition 移動する座標(ワールド座標)
  */
-void GameSpriteBase::moveWorld(float duration, Vec2 const& newPosition) {
+void GameSpriteBase::moveWorld(Vec2 const& newPosition) {
     this->m_worldPosition = newPosition;
-    MoveTo *actionMove = MoveTo::create(duration, Vec2(newPosition.x * PER_TILE_SIZE,  (MAP_TILE_HEGHT - newPosition.y - 1) * PER_TILE_SIZE));
+    MoveTo *actionMove = MoveTo::create(SPRITE_MOVE_SPEED, Vec2(newPosition.x * PER_TILE_SIZE,  (MAP_TILE_HEGHT - newPosition.y - 1) * PER_TILE_SIZE));
     actionMove->setTag(::move);
     this->stopActionByTag(::move);
     this->runAction(actionMove);
