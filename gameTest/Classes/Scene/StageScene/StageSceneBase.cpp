@@ -695,7 +695,7 @@ void StageSceneBase::updateCameraPosition()
     }
     
     // カメラ移動
-    MoveTo* actionMove = MoveTo::create(0.1f, newCameraPosition);
+    MoveTo* actionMove = MoveTo::create(SPRITE_MOVE_SPEED, newCameraPosition);
     this->m_camera->stopAllActions();
     this->m_camera->runAction(actionMove);
 }
