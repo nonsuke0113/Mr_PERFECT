@@ -20,6 +20,7 @@
 #include "Stage9Scene.hpp"
 #include "Stage10Scene.hpp"
 #include "Stage11Scene.hpp"
+#include "Stage12Scene.hpp"
 
 #pragma mark -
 #pragma mark Init
@@ -231,6 +232,11 @@ void SelectMissonScene::touchMissionEvent(Ref *pSender, ui::Widget::TouchEventTy
                 case 11:
                 {
                     stageScene = Stage11Scene::createScene();
+                    break;
+                }
+                case 12:
+                {
+                    stageScene = Stage12Scene::createScene();
                     break;
                 }
                 default:
