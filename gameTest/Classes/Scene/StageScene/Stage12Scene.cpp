@@ -55,7 +55,7 @@ void Stage12Scene::initCharactors()
     this->addChild(this->m_player);
     
     // 敵キャラクター
-    EnemySprite* enemy1 = EnemySprite::create("enemy1.png", Vec2(8.0f, 25.0f), ::front, 35.0f, patorol_random);
+    EnemySprite* enemy1 = EnemySprite::create("enemy1.png", Vec2(8.0f, 25.0f), ::front, 45.0f, patorol_random);
     enemy1->setAnchorPoint(Vec2(0.0f, 0.0f));
     this->addChild(enemy1);
 }
