@@ -14,8 +14,8 @@ USING_NS_CC;
 
 #include "cocos2d.h"
 #include "ui/CocosGUI.h"
-#include "GameSpriteBase.hpp"
 #include "CharacterSprite.hpp"
+#include "ReactsHitSprite.hpp"
 
 class BulletSprite : public GameSpriteBase
 {
@@ -26,7 +26,7 @@ protected:
     float m_updatePosFrame;
     
     void updatePosition(float frame);
-    CharacterSprite* validateHit();
+    ReactsHitSprite* validateHit();
     
 public:
     static BulletSprite* create(const Vec2 &pos, ::directcion direction, CharacterSprite* charactor, float updatePosFrame);

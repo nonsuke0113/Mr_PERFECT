@@ -44,7 +44,7 @@ CharacterSprite* CharacterSprite::create(const std::string& filename, const Vec2
 bool CharacterSprite::initWithFileName(const std::string& filename, const Vec2 &pos, ::directcion direction, float updatePosFrame)
 {
     this->setupAnimationCache();
-    if (!GameSpriteBase::initWithFileName(filename, pos, direction)) {
+    if (!ReactsHitSprite::initWithFileName(filename, pos, direction, nullptr)) {
         return false;
     }
     this->m_hp = 3;

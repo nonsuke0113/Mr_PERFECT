@@ -63,6 +63,8 @@
 		86465100244C5DF800C53D6C /* Stage13Scene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 864650FE244C5DF800C53D6C /* Stage13Scene.cpp */; };
 		86465103244C5FAC00C53D6C /* Stage14Scene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 86465101244C5FAC00C53D6C /* Stage14Scene.cpp */; };
 		86465106244C8C4200C53D6C /* Stage15Scene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 86465104244C8C4200C53D6C /* Stage15Scene.cpp */; };
+		8646D362244DDB7100B1DEDA /* ReactsHitSprite.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8646D360244DDB7100B1DEDA /* ReactsHitSprite.cpp */; };
+		8646D366244DDFEA00B1DEDA /* Stage16Scene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8646D364244DDFE900B1DEDA /* Stage16Scene.cpp */; };
 		8648AA8023F294F200365B62 /* AStarNode.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8648AA7E23F294F200365B62 /* AStarNode.cpp */; };
 		8648AA8423F2D43700365B62 /* AStarUtils.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8648AA8223F2D43700365B62 /* AStarUtils.cpp */; };
 		864FC468237527FE00DDF5E8 /* EnemySprite.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 864FC466237527FE00DDF5E8 /* EnemySprite.cpp */; };
@@ -225,6 +227,10 @@
 		86465102244C5FAC00C53D6C /* Stage14Scene.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Stage14Scene.hpp; sourceTree = "<group>"; };
 		86465104244C8C4200C53D6C /* Stage15Scene.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Stage15Scene.cpp; sourceTree = "<group>"; };
 		86465105244C8C4200C53D6C /* Stage15Scene.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Stage15Scene.hpp; sourceTree = "<group>"; };
+		8646D360244DDB7100B1DEDA /* ReactsHitSprite.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = ReactsHitSprite.cpp; sourceTree = "<group>"; };
+		8646D361244DDB7100B1DEDA /* ReactsHitSprite.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = ReactsHitSprite.hpp; sourceTree = "<group>"; };
+		8646D364244DDFE900B1DEDA /* Stage16Scene.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Stage16Scene.cpp; sourceTree = "<group>"; };
+		8646D365244DDFE900B1DEDA /* Stage16Scene.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Stage16Scene.hpp; sourceTree = "<group>"; };
 		8648AA7E23F294F200365B62 /* AStarNode.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = AStarNode.cpp; sourceTree = "<group>"; };
 		8648AA7F23F294F200365B62 /* AStarNode.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = AStarNode.hpp; sourceTree = "<group>"; };
 		8648AA8223F2D43700365B62 /* AStarUtils.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = AStarUtils.cpp; sourceTree = "<group>"; };
@@ -545,6 +551,8 @@
 				86465101244C5FAC00C53D6C /* Stage14Scene.cpp */,
 				86465105244C8C4200C53D6C /* Stage15Scene.hpp */,
 				86465104244C8C4200C53D6C /* Stage15Scene.cpp */,
+				8646D365244DDFE900B1DEDA /* Stage16Scene.hpp */,
+				8646D364244DDFE900B1DEDA /* Stage16Scene.cpp */,
 			);
 			path = StageScene;
 			sourceTree = "<group>";
@@ -570,6 +578,8 @@
 			children = (
 				861B7491239F516C007068AB /* GameSpriteBase.hpp */,
 				861B7490239F516C007068AB /* GameSpriteBase.cpp */,
+				8646D361244DDB7100B1DEDA /* ReactsHitSprite.hpp */,
+				8646D360244DDB7100B1DEDA /* ReactsHitSprite.cpp */,
 				E9A5211421A90C6F00DB44EA /* CharacterSprite.hpp */,
 				E9A5211321A90C6F00DB44EA /* CharacterSprite.cpp */,
 				865D5A6D23E10BAC008A7C6D /* PlayerSprite.hpp */,
@@ -753,12 +763,14 @@
 				8648AA8423F2D43700365B62 /* AStarUtils.cpp in Sources */,
 				1AF87B8B1F6F782A007BE51C /* RootViewController.mm in Sources */,
 				46880B8819C43A87006E1F66 /* AppDelegate.cpp in Sources */,
+				8646D362244DDB7100B1DEDA /* ReactsHitSprite.cpp in Sources */,
 				E92CE8792206A24900E123FD /* AdMobHelper.mm in Sources */,
 				E92B76D02425B0AD00FD5EAC /* Stage3Scene.cpp in Sources */,
 				1AF87B8A1F6F7822007BE51C /* main.m in Sources */,
 				8659988923AA030F002EB428 /* Stage1Scene.cpp in Sources */,
 				86465106244C8C4200C53D6C /* Stage15Scene.cpp in Sources */,
 				E9A5210E21A90B8C00DB44EA /* TitleScene.cpp in Sources */,
+				8646D366244DDFEA00B1DEDA /* Stage16Scene.cpp in Sources */,
 				ABBA36B721BA6A3500A02928 /* MessageDialog.cpp in Sources */,
 				86114BE0240AB31E00864BEA /* StageLeftUILayer.cpp in Sources */,
 				8610B8FC242684070013E21B /* Stage8Scene.cpp in Sources */,

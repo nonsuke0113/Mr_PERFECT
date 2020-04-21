@@ -102,19 +102,21 @@ void BulletSprite::shootBullet(::directcion direction)
 void BulletSprite::updatePosition(float frame)
 {
     // 敵キャラクターの撃った弾は敵キャラクターに当たらないようにする
-    StageSceneBase* mainScene = (StageSceneBase*)this->getParent();
-    CharacterSprite* hitCharacter = this->validateHit();
+    StageSceneBase *mainScene = (StageSceneBase*)this->getParent();
+    ReactsHitSprite *sprite = this->validateHit();
     if ((this->m_shootCharactor != mainScene->m_player) &&
-        hitCharacter != mainScene->m_player) {
-        hitCharacter = nullptr;
+        sprite != mainScene->m_player) {
+        sprite = nullptr;
     }
     
     // 被弾処理
-    if (hitCharacter != nullptr) {
-        hitCharacter->hitToBullet(this->power(), this->directcion());
+    ReactsHitSprite *hitSprite = dynamic_cast<ReactsHitSprite*>(sprite);
+    if (hitSprite != nullptr) {
+        hitSprite->hitToBullet(this->power(), this->directcion());
     }
+    
     // 被弾した or 進めなくなったら自身を削除する
-    if (hitCharacter != nullptr ||
+    if (sprite != nullptr ||
         (!this->canMovePos(this->worldPosition()) && this->m_shootCharactor->worldPosition() != this->worldPosition())) {
         unschedule(schedule_selector(BulletSprite::updatePosition));
         this->removeFromParentAndCleanup(true);
@@ -127,19 +129,22 @@ void BulletSprite::updatePosition(float frame)
 
 
 /**
-    弾がキャラクターに当たったかどうかを検証する
-    当たっているキャラクターがいなかった場合、nullptrを返す
+    弾がスプライトに当たったかどうかを検証する
+    当たっているスプライトがなかった場合、nullptrを返す
  
-    @return 弾に当たったキャラクター or nullptr
+    @return 弾に当たったスプライト or nullptr
  */
-CharacterSprite* BulletSprite::validateHit()
+ReactsHitSprite* BulletSprite::validateHit()
 {
     StageSceneBase* mainScene = (StageSceneBase*)this->getParent();
-    Vector<CharacterSprite*> charactersVector = mainScene->charactersVector();
-    for (int i = 0; i < charactersVector.size(); i++) {
-        if (charactersVector.at(i)->worldPosition() == this->worldPosition() &&
-            charactersVector.at(i) != this->m_shootCharactor) {
-            return charactersVector.at(i);
+    Vector<GameSpriteBase*> gameSpriteVector = mainScene->gameSpriteVector();
+    for (GameSpriteBase* srpite : gameSpriteVector) {
+        ReactsHitSprite *hitSprite = dynamic_cast<ReactsHitSprite*>(srpite);
+        if (hitSprite != nullptr &&
+            hitSprite->worldPosition() == this->worldPosition() &&
+            hitSprite != this->m_shootCharactor)
+        {
+            return hitSprite;
         }
     }
     return nullptr;

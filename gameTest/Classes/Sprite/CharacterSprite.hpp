@@ -14,9 +14,9 @@ USING_NS_CC;
 
 #include "cocos2d.h"
 #include "ui/CocosGUI.h"
-#include "GameSpriteBase.hpp"
+#include "ReactsHitSprite.hpp"
 
-class CharacterSprite : public GameSpriteBase
+class CharacterSprite : public ReactsHitSprite
 {
 protected:
     int m_hp; // HP
