@@ -49,14 +49,25 @@ bool CreditScene::init()
     
     Label *bgmLabel2 = Label::createWithTTF(StringUtils::format("BGM：hitoshi by Senses Circuit"), "fonts/PixelMplus12-Regular.ttf", 30);
     bgmLabel2->setColor(Color3B(0, 0, 0));
-    MenuItemLabel *menuLabel = MenuItemLabel::create(bgmLabel2, [](Ref * label) {
+    MenuItemLabel *menuLabel1 = MenuItemLabel::create(bgmLabel2, [](Ref * label) {
         ShareLauncher::openURL("https://www.senses-circuit.com");
     });
-    menuLabel->setAnchorPoint(Vec2(0.0f, 0.0f));
-    menuLabel->setPosition(Vec2(160.0f, 500.0f));
-    Menu *menu = Menu::create(menuLabel, NULL);
-    menu->setPosition(Vec2(0.0f, 0.0f));
-    this->addChild(menu);
+    menuLabel1->setAnchorPoint(Vec2(0.0f, 0.0f));
+    menuLabel1->setPosition(Vec2(160.0f, 500.0f));
+    Menu *menu1 = Menu::create(menuLabel1, NULL);
+    menu1->setPosition(Vec2(0.0f, 0.0f));
+    this->addChild(menu1);
+    
+    Label *bgmLabel3 = Label::createWithTTF(StringUtils::format("SE ：On-Jin ～音人～"), "fonts/PixelMplus12-Regular.ttf", 30);
+    bgmLabel3->setColor(Color3B(0, 0, 0));
+    MenuItemLabel *menuLabel2 = MenuItemLabel::create(bgmLabel3, [](Ref * label) {
+        ShareLauncher::openURL("https://on-jin.com/");
+    });
+    menuLabel2->setAnchorPoint(Vec2(0.0f, 0.0f));
+    menuLabel2->setPosition(Vec2(160.0f, 460.0f));
+    Menu *menu2 = Menu::create(menuLabel2, NULL);
+    menu2->setPosition(Vec2(0.0f, 0.0f));
+    this->addChild(menu2);
     
     // 戻るボタン
     ui::Button *backButton = ui::Button::create("back_button.png");
