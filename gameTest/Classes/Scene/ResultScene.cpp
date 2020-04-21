@@ -75,7 +75,7 @@ bool ResultScene::init(ResultInfo resultInfo)
     this->addChild(resultSprite);
         
     // ステージラベル
-    Label *stageLabel = Label::createWithTTF(StringUtils::format("MISSION%d", this->m_resultInfo.m_stageNum), "fonts/PixelMplus12-Regular.ttf", 30);
+    Label *stageLabel = Label::createWithTTF(StringUtils::format("MISSION %d", this->m_resultInfo.m_stageNum), "fonts/PixelMplus12-Regular.ttf", 30);
     stageLabel->setAnchorPoint(Vec2(0.5f, 1.0f));
     stageLabel->setPosition(Vec2(568.0f, 476.0f));
     stageLabel->setColor(Color3B(0, 0, 0));
