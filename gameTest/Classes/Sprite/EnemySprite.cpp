@@ -52,7 +52,6 @@ bool EnemySprite::initWithFileName(const std::string& filename, const Vec2 &pos,
     this->m_initPatorolType = patorolType;
     this->m_patorolType = patorolType;
     this->m_rotateDirection = ::turn_none;
-    this->m_hp = 5;
     this->m_routeStack = std::vector<Vec2>();
     this->m_routeStackIndex = 0;
     this->m_isFoundPlayer = false;
