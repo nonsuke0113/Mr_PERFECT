@@ -188,11 +188,11 @@ void EnemySprite::showSpeechBubble(::speechBubbleType speechBubbleType)
     GameSpriteBase *speechBubble = nullptr;
     switch (speechBubbleType) {
         case ::exclamation:
-            speechBubble = GameSpriteBase::create("exclamation.png", Vec2 { this->m_worldPosition.x, this->m_worldPosition.y - 1.0f }, this->directcion());
+            speechBubble = GameSpriteBase::create("exclamation.png", Vec2 { this->m_worldPosition.x, this->m_worldPosition.y - 1.0f }, this->directcion(), true);
             this->m_movingHeardSoundPoint = true;
             break;
         case ::question:
-            speechBubble = GameSpriteBase::create("question.png", Vec2 { this->m_worldPosition.x, this->m_worldPosition.y - 1.0f }, this->directcion());
+            speechBubble = GameSpriteBase::create("question.png", Vec2 { this->m_worldPosition.x, this->m_worldPosition.y - 1.0f }, this->directcion(), true);
             break;
         default:
             break;
@@ -228,6 +228,37 @@ void EnemySprite::moveToPos(Vec2 const& pos)
             this->m_patorolType = ::patorol_according;
         }
     }),nullptr));
+}
+
+
+/**
+    次の座標に移動可能かどうかを返す
+ 
+    @return 次の座標に移動可能かどうか
+ */
+bool EnemySprite::canMoveNextPos()
+{
+    // 通れない道
+    if (!isCanEnterTileGID(this->nextTileGID())) {
+        return false;
+    }
+    
+    // 別のゲームスプライトがある
+    StageSceneBase* mainScene = (StageSceneBase*)this->getParent();
+    for (GameSpriteBase *sprite : mainScene->gameSpriteVector()) {
+        // 敵同士はすり抜ける
+        EnemySprite *enemy = dynamic_cast<EnemySprite*>(sprite);
+        if (enemy != nullptr) {
+            continue;
+        }
+        
+        if (this->nextTilePosition() == sprite->worldPosition() &&
+            !sprite->isThroughable()) {
+            return false;
+        }
+    }
+    
+    return true;
 }
 
 
@@ -464,7 +495,7 @@ void EnemySprite::patrolRoundTrip()
     }
     
     // 真っ直ぐ進む
-    if (this->canMovePos(this->nextTilePosition())) {
+    if (this->canMoveNextPos()) {
         this->moveNextTile();
     }
     // 進めなかったら向きを反転する
@@ -506,7 +537,7 @@ void EnemySprite::patrolRotateIfPossible()
         this->facingNextPos(nextRotatePos);
     }
     // 真っ直ぐ進む
-    if (this->canMovePos(this->nextTilePosition())) {
+    if (this->canMoveNextPos()) {
         this->moveNextTile();
     }
     // 進めなかったら向きを回転する
@@ -529,7 +560,7 @@ void EnemySprite::patrolRotateHitWall()
     }
     
     // 真っ直ぐ進む
-    if (this->canMovePos(this->nextTilePosition())) {
+    if (this->canMoveNextPos()) {
         this->moveNextTile();
     }
     // 進めなかったら向きを回転する
@@ -556,7 +587,7 @@ void EnemySprite::patrolRandom()
     do {
         int random = rand() % 4;
         this->setDirectcion((::directcion)random);
-    } while (!this->canMovePos(this->nextTilePosition()) || this->nextCharacter() == mainScene->m_player);
+    } while (!this->canMoveNextPos());
     this->moveNextTile();
 }
 
@@ -579,8 +610,7 @@ void EnemySprite::patrolChase()
     }
     
     // 真っ直ぐ進む
-    if (this->canMovePos(this->nextTilePosition()) &&
-        this->nextCharacter() != mainScene->m_player) {
+    if (this->canMoveNextPos()) {
         this->moveNextTile();
     }
 }
@@ -621,7 +651,7 @@ void EnemySprite::patrolChaseForever()
     // プレイヤーに近づく
     Vec2 nextPos = this->m_routeStack.at(this->m_routeStackIndex);
     this->facingNextPos(nextPos);
-    if (this->canMovePos(nextPos) && this->nextCharacter() != mainScene->m_player) {
+    if (this->canMoveNextPos()) {
         this->moveNextTile();
         if (this->worldPosition() == nextPos) {
             this->m_routeStackIndex++;
@@ -661,7 +691,7 @@ void EnemySprite::patrolAccording()
     // 真っ直ぐ進む
     Vec2 nextPos = this->m_routeStack.at(this->m_routeStackIndex);
     this->facingNextPos(nextPos);
-    if (this->canMovePos(nextPos) && this->nextCharacter() != mainScene->m_player) {
+    if (this->canMoveNextPos()) {
         this->moveNextTile();
         if (this->worldPosition() == nextPos) {
             this->m_routeStackIndex++;

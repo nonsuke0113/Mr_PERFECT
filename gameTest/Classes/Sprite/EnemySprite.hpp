@@ -57,6 +57,7 @@ protected:
     void setupAnimationCache();
     void setDirectcion(::directcion direction);
     void hitToBullet(int damage, ::directcion bulletDirection);
+    bool canMoveNextPos();
     void rotate();
     void dead();
     virtual void update(float delta);
@@ -81,7 +82,7 @@ public:
     void moveToPos(Vec2 const& pos);
     void startPatrol();
     void stopPatrol();
-    
+   
 };
 
 #endif /* EnemySprite_hpp */
