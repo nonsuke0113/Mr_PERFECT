@@ -65,14 +65,14 @@ void Stage16Scene::initCharactors()
     this->addChild(enemy2);
     
     // ターゲット
-    this->m_target1 = ReactsHitSprite::create("switch.png", Vec2(8.0f, 22.0f), ::front, [this]() {
+    this->m_target1 = ReactsHitSprite::create("target_wall.png", Vec2(8.0f, 22.0f), ::front, [this]() {
         this->hitTarget1();
     });
     this->m_target1->setAnchorPoint(Vec2(0.0f, 0.0f));
     this->addChild(this->m_target1);
     
     // 壁
-    this->m_wall = GameSpriteBase::create("wall.png", Vec2(8.0f, 20.0f), ::front);
+    this->m_wall = GameSpriteBase::create("wall.png", Vec2(8.0f, 20.0f), ::front, false);
     this->m_wall->setAnchorPoint(Vec2(0.0f, 0.0f));
     this->addChild(this->m_wall);
 }

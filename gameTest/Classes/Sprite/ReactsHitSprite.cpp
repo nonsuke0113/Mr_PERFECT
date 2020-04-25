@@ -40,7 +40,7 @@ ReactsHitSprite* ReactsHitSprite::create(const std::string& filename, const Vec2
  */
 bool ReactsHitSprite::initWithFileName(const std::string& filename, const Vec2 &pos, ::directcion direction, std::function<void()> hitAction)
 {
-    if (!GameSpriteBase::initWithFileName(filename, pos, direction)) {
+    if (!GameSpriteBase::initWithFileName(filename, pos, direction, false)) {
         return false;
     }
     this->m_hitAction = hitAction;

@@ -18,10 +18,10 @@
     @param direction 画像の向き
     @return Sprite
  */
-GameSpriteBase* GameSpriteBase::create(const std::string& filename, const Vec2& pos, ::directcion direction)
+GameSpriteBase* GameSpriteBase::create(const std::string& filename, const Vec2& pos, ::directcion direction, bool isThroughable)
 {
     GameSpriteBase *sprite = new (std::nothrow) GameSpriteBase();
-    if (sprite && sprite->initWithFileName(filename, pos, direction))
+    if (sprite && sprite->initWithFileName(filename, pos, direction, isThroughable))
     {
         sprite->autorelease();
         return sprite;
@@ -37,8 +37,9 @@ GameSpriteBase* GameSpriteBase::create(const std::string& filename, const Vec2& 
     @param filename 画像リソース名
     @param pos ワールド座標初期位置
     @param direction 画像の向き
+    @param isThroughable 他のスプライトが通過可能かどうか
  */
-bool GameSpriteBase::initWithFileName(const std::string& filename, const Vec2 &pos, ::directcion direction)
+bool GameSpriteBase::initWithFileName(const std::string& filename, const Vec2 &pos, ::directcion direction, bool isThroughable)
 {
     if (!Sprite::initWithFile(filename)) {
         return false;
@@ -48,6 +49,7 @@ bool GameSpriteBase::initWithFileName(const std::string& filename, const Vec2 &p
     this->setPosition(Vec2(pos.x * PER_TILE_SIZE, (MAP_TILE_HEGHT - pos.y - 1) * PER_TILE_SIZE));
     this->m_initDirectcion = direction;
     this->setDirectcion(direction);
+    this->m_isThroughable = isThroughable;
     return true;
 }
 
@@ -67,10 +69,21 @@ Vec2& GameSpriteBase::worldPosition() {
 /**
     向きゲッター
  
-    @param スプライトの向き
+    @return スプライトの向き
  */
 directcion GameSpriteBase::directcion() {
     return this->m_directcion;
+}
+
+
+/**
+    通過可能かどうかゲッター
+ 
+    @return 他のスプライトが通過可能かどうか
+ */
+bool GameSpriteBase::isThroughable()
+{
+    return this->m_isThroughable;
 }
 
 
@@ -243,12 +256,11 @@ void GameSpriteBase::lookback()
  */
 bool GameSpriteBase::canMovePos(Vec2 const& pos)
 {
-    StageSceneBase* scene = (StageSceneBase*)this->getParent();
-    TMXLayer* layer = scene->m_map->getLayer("MAP");
+    StageSceneBase *mainScene = (StageSceneBase*)this->getParent();
+    TMXLayer *layer = mainScene->m_map->getLayer("MAP");
     if (pos.x < 0.0f || pos.x >= MAP_TILE_WIDTH ||
         pos.y < 0.0f || pos.y >= MAP_TILE_HEGHT ||
-        !(layer->getTileGIDAt(pos) - 1.0f == 0 ||
-        layer->getTileGIDAt(pos) - 1.0f == 3)) {
+        !isCanEnterTileGID(layer->getTileGIDAt(pos) - 1.0f)) {
         return false;
     }
     return true;

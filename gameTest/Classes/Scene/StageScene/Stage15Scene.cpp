@@ -61,12 +61,12 @@ void Stage15Scene::initCharactors()
     this->addChild(enemy1);
     
     // スイッチ
-    GameSpriteBase *switch1 = GameSpriteBase::create("switch.png", Vec2(11.0f, 21.0f), ::front);
+    GameSpriteBase *switch1 = GameSpriteBase::create("switch_wall.png", Vec2(11.0f, 21.0f), ::front, false);
     switch1->setAnchorPoint(Vec2(0.0f, 0.0f));
     this->addChild(switch1);
     
     // 壁
-    this->m_wall = GameSpriteBase::create("wall.png", Vec2(8.0f, 21.0f), ::front);
+    this->m_wall = GameSpriteBase::create("wall.png", Vec2(8.0f, 21.0f), ::front, false);
     this->m_wall->setAnchorPoint(Vec2(0.0f, 0.0f));
     this->addChild(this->m_wall);
 }

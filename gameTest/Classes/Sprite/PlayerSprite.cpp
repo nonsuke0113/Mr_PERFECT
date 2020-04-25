@@ -130,16 +130,16 @@ void PlayerSprite::knockWall()
     GameSpriteBase *knock = nullptr;
     switch (this->directcion()) {
         case ::front:
-            knock = GameSpriteBase::create("knock_under.png", this->nextTilePosition(), this->directcion());
+            knock = GameSpriteBase::create("knock_under.png", this->nextTilePosition(), this->directcion(), true);
             break;
         case ::right:
-            knock = GameSpriteBase::create("knock_right.png", this->nextTilePosition(), this->directcion());
+            knock = GameSpriteBase::create("knock_right.png", this->nextTilePosition(), this->directcion(), true);
             break;
         case ::back:
-            knock = GameSpriteBase::create("knock_up.png", this->nextTilePosition(), this->directcion());
+            knock = GameSpriteBase::create("knock_up.png", this->nextTilePosition(), this->directcion(), true);
             break;
         case ::left:
-            knock = GameSpriteBase::create("knock_left.png", this->nextTilePosition(), this->directcion());
+            knock = GameSpriteBase::create("knock_left.png", this->nextTilePosition(), this->directcion(), true);
             break;
         default:
             break;
@@ -170,7 +170,8 @@ bool PlayerSprite::canMoveNextPos()
     // 別のゲームスプライトがある
     StageSceneBase* mainScene = (StageSceneBase*)this->getParent();
     for (GameSpriteBase *sprite : mainScene->gameSpriteVector()) {
-        if (this->nextTilePosition() == sprite->worldPosition()) {
+        if (this->nextTilePosition() == sprite->worldPosition() &&
+            !sprite->isThroughable()) {
             return false;
         }
     }

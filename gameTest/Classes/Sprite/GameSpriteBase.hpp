@@ -38,12 +38,15 @@ protected:
     Vec2 m_worldPosition; // ワールド座標
     ::directcion m_initDirectcion; // スプライトの初期の向き
     ::directcion m_directcion; // スプライトの向き
+    /// 他のスプライトが通過可能かどうか
+    bool m_isThroughable;
     
 public:
-    static GameSpriteBase* create(const std::string& filename, const Vec2 &pos, ::directcion direction);
-    virtual bool initWithFileName(const std::string& filename, const Vec2 &pos, ::directcion direction);
+    static GameSpriteBase* create(const std::string& filename, const Vec2 &pos, ::directcion direction, bool isThroughable);
+    virtual bool initWithFileName(const std::string& filename, const Vec2 &pos, ::directcion direction, bool isThroughable);
     Vec2& worldPosition();
     directcion directcion();
+    bool isThroughable();
     void setWorldPosition(Vec2 const& worldPos);
     virtual void setDirectcion(::directcion direction);
     void moveWorld(Vec2 const& newPosition);

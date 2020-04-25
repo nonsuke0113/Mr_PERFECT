@@ -60,7 +60,7 @@ BulletSprite* BulletSprite::create(const Vec2& pos, ::directcion direction, Char
  */
 bool BulletSprite::initWithFileName(const std::string& filename, const Vec2 &pos, ::directcion direction, CharacterSprite* charactor, float updatePosFrame)
 {
-    if (!GameSpriteBase::initWithFileName(filename, pos, direction)) {
+    if (!GameSpriteBase::initWithFileName(filename, pos, direction, true)) {
         return false;
     }
     this->m_shootCharactor = charactor;
@@ -104,23 +104,25 @@ void BulletSprite::updatePosition(float frame)
     // 敵キャラクターの撃った弾は敵キャラクターに当たらないようにする
     StageSceneBase *mainScene = (StageSceneBase*)this->getParent();
     ReactsHitSprite *sprite = this->validateHit();
-    if ((this->m_shootCharactor != mainScene->m_player) &&
+    if (this->m_shootCharactor != nullptr &&
+        this->m_shootCharactor != mainScene->m_player &&
         sprite != mainScene->m_player) {
         sprite = nullptr;
     }
     
     // 被弾処理
-    ReactsHitSprite *hitSprite = dynamic_cast<ReactsHitSprite*>(sprite);
-    if (hitSprite != nullptr) {
-        hitSprite->hitToBullet(this->power(), this->directcion());
+    if (sprite != nullptr) {
+        sprite->hitToBullet(this->power(), this->directcion());
     }
     
     // 被弾した or 進めなくなったら自身を削除する
     if (sprite != nullptr ||
-        (!this->canMovePos(this->worldPosition()) && this->m_shootCharactor->worldPosition() != this->worldPosition())) {
+        (!this->canMovePos(this->worldPosition()))) {
         unschedule(schedule_selector(BulletSprite::updatePosition));
         this->removeFromParentAndCleanup(true);
-        this->m_shootCharactor->m_bullet = nullptr;
+        if (this->m_shootCharactor) {
+            this->m_shootCharactor->m_bullet = nullptr;
+        }
         return;
     }
     
