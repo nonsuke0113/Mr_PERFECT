@@ -277,7 +277,7 @@ void StageSceneBase::touchB()
         return;
     }
     
-    // 1秒以内は撃てない
+    // インターバルが経過していなければ撃てない
     if (this->m_shootBulletInterval <= SHOOT_BULLET_INTERVAL) {
         return;
     }

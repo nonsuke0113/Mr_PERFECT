@@ -43,7 +43,7 @@ float const SPRITE_MOVE_SPEED = 0.1f;
 #pragma mark Charactor
 float const CHARACTER_ANIMATION_SPEED = 0.5f;
 
-float const SHOOT_BULLET_INTERVAL = 60.0f;
+float const SHOOT_BULLET_INTERVAL = 30.0f;
 
 #pragma mark -
 #pragma mark Message
