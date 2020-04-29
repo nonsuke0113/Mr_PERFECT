@@ -26,15 +26,6 @@ Stage3Scene* Stage3Scene::createScene()
 
 
 /**
-    ステージ情報の初期化処理
- */
-void Stage3Scene::initStage()
-{
-    this->m_isTutorialMessage3 = false;
-}
-
-
-/**
 　　MAPの初期化処理
  */
 void Stage3Scene::initMap()
@@ -84,6 +75,8 @@ void Stage3Scene::initScoreStandard()
  */
 void Stage3Scene::gameStart()
 {
+    this->m_isTutorialMessage3 = false;
+    
     // ミッション開始のメッセージ表示後、ゲームスタート
     this->m_mdController->createStartKillMissonMessage([this]() {
         StageSceneBase::gameStart();

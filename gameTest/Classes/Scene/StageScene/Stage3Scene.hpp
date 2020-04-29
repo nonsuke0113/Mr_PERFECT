@@ -16,7 +16,6 @@ private:
     /// チュートリアルメッセージ3表示済みかどうか
     bool m_isTutorialMessage3;
     
-    void initStage();
     void initMap();
     void initCharactors();
     void initScoreStandard();
