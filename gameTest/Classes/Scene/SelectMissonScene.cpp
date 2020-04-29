@@ -31,20 +31,43 @@
 #pragma mark Init
 /**
     シーンの作成
+ 
+    @param page 初期表示ページ
+    @return シーン
  */
-Scene* SelectMissonScene::createScene()
+Scene* SelectMissonScene::createScene(int page)
 {
     auto scene = Scene::create();
-    auto layer = SelectMissonScene::create();
+    auto layer = SelectMissonScene::create(page);
     scene->addChild(layer);
     return scene;
+}
+
+/**
+    レイヤーのcreateメソッド
+ 
+    @param page 初期表示ページ
+    @return レイヤー
+ */
+SelectMissonScene* SelectMissonScene::create(int page)
+{
+    SelectMissonScene *layer = new (std::nothrow) SelectMissonScene();
+    if (layer && layer->init(page))
+    {
+        layer->autorelease();
+        return layer;
+    }
+    CC_SAFE_DELETE(layer);
+    return nullptr;
 }
 
 
 /**
     初期化処理
+ 
+    @param page 初期表示ページ
  */
-bool SelectMissonScene::init()
+bool SelectMissonScene::init(int page)
 {
     if ( !Layer::init() )
     {
@@ -59,7 +82,7 @@ bool SelectMissonScene::init()
     this->addChild(bgColor);
     
     // ページ設定
-    this->m_page = 1;
+    this->m_page = page;
     
     // 進むボタン
     this->m_nextButton = ui::Button::create("back_button.png");
@@ -75,7 +98,20 @@ bool SelectMissonScene::init()
     this->m_backButton->addTouchEventListener(CC_CALLBACK_2(SelectMissonScene::touchBackEvent, this));
     this->addChild(this->m_backButton);
     
-    //
+    // ミッションUI
+    this->initMission();
+    
+    this->updateView();
+    return true;
+}
+
+
+/**
+    ミッションUIの初期化
+ */
+void SelectMissonScene::initMission()
+{
+    // 表示ボタンの初期化
     for (int i = 0; i < 2; i++) {
         for (int j = 0; j < 2; j++) {
             for (int k = 0; k < 5; k++) {
@@ -109,9 +145,6 @@ bool SelectMissonScene::init()
             }
         }
     }
-    
-    this->updateView();
-    return true;
 }
 
 

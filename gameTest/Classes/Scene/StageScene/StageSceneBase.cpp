@@ -524,7 +524,8 @@ void StageSceneBase::backMissionSelectScene()
     // 全てのスケジュールを中止
     this->allNodeUnschedule();
     
-    Scene *resultScene = SelectMissonScene::createScene();
+    int page = this->m_stageNum > 10 ? 2 : 1;
+    Scene *resultScene = SelectMissonScene::createScene(page);
     TransitionFade* fade = TransitionFade::create(1.0f, resultScene);
     Director::getInstance()->replaceScene(fade);
 }

@@ -14,7 +14,7 @@ USING_NS_CC;
 
 #include "cocos2d.h"
 #include "ui/CocosGUI.h"
-
+ 
 class SelectMissonScene : public Layer
 {
 private:
@@ -25,15 +25,16 @@ private:
     Vector<Label*> m_scoreLabels; // スコアラベルの配列
     Vector<Sprite*> m_rankSprites; // ランク画像の配列
     
+    void initMission();
     void updateView();
     void touchMissionEvent(Ref *pSender, cocos2d::ui::Widget::TouchEventType type);
     void touchNextEvent(Ref *pSender, ui::Widget::TouchEventType type);
     void touchBackEvent(Ref *pSender, ui::Widget::TouchEventType type);
     
 public:
-    static Scene* createScene();
-    CREATE_FUNC(SelectMissonScene);
-    virtual bool init();
+    static Scene* createScene(int page);
+    static SelectMissonScene* create(int page);
+    virtual bool init(int page);
     
 };
 

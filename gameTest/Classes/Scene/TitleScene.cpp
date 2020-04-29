@@ -137,7 +137,7 @@ void TitleScene::touchMissionModeEvent(Ref *pSender, ui::Widget::TouchEventType 
     {
         case ui::Widget::TouchEventType::BEGAN:
         {
-            Scene *selectMissionScene { SelectMissonScene::createScene() };
+            Scene *selectMissionScene { SelectMissonScene::createScene(1) };
             Director::getInstance()->replaceScene(selectMissionScene);
             break;
         }

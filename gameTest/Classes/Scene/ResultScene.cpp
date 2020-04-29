@@ -172,7 +172,8 @@ void ResultScene::onTouchesBegan(const std::vector<Touch *> &touches, cocos2d::E
     // ミッション選択シーンに遷移
     Vector<FiniteTimeAction *> actionAry;
     actionAry.pushBack(CallFunc::create([this]() {
-        Scene *selectMissionScene = SelectMissonScene::createScene();
+        int page = this->m_resultInfo.m_stageNum > 10 ? 2 : 1;
+        Scene *selectMissionScene = SelectMissonScene::createScene(page);
         TransitionFade* fade = TransitionFade::create(1.0f, selectMissionScene);
         Director::getInstance()->replaceScene(fade);
     }));
