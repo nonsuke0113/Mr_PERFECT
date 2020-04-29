@@ -15,22 +15,13 @@
 Stage7Scene* Stage7Scene::createScene()
 {
     Stage7Scene *scene = new (std::nothrow) Stage7Scene();
-    if (scene && scene->init())
+    if (scene && scene->init(7))
     {
         scene->autorelease();
         return scene;
     }
     CC_SAFE_DELETE(scene);
     return nullptr;
-}
-
-
-/**
-    ステージ情報の初期化処理
- */
-void Stage7Scene::initStage()
-{
-    this->m_stageNum = 7;
 }
 
 

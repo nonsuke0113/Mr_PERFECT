@@ -18,11 +18,14 @@
 #pragma mark Init
 /**
     シーンの作成
+ 
+    @param stageNum ステージ番号
+    @return シーン
  */
-StageSceneBase* StageSceneBase::createScene()
+StageSceneBase* StageSceneBase::createScene(int stageNum)
 {
     StageSceneBase *scene = new (std::nothrow) StageSceneBase();
-    if (scene && scene->init())
+    if (scene && scene->init(stageNum))
     {
         scene->autorelease();
         return scene;
@@ -34,15 +37,18 @@ StageSceneBase* StageSceneBase::createScene()
 
 /**
     初期化処理
+ 
+    @param stageNum ステージ番号
  */
-bool StageSceneBase::init()
+bool StageSceneBase::init(int stageNum)
 {
     if (!Scene::init()) {
         return false;
     }
+    this->m_stageNum = stageNum;
+    
     this->initCamera();
     this->initUI();
-    this->initStage();
     this->initMap();
     this->initCharactors();
     this->initScoreStandard();
@@ -84,16 +90,6 @@ void StageSceneBase::initUI()
     this->m_uiLayer = StageUILayer::create();
     this->m_uiLayer->setCameraMask((unsigned short)CameraFlag::USER1);
     this->addChild(this->m_uiLayer);
-}
-
-
-/**
-    ステージ情報の初期化処理
-    子クラスにて実装する
- */
-void StageSceneBase::initStage()
-{
-    return;
 }
 
 

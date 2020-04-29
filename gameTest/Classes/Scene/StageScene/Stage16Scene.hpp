@@ -19,7 +19,6 @@ private:
     /// ターゲット
     ReactsHitSprite *m_target1;
     
-    void initStage();
     void initMap();
     void initCharactors();
     void initScoreStandard();

@@ -15,22 +15,13 @@
 Stage8Scene* Stage8Scene::createScene()
 {
     Stage8Scene *scene = new (std::nothrow) Stage8Scene();
-    if (scene && scene->init())
+    if (scene && scene->init(8))
     {
         scene->autorelease();
         return scene;
     }
     CC_SAFE_DELETE(scene);
     return nullptr;
-}
-
-
-/**
-    ステージ情報の初期化処理
- */
-void Stage8Scene::initStage()
-{
-    this->m_stageNum = 8;
 }
 
 

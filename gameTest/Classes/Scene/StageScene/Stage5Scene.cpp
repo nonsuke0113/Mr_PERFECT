@@ -15,22 +15,13 @@
 Stage5Scene* Stage5Scene::createScene()
 {
     Stage5Scene *scene = new (std::nothrow) Stage5Scene();
-    if (scene && scene->init())
+    if (scene && scene->init(5))
     {
         scene->autorelease();
         return scene;
     }
     CC_SAFE_DELETE(scene);
     return nullptr;
-}
-
-
-/**
-    ステージ情報の初期化処理
- */
-void Stage5Scene::initStage()
-{
-    this->m_stageNum = 5;
 }
 
 

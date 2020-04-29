@@ -52,7 +52,6 @@ protected:
     /// スコア基準値
     ::scoreStandard m_scoreStandard;
     
-    virtual void initStage();
     virtual void initMap();
     virtual void initCharactors();
     virtual void initScoreStandard();
@@ -75,8 +74,8 @@ public:
     /// 操作キャラクター
     PlayerSprite *m_player;
     
-    static StageSceneBase *createScene();
-    virtual bool init();
+    static StageSceneBase *createScene(int stageNum);
+    virtual bool init(int stageNum);
     ::padState padState();
     Vector<GameSpriteBase*> gameSpriteVector();
     Vector<CharacterSprite*> charactersVector();

@@ -16,22 +16,13 @@
 Stage16Scene* Stage16Scene::createScene()
 {
     Stage16Scene *scene = new (std::nothrow) Stage16Scene();
-    if (scene && scene->init())
+    if (scene && scene->init(16))
     {
         scene->autorelease();
         return scene;
     }
     CC_SAFE_DELETE(scene);
     return nullptr;
-}
-
-
-/**
-    ステージ情報の初期化処理
- */
-void Stage16Scene::initStage()
-{
-    this->m_stageNum = 16;
 }
 
 

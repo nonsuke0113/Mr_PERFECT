@@ -15,7 +15,7 @@
 Stage1Scene* Stage1Scene::createScene()
 {
     Stage1Scene *scene = new (std::nothrow) Stage1Scene();
-    if (scene && scene->init())
+    if (scene && scene->init(1))
     {
         scene->autorelease();
         return scene;
@@ -30,7 +30,6 @@ Stage1Scene* Stage1Scene::createScene()
  */
 void Stage1Scene::initStage()
 {
-    this->m_stageNum = 1;
     this->m_isTutorialMessage1 = false;
 }
 
