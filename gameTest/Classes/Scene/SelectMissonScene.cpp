@@ -85,7 +85,7 @@ bool SelectMissonScene::init(int page)
     this->m_page = page;
     
     // 進むボタン
-    this->m_nextButton = ui::Button::create("back_button.png");
+    this->m_nextButton = ui::Button::create("next_button.png");
     this->m_nextButton->setAnchorPoint(Vec2(1.0f, 0.0f));
     this->m_nextButton->setPosition(Vec2(1036.0f, 100.0f));
     this->m_nextButton->addTouchEventListener(CC_CALLBACK_2(SelectMissonScene::touchNextEvent, this));
