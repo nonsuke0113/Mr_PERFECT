@@ -39,8 +39,6 @@ protected:
     GameState m_state;
     /// ステージ番号
     int m_stageNum;
-    /// プレイヤーが弾丸を撃てない間隔
-    float m_shootBulletInterval;
     /// 敵がプレイヤーを発見した回数
     int m_enemyFoundPlayerCount;
     /// スクロール用カメラ

@@ -52,7 +52,6 @@ bool StageSceneBase::init()
     this->addChild(this->m_mdController->m_dialog);
     
     this->m_time = 0.0f;
-    this->m_shootBulletInterval = 0.0f;
     this->m_enemyFoundPlayerCount = 0;
     
     this->gameStart();
@@ -278,10 +277,11 @@ void StageSceneBase::touchB()
     }
     
     // インターバルが経過していなければ撃てない
-    if (this->m_shootBulletInterval <= SHOOT_BULLET_INTERVAL) {
+    float interval = this->m_time - this->m_player->timeOfLastShoot();
+    if (this->m_player->timeOfLastShoot() != 0.0f && interval <= SHOOT_BULLET_INTERVAL) {
         return;
     }
-    this->m_shootBulletInterval = 0.0f;
+    this->m_player->setTimeOfLastShoot(this->m_time);
     
     this->m_player->shootBullet();
     
@@ -609,8 +609,6 @@ void StageSceneBase::updateTime()
     }
     this->m_time++;
     this->m_uiLayer->updateTime(this->m_time / 60);
-    
-    this->m_shootBulletInterval++;
 }
 
 

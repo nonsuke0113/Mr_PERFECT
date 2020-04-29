@@ -31,6 +31,24 @@ PlayerSprite* PlayerSprite::create(const std::string& filename, const Vec2& pos,
 
 
 /**
+    初期化処理
+ 
+    @param filename キャラクターの画像リソース名
+    @param pos キャラクターのワールド座標初期位置
+    @param direction キャラクターの向き
+    @param updatePosFrame キャラクターの座標更新のフレーム
+ */
+bool PlayerSprite::initWithFileName(const std::string& filename, const Vec2 &pos, ::directcion direction, float updatePosFrame)
+{
+    if (!CharacterSprite::initWithFileName(filename, pos, direction, updatePosFrame)) {
+        return false;
+    }
+    this->m_timeOfLastShoot = 0.0f;
+    return true;
+}
+
+
+/**
     アニメーションキャッシュに移動用のアニメーションを設定する
  */
 void PlayerSprite::setupAnimationCache()
@@ -64,7 +82,27 @@ void PlayerSprite::setupAnimationCache()
 
 
 #pragma mark -
+#pragma mark Getter
+/**
+    最後に弾丸を撃った時間ゲッター
+ */
+float PlayerSprite::timeOfLastShoot()
+{
+    return this->m_timeOfLastShoot;
+}
+
+
+#pragma mark -
 #pragma mark Setter
+/**
+    最後に弾丸を撃った時間セッター
+ */
+void PlayerSprite::setTimeOfLastShoot(float time)
+{
+    this->m_timeOfLastShoot = time;
+}
+
+
 /**
     向きセッター
  */
