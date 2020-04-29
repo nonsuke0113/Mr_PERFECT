@@ -20,10 +20,14 @@ class AStarNode : public Ref
 protected:
     
 public:
-    Vec2 m_pos; // ワールド座標
-    float m_eCost; // 推定(estimated)コスト。このノードから、ゴールノードまでの最短距離。
-    float m_aCost; // 実(actual)コスト。スタートノードからの距離+eコスト。
-    AStarNode *m_parentNode; // 親のノード。
+    /// ワールド座標
+    Vec2 m_pos;
+    /// 推定(estimated)コスト。このノードから、ゴールノードまでの最短距離。
+    float m_eCost;
+    /// 実(actual)コスト。スタートノードからの距離+eコスト。
+    float m_aCost;
+    /// 親のノード。
+    AStarNode *m_parentNode;
     
     static AStarNode* create(const Vec2 pos, const Vec2 goalPos, AStarNode* parent);
     virtual bool init(const Vec2 pos, const Vec2 goalPos, AStarNode* parent);

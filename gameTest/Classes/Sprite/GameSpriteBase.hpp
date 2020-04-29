@@ -16,7 +16,7 @@ USING_NS_CC;
 #include "ui/CocosGUI.h"
 #include "GameConst.hpp"
 
-// 向き
+/// 向き
 typedef enum {
     back,
     right,
@@ -25,7 +25,7 @@ typedef enum {
     none
 } directcion;
 
-// アクション
+/// アクション
 typedef enum {
     move,
     animate
@@ -34,10 +34,14 @@ typedef enum {
 class GameSpriteBase : public Sprite
 {
 protected:
-    Vec2 m_initWorldPosition; // 初期座標
-    Vec2 m_worldPosition; // ワールド座標
-    ::directcion m_initDirectcion; // スプライトの初期の向き
-    ::directcion m_directcion; // スプライトの向き
+    /// 初期座標
+    Vec2 m_initWorldPosition;
+    /// ワールド座標
+    Vec2 m_worldPosition;
+    /// スプライトの初期の向き
+    ::directcion m_initDirectcion;
+    /// スプライトの向き
+    ::directcion m_directcion;
     /// 他のスプライトが通過可能かどうか
     bool m_isThroughable;
     

@@ -23,7 +23,8 @@ protected:
     void createMessage(std::vector<std::string> messages, std::function<void()> completedAction);
     
 public:
-    MessageDialog* m_dialog; // メッセージダイアログ
+    /// メッセージダイアログ
+    MessageDialog* m_dialog;
     
     static MessageDialogController* create();
     virtual bool init();

@@ -18,12 +18,18 @@ USING_NS_CC;
 class SelectMissonScene : public Layer
 {
 private:
-    int m_page; // ページ
-    ui::Button *m_nextButton; // 進むボタン
-    ui::Button *m_backButton; // 戻るボタン
-    Vector<ui::Button*> m_missionButtons; // ミッション選択ボタンの配列
-    Vector<Label*> m_scoreLabels; // スコアラベルの配列
-    Vector<Sprite*> m_rankSprites; // ランク画像の配列
+    /// ページ
+    int m_page;
+    /// 進むボタン
+    ui::Button *m_nextButton;
+    /// 戻るボタン
+    ui::Button *m_backButton;
+    /// ミッション選択ボタンの配列
+    Vector<ui::Button*> m_missionButtons;
+    /// スコアラベルの配列
+    Vector<Label*> m_scoreLabels;
+    /// ランク画像の配列
+    Vector<Sprite*> m_rankSprites;
     
     void initMission();
     void updateView();

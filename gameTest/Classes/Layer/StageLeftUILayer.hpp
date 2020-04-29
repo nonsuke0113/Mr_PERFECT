@@ -27,10 +27,14 @@ typedef enum {
 class StageLeftUILayer : public Layer
 {
 private:
-    Sprite *m_background; // 背景
-    Sprite *m_padBack; // パッド下地
-    Sprite *m_padPick; // パッド操作部
-    Vector<Sprite*> m_heartes; // hp
+    /// 背景
+    Sprite *m_background;
+    /// パッド下地
+    Sprite *m_padBack;
+    /// パッド操作部
+    Sprite *m_padPick;
+    /// HP画像の配列
+    Vector<Sprite*> m_heartes;
     
     static double degreeFromVec2(Vec2 posA, Vec2 posB);
     void onTouchesBegan(const std::vector<Touch*>& touches, Event *unused_event);

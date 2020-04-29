@@ -20,8 +20,10 @@ USING_NS_CC;
 class StageUILayer : public Layer
 {
 private:
-    StageLeftUILayer *m_leftLayer; // 左サイドバー
-    StageRightUILayer *m_rightLayer; // 右サイドバー
+    /// 左サイドバー
+    StageLeftUILayer *m_leftLayer;
+    /// 右サイドバー
+    StageRightUILayer *m_rightLayer;
     
 public:
     CREATE_FUNC(StageUILayer);

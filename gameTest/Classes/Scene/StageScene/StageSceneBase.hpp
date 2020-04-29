@@ -35,17 +35,24 @@ private:
     void updateCameraPosition();
     
 protected:
-    GameState m_state; // ゲームの状態
-    // ステージ情報
+    /// ゲームの状態
+    GameState m_state;
+    /// ステージ番号
     int m_stageNum;
-    float m_shootBulletInterval; // 弾丸を撃てない間隔
-    int m_enemyFoundPlayerCount; // 敵がプレイヤーを発見した回数
-    Camera *m_camera; // スクロール用カメラ
-    MessageDialogController *m_mdController; // メッセージダイアログコントローラー
-    StageUILayer *m_uiLayer; // UIレイヤー
+    /// プレイヤーが弾丸を撃てない間隔
+    float m_shootBulletInterval;
+    /// 敵がプレイヤーを発見した回数
+    int m_enemyFoundPlayerCount;
+    /// スクロール用カメラ
+    Camera *m_camera;
+    /// メッセージダイアログコントローラー
+    MessageDialogController *m_mdController;
+    /// UIレイヤー
+    StageUILayer *m_uiLayer;
     /// リザルト用の情報
     ResultInfo *m_resultInfo;
-    ::scoreStandard m_scoreStandard; // スコア基準値
+    /// スコア基準値
+    ::scoreStandard m_scoreStandard;
     
     virtual void initStage();
     virtual void initMap();
@@ -63,9 +70,12 @@ protected:
     virtual void checkState();
     
 public:
-    float m_time; // 経過時間
-    TMXTiledMap *m_map; // MAP
-    PlayerSprite *m_player; // 操作キャラクター
+    /// 経過時間
+    float m_time;
+    /// MAP
+    TMXTiledMap *m_map;
+    /// 操作キャラクター
+    PlayerSprite *m_player;
     
     static StageSceneBase *createScene();
     virtual bool init();

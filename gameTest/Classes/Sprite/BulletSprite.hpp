@@ -20,8 +20,10 @@ USING_NS_CC;
 class BulletSprite : public GameSpriteBase
 {
 protected:
-    CharacterSprite* m_shootCharactor; // 撃ったキャラクター
-    int m_power; // 威力
+    /// 撃ったキャラクター
+    CharacterSprite* m_shootCharactor;
+    /// 威力
+    int m_power;
     /// 座標更新のフレーム
     float m_updatePosFrame;
     

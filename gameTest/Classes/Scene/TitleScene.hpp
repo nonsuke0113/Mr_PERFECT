@@ -21,13 +21,20 @@ USING_NS_CC;
 class TitleScene : public Layer
 {
 private:
-    Sprite *m_logo; // タイトルロゴ
-    ui::Button *m_startButton; // スタートボタン
-    ui::Button *m_menu1Button; // ミッションモードボタン
-    ui::Button *m_menu2Button; // 遊び方ボタン
-    ui::Button *m_menu3Button; // 遊び方ボタン
-    PlayerSprite *m_playerSprite; // プレイヤーキャラクター
-    EnemySprite *m_enemySprite; // 敵キャラクター
+    /// タイトルロゴ
+    Sprite *m_logo;
+    /// スタートボタン
+    ui::Button *m_startButton;
+    /// ミッションモードボタン
+    ui::Button *m_menu1Button;
+    /// 遊び方ボタン
+    ui::Button *m_menu2Button;
+    /// クレジットボタン
+    ui::Button *m_menu3Button;
+    /// プレイヤーキャラクター
+    PlayerSprite *m_playerSprite;
+    /// 敵キャラクター
+    EnemySprite *m_enemySprite;
     
     void touchStartEvent(Ref *pSender, cocos2d::ui::Widget::TouchEventType type);
     void touchMissionModeEvent(Ref *pSender, cocos2d::ui::Widget::TouchEventType type);

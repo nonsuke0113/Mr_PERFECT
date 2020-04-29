@@ -16,7 +16,7 @@ class Stage16Scene : public StageSceneBase
 private:
     /// 出口を隠す用の壁
     GameSpriteBase *m_wall;
-    /// 的
+    /// ターゲット
     ReactsHitSprite *m_target1;
     
     void initStage();

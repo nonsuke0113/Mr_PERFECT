@@ -16,7 +16,7 @@ class Stage17Scene : public StageSceneBase
 private:
     /// 床のスイッチ
     GameSpriteBase *m_switch1;
-    /// 的
+    /// ターゲット
     ReactsHitSprite *m_target1;
     /// スイッチの状態
     bool m_isSwitch1On;

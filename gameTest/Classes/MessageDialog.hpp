@@ -19,22 +19,38 @@ USING_NS_CC;
 class MessageDialog : public Node, public ui::EditBoxDelegate
 {
 private:
-    ui::Scale9Sprite *m_frame; // メッセージフレーム
-    Label *m_label; // 表示中のメッセージラベル
-    ui::EditBox *m_editBox; // プレイヤー入力用EditView
-    Sprite *m_finishArrow; // 文字送り終了矢印
-    Sprite *m_userChoiceArrow; // 2択用の矢印画像
-    bool m_isVisible; // メッセージダイアログが表示されているかどうか
-    bool m_isNeedInput; // プレイヤー入力が必要かどうか
-    bool m_isNeedChoice; // プレイヤー選択の2択が必要かどうか
-    bool m_isSending; // 文字送り中かどうか
-    bool m_userChoice; // プレイヤーの選択
-    std::vector<std::string> m_messageList; // 表示するメッセージのリスト
-    std::vector<std::string> m_answerList; // プレイヤー入力のリスト
-    int m_messageIndex;    // 現在表示中のメッセージのインデックス
-    int m_charIndex; // 現在の文字位置
-    float m_distance; // 前の文字を表示してからの経過時間
-    std::function<void()> m_completedAction; // 文字送り完了後のハンドラ
+    /// メッセージフレーム
+    ui::Scale9Sprite *m_frame;
+    /// 表示中のメッセージラベル
+    Label *m_label;
+    /// プレイヤー入力用EditView
+    ui::EditBox *m_editBox;
+    /// 文字送り終了矢印
+    Sprite *m_finishArrow;
+    /// 2択用の矢印画像
+    Sprite *m_userChoiceArrow;
+    /// メッセージダイアログが表示されているかどうか
+    bool m_isVisible;
+    /// プレイヤー入力が必要かどうか
+    bool m_isNeedInput;
+    /// プレイヤー選択の2択が必要かどうか
+    bool m_isNeedChoice;
+    /// 文字送り中かどうか
+    bool m_isSending;
+    /// プレイヤーの選択
+    bool m_userChoice;
+    /// 表示するメッセージのリスト
+    std::vector<std::string> m_messageList;
+    /// プレイヤー入力のリスト
+    std::vector<std::string> m_answerList;
+    /// 現在表示中のメッセージのインデックス
+    int m_messageIndex;
+    /// 現在の文字位置
+    int m_charIndex;
+    /// 前の文字を表示してからの経過時間
+    float m_distance;
+    /// 文字送り完了後のハンドラ
+    std::function<void()> m_completedAction;
     
     void initFrame(const Size frameSize);
     void initFinishArrow();

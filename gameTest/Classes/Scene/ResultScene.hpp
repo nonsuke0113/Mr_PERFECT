@@ -19,8 +19,10 @@ USING_NS_CC;
 class ResultScene : public Layer
 {
 private:
-    ResultInfo m_resultInfo; // リザルト情報
-    Sprite *m_userRankSprite; // ランク画像
+    /// リザルト情報
+    ResultInfo m_resultInfo;
+    /// ランク画像
+    Sprite *m_userRankSprite;
     
     void onTouchesBegan(const std::vector<Touch*>& touches, Event *unused_event);
     void touchShareEvent(Ref *pSender, ui::Widget::TouchEventType type);

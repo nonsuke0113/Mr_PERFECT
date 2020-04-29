@@ -13,7 +13,8 @@
 class Stage1Scene : public StageSceneBase
 {
 private:
-    bool m_isTutorialMessage1; // チュートリアルメッセージ1表示済みかどうか
+    /// チュートリアルメッセージ1表示済みかどうか
+    bool m_isTutorialMessage1;
     
     void initStage();
     void initMap();

@@ -19,13 +19,15 @@ USING_NS_CC;
 class CharacterSprite : public ReactsHitSprite
 {
 protected:
-    int m_hp; // HP
+    /// HP
+    int m_hp;
     
     virtual void setupAnimationCache();
     virtual void dead();
     
 public:
-    Sprite *m_bullet; // 発砲した弾丸
+    /// 発砲した弾丸
+    Sprite *m_bullet;
     /// 座標更新のフレーム
     float m_updatePosFrame;
     

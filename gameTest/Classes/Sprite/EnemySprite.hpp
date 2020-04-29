@@ -13,14 +13,14 @@
 #include "CharacterSprite.hpp"
 #include <vector>
 
-// 回転方向
+/// 回転方向
 typedef enum {
     turn_right,
     turn_left,
     turn_none
 } rotateDirectcion;
 
-// 警備の種類
+/// 警備の種類
 typedef enum {
     patorol_roundtrip, // 往復
     patorol_rotateifpossible, // 巡回(曲がれるなら曲がる)
@@ -33,7 +33,7 @@ typedef enum {
     patorol_none // 警備なし
 } patorolType;
 
-// 吹き出しの種類
+/// 吹き出しの種類
 typedef enum {
     exclamation,
     question
@@ -43,16 +43,26 @@ typedef enum {
 class EnemySprite : public CharacterSprite
 {
 protected:
-    ::patorolType m_initPatorolType; // 初期警備タイプ
-    ::patorolType m_patorolType; // 警備タイプ
-    ::rotateDirectcion m_rotateDirection; // 巡回時の回転方向
-    std::vector<Vec2> m_routeStack; // 経路
-    int m_routeStackIndex; // 経路の進捗を管理するインデックス
-    Vec2 m_playerLostPoint; // プレイヤーを最後に発見した座標
-    Vec2 m_playerLostNextPoint; // プレイヤーを見失った際に見た次の座標
-    bool m_movingHeardSoundPoint; // 聞こえた位置に移動中
-    bool m_isFoundPlayer; // プレイヤー発見中
-    int m_hearableRange; // 壁叩きの音が聞こえる範囲
+    /// 初期警備タイプ
+    ::patorolType m_initPatorolType;
+    /// 警備タイプ
+    ::patorolType m_patorolType;
+    /// 巡回時の回転方向
+    ::rotateDirectcion m_rotateDirection;
+    /// 経路
+    std::vector<Vec2> m_routeStack;
+    /// 経路の進捗を管理するインデックス
+    int m_routeStackIndex;
+    /// プレイヤーを最後に発見した座標
+    Vec2 m_playerLostPoint;
+    /// プレイヤーを見失った際に見た次の座標
+    Vec2 m_playerLostNextPoint;
+    /// 聞こえた位置に移動中かどうか
+    bool m_movingHeardSoundPoint;
+    /// プレイヤー発見中かどうか
+    bool m_isFoundPlayer;
+    /// 壁叩きの音が聞こえる範囲
+    int m_hearableRange;
     
     void setupAnimationCache();
     void setDirectcion(::directcion direction);
