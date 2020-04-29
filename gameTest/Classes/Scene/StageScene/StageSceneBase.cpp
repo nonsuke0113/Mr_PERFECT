@@ -95,11 +95,14 @@ void StageSceneBase::initUI()
 
 /**
     MAPの初期化処理
-    子クラスにて実装する
  */
 void StageSceneBase::initMap()
 {
-    return;
+    this->m_map = TMXTiledMap::create(StringUtils::format("map%d.tmx", this->m_stageNum).c_str());
+    if (this->m_map == nullptr) {
+        return;
+    }
+    this->addChild(this->m_map);
 }
 
 

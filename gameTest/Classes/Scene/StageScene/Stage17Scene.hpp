@@ -21,7 +21,6 @@ private:
     /// スイッチの状態
     bool m_isSwitch1On;
     
-    void initMap();
     void initCharactors();
     void initScoreStandard();
     void gameStart();

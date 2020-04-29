@@ -26,16 +26,6 @@ Stage8Scene* Stage8Scene::createScene()
 
 
 /**
-    MAPの初期化処理
- */
-void Stage8Scene::initMap()
-{
-    this->m_map = TMXTiledMap::create("map8.tmx");
-    this->addChild(this->m_map);
-}
-
-
-/**
     キャラクターの初期化処理
  */
 void Stage8Scene::initCharactors()

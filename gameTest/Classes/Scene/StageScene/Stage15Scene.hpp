@@ -16,7 +16,6 @@ private:
     /// 出口を隠す用の壁
     GameSpriteBase *m_wall;
     
-    void initMap();
     void initCharactors();
     void initScoreStandard();
     void gameStart();

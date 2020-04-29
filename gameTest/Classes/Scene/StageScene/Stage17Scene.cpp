@@ -28,16 +28,6 @@ Stage17Scene* Stage17Scene::createScene()
 
 
 /**
-    MAPの初期化処理
- */
-void Stage17Scene::initMap()
-{
-    this->m_map = TMXTiledMap::create("map17.tmx");
-    this->addChild(this->m_map);
-}
-
-
-/**
     キャラクターの初期化処理
  */
 void Stage17Scene::initCharactors()

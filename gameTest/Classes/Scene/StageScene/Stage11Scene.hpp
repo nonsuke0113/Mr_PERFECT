@@ -13,7 +13,6 @@
 class Stage11Scene : public StageSceneBase
 {
 private:
-    void initMap();
     void initCharactors();
     void initScoreStandard();
     void gameStart();
