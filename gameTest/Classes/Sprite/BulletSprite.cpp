@@ -94,6 +94,24 @@ void BulletSprite::shootBullet(::directcion direction)
     schedule(schedule_selector(BulletSprite::updatePosition), this->m_updatePosFrame);
 }
 
+/**
+    与えられた座標が移動可能かどうかの処理をオーバーライド
+ 
+    @param pos 対象の座標
+    @return 移動可能かどうか
+ */
+bool BulletSprite::canMovePos(Vec2 const& pos)
+{
+    StageSceneBase *mainScene = (StageSceneBase*)this->getParent();
+    TMXLayer *layer = mainScene->m_map->getLayer("MAP");
+    if (pos.x < 0.0f || pos.x >= MAP_TILE_WIDTH ||
+        pos.y < 0.0f || pos.y >= MAP_TILE_HEGHT ||
+        !isCanEnterTileGID(layer->getTileGIDAt(pos) - 1.0f)) {
+        return false;
+    }
+    return true;
+}
+
 
 /**
     弾の座標更新

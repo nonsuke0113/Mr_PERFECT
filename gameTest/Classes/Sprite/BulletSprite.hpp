@@ -27,6 +27,7 @@ protected:
     /// 座標更新のフレーム
     float m_updatePosFrame;
     
+    bool canMovePos(Vec2 const& pos);
     void updatePosition(float frame);
     ReactsHitSprite* validateHit();
     

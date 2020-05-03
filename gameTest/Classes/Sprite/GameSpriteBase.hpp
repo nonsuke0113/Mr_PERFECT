@@ -61,7 +61,7 @@ public:
     void turnLeft();
     void lookback();
     int nextTileGID();
-    bool canMovePos(Vec2 const& pos);
+    virtual bool canMovePos(Vec2 const& pos);
     void facingNextPos(Vec2& pos);
     
 };

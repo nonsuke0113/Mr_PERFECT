@@ -263,6 +263,14 @@ bool GameSpriteBase::canMovePos(Vec2 const& pos)
         !isCanEnterTileGID(layer->getTileGIDAt(pos) - 1.0f)) {
         return false;
     }
+    for (GameSpriteBase *sprite : mainScene->gameSpriteVector()) {
+        if (sprite->isThroughable()) {
+            continue;
+        }
+        if (pos == sprite->worldPosition()) {
+            return false;
+        }
+    }
     return true;
 }
 

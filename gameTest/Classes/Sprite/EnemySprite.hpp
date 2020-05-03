@@ -67,6 +67,7 @@ protected:
     void setupAnimationCache();
     void setDirectcion(::directcion direction);
     void hitToBullet(int damage, ::directcion bulletDirection);
+    bool canMovePos(Vec2 const& pos);
     bool canMoveNextPos();
     void rotate();
     void dead();

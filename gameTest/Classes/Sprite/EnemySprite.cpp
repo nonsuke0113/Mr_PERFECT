@@ -231,6 +231,24 @@ void EnemySprite::moveToPos(Vec2 const& pos)
 
 
 /**
+    与えられた座標が移動可能かどうかの処理をオーバーライド
+    最短経路の計算時にだけ、プレイヤーの座標は移動可能とする
+ 
+    @param pos 対象の座標
+    @return 移動可能かどうか
+ */
+bool EnemySprite::canMovePos(Vec2 const& pos)
+{
+    StageSceneBase* mainScene = (StageSceneBase*)this->getParent();
+    if (mainScene->m_player->worldPosition() == pos) {
+        return true;
+    } else {
+        return GameSpriteBase::canMovePos(pos);
+    }
+}
+
+
+/**
     次の座標に移動可能かどうかを返す
  
     @return 次の座標に移動可能かどうか
