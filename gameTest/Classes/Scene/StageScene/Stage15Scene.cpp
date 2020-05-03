@@ -123,6 +123,7 @@ void Stage15Scene::touchA()
         // SE再生
         experimental::AudioEngine::play2d("switch.mp3", false);
         this->m_wall->removeFromParent();
+        this->m_wall = nullptr;
         return;
     }
     
