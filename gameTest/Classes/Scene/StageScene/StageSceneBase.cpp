@@ -146,14 +146,14 @@ void StageSceneBase::initScoreStandard()
  */
 Vector<GameSpriteBase*> StageSceneBase::gameSpriteVector() {
     Vector<Node*> nodes = this->getChildren();
-    Vector<GameSpriteBase*> characters;
+    Vector<GameSpriteBase*> gameSprites;
     for (Node *node : nodes) {
         GameSpriteBase *sprite = dynamic_cast<GameSpriteBase*>(node);
         if (sprite != nullptr){
-            characters.pushBack(sprite);
+            gameSprites.pushBack(sprite);
         }
     }
-    return characters;
+    return gameSprites;
 }
 
 
@@ -165,10 +165,10 @@ Vector<GameSpriteBase*> StageSceneBase::gameSpriteVector() {
 Vector<CharacterSprite*> StageSceneBase::charactersVector() {
     Vector<Node*> nodes = this->getChildren();
     Vector<CharacterSprite*> characters;
-    for (int i = 0; i < nodes.size(); i++) {
-        if (typeid(*nodes.at(i)) == typeid(PlayerSprite) ||
-            typeid(*nodes.at(i)) == typeid(EnemySprite)){
-            characters.pushBack((CharacterSprite*)nodes.at(i));
+    for (Node *node : nodes) {
+        CharacterSprite *chara = dynamic_cast<CharacterSprite*>(node);
+        if (chara != nullptr) {
+            characters.pushBack(chara);
         }
     }
     return characters;
@@ -183,9 +183,10 @@ Vector<CharacterSprite*> StageSceneBase::charactersVector() {
 Vector<EnemySprite*> StageSceneBase::enemysVector() {
     Vector<Node*> nodes = this->getChildren();
     Vector<EnemySprite*> enemysVector;
-    for (int i = 0; i < nodes.size(); i++) {
-        if (typeid(*nodes.at(i)) == typeid(EnemySprite)) {
-            enemysVector.pushBack((EnemySprite*)nodes.at(i));
+    for (Node *node : nodes) {
+        EnemySprite *enemy = dynamic_cast<EnemySprite*>(node);
+        if (enemy != nullptr) {
+            enemysVector.pushBack(enemy);
         }
     }
     return enemysVector;
