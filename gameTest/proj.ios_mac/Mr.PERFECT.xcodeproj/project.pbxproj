@@ -46,6 +46,7 @@
 		8262943E1AAF051F00CB7CF7 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8262943D1AAF051F00CB7CF7 /* Security.framework */; };
 		8602DD5F245E634E002825DF /* Stage18Scene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8602DD5D245E634E002825DF /* Stage18Scene.cpp */; };
 		8602DD63245E87FA002825DF /* Stage19Scene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8602DD61245E87FA002825DF /* Stage19Scene.cpp */; };
+		8602DD66245E9293002825DF /* Stage20Scene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8602DD64245E9293002825DF /* Stage20Scene.cpp */; };
 		8610B8ED2425F5060013E21B /* Stage4Scene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8610B8EB2425F5060013E21B /* Stage4Scene.cpp */; };
 		8610B8F5242683D80013E21B /* Stage6Scene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8610B8F3242683D80013E21B /* Stage6Scene.cpp */; };
 		8610B8F9242683F20013E21B /* Stage7Scene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8610B8F7242683F20013E21B /* Stage7Scene.cpp */; };
@@ -197,6 +198,8 @@
 		8602DD5E245E634E002825DF /* Stage18Scene.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Stage18Scene.hpp; sourceTree = "<group>"; };
 		8602DD61245E87FA002825DF /* Stage19Scene.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Stage19Scene.cpp; sourceTree = "<group>"; };
 		8602DD62245E87FA002825DF /* Stage19Scene.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Stage19Scene.hpp; sourceTree = "<group>"; };
+		8602DD64245E9293002825DF /* Stage20Scene.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Stage20Scene.cpp; sourceTree = "<group>"; };
+		8602DD65245E9293002825DF /* Stage20Scene.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Stage20Scene.hpp; sourceTree = "<group>"; };
 		8610B8EB2425F5060013E21B /* Stage4Scene.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Stage4Scene.cpp; sourceTree = "<group>"; };
 		8610B8EC2425F5060013E21B /* Stage4Scene.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Stage4Scene.hpp; sourceTree = "<group>"; };
 		8610B8F3242683D80013E21B /* Stage6Scene.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Stage6Scene.cpp; sourceTree = "<group>"; };
@@ -568,6 +571,8 @@
 				8602DD5D245E634E002825DF /* Stage18Scene.cpp */,
 				8602DD62245E87FA002825DF /* Stage19Scene.hpp */,
 				8602DD61245E87FA002825DF /* Stage19Scene.cpp */,
+				8602DD65245E9293002825DF /* Stage20Scene.hpp */,
+				8602DD64245E9293002825DF /* Stage20Scene.cpp */,
 			);
 			path = StageScene;
 			sourceTree = "<group>";
@@ -803,6 +808,7 @@
 				E97BDD152426106200BAAE25 /* Stage5Scene.cpp in Sources */,
 				8610B902242684390013E21B /* Stage10Scene.cpp in Sources */,
 				86202C4A2451CBA2000C1421 /* Stage17Scene.cpp in Sources */,
+				8602DD66245E9293002825DF /* Stage20Scene.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

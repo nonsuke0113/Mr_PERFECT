@@ -28,6 +28,7 @@
 #include "Stage17Scene.hpp"
 #include "Stage18Scene.hpp"
 #include "Stage19Scene.hpp"
+#include "Stage20Scene.hpp"
 
 #pragma mark -
 #pragma mark Init
@@ -187,7 +188,9 @@ void SelectMissonScene::updateView()
         
         // 表示
         if (score != 0) {
-            this->m_missionButtons.at(i + 1)->setVisible(true);
+            if (i < 20 - 1) {
+                this->m_missionButtons.at(i + 1)->setVisible(true);
+            }
             Label *scoreLabel = this->m_scoreLabels.at(i);
             scoreLabel->setString(StringUtils::format("%05d", score).c_str());
             scoreLabel->setVisible(true);
@@ -312,6 +315,11 @@ void SelectMissonScene::touchMissionEvent(Ref *pSender, ui::Widget::TouchEventTy
                 case 19:
                 {
                     stageScene = Stage19Scene::createScene();
+                    break;
+                }
+                case 20:
+                {
+                    stageScene = Stage20Scene::createScene();
                     break;
                 }
                 default:
