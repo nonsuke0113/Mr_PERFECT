@@ -45,6 +45,7 @@
 		52B47A471A53D09C004E4C60 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 52B47A461A53D09B004E4C60 /* Security.framework */; };
 		8262943E1AAF051F00CB7CF7 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8262943D1AAF051F00CB7CF7 /* Security.framework */; };
 		8602DD5F245E634E002825DF /* Stage18Scene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8602DD5D245E634E002825DF /* Stage18Scene.cpp */; };
+		8602DD63245E87FA002825DF /* Stage19Scene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8602DD61245E87FA002825DF /* Stage19Scene.cpp */; };
 		8610B8ED2425F5060013E21B /* Stage4Scene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8610B8EB2425F5060013E21B /* Stage4Scene.cpp */; };
 		8610B8F5242683D80013E21B /* Stage6Scene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8610B8F3242683D80013E21B /* Stage6Scene.cpp */; };
 		8610B8F9242683F20013E21B /* Stage7Scene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8610B8F7242683F20013E21B /* Stage7Scene.cpp */; };
@@ -194,6 +195,8 @@
 		8262943D1AAF051F00CB7CF7 /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
 		8602DD5D245E634E002825DF /* Stage18Scene.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Stage18Scene.cpp; sourceTree = "<group>"; };
 		8602DD5E245E634E002825DF /* Stage18Scene.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Stage18Scene.hpp; sourceTree = "<group>"; };
+		8602DD61245E87FA002825DF /* Stage19Scene.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Stage19Scene.cpp; sourceTree = "<group>"; };
+		8602DD62245E87FA002825DF /* Stage19Scene.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Stage19Scene.hpp; sourceTree = "<group>"; };
 		8610B8EB2425F5060013E21B /* Stage4Scene.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Stage4Scene.cpp; sourceTree = "<group>"; };
 		8610B8EC2425F5060013E21B /* Stage4Scene.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Stage4Scene.hpp; sourceTree = "<group>"; };
 		8610B8F3242683D80013E21B /* Stage6Scene.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Stage6Scene.cpp; sourceTree = "<group>"; };
@@ -563,6 +566,8 @@
 				86202C482451CBA2000C1421 /* Stage17Scene.cpp */,
 				8602DD5E245E634E002825DF /* Stage18Scene.hpp */,
 				8602DD5D245E634E002825DF /* Stage18Scene.cpp */,
+				8602DD62245E87FA002825DF /* Stage19Scene.hpp */,
+				8602DD61245E87FA002825DF /* Stage19Scene.cpp */,
 			);
 			path = StageScene;
 			sourceTree = "<group>";
@@ -770,6 +775,7 @@
 				867B070B2439A1D4006106FC /* CreditScene.cpp in Sources */,
 				8610B8ED2425F5060013E21B /* Stage4Scene.cpp in Sources */,
 				8602DD5F245E634E002825DF /* Stage18Scene.cpp in Sources */,
+				8602DD63245E87FA002825DF /* Stage19Scene.cpp in Sources */,
 				865D5A6E23E10BAC008A7C6D /* PlayerSprite.cpp in Sources */,
 				8610B8FF2426841E0013E21B /* Stage9Scene.cpp in Sources */,
 				8648AA8423F2D43700365B62 /* AStarUtils.cpp in Sources */,
