@@ -232,7 +232,7 @@ void EnemySprite::moveToPos(Vec2 const& pos)
 
 /**
     与えられた座標が移動可能かどうかの処理をオーバーライド
-    最短経路の計算時にだけ、プレイヤーの座標は移動可能とする
+    経路探索とプレイヤーの発見処理で、キャラクターがいる位置も移動可能扱いにする
  
     @param pos 対象の座標
     @return 移動可能かどうか
@@ -240,11 +240,12 @@ void EnemySprite::moveToPos(Vec2 const& pos)
 bool EnemySprite::canMovePos(Vec2 const& pos)
 {
     StageSceneBase* mainScene = (StageSceneBase*)this->getParent();
-    if (mainScene->m_player->worldPosition() == pos) {
-        return true;
-    } else {
-        return GameSpriteBase::canMovePos(pos);
+    for (CharacterSprite *chara : mainScene->charactersVector()) {
+        if (chara->worldPosition() == pos) {
+            return true;
+        }
     }
+    return GameSpriteBase::canMovePos(pos);
 }
 
 
