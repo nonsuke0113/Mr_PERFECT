@@ -166,7 +166,7 @@ void SelectMissonScene::updateView()
         this->m_nextButton->setVisible(false);
     }
     
-    for (int i = 0; i < 20; i++) {
+    for (int i = 0; i < MISSION_NUM; i++) {
         
         if ((i < ((this->m_page - 1) * 10)) ||
             (i >= (this->m_page * 10)))
@@ -188,7 +188,7 @@ void SelectMissonScene::updateView()
         
         // 表示
         if (score != 0) {
-            if (i < 20 - 1) {
+            if (i < MISSION_NUM - 1) {
                 this->m_missionButtons.at(i + 1)->setVisible(true);
             }
             Label *scoreLabel = this->m_scoreLabels.at(i);

@@ -8,6 +8,10 @@
 #include "GameConst.hpp"
 
 #pragma mark -
+#pragma mark Game
+int const MISSION_NUM = 20;
+
+#pragma mark -
 #pragma mark UILayout
 float const VIEW_HEGHT = 640.0f;
 float const VIEW_WIDTH = 1136.0f;

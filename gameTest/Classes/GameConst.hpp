@@ -10,6 +10,9 @@
 
 #pragma mark -
 #pragma mark Game
+/// ミッション数
+extern int const MISSION_NUM;
+
 /// ゲームの状態
 enum class GameState {
     InProgress, // 進行中
