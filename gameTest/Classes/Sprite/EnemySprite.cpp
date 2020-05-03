@@ -558,10 +558,6 @@ void EnemySprite::patrolRotateIfPossible()
     if (this->canMoveNextPos()) {
         this->moveNextTile();
     }
-    // 進めなかったら向きを回転する
-    else {
-        this->rotate();
-    }
 }
 
 
