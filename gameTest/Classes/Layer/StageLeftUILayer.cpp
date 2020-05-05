@@ -7,6 +7,7 @@
 
 #include "StageLeftUILayer.hpp"
 #include <math.h>
+#include "GameConst.hpp"
 
 static Vec2 _defaultPickPos; // パッド操作部の基準座標
 
@@ -125,21 +126,22 @@ void StageLeftUILayer::onTouchesMoved(const std::vector<Touch *> &touches, cocos
     while (iterator != touches.end()) {
         Touch* touch = (Touch*)(*iterator);
         auto location = touch->getLocation();
-        Rect padPickRect = this->m_padPick->getBoundingBox();
-        
-        if (location.x > _defaultPickPos.x + this->m_padPick->getContentSize().width / 2) {
-            location.x = _defaultPickPos.x + this->m_padPick->getContentSize().width / 2;
-        } else if (location.x < _defaultPickPos.x - this->m_padPick->getContentSize().width / 2) {
-            location.x = _defaultPickPos.x - this->m_padPick->getContentSize().width / 2;
-        }
-        
-        if (location.y > _defaultPickPos.y + this->m_padPick->getContentSize().height / 2) {
-            location.y = _defaultPickPos.y + this->m_padPick->getContentSize().height / 2;
-        } else if (location.y < _defaultPickPos.y - this->m_padPick->getContentSize().height / 2) {
-            location.y = _defaultPickPos.y - this->m_padPick->getContentSize().height / 2;
-        }
-        
+        Size visibleSize = Director::getInstance()->getVisibleSize();
+        Rect rect = Rect(0.0f, 0.0f, visibleSize.width - SIDE_BAR_WIDTH, visibleSize.height);
+        if (rect.containsPoint(location)) {
+            if (location.x > _defaultPickPos.x + this->m_padPick->getContentSize().width / 2) {
+                location.x = _defaultPickPos.x + this->m_padPick->getContentSize().width / 2;
+            } else if (location.x < _defaultPickPos.x - this->m_padPick->getContentSize().width / 2) {
+                location.x = _defaultPickPos.x - this->m_padPick->getContentSize().width / 2;
+            }
+            
+            if (location.y > _defaultPickPos.y + this->m_padPick->getContentSize().height / 2) {
+                location.y = _defaultPickPos.y + this->m_padPick->getContentSize().height / 2;
+            } else if (location.y < _defaultPickPos.y - this->m_padPick->getContentSize().height / 2) {
+                location.y = _defaultPickPos.y - this->m_padPick->getContentSize().height / 2;
+            }
         this->m_padPick->setPosition(location);
+        }
         
         iterator++;
     }
