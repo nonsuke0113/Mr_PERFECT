@@ -81,8 +81,8 @@ void Stage19Scene::initCharactors()
 */
 void Stage19Scene::initScoreStandard()
 {
-    this->m_scoreStandard.timeScoreStandardA = 60;
-    this->m_scoreStandard.timeScoreStandardB = 190;
+    this->m_scoreStandard.timeScoreStandardA = 20;
+    this->m_scoreStandard.timeScoreStandardB = 45;
     this->m_scoreStandard.foundScoreStandardA = 0;
     this->m_scoreStandard.foundScoreStandardB = 2;
 }

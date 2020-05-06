@@ -57,7 +57,7 @@ void Stage7Scene::initCharactors()
 void Stage7Scene::initScoreStandard()
 {
     this->m_scoreStandard.timeScoreStandardA = 10;
-    this->m_scoreStandard.timeScoreStandardB = 20;
+    this->m_scoreStandard.timeScoreStandardB = 15;
     this->m_scoreStandard.foundScoreStandardA = 0;
     this->m_scoreStandard.foundScoreStandardB = 2;
 }
