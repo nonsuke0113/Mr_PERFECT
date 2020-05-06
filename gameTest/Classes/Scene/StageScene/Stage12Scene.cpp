@@ -36,9 +36,14 @@ void Stage12Scene::initCharactors()
     this->addChild(this->m_player);
     
     // 敵キャラクター
-    EnemySprite* enemy1 = EnemySprite::create("enemy1.png", Vec2(8.0f, 25.0f), ::front, 45.0f, patorol_random);
+    EnemySprite* enemy1 = EnemySprite::create("enemy1.png", Vec2(10.0f, 28.0f), ::left, 30.0f, patorol_rotatehitwall);
     enemy1->setAnchorPoint(Vec2(0.0f, 0.0f));
+    enemy1->setRotateDirectcion(::turn_right);
     this->addChild(enemy1);
+    
+    EnemySprite* enemy2 = EnemySprite::create("enemy1.png", Vec2(8.0f, 23.0f), ::front, 45.0f, patorol_random);
+    enemy2->setAnchorPoint(Vec2(0.0f, 0.0f));
+    this->addChild(enemy2);
 }
 
 
@@ -47,8 +52,8 @@ void Stage12Scene::initCharactors()
 */
 void Stage12Scene::initScoreStandard()
 {
-    this->m_scoreStandard.timeScoreStandardA = 10;
-    this->m_scoreStandard.timeScoreStandardB = 20;
+    this->m_scoreStandard.timeScoreStandardA = 20;
+    this->m_scoreStandard.timeScoreStandardB = 30;
     this->m_scoreStandard.foundScoreStandardA = 0;
     this->m_scoreStandard.foundScoreStandardB = 2;
 }

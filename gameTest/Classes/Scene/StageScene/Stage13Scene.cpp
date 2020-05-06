@@ -6,6 +6,7 @@
 //
 
 #include "Stage13Scene.hpp"
+#include <AudioEngine.h>
 
 #pragma mark -
 #pragma mark Init
@@ -36,13 +37,19 @@ void Stage13Scene::initCharactors()
     this->addChild(this->m_player);
     
     // 敵キャラクター
-    EnemySprite* enemy1 = EnemySprite::create("enemy1.png", Vec2(5.0f, 21.0f), ::front, 45.0f, patorol_random);
+    EnemySprite* enemy1 = EnemySprite::create("enemy1.png", Vec2(11.0f, 22.0f), ::front, 30.0f, ::patorol_nomove);
     enemy1->setAnchorPoint(Vec2(0.0f, 0.0f));
     this->addChild(enemy1);
     
-    EnemySprite* enemy2 = EnemySprite::create("enemy1.png", Vec2(11.0f, 21.0f), ::front, 45.0f, patorol_random);
-    enemy2->setAnchorPoint(Vec2(0.0f, 0.0f));
-    this->addChild(enemy2);
+    // スイッチ
+    GameSpriteBase *switch1 = GameSpriteBase::create("switch_wall.png", Vec2(11.0f, 21.0f), ::front, false);
+    switch1->setAnchorPoint(Vec2(0.0f, 0.0f));
+    this->addChild(switch1);
+    
+    // 壁
+    this->m_wall = GameSpriteBase::create("wall.png", Vec2(8.0f, 21.0f), ::front, false);
+    this->m_wall->setAnchorPoint(Vec2(0.0f, 0.0f));
+    this->addChild(this->m_wall);
 }
 
 
@@ -51,8 +58,8 @@ void Stage13Scene::initCharactors()
 */
 void Stage13Scene::initScoreStandard()
 {
-    this->m_scoreStandard.timeScoreStandardA = 20;
-    this->m_scoreStandard.timeScoreStandardB = 30;
+    this->m_scoreStandard.timeScoreStandardA = 15;
+    this->m_scoreStandard.timeScoreStandardB = 20;
     this->m_scoreStandard.foundScoreStandardA = 0;
     this->m_scoreStandard.foundScoreStandardB = 2;
 }
@@ -66,7 +73,7 @@ void Stage13Scene::initScoreStandard()
 void Stage13Scene::gameStart()
 {
     // ミッション開始のメッセージ表示後、ゲームスタート
-    this->m_mdController->createStartKillMissonMessage([this]() {
+    this->m_mdController->createStartReachMissonMessage([this]() {
         StageSceneBase::gameStart();
         this->m_mdController->m_dialog->setCompleteAction(nullptr);
     });
@@ -93,9 +100,33 @@ void Stage13Scene::doContinue()
 void Stage13Scene::checkState()
 {
     // クリア判定
-    if (this->enemysVector().size() == 0) {
+    if (this->m_player->worldPosition() == Vec2(8.0f, 21.0f)) {
         this->stageClear();
     }
     
     return;
+}
+
+
+#pragma mark -
+#pragma mark ButtonEvent
+/**
+    Aボタン押下時に呼び出される処理
+ */
+void Stage13Scene::touchA()
+{
+    // 出口を隠している壁を消す
+    if ((this->m_player->worldPosition() == Vec2(11.0f, 22.0f)) &&
+        (this->m_player->directcion() == ::back) &&
+        this->m_wall != nullptr)
+    {
+        // SE再生
+        experimental::AudioEngine::play2d("switch.mp3", false);
+        this->m_wall->removeFromParent();
+        this->m_wall = nullptr;
+        return;
+    }
+    
+    // 親の処理を呼ぶ
+    StageSceneBase::touchA();
 }

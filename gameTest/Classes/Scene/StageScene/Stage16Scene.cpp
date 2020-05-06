@@ -2,11 +2,10 @@
 //  Stage16Scene.cpp
 //  gameTest-mobile
 //
-//  Created by 丹野健介 on 2020/04/20.
+//  Created by 丹野健介 on 2020/03/22.
 //
 
 #include "Stage16Scene.hpp"
-#include <AudioEngine.h>
 
 #pragma mark -
 #pragma mark Init
@@ -32,30 +31,35 @@ Stage16Scene* Stage16Scene::createScene()
 void Stage16Scene::initCharactors()
 {
     // プレイヤー
-    this->m_player = PlayerSprite::create("player_back1.png", Vec2(8.0f, 29.0f), ::back, 30.0f);
+    this->m_player = PlayerSprite::create("player_back1.png", Vec2(5.0f, 29.0f), ::back, 30.0f);
     this->m_player->setAnchorPoint(Vec2(0.0f, 0.0f));
     this->addChild(this->m_player);
     
     // 敵キャラクター
-    EnemySprite* enemy1 = EnemySprite::create("enemy1.png", Vec2(4.0f, 25.0f), ::right, 30.0f, ::patorol_nomove);
+    EnemySprite* enemy1 = EnemySprite::create("enemy1.png", Vec2(11.0f, 25.0f), ::left, 30.0f, patorol_rotateifpossible);
     enemy1->setAnchorPoint(Vec2(0.0f, 0.0f));
     this->addChild(enemy1);
+    enemy1->setRotateDirectcion(turn_left);
     
-    EnemySprite* enemy2 = EnemySprite::create("enemy1.png", Vec2(12.0f, 25.0f), ::left, 30.0f, ::patorol_nomove);
+    EnemySprite* enemy2 = EnemySprite::create("enemy1.png", Vec2(7.0f, 22.0f), ::right, 30.0f, patorol_rotateifpossible);
     enemy2->setAnchorPoint(Vec2(0.0f, 0.0f));
     this->addChild(enemy2);
+    enemy2->setRotateDirectcion(turn_right);
     
-    // ターゲット
-    this->m_target1 = ReactsHitSprite::create("target_wall.png", Vec2(8.0f, 22.0f), ::front, [this]() {
-        this->hitTarget1();
-    });
-    this->m_target1->setAnchorPoint(Vec2(0.0f, 0.0f));
-    this->addChild(this->m_target1);
+    EnemySprite* enemy3 = EnemySprite::create("enemy1.png", Vec2(11.0f, 19.0f), ::left, 30.0f, patorol_rotateifpossible);
+    enemy3->setAnchorPoint(Vec2(0.0f, 0.0f));
+    this->addChild(enemy3);
+    enemy3->setRotateDirectcion(turn_left);
     
-    // 壁
-    this->m_wall = GameSpriteBase::create("wall.png", Vec2(8.0f, 20.0f), ::front, false);
-    this->m_wall->setAnchorPoint(Vec2(0.0f, 0.0f));
-    this->addChild(this->m_wall);
+    EnemySprite* enemy4 = EnemySprite::create("enemy1.png", Vec2(7.0f, 16.0f), ::right, 30.0f, patorol_rotateifpossible);
+    enemy4->setAnchorPoint(Vec2(0.0f, 0.0f));
+    this->addChild(enemy4);
+    enemy4->setRotateDirectcion(turn_right);
+    
+    EnemySprite* enemy5 = EnemySprite::create("enemy1.png", Vec2(11.0f, 13.0f), ::left, 30.0f, patorol_rotateifpossible);
+    enemy5->setAnchorPoint(Vec2(0.0f, 0.0f));
+    this->addChild(enemy5);
+    enemy5->setRotateDirectcion(turn_left);
 }
 
 
@@ -64,10 +68,10 @@ void Stage16Scene::initCharactors()
 */
 void Stage16Scene::initScoreStandard()
 {
-    this->m_scoreStandard.timeScoreStandardA = 10;
-    this->m_scoreStandard.timeScoreStandardB = 20;
+    this->m_scoreStandard.timeScoreStandardA = 15;
+    this->m_scoreStandard.timeScoreStandardB = 45;
     this->m_scoreStandard.foundScoreStandardA = 0;
-    this->m_scoreStandard.foundScoreStandardB = 2;
+    this->m_scoreStandard.foundScoreStandardB = 3;
 }
 
 
@@ -105,25 +109,10 @@ void Stage16Scene::doContinue()
  */
 void Stage16Scene::checkState()
 {
-    // クリア判定
-    if (this->m_player->worldPosition() == Vec2(8.0f, 20.0f)) {
+    // クリア座標判定
+    if (this->m_player->worldPosition() == Vec2(12.0f, 12.0f)) {
         this->stageClear();
     }
     
     return;
-}
-
-
-/**
-    ターゲットに弾丸を当てた際に呼び出される処理
- */
-void Stage16Scene::hitTarget1()
-{
-    // 出口を隠している壁を消す
-    if (this->m_wall != nullptr) {
-        // SE再生
-        experimental::AudioEngine::play2d("switch.mp3", false);
-        this->m_wall->removeFromParent();
-        this->m_wall = nullptr;
-    }
 }

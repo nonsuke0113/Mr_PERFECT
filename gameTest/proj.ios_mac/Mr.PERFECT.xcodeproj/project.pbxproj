@@ -44,31 +44,31 @@
 		521A8EAA19F11F5000D177D7 /* fonts in Resources */ = {isa = PBXBuildFile; fileRef = 521A8EA819F11F5000D177D7 /* fonts */; };
 		52B47A471A53D09C004E4C60 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 52B47A461A53D09B004E4C60 /* Security.framework */; };
 		8262943E1AAF051F00CB7CF7 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8262943D1AAF051F00CB7CF7 /* Security.framework */; };
-		8602DD5F245E634E002825DF /* Stage18Scene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8602DD5D245E634E002825DF /* Stage18Scene.cpp */; };
-		8602DD63245E87FA002825DF /* Stage19Scene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8602DD61245E87FA002825DF /* Stage19Scene.cpp */; };
-		8602DD66245E9293002825DF /* Stage20Scene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8602DD64245E9293002825DF /* Stage20Scene.cpp */; };
-		8610B8ED2425F5060013E21B /* Stage4Scene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8610B8EB2425F5060013E21B /* Stage4Scene.cpp */; };
-		8610B8F5242683D80013E21B /* Stage6Scene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8610B8F3242683D80013E21B /* Stage6Scene.cpp */; };
+		8602DD5F245E634E002825DF /* Stage20Scene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8602DD5D245E634E002825DF /* Stage20Scene.cpp */; };
+		8602DD63245E87FA002825DF /* Stage17Scene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8602DD61245E87FA002825DF /* Stage17Scene.cpp */; };
+		8602DD66245E9293002825DF /* Stage19Scene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8602DD64245E9293002825DF /* Stage19Scene.cpp */; };
+		8610B8ED2425F5060013E21B /* Stage11Scene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8610B8EB2425F5060013E21B /* Stage11Scene.cpp */; };
+		8610B8F5242683D80013E21B /* Stage9Scene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8610B8F3242683D80013E21B /* Stage9Scene.cpp */; };
 		8610B8F9242683F20013E21B /* Stage7Scene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8610B8F7242683F20013E21B /* Stage7Scene.cpp */; };
-		8610B8FC242684070013E21B /* Stage8Scene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8610B8FA242684070013E21B /* Stage8Scene.cpp */; };
-		8610B8FF2426841E0013E21B /* Stage9Scene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8610B8FD2426841E0013E21B /* Stage9Scene.cpp */; };
-		8610B902242684390013E21B /* Stage10Scene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8610B900242684390013E21B /* Stage10Scene.cpp */; };
+		8610B8FC242684070013E21B /* Stage4Scene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8610B8FA242684070013E21B /* Stage4Scene.cpp */; };
+		8610B8FF2426841E0013E21B /* Stage14Scene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8610B8FD2426841E0013E21B /* Stage14Scene.cpp */; };
+		8610B902242684390013E21B /* Stage16Scene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8610B900242684390013E21B /* Stage16Scene.cpp */; };
 		8610B906242725080013E21B /* splash.png in Resources */ = {isa = PBXBuildFile; fileRef = 8610B905242725080013E21B /* splash.png */; };
 		86114BE0240AB31E00864BEA /* StageLeftUILayer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 86114BDE240AB31E00864BEA /* StageLeftUILayer.cpp */; };
 		86114BE5240AB95700864BEA /* StageRightUILayer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 86114BE3240AB95700864BEA /* StageRightUILayer.cpp */; };
 		8619C96A2438B4BC00956209 /* ShareLauncher.mm in Sources */ = {isa = PBXBuildFile; fileRef = 8619C9682438B4BC00956209 /* ShareLauncher.mm */; };
 		861B748E239F37A6007068AB /* BulletSprite.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 861B748C239F37A6007068AB /* BulletSprite.cpp */; };
 		861B7492239F516C007068AB /* GameSpriteBase.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 861B7490239F516C007068AB /* GameSpriteBase.cpp */; };
-		86202C4A2451CBA2000C1421 /* Stage17Scene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 86202C482451CBA2000C1421 /* Stage17Scene.cpp */; };
+		86202C4A2451CBA2000C1421 /* Stage8Scene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 86202C482451CBA2000C1421 /* Stage8Scene.cpp */; };
 		8639393D2417CFC4001679EA /* ResultScene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8639393B2417CFC4001679EA /* ResultScene.cpp */; };
 		864650EE244ACDF100C53D6C /* ResultInfo.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 864650EB244ACDF000C53D6C /* ResultInfo.cpp */; };
-		864650F9244BF1CD00C53D6C /* Stage11Scene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 864650F7244BF1CD00C53D6C /* Stage11Scene.cpp */; };
-		864650FD244C3DAA00C53D6C /* Stage12Scene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 864650FB244C3DAA00C53D6C /* Stage12Scene.cpp */; };
-		86465100244C5DF800C53D6C /* Stage13Scene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 864650FE244C5DF800C53D6C /* Stage13Scene.cpp */; };
-		86465103244C5FAC00C53D6C /* Stage14Scene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 86465101244C5FAC00C53D6C /* Stage14Scene.cpp */; };
-		86465106244C8C4200C53D6C /* Stage15Scene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 86465104244C8C4200C53D6C /* Stage15Scene.cpp */; };
+		864650F9244BF1CD00C53D6C /* Stage18Scene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 864650F7244BF1CD00C53D6C /* Stage18Scene.cpp */; };
+		864650FD244C3DAA00C53D6C /* Stage6Scene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 864650FB244C3DAA00C53D6C /* Stage6Scene.cpp */; };
+		86465100244C5DF800C53D6C /* Stage15Scene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 864650FE244C5DF800C53D6C /* Stage15Scene.cpp */; };
+		86465103244C5FAC00C53D6C /* Stage12Scene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 86465101244C5FAC00C53D6C /* Stage12Scene.cpp */; };
+		86465106244C8C4200C53D6C /* Stage13Scene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 86465104244C8C4200C53D6C /* Stage13Scene.cpp */; };
 		8646D362244DDB7100B1DEDA /* ReactsHitSprite.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8646D360244DDB7100B1DEDA /* ReactsHitSprite.cpp */; };
-		8646D366244DDFEA00B1DEDA /* Stage16Scene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8646D364244DDFE900B1DEDA /* Stage16Scene.cpp */; };
+		8646D366244DDFEA00B1DEDA /* Stage5Scene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8646D364244DDFE900B1DEDA /* Stage5Scene.cpp */; };
 		8648AA8023F294F200365B62 /* AStarNode.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8648AA7E23F294F200365B62 /* AStarNode.cpp */; };
 		8648AA8423F2D43700365B62 /* AStarUtils.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8648AA8223F2D43700365B62 /* AStarUtils.cpp */; };
 		864FC468237527FE00DDF5E8 /* EnemySprite.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 864FC466237527FE00DDF5E8 /* EnemySprite.cpp */; };
@@ -100,7 +100,7 @@
 		E92CE85C2206814400E123FD /* GoogleMobileAds.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E92CE85A2206814400E123FD /* GoogleMobileAds.framework */; };
 		E92CE85D2206814400E123FD /* README.txt in Resources */ = {isa = PBXBuildFile; fileRef = E92CE85B2206814400E123FD /* README.txt */; };
 		E92CE8792206A24900E123FD /* AdMobHelper.mm in Sources */ = {isa = PBXBuildFile; fileRef = E92CE8782206A24900E123FD /* AdMobHelper.mm */; };
-		E97BDD152426106200BAAE25 /* Stage5Scene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E97BDD132426106200BAAE25 /* Stage5Scene.cpp */; };
+		E97BDD152426106200BAAE25 /* Stage10Scene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E97BDD132426106200BAAE25 /* Stage10Scene.cpp */; };
 		E9A5210E21A90B8C00DB44EA /* TitleScene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E9A5210C21A90B8C00DB44EA /* TitleScene.cpp */; };
 		E9A5211521A90C6F00DB44EA /* CharacterSprite.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E9A5211321A90C6F00DB44EA /* CharacterSprite.cpp */; };
 		ED545A7C1B68A1F400C3958E /* libiconv.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = ED545A7B1B68A1F400C3958E /* libiconv.dylib */; };
@@ -194,24 +194,24 @@
 		521A8EA819F11F5000D177D7 /* fonts */ = {isa = PBXFileReference; lastKnownFileType = folder; path = fonts; sourceTree = "<group>"; };
 		52B47A461A53D09B004E4C60 /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS.sdk/System/Library/Frameworks/Security.framework; sourceTree = DEVELOPER_DIR; };
 		8262943D1AAF051F00CB7CF7 /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
-		8602DD5D245E634E002825DF /* Stage18Scene.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Stage18Scene.cpp; sourceTree = "<group>"; };
-		8602DD5E245E634E002825DF /* Stage18Scene.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Stage18Scene.hpp; sourceTree = "<group>"; };
-		8602DD61245E87FA002825DF /* Stage19Scene.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Stage19Scene.cpp; sourceTree = "<group>"; };
-		8602DD62245E87FA002825DF /* Stage19Scene.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Stage19Scene.hpp; sourceTree = "<group>"; };
-		8602DD64245E9293002825DF /* Stage20Scene.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Stage20Scene.cpp; sourceTree = "<group>"; };
-		8602DD65245E9293002825DF /* Stage20Scene.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Stage20Scene.hpp; sourceTree = "<group>"; };
-		8610B8EB2425F5060013E21B /* Stage4Scene.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Stage4Scene.cpp; sourceTree = "<group>"; };
-		8610B8EC2425F5060013E21B /* Stage4Scene.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Stage4Scene.hpp; sourceTree = "<group>"; };
-		8610B8F3242683D80013E21B /* Stage6Scene.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Stage6Scene.cpp; sourceTree = "<group>"; };
-		8610B8F4242683D80013E21B /* Stage6Scene.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Stage6Scene.hpp; sourceTree = "<group>"; };
+		8602DD5D245E634E002825DF /* Stage20Scene.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Stage20Scene.cpp; sourceTree = "<group>"; };
+		8602DD5E245E634E002825DF /* Stage20Scene.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Stage20Scene.hpp; sourceTree = "<group>"; };
+		8602DD61245E87FA002825DF /* Stage17Scene.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Stage17Scene.cpp; sourceTree = "<group>"; };
+		8602DD62245E87FA002825DF /* Stage17Scene.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Stage17Scene.hpp; sourceTree = "<group>"; };
+		8602DD64245E9293002825DF /* Stage19Scene.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Stage19Scene.cpp; sourceTree = "<group>"; };
+		8602DD65245E9293002825DF /* Stage19Scene.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Stage19Scene.hpp; sourceTree = "<group>"; };
+		8610B8EB2425F5060013E21B /* Stage11Scene.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Stage11Scene.cpp; sourceTree = "<group>"; };
+		8610B8EC2425F5060013E21B /* Stage11Scene.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Stage11Scene.hpp; sourceTree = "<group>"; };
+		8610B8F3242683D80013E21B /* Stage9Scene.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Stage9Scene.cpp; sourceTree = "<group>"; };
+		8610B8F4242683D80013E21B /* Stage9Scene.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Stage9Scene.hpp; sourceTree = "<group>"; };
 		8610B8F7242683F20013E21B /* Stage7Scene.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Stage7Scene.cpp; sourceTree = "<group>"; };
 		8610B8F8242683F20013E21B /* Stage7Scene.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Stage7Scene.hpp; sourceTree = "<group>"; };
-		8610B8FA242684070013E21B /* Stage8Scene.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Stage8Scene.cpp; sourceTree = "<group>"; };
-		8610B8FB242684070013E21B /* Stage8Scene.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Stage8Scene.hpp; sourceTree = "<group>"; };
-		8610B8FD2426841E0013E21B /* Stage9Scene.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Stage9Scene.cpp; sourceTree = "<group>"; };
-		8610B8FE2426841E0013E21B /* Stage9Scene.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Stage9Scene.hpp; sourceTree = "<group>"; };
-		8610B900242684390013E21B /* Stage10Scene.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Stage10Scene.cpp; sourceTree = "<group>"; };
-		8610B901242684390013E21B /* Stage10Scene.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Stage10Scene.hpp; sourceTree = "<group>"; };
+		8610B8FA242684070013E21B /* Stage4Scene.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Stage4Scene.cpp; sourceTree = "<group>"; };
+		8610B8FB242684070013E21B /* Stage4Scene.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Stage4Scene.hpp; sourceTree = "<group>"; };
+		8610B8FD2426841E0013E21B /* Stage14Scene.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Stage14Scene.cpp; sourceTree = "<group>"; };
+		8610B8FE2426841E0013E21B /* Stage14Scene.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Stage14Scene.hpp; sourceTree = "<group>"; };
+		8610B900242684390013E21B /* Stage16Scene.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Stage16Scene.cpp; sourceTree = "<group>"; };
+		8610B901242684390013E21B /* Stage16Scene.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Stage16Scene.hpp; sourceTree = "<group>"; };
 		8610B905242725080013E21B /* splash.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = splash.png; sourceTree = "<group>"; };
 		86114BDE240AB31E00864BEA /* StageLeftUILayer.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = StageLeftUILayer.cpp; sourceTree = "<group>"; };
 		86114BDF240AB31E00864BEA /* StageLeftUILayer.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = StageLeftUILayer.hpp; sourceTree = "<group>"; };
@@ -223,26 +223,26 @@
 		861B748D239F37A6007068AB /* BulletSprite.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = BulletSprite.hpp; sourceTree = "<group>"; };
 		861B7490239F516C007068AB /* GameSpriteBase.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = GameSpriteBase.cpp; sourceTree = "<group>"; };
 		861B7491239F516C007068AB /* GameSpriteBase.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = GameSpriteBase.hpp; sourceTree = "<group>"; };
-		86202C482451CBA2000C1421 /* Stage17Scene.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Stage17Scene.cpp; sourceTree = "<group>"; };
-		86202C492451CBA2000C1421 /* Stage17Scene.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Stage17Scene.hpp; sourceTree = "<group>"; };
+		86202C482451CBA2000C1421 /* Stage8Scene.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Stage8Scene.cpp; sourceTree = "<group>"; };
+		86202C492451CBA2000C1421 /* Stage8Scene.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Stage8Scene.hpp; sourceTree = "<group>"; };
 		8639393B2417CFC4001679EA /* ResultScene.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = ResultScene.cpp; sourceTree = "<group>"; };
 		8639393C2417CFC4001679EA /* ResultScene.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = ResultScene.hpp; sourceTree = "<group>"; };
 		864650EB244ACDF000C53D6C /* ResultInfo.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ResultInfo.cpp; sourceTree = "<group>"; };
 		864650ED244ACDF000C53D6C /* ResultInfo.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = ResultInfo.hpp; sourceTree = "<group>"; };
-		864650F7244BF1CD00C53D6C /* Stage11Scene.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Stage11Scene.cpp; sourceTree = "<group>"; };
-		864650F8244BF1CD00C53D6C /* Stage11Scene.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Stage11Scene.hpp; sourceTree = "<group>"; };
-		864650FB244C3DAA00C53D6C /* Stage12Scene.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Stage12Scene.cpp; sourceTree = "<group>"; };
-		864650FC244C3DAA00C53D6C /* Stage12Scene.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Stage12Scene.hpp; sourceTree = "<group>"; };
-		864650FE244C5DF800C53D6C /* Stage13Scene.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Stage13Scene.cpp; sourceTree = "<group>"; };
-		864650FF244C5DF800C53D6C /* Stage13Scene.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Stage13Scene.hpp; sourceTree = "<group>"; };
-		86465101244C5FAC00C53D6C /* Stage14Scene.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Stage14Scene.cpp; sourceTree = "<group>"; };
-		86465102244C5FAC00C53D6C /* Stage14Scene.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Stage14Scene.hpp; sourceTree = "<group>"; };
-		86465104244C8C4200C53D6C /* Stage15Scene.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Stage15Scene.cpp; sourceTree = "<group>"; };
-		86465105244C8C4200C53D6C /* Stage15Scene.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Stage15Scene.hpp; sourceTree = "<group>"; };
+		864650F7244BF1CD00C53D6C /* Stage18Scene.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Stage18Scene.cpp; sourceTree = "<group>"; };
+		864650F8244BF1CD00C53D6C /* Stage18Scene.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Stage18Scene.hpp; sourceTree = "<group>"; };
+		864650FB244C3DAA00C53D6C /* Stage6Scene.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Stage6Scene.cpp; sourceTree = "<group>"; };
+		864650FC244C3DAA00C53D6C /* Stage6Scene.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Stage6Scene.hpp; sourceTree = "<group>"; };
+		864650FE244C5DF800C53D6C /* Stage15Scene.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Stage15Scene.cpp; sourceTree = "<group>"; };
+		864650FF244C5DF800C53D6C /* Stage15Scene.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Stage15Scene.hpp; sourceTree = "<group>"; };
+		86465101244C5FAC00C53D6C /* Stage12Scene.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Stage12Scene.cpp; sourceTree = "<group>"; };
+		86465102244C5FAC00C53D6C /* Stage12Scene.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Stage12Scene.hpp; sourceTree = "<group>"; };
+		86465104244C8C4200C53D6C /* Stage13Scene.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Stage13Scene.cpp; sourceTree = "<group>"; };
+		86465105244C8C4200C53D6C /* Stage13Scene.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Stage13Scene.hpp; sourceTree = "<group>"; };
 		8646D360244DDB7100B1DEDA /* ReactsHitSprite.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = ReactsHitSprite.cpp; sourceTree = "<group>"; };
 		8646D361244DDB7100B1DEDA /* ReactsHitSprite.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = ReactsHitSprite.hpp; sourceTree = "<group>"; };
-		8646D364244DDFE900B1DEDA /* Stage16Scene.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Stage16Scene.cpp; sourceTree = "<group>"; };
-		8646D365244DDFE900B1DEDA /* Stage16Scene.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Stage16Scene.hpp; sourceTree = "<group>"; };
+		8646D364244DDFE900B1DEDA /* Stage5Scene.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Stage5Scene.cpp; sourceTree = "<group>"; };
+		8646D365244DDFE900B1DEDA /* Stage5Scene.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Stage5Scene.hpp; sourceTree = "<group>"; };
 		8648AA7E23F294F200365B62 /* AStarNode.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = AStarNode.cpp; sourceTree = "<group>"; };
 		8648AA7F23F294F200365B62 /* AStarNode.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = AStarNode.hpp; sourceTree = "<group>"; };
 		8648AA8223F2D43700365B62 /* AStarUtils.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = AStarUtils.cpp; sourceTree = "<group>"; };
@@ -293,8 +293,8 @@
 		E92CE8782206A24900E123FD /* AdMobHelper.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = AdMobHelper.mm; sourceTree = "<group>"; };
 		E92CE87A2206A26700E123FD /* AdMobHelper.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AdMobHelper.h; sourceTree = "<group>"; };
 		E945438E21F49F4900C11542 /* StringUtil.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = StringUtil.h; sourceTree = "<group>"; };
-		E97BDD132426106200BAAE25 /* Stage5Scene.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Stage5Scene.cpp; sourceTree = "<group>"; };
-		E97BDD142426106200BAAE25 /* Stage5Scene.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Stage5Scene.hpp; sourceTree = "<group>"; };
+		E97BDD132426106200BAAE25 /* Stage10Scene.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Stage10Scene.cpp; sourceTree = "<group>"; };
+		E97BDD142426106200BAAE25 /* Stage10Scene.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Stage10Scene.hpp; sourceTree = "<group>"; };
 		E9A5210C21A90B8C00DB44EA /* TitleScene.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = TitleScene.cpp; sourceTree = "<group>"; };
 		E9A5210D21A90B8C00DB44EA /* TitleScene.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = TitleScene.hpp; sourceTree = "<group>"; };
 		E9A5211321A90C6F00DB44EA /* CharacterSprite.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = CharacterSprite.cpp; sourceTree = "<group>"; };
@@ -539,40 +539,40 @@
 				86C1AEC523EFE2A7003F61B7 /* Stage2Scene.cpp */,
 				E92B76CF2425B0AD00FD5EAC /* Stage3Scene.hpp */,
 				E92B76CE2425B0AD00FD5EAC /* Stage3Scene.cpp */,
-				8610B8EC2425F5060013E21B /* Stage4Scene.hpp */,
-				8610B8EB2425F5060013E21B /* Stage4Scene.cpp */,
-				E97BDD142426106200BAAE25 /* Stage5Scene.hpp */,
-				E97BDD132426106200BAAE25 /* Stage5Scene.cpp */,
-				8610B8F4242683D80013E21B /* Stage6Scene.hpp */,
-				8610B8F3242683D80013E21B /* Stage6Scene.cpp */,
+				8610B8FB242684070013E21B /* Stage4Scene.hpp */,
+				8610B8FA242684070013E21B /* Stage4Scene.cpp */,
+				8646D365244DDFE900B1DEDA /* Stage5Scene.hpp */,
+				8646D364244DDFE900B1DEDA /* Stage5Scene.cpp */,
+				864650FC244C3DAA00C53D6C /* Stage6Scene.hpp */,
+				864650FB244C3DAA00C53D6C /* Stage6Scene.cpp */,
 				8610B8F8242683F20013E21B /* Stage7Scene.hpp */,
 				8610B8F7242683F20013E21B /* Stage7Scene.cpp */,
-				8610B8FB242684070013E21B /* Stage8Scene.hpp */,
-				8610B8FA242684070013E21B /* Stage8Scene.cpp */,
-				8610B8FE2426841E0013E21B /* Stage9Scene.hpp */,
-				8610B8FD2426841E0013E21B /* Stage9Scene.cpp */,
-				8610B901242684390013E21B /* Stage10Scene.hpp */,
-				8610B900242684390013E21B /* Stage10Scene.cpp */,
-				864650F8244BF1CD00C53D6C /* Stage11Scene.hpp */,
-				864650F7244BF1CD00C53D6C /* Stage11Scene.cpp */,
-				864650FC244C3DAA00C53D6C /* Stage12Scene.hpp */,
-				864650FB244C3DAA00C53D6C /* Stage12Scene.cpp */,
-				864650FF244C5DF800C53D6C /* Stage13Scene.hpp */,
-				864650FE244C5DF800C53D6C /* Stage13Scene.cpp */,
-				86465102244C5FAC00C53D6C /* Stage14Scene.hpp */,
-				86465101244C5FAC00C53D6C /* Stage14Scene.cpp */,
-				86465105244C8C4200C53D6C /* Stage15Scene.hpp */,
-				86465104244C8C4200C53D6C /* Stage15Scene.cpp */,
-				8646D365244DDFE900B1DEDA /* Stage16Scene.hpp */,
-				8646D364244DDFE900B1DEDA /* Stage16Scene.cpp */,
-				86202C492451CBA2000C1421 /* Stage17Scene.hpp */,
-				86202C482451CBA2000C1421 /* Stage17Scene.cpp */,
-				8602DD5E245E634E002825DF /* Stage18Scene.hpp */,
-				8602DD5D245E634E002825DF /* Stage18Scene.cpp */,
-				8602DD62245E87FA002825DF /* Stage19Scene.hpp */,
-				8602DD61245E87FA002825DF /* Stage19Scene.cpp */,
-				8602DD65245E9293002825DF /* Stage20Scene.hpp */,
-				8602DD64245E9293002825DF /* Stage20Scene.cpp */,
+				86202C492451CBA2000C1421 /* Stage8Scene.hpp */,
+				86202C482451CBA2000C1421 /* Stage8Scene.cpp */,
+				8610B8F4242683D80013E21B /* Stage9Scene.hpp */,
+				8610B8F3242683D80013E21B /* Stage9Scene.cpp */,
+				E97BDD142426106200BAAE25 /* Stage10Scene.hpp */,
+				E97BDD132426106200BAAE25 /* Stage10Scene.cpp */,
+				8610B8EC2425F5060013E21B /* Stage11Scene.hpp */,
+				8610B8EB2425F5060013E21B /* Stage11Scene.cpp */,
+				86465102244C5FAC00C53D6C /* Stage12Scene.hpp */,
+				86465101244C5FAC00C53D6C /* Stage12Scene.cpp */,
+				86465105244C8C4200C53D6C /* Stage13Scene.hpp */,
+				86465104244C8C4200C53D6C /* Stage13Scene.cpp */,
+				8610B8FE2426841E0013E21B /* Stage14Scene.hpp */,
+				8610B8FD2426841E0013E21B /* Stage14Scene.cpp */,
+				864650FF244C5DF800C53D6C /* Stage15Scene.hpp */,
+				864650FE244C5DF800C53D6C /* Stage15Scene.cpp */,
+				8610B901242684390013E21B /* Stage16Scene.hpp */,
+				8610B900242684390013E21B /* Stage16Scene.cpp */,
+				8602DD62245E87FA002825DF /* Stage17Scene.hpp */,
+				8602DD61245E87FA002825DF /* Stage17Scene.cpp */,
+				864650F8244BF1CD00C53D6C /* Stage18Scene.hpp */,
+				864650F7244BF1CD00C53D6C /* Stage18Scene.cpp */,
+				8602DD65245E9293002825DF /* Stage19Scene.hpp */,
+				8602DD64245E9293002825DF /* Stage19Scene.cpp */,
+				8602DD5E245E634E002825DF /* Stage20Scene.hpp */,
+				8602DD5D245E634E002825DF /* Stage20Scene.cpp */,
 			);
 			path = StageScene;
 			sourceTree = "<group>";
@@ -773,16 +773,16 @@
 				8648AA8023F294F200365B62 /* AStarNode.cpp in Sources */,
 				864650EE244ACDF100C53D6C /* ResultInfo.cpp in Sources */,
 				8619C96A2438B4BC00956209 /* ShareLauncher.mm in Sources */,
-				864650FD244C3DAA00C53D6C /* Stage12Scene.cpp in Sources */,
-				86465100244C5DF800C53D6C /* Stage13Scene.cpp in Sources */,
+				864650FD244C3DAA00C53D6C /* Stage6Scene.cpp in Sources */,
+				86465100244C5DF800C53D6C /* Stage15Scene.cpp in Sources */,
 				861B748E239F37A6007068AB /* BulletSprite.cpp in Sources */,
 				86C1AEC723EFE2A7003F61B7 /* Stage2Scene.cpp in Sources */,
 				867B070B2439A1D4006106FC /* CreditScene.cpp in Sources */,
-				8610B8ED2425F5060013E21B /* Stage4Scene.cpp in Sources */,
-				8602DD5F245E634E002825DF /* Stage18Scene.cpp in Sources */,
-				8602DD63245E87FA002825DF /* Stage19Scene.cpp in Sources */,
+				8610B8ED2425F5060013E21B /* Stage11Scene.cpp in Sources */,
+				8602DD5F245E634E002825DF /* Stage20Scene.cpp in Sources */,
+				8602DD63245E87FA002825DF /* Stage17Scene.cpp in Sources */,
 				865D5A6E23E10BAC008A7C6D /* PlayerSprite.cpp in Sources */,
-				8610B8FF2426841E0013E21B /* Stage9Scene.cpp in Sources */,
+				8610B8FF2426841E0013E21B /* Stage14Scene.cpp in Sources */,
 				8648AA8423F2D43700365B62 /* AStarUtils.cpp in Sources */,
 				1AF87B8B1F6F782A007BE51C /* RootViewController.mm in Sources */,
 				46880B8819C43A87006E1F66 /* AppDelegate.cpp in Sources */,
@@ -791,24 +791,24 @@
 				E92B76D02425B0AD00FD5EAC /* Stage3Scene.cpp in Sources */,
 				1AF87B8A1F6F7822007BE51C /* main.m in Sources */,
 				8659988923AA030F002EB428 /* Stage1Scene.cpp in Sources */,
-				86465106244C8C4200C53D6C /* Stage15Scene.cpp in Sources */,
+				86465106244C8C4200C53D6C /* Stage13Scene.cpp in Sources */,
 				E9A5210E21A90B8C00DB44EA /* TitleScene.cpp in Sources */,
-				8646D366244DDFEA00B1DEDA /* Stage16Scene.cpp in Sources */,
+				8646D366244DDFEA00B1DEDA /* Stage5Scene.cpp in Sources */,
 				ABBA36B721BA6A3500A02928 /* MessageDialog.cpp in Sources */,
 				86114BE0240AB31E00864BEA /* StageLeftUILayer.cpp in Sources */,
-				8610B8FC242684070013E21B /* Stage8Scene.cpp in Sources */,
+				8610B8FC242684070013E21B /* Stage4Scene.cpp in Sources */,
 				864FC468237527FE00DDF5E8 /* EnemySprite.cpp in Sources */,
 				86F5F18A2406A8A90051060B /* StageUILayer.cpp in Sources */,
-				864650F9244BF1CD00C53D6C /* Stage11Scene.cpp in Sources */,
+				864650F9244BF1CD00C53D6C /* Stage18Scene.cpp in Sources */,
 				8639393D2417CFC4001679EA /* ResultScene.cpp in Sources */,
-				86465103244C5FAC00C53D6C /* Stage14Scene.cpp in Sources */,
+				86465103244C5FAC00C53D6C /* Stage12Scene.cpp in Sources */,
 				86DA7CC423E4364900B495AB /* SelectMissonScene.cpp in Sources */,
-				8610B8F5242683D80013E21B /* Stage6Scene.cpp in Sources */,
+				8610B8F5242683D80013E21B /* Stage9Scene.cpp in Sources */,
 				861B7492239F516C007068AB /* GameSpriteBase.cpp in Sources */,
-				E97BDD152426106200BAAE25 /* Stage5Scene.cpp in Sources */,
-				8610B902242684390013E21B /* Stage10Scene.cpp in Sources */,
-				86202C4A2451CBA2000C1421 /* Stage17Scene.cpp in Sources */,
-				8602DD66245E9293002825DF /* Stage20Scene.cpp in Sources */,
+				E97BDD152426106200BAAE25 /* Stage10Scene.cpp in Sources */,
+				8610B902242684390013E21B /* Stage16Scene.cpp in Sources */,
+				86202C4A2451CBA2000C1421 /* Stage8Scene.cpp in Sources */,
+				8602DD66245E9293002825DF /* Stage19Scene.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

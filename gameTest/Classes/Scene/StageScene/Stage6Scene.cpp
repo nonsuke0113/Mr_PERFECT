@@ -2,7 +2,7 @@
 //  Stage6Scene.cpp
 //  gameTest-mobile
 //
-//  Created by 丹野健介 on 2020/03/22.
+//  Created by 丹野健介 on 2020/04/19.
 //
 
 #include "Stage6Scene.hpp"
@@ -36,27 +36,9 @@ void Stage6Scene::initCharactors()
     this->addChild(this->m_player);
     
     // 敵キャラクター
-    EnemySprite* enemy1 = EnemySprite::create("enemy1.png", Vec2(9.0f, 26.0f), ::left, 30.0f, patorol_rotatehitwall);
+    EnemySprite* enemy1 = EnemySprite::create("enemy1.png", Vec2(8.0f, 25.0f), ::front, 45.0f, patorol_random);
     enemy1->setAnchorPoint(Vec2(0.0f, 0.0f));
-    enemy1->setRotateDirectcion(::turn_left);
     this->addChild(enemy1);
-    
-    EnemySprite* enemy2 = EnemySprite::create("enemy1.png", Vec2(8.0f, 24.0f), ::back, 30.0f, patorol_roundtrip);
-    enemy2->setAnchorPoint(Vec2(0.0f, 0.0f));
-    this->addChild(enemy2);
-    
-    EnemySprite* enemy3 = EnemySprite::create("enemy1.png", Vec2(12.0f, 24.0f), ::left, 30.0f, patorol_rotatehitwall);
-    enemy3->setAnchorPoint(Vec2(0.0f, 0.0f));
-    enemy3->setRotateDirectcion(::turn_left);
-    this->addChild(enemy3);
-    
-    EnemySprite* enemy4 = EnemySprite::create("enemy1.png", Vec2(11.0f, 22.0f), ::back, 30.0f, patorol_roundtrip);
-    enemy4->setAnchorPoint(Vec2(0.0f, 0.0f));
-    this->addChild(enemy4);
-    
-    EnemySprite* enemy5 = EnemySprite::create("enemy1.png", Vec2(11.0f, 28.0f), ::front, 30.0f, patorol_roundtrip);
-    enemy5->setAnchorPoint(Vec2(0.0f, 0.0f));
-    this->addChild(enemy5);
 }
 
 
@@ -74,6 +56,19 @@ void Stage6Scene::initScoreStandard()
 
 #pragma mark -
 #pragma mark GameEvent
+/**
+    ゲーム開始時の処理
+ */
+void Stage6Scene::gameStart()
+{
+    // ミッション開始のメッセージ表示後、ゲームスタート
+    this->m_mdController->createStartKillMissonMessage([this]() {
+        StageSceneBase::gameStart();
+        this->m_mdController->m_dialog->setCompleteAction(nullptr);
+    });
+}
+
+
 /**
     コンティニューを実行
  */
@@ -94,23 +89,9 @@ void Stage6Scene::doContinue()
 void Stage6Scene::checkState()
 {
     // クリア判定
-    if (this->m_player->worldPosition() == Vec2(14.0f, 25.0f)) {
+    if (this->enemysVector().size() == 0) {
         this->stageClear();
     }
     
     return;
 }
-
-
-/**
-    ゲーム開始時の処理
- */
-void Stage6Scene::gameStart()
-{
-    // ミッション開始のメッセージ表示後、ゲームスタート
-    this->m_mdController->createStartReachMissonMessage([this]() {
-        StageSceneBase::gameStart();
-        this->m_mdController->m_dialog->setCompleteAction(nullptr);
-    });
-}
-

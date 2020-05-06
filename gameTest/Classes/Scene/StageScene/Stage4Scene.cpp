@@ -2,7 +2,7 @@
 //  Stage4Scene.cpp
 //  gameTest-mobile
 //
-//  Created by 丹野健介 on 2020/03/21.
+//  Created by 丹野健介 on 2020/03/22.
 //
 
 #include "Stage4Scene.hpp"
@@ -36,21 +36,9 @@ void Stage4Scene::initCharactors()
     this->addChild(this->m_player);
     
     // 敵キャラクター
-    EnemySprite* enemy1 = EnemySprite::create("enemy1.png", Vec2(9.0f, 25.0f), ::left, 30.0f, patorol_nomove);
+    EnemySprite* enemy1 = EnemySprite::create("enemy1.png", Vec2(11.0f, 26.0f), ::left, 30.0f, patorol_nomove);
     enemy1->setAnchorPoint(Vec2(0.0f, 0.0f));
     this->addChild(enemy1);
-    
-    EnemySprite* enemy2 = EnemySprite::create("enemy1.png", Vec2(7.0f, 24.0f), ::right, 30.0f, patorol_nomove);
-    enemy2->setAnchorPoint(Vec2(0.0f, 0.0f));
-    this->addChild(enemy2);
-    
-    EnemySprite* enemy3 = EnemySprite::create("enemy1.png", Vec2(9.0f, 23.0f), ::left, 30.0f, patorol_nomove);
-    enemy3->setAnchorPoint(Vec2(0.0f, 0.0f));
-    this->addChild(enemy3);
-    
-    EnemySprite* enemy4 = EnemySprite::create("enemy1.png", Vec2(11.0f, 15.0f), ::left, 30.0f, patorol_nomove);
-    enemy4->setAnchorPoint(Vec2(0.0f, 0.0f));
-    this->addChild(enemy4);
 }
 
 
@@ -59,10 +47,10 @@ void Stage4Scene::initCharactors()
 */
 void Stage4Scene::initScoreStandard()
 {
-    this->m_scoreStandard.timeScoreStandardA = 15;
-    this->m_scoreStandard.timeScoreStandardA = 30;
+    this->m_scoreStandard.timeScoreStandardA = 5;
+    this->m_scoreStandard.timeScoreStandardA = 10;
     this->m_scoreStandard.foundScoreStandardA = 0;
-    this->m_scoreStandard.foundScoreStandardB = 2;
+    this->m_scoreStandard.foundScoreStandardB = 1;
 }
 
 
@@ -101,7 +89,7 @@ void Stage4Scene::doContinue()
 void Stage4Scene::checkState()
 {
     // クリア座標判定
-    if (this->m_player->worldPosition() == Vec2(9.0f, 14.0f)) {
+    if (this->m_player->worldPosition() == Vec2(10.0f, 24.0f)) {
         this->stageClear();
     }
     

@@ -2,7 +2,7 @@
 //  Stage14Scene.cpp
 //  gameTest-mobile
 //
-//  Created by 丹野健介 on 2020/04/19.
+//  Created by 丹野健介 on 2020/03/22.
 //
 
 #include "Stage14Scene.hpp"
@@ -36,14 +36,19 @@ void Stage14Scene::initCharactors()
     this->addChild(this->m_player);
     
     // 敵キャラクター
-    EnemySprite* enemy1 = EnemySprite::create("enemy1.png", Vec2(10.0f, 28.0f), ::left, 30.0f, patorol_rotatehitwall);
+    EnemySprite* enemy1 = EnemySprite::create("enemy1.png", Vec2(10.0f, 26.0f), ::front, 30.0f, patorol_roundtrip);
     enemy1->setAnchorPoint(Vec2(0.0f, 0.0f));
-    enemy1->setRotateDirectcion(::turn_right);
     this->addChild(enemy1);
     
-    EnemySprite* enemy2 = EnemySprite::create("enemy1.png", Vec2(8.0f, 23.0f), ::front, 45.0f, patorol_random);
+    EnemySprite* enemy2 = EnemySprite::create("enemy1.png", Vec2(10.0f, 24.0f), ::right, 30.0f, patorol_rotatehitwall);
     enemy2->setAnchorPoint(Vec2(0.0f, 0.0f));
+    enemy2->setRotateDirectcion(turn_right);
     this->addChild(enemy2);
+    
+    EnemySprite* enemy3 = EnemySprite::create("enemy1.png", Vec2(10.0f, 28.0f), ::left, 30.0f, patorol_rotatehitwall);
+    enemy3->setAnchorPoint(Vec2(0.0f, 0.0f));
+    enemy3->setRotateDirectcion(turn_right);
+    this->addChild(enemy3);
 }
 
 
@@ -52,8 +57,8 @@ void Stage14Scene::initCharactors()
 */
 void Stage14Scene::initScoreStandard()
 {
+    this->m_scoreStandard.timeScoreStandardA = 10;
     this->m_scoreStandard.timeScoreStandardA = 20;
-    this->m_scoreStandard.timeScoreStandardB = 30;
     this->m_scoreStandard.foundScoreStandardA = 0;
     this->m_scoreStandard.foundScoreStandardB = 2;
 }
@@ -67,7 +72,7 @@ void Stage14Scene::initScoreStandard()
 void Stage14Scene::gameStart()
 {
     // ミッション開始のメッセージ表示後、ゲームスタート
-    this->m_mdController->createStartKillMissonMessage([this]() {
+    this->m_mdController->createStartReachMissonMessage([this]() {
         StageSceneBase::gameStart();
         this->m_mdController->m_dialog->setCompleteAction(nullptr);
     });
@@ -93,8 +98,8 @@ void Stage14Scene::doContinue()
  */
 void Stage14Scene::checkState()
 {
-    // クリア判定
-    if (this->enemysVector().size() == 0) {
+    // クリア座標判定
+    if (this->m_player->worldPosition() == Vec2(12.0f, 22.0f)) {
         this->stageClear();
     }
     

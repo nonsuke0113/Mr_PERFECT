@@ -6,6 +6,8 @@
 //
 
 #include "Stage20Scene.hpp"
+#include <AudioEngine.h>
+#include "BulletSprite.hpp"
 
 #pragma mark -
 #pragma mark Init
@@ -30,34 +32,42 @@ Stage20Scene* Stage20Scene::createScene()
  */
 void Stage20Scene::initCharactors()
 {
+    // スイッチ
+    this->m_switch1 = GameSpriteBase::create("switch_wall.png", Vec2(3.0f, 23.0f), ::front, false);
+    this->m_switch1->setAnchorPoint(Vec2(0.0f, 0.0f));
+    this->addChild(this->m_switch1);
+    
+    this->m_switch2 = GameSpriteBase::create("switch_wall.png", Vec2(13.0f, 23.0f), ::front, false);
+    this->m_switch2->setAnchorPoint(Vec2(0.0f, 0.0f));
+    this->addChild(this->m_switch2);
+    
     // プレイヤー
     this->m_player = PlayerSprite::create("player_back1.png", Vec2(8.0f, 29.0f), ::back, 30.0f);
     this->m_player->setAnchorPoint(Vec2(0.0f, 0.0f));
     this->addChild(this->m_player);
     
     // 敵キャラクター
-    EnemySprite* enemy1 = EnemySprite::create("enemy1.png", Vec2(8.0f, 19.0f), ::right, 35.0f, patorol_rotateifpossible);
+    EnemySprite* enemy1 = EnemySprite::create("enemy1.png", Vec2(8.0f, 26.0f), ::left, 35.0f, ::patorol_rotateifpossible);
     enemy1->setAnchorPoint(Vec2(0.0f, 0.0f));
+    enemy1->setRotateDirectcion(::turn_left);
     this->addChild(enemy1);
-    enemy1->setRotateDirectcion(::turn_right);
     
-    EnemySprite* enemy2 = EnemySprite::create("enemy1.png", Vec2(8.0f, 22.0f), ::left, 30.0f, patorol_roundtrip);
+    EnemySprite* enemy2 = EnemySprite::create("enemy1.png", Vec2(6.0f, 24.0f), ::left, 35.0f, ::patorol_nomove);
     enemy2->setAnchorPoint(Vec2(0.0f, 0.0f));
     this->addChild(enemy2);
     
-    EnemySprite* enemy3 = EnemySprite::create("enemy1.png", Vec2(8.0f, 24.0f), ::front, 40.0f, patorol_random);
+    EnemySprite* enemy3 = EnemySprite::create("enemy1.png", Vec2(10.0f, 24.0f), ::right, 35.0f, ::patorol_nomove);
     enemy3->setAnchorPoint(Vec2(0.0f, 0.0f));
     this->addChild(enemy3);
     
-    EnemySprite* enemy4 = EnemySprite::create("enemy1.png", Vec2(5.0f, 24.0f), ::left, 30.0f, patorol_rotateifpossible);
+    EnemySprite* enemy4 = EnemySprite::create("enemy1.png", Vec2(8.0f, 19.0f), ::front, 25.0f, ::patorol_random);
     enemy4->setAnchorPoint(Vec2(0.0f, 0.0f));
     this->addChild(enemy4);
-    enemy4->setRotateDirectcion(::turn_left);
     
-    EnemySprite* enemy5 = EnemySprite::create("enemy1.png", Vec2(11.0f, 24.0f), ::right, 30.0f, patorol_rotateifpossible);
-    enemy5->setAnchorPoint(Vec2(0.0f, 0.0f));
-    this->addChild(enemy5);
-    enemy5->setRotateDirectcion(::turn_right);
+    // 壁
+    this->m_wall = GameSpriteBase::create("wall.png", Vec2(8.0f, 23.0f), ::front, false);
+    this->m_wall->setAnchorPoint(Vec2(0.0f, 0.0f));
+    this->addChild(this->m_wall);
 }
 
 
@@ -66,8 +76,8 @@ void Stage20Scene::initCharactors()
 */
 void Stage20Scene::initScoreStandard()
 {
-    this->m_scoreStandard.timeScoreStandardA = 15;
-    this->m_scoreStandard.timeScoreStandardB = 30;
+    this->m_scoreStandard.timeScoreStandardA = 45;
+    this->m_scoreStandard.timeScoreStandardB = 60;
     this->m_scoreStandard.foundScoreStandardA = 0;
     this->m_scoreStandard.foundScoreStandardB = 2;
 }
@@ -81,7 +91,7 @@ void Stage20Scene::initScoreStandard()
 void Stage20Scene::gameStart()
 {
     // ミッション開始のメッセージ表示後、ゲームスタート
-    this->m_mdController->createStartReachMissonMessage([this]() {
+    this->m_mdController->createStartKillMissonMessage([this]() {
         StageSceneBase::gameStart();
         this->m_mdController->m_dialog->setCompleteAction(nullptr);
     });
@@ -107,10 +117,52 @@ void Stage20Scene::doContinue()
  */
 void Stage20Scene::checkState()
 {
-    // クリア座標判定
-    if (this->m_player->worldPosition() == Vec2(8.0f, 19.0f)) {
+    // クリア判定
+    if (this->enemysVector().size() == 0) {
         this->stageClear();
     }
     
     return;
+}
+
+#pragma mark -
+#pragma mark ButtonEvent
+/**
+    Aボタン押下時に呼び出される処理
+ */
+void Stage20Scene::touchA()
+{
+    // スイッチ押下
+    if ((this->m_player->worldPosition() == Vec2(3.0f, 24.0f)) &&
+        (this->m_player->directcion() == ::back) &&
+        this->m_switch1 != nullptr)
+    {
+        this->m_switch1->removeFromParent();
+        this->m_switch1 = nullptr;
+        
+        // SE再生
+        experimental::AudioEngine::play2d("switch.mp3", false);
+    }
+    if ((this->m_player->worldPosition() == Vec2(13.0f, 24.0f)) &&
+        (this->m_player->directcion() == ::back) &&
+        this->m_switch2 != nullptr)
+    {
+        this->m_switch2->removeFromParent();
+        this->m_switch2 = nullptr;
+        
+        // SE再生
+        experimental::AudioEngine::play2d("switch.mp3", false);
+    }
+    
+    // スイッチが2つとも押されていたら、壁を消す
+    if (this->m_switch1 == nullptr &&
+        this->m_switch2 == nullptr &&
+        this->m_wall != nullptr)
+    {
+        this->m_wall->removeFromParent();
+        this->m_wall = nullptr;
+    }
+    
+    // 親の処理を呼ぶ
+    StageSceneBase::touchA();
 }

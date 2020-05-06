@@ -13,13 +13,9 @@
 class Stage15Scene : public StageSceneBase
 {
 private:
-    /// 出口を隠す用の壁
-    GameSpriteBase *m_wall;
-    
     void initCharactors();
     void initScoreStandard();
     void gameStart();
-    void touchA();
     void doContinue();
     void checkState();
     

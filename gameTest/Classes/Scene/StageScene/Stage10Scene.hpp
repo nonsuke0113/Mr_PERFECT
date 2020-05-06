@@ -2,7 +2,7 @@
 //  Stage10Scene.hpp
 //  gameTest-mobile
 //
-//  Created by 丹野健介 on 2020/03/22.
+//  Created by 健介 丹野 on 2020/03/21.
 //
 
 #ifndef Stage10Scene_hpp

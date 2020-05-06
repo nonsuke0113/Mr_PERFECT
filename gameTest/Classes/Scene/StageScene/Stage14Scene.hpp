@@ -2,7 +2,7 @@
 //  Stage14Scene.hpp
 //  gameTest-mobile
 //
-//  Created by 丹野健介 on 2020/04/19.
+//  Created by 丹野健介 on 2020/03/22.
 //
 
 #ifndef Stage14Scene_hpp
