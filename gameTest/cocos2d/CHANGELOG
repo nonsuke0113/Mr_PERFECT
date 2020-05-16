@@ -26,7 +26,6 @@ cocos2d-x-3.17 May.21 2018
 [REFINE]        UI: support BMFont in TextField
 [REFINE]        UI: improve EditBox on win32 platform
 [REFINE]        UI: RichText improvements, get the real height by automatically customize ContentSize, refactor split algorithm
-[REFINE]        UI: remove autorelease mark from UIWebViewWrapper and manage memory manually
 [REFINE]        Lua: implementation conversion Lua table to ObjC Dictionary
 [REFINE]        Lua: improve loader, support standerd Lua package require
 [REFINE]        Web: upgrade Spine Javascript runtime to v3.6.39
@@ -86,7 +85,6 @@ cocos2d-x-3.17 May.21 2018
 [FIX]           JSB: miss GetterSetter define for the placeHolder of TextField
 [FIX]           Web: out-of-date submodule commmit of cocos2d-html5 repo
 [FIX]           Web: bugs for Performance Test for Spine on WebGL
-[FIX]           iOS: fix bug about delayed creation UIWebView on iOS
 [FIX]           Andorid: infinite loop when counting text lines on Android in some situations
 [FIX]           Android: crash when network error message is too long
 [FIX]           Android: JniHelper no longer thread safe
