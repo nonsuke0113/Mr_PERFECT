@@ -88,11 +88,31 @@ void Stage1Scene::gameStart()
 {
     this->m_isTutorialMessage1 = false;
     
-    // ミッション開始のメッセージ表示後、ゲームスタート
-    this->m_mdController->createStartSeekMissonMessage([this]() {
-        StageSceneBase::gameStart();
-        this->m_mdController->m_dialog->setCompleteAction(nullptr);
-    });
+    UserDefault *userDefault = UserDefault::getInstance();
+    if (userDefault->getIntegerForKey("score1") != 0) {
+        // ミッション開始のメッセージ表示後、ゲームスタート
+        this->m_mdController->createStartSeekMissonMessage([this]() {
+            StageSceneBase::gameStart();
+            this->m_mdController->m_dialog->setCompleteAction(nullptr);
+        });
+    } else {
+        std::vector<std::string> messages = std::vector<std::string>();
+        messages.push_back("Pi Pi Pi Pi...");
+        messages.push_back("???「目的地に無事潜入できたようだな。」");
+        messages.push_back("???「今回のミッションも困難なものばかりだが、」");
+        messages.push_back("???「そのコードネームの名の通り、」");
+        messages.push_back("???「Perfect Rankでのクリアを期待している。」");
+        messages.push_back("???「それでは、健闘を祈る。」");
+        this->m_mdController->setMessages(messages);
+        this->m_mdController->setMessageCallback([this]() {
+            // ミッション開始のメッセージ表示後、ゲームスタート
+            this->m_mdController->createStartSeekMissonMessage([this]() {
+                StageSceneBase::gameStart();
+                this->m_mdController->m_dialog->setCompleteAction(nullptr);
+            });
+        });
+        this->m_mdController->displayMessageDialog();
+    }
 }
 
 
