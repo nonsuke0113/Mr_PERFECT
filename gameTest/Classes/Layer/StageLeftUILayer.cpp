@@ -173,13 +173,13 @@ void StageLeftUILayer::onTouchesEnded(const std::vector<Touch*>& touches, Event 
     
     double degree = this->degreeFromVec2(_defaultPickPos, this->m_padPick->getPosition());
     
-    if (degree >= 45.0 && degree < 135.0) {
+    if (degree > 45.0 && degree <= 135.0) {
         return ::padUp;
-    } else if ((degree >= 0 && degree < 45.0) || (degree <= 0 && degree >= -45.0)) {
+    } else if ((degree >= 0 && degree <= 45.0) || (degree <= 0 && degree > -45.0)) {
         return ::padRight;
-    } else if (degree < -45.0 && degree >= -135.0) {
+    } else if (degree <= -45.0 && degree > -135.0) {
         return ::padDown;
-    } else if ((degree <= -135.0 && degree >= 180.0) || (degree >= 135 && degree <= 180.0)) {
+    } else if ((degree <= -135.0 && degree >= -180.0) || (degree > 135 && degree <= 180.0)) {
         return ::padLeft;
     }
     
