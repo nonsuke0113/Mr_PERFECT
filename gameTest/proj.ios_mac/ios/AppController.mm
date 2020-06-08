@@ -30,7 +30,7 @@
 #import "RootViewController.h"
 
 extern "C"{
-#import <GoogleMobileAds/GADInterstitial.h>
+#import <GoogleMobileAds/GoogleMobileAds.h>
 };
 
 @interface AppController() <GADInterstitialDelegate>
@@ -97,7 +97,7 @@ static AppDelegate s_sharedApplication;
 }
 
 - (void)loadInterstitial{
-    self.interstitial = [[GADInterstitial alloc] initWithAdUnitID:@"ca-app-pub-3940256099942544/4411468910"];
+    self.interstitial = [[GADInterstitial alloc] initWithAdUnitID:@"ca-app-pub-4909093571037310/5648882892"];
     self.interstitial.delegate = self;
     GADRequest *request = [GADRequest request];
     request.testDevices = @[ kGADSimulatorID ];
