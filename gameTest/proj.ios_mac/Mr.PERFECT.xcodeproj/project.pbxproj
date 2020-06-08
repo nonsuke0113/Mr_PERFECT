@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		114BD5072AFDCF28EBE8D03F /* Pods_Mr_PERFECT_mobile.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 913C82215021138E36B907BD /* Pods_Mr_PERFECT_mobile.framework */; };
 		1A88B2641FC3D9C9005C14AE /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1A88B2631FC3D9C9005C14AE /* Images.xcassets */; };
 		1AC6FB21180E996B004C840B /* libcocos2d Mac.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1AC6FAF9180E9839004C840B /* libcocos2d Mac.a */; };
 		1AC6FB30180E99EB004C840B /* libcocos2d iOS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1AC6FB07180E9839004C840B /* libcocos2d iOS.a */; };
@@ -75,10 +76,15 @@
 		8659988923AA030F002EB428 /* Stage1Scene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8659988723AA030F002EB428 /* Stage1Scene.cpp */; };
 		865D5A6E23E10BAC008A7C6D /* PlayerSprite.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 865D5A6C23E10BAC008A7C6D /* PlayerSprite.cpp */; };
 		8664737F23A8B58900ADCC59 /* StageSceneBase.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8664737D23A8B58900ADCC59 /* StageSceneBase.cpp */; };
+		86722642247173BB00CD26A3 /* GameController.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 86722641247173BB00CD26A3 /* GameController.framework */; };
+		86722644247173CC00CD26A3 /* MediaPlayer.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 86722643247173CC00CD26A3 /* MediaPlayer.framework */; };
 		8678AB6F2443089B00BA1717 /* GameConst.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8678AB6D2443089B00BA1717 /* GameConst.cpp */; };
 		867B070B2439A1D4006106FC /* CreditScene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 867B07092439A1D4006106FC /* CreditScene.cpp */; };
 		86C1AEC723EFE2A7003F61B7 /* Stage2Scene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 86C1AEC523EFE2A7003F61B7 /* Stage2Scene.cpp */; };
 		86DA7CC423E4364900B495AB /* SelectMissonScene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 86DA7CC223E4364900B495AB /* SelectMissonScene.cpp */; };
+		86E3001B247172B900745745 /* FBLPromises.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 86E3001A247172B900745745 /* FBLPromises.framework */; };
+		86E3001E247172BE00745745 /* GoogleUtilities.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 86E3001D247172BE00745745 /* GoogleUtilities.framework */; };
+		86E30021247172C300745745 /* nanopb.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 86E30020247172C300745745 /* nanopb.framework */; };
 		86F5F18A2406A8A90051060B /* StageUILayer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 86F5F1882406A8A90051060B /* StageUILayer.cpp */; };
 		ABB249BA2420C01B005018AB /* MessageDialogController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = ABB249B82420C01B005018AB /* MessageDialogController.cpp */; };
 		ABBA36B721BA6A3500A02928 /* MessageDialog.cpp in Sources */ = {isa = PBXBuildFile; fileRef = ABBA36B521BA6A3500A02928 /* MessageDialog.cpp */; };
@@ -97,14 +103,13 @@
 		E92CE84A220679F900E123FD /* EventKitUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E92CE848220679F900E123FD /* EventKitUI.framework */; };
 		E92CE84C22067A1800E123FD /* MessageUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E92CE84B22067A1800E123FD /* MessageUI.framework */; };
 		E92CE85022067BF700E123FD /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E92CE84F22067BF600E123FD /* SystemConfiguration.framework */; };
-		E92CE85C2206814400E123FD /* GoogleMobileAds.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E92CE85A2206814400E123FD /* GoogleMobileAds.framework */; };
-		E92CE85D2206814400E123FD /* README.txt in Resources */ = {isa = PBXBuildFile; fileRef = E92CE85B2206814400E123FD /* README.txt */; };
 		E92CE8792206A24900E123FD /* AdMobHelper.mm in Sources */ = {isa = PBXBuildFile; fileRef = E92CE8782206A24900E123FD /* AdMobHelper.mm */; };
 		E97BDD152426106200BAAE25 /* Stage10Scene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E97BDD132426106200BAAE25 /* Stage10Scene.cpp */; };
 		E9A5210E21A90B8C00DB44EA /* TitleScene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E9A5210C21A90B8C00DB44EA /* TitleScene.cpp */; };
 		E9A5211521A90C6F00DB44EA /* CharacterSprite.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E9A5211321A90C6F00DB44EA /* CharacterSprite.cpp */; };
 		ED545A7C1B68A1F400C3958E /* libiconv.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = ED545A7B1B68A1F400C3958E /* libiconv.dylib */; };
 		ED545A7E1B68A1FA00C3958E /* libiconv.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = ED545A7D1B68A1FA00C3958E /* libiconv.dylib */; };
+		FA1BB76B9FEA12366CE0A887 /* Pods_Mr_PERFECT_desktop.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 44D81FBB1E126DD9A69C6002 /* Pods_Mr_PERFECT_desktop.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -148,7 +153,7 @@
 /* Begin PBXCopyFilesBuildPhase section */
 		E92CE85322067C5600E123FD /* Embed Frameworks */ = {
 			isa = PBXCopyFilesBuildPhase;
-			buildActionMask = 2147483647;
+			buildActionMask = 12;
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
@@ -177,6 +182,7 @@
 		288765A40DF7441C002DB57D /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
 		294D0D631D0D56D500F7F5D4 /* CoreText.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreText.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS.sdk/System/Library/Frameworks/CoreText.framework; sourceTree = DEVELOPER_DIR; };
 		3EACC98E19EE6D4300EB3C5E /* res */ = {isa = PBXFileReference; lastKnownFileType = folder; path = res; sourceTree = "<group>"; };
+		44D81FBB1E126DD9A69C6002 /* Pods_Mr_PERFECT_desktop.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Mr_PERFECT_desktop.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		46880B7619C43A67006E1F66 /* CloseNormal.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = CloseNormal.png; sourceTree = "<group>"; };
 		46880B7719C43A67006E1F66 /* CloseSelected.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = CloseSelected.png; sourceTree = "<group>"; };
 		46880B7A19C43A67006E1F66 /* HelloWorld.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = HelloWorld.png; sourceTree = "<group>"; };
@@ -193,6 +199,7 @@
 		5087E78A17EB975400C73F5D /* OpenGL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGL.framework; path = System/Library/Frameworks/OpenGL.framework; sourceTree = SDKROOT; };
 		521A8EA819F11F5000D177D7 /* fonts */ = {isa = PBXFileReference; lastKnownFileType = folder; path = fonts; sourceTree = "<group>"; };
 		52B47A461A53D09B004E4C60 /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS.sdk/System/Library/Frameworks/Security.framework; sourceTree = DEVELOPER_DIR; };
+		6162DFCC56CAD643BCF5F316 /* Pods-Mr.PERFECT-desktop.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Mr.PERFECT-desktop.debug.xcconfig"; path = "Target Support Files/Pods-Mr.PERFECT-desktop/Pods-Mr.PERFECT-desktop.debug.xcconfig"; sourceTree = "<group>"; };
 		8262943D1AAF051F00CB7CF7 /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
 		8602DD5D245E634E002825DF /* Stage20Scene.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Stage20Scene.cpp; sourceTree = "<group>"; };
 		8602DD5E245E634E002825DF /* Stage20Scene.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Stage20Scene.hpp; sourceTree = "<group>"; };
@@ -255,6 +262,8 @@
 		865D5A6D23E10BAC008A7C6D /* PlayerSprite.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = PlayerSprite.hpp; sourceTree = "<group>"; };
 		8664737D23A8B58900ADCC59 /* StageSceneBase.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = StageSceneBase.cpp; sourceTree = "<group>"; };
 		8664737E23A8B58900ADCC59 /* StageSceneBase.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = StageSceneBase.hpp; sourceTree = "<group>"; };
+		86722641247173BB00CD26A3 /* GameController.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GameController.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS13.2.sdk/System/Library/Frameworks/GameController.framework; sourceTree = DEVELOPER_DIR; };
+		86722643247173CC00CD26A3 /* MediaPlayer.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MediaPlayer.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS13.2.sdk/System/Library/Frameworks/MediaPlayer.framework; sourceTree = DEVELOPER_DIR; };
 		8678AB6D2443089B00BA1717 /* GameConst.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = GameConst.cpp; sourceTree = "<group>"; };
 		8678AB6E2443089B00BA1717 /* GameConst.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = GameConst.hpp; sourceTree = "<group>"; };
 		867B07092439A1D4006106FC /* CreditScene.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = CreditScene.cpp; sourceTree = "<group>"; };
@@ -263,12 +272,19 @@
 		86C1AEC623EFE2A7003F61B7 /* Stage2Scene.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Stage2Scene.hpp; sourceTree = "<group>"; };
 		86DA7CC223E4364900B495AB /* SelectMissonScene.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = SelectMissonScene.cpp; sourceTree = "<group>"; };
 		86DA7CC323E4364900B495AB /* SelectMissonScene.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = SelectMissonScene.hpp; sourceTree = "<group>"; };
+		86E3001A247172B900745745 /* FBLPromises.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = FBLPromises.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		86E3001D247172BE00745745 /* GoogleUtilities.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = GoogleUtilities.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		86E30020247172C300745745 /* nanopb.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = nanopb.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		86F5F1882406A8A90051060B /* StageUILayer.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = StageUILayer.cpp; sourceTree = "<group>"; };
 		86F5F1892406A8A90051060B /* StageUILayer.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = StageUILayer.hpp; sourceTree = "<group>"; };
+		913C82215021138E36B907BD /* Pods_Mr_PERFECT_mobile.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Mr_PERFECT_mobile.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		95BDD216A05B79CBA644C60C /* Pods-Mr.PERFECT-mobile.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Mr.PERFECT-mobile.debug.xcconfig"; path = "Target Support Files/Pods-Mr.PERFECT-mobile/Pods-Mr.PERFECT-mobile.debug.xcconfig"; sourceTree = "<group>"; };
+		A1C4BAF2E1E46D22818F6EB4 /* Pods-Mr.PERFECT-mobile.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Mr.PERFECT-mobile.release.xcconfig"; path = "Target Support Files/Pods-Mr.PERFECT-mobile/Pods-Mr.PERFECT-mobile.release.xcconfig"; sourceTree = "<group>"; };
 		ABB249B82420C01B005018AB /* MessageDialogController.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = MessageDialogController.cpp; sourceTree = "<group>"; };
 		ABB249B92420C01B005018AB /* MessageDialogController.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = MessageDialogController.hpp; sourceTree = "<group>"; };
 		ABBA36B521BA6A3500A02928 /* MessageDialog.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = MessageDialog.cpp; sourceTree = "<group>"; };
 		ABBA36B621BA6A3500A02928 /* MessageDialog.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = MessageDialog.hpp; sourceTree = "<group>"; };
+		B9140E3BDAC799A69682FB83 /* Pods-Mr.PERFECT-desktop.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Mr.PERFECT-desktop.release.xcconfig"; path = "Target Support Files/Pods-Mr.PERFECT-desktop/Pods-Mr.PERFECT-desktop.release.xcconfig"; sourceTree = "<group>"; };
 		BF170DB012928DE900B8313A /* OpenGLES.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGLES.framework; path = System/Library/Frameworks/OpenGLES.framework; sourceTree = SDKROOT; };
 		BF170DB412928DE900B8313A /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = usr/lib/libz.dylib; sourceTree = SDKROOT; };
 		BF1C47EA1293683800B63C5D /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
@@ -288,8 +304,6 @@
 		E92CE84B22067A1800E123FD /* MessageUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MessageUI.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS12.0.sdk/System/Library/Frameworks/MessageUI.framework; sourceTree = DEVELOPER_DIR; };
 		E92CE84D22067BE600E123FD /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS12.0.sdk/System/Library/Frameworks/StoreKit.framework; sourceTree = DEVELOPER_DIR; };
 		E92CE84F22067BF600E123FD /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS12.0.sdk/System/Library/Frameworks/SystemConfiguration.framework; sourceTree = DEVELOPER_DIR; };
-		E92CE85A2206814400E123FD /* GoogleMobileAds.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = GoogleMobileAds.framework; sourceTree = "<group>"; };
-		E92CE85B2206814400E123FD /* README.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = README.txt; sourceTree = "<group>"; };
 		E92CE8782206A24900E123FD /* AdMobHelper.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = AdMobHelper.mm; sourceTree = "<group>"; };
 		E92CE87A2206A26700E123FD /* AdMobHelper.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AdMobHelper.h; sourceTree = "<group>"; };
 		E945438E21F49F4900C11542 /* StringUtil.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = StringUtil.h; sourceTree = "<group>"; };
@@ -310,17 +324,19 @@
 			files = (
 				E92CE85022067BF700E123FD /* SystemConfiguration.framework in Frameworks */,
 				E92CE84C22067A1800E123FD /* MessageUI.framework in Frameworks */,
+				86722642247173BB00CD26A3 /* GameController.framework in Frameworks */,
 				E92CE849220679F900E123FD /* EventKit.framework in Frameworks */,
 				E92CE84A220679F900E123FD /* EventKitUI.framework in Frameworks */,
 				E92CE846220679DC00E123FD /* CoreTelephony.framework in Frameworks */,
 				E92CE844220679B300E123FD /* CoreMedia.framework in Frameworks */,
+				86722644247173CC00CD26A3 /* MediaPlayer.framework in Frameworks */,
+				86E3001E247172BE00745745 /* GoogleUtilities.framework in Frameworks */,
 				E92CE83E2206796300E123FD /* AdSupport.framework in Frameworks */,
 				294D0D641D0D56D500F7F5D4 /* CoreText.framework in Frameworks */,
 				ED545A7C1B68A1F400C3958E /* libiconv.dylib in Frameworks */,
 				52B47A471A53D09C004E4C60 /* Security.framework in Frameworks */,
 				1AC6FB30180E99EB004C840B /* libcocos2d iOS.a in Frameworks */,
 				D6B0611B1803AB670077942B /* CoreMotion.framework in Frameworks */,
-				E92CE85C2206814400E123FD /* GoogleMobileAds.framework in Frameworks */,
 				1D60589F0D05DD5A006BFB54 /* Foundation.framework in Frameworks */,
 				1DF5F4E00D08C38300B7A737 /* UIKit.framework in Frameworks */,
 				288765A50DF7441C002DB57D /* CoreGraphics.framework in Frameworks */,
@@ -330,6 +346,9 @@
 				D44C620C132DFF330009C878 /* OpenAL.framework in Frameworks */,
 				D44C620E132DFF430009C878 /* AVFoundation.framework in Frameworks */,
 				D44C6210132DFF4E0009C878 /* AudioToolbox.framework in Frameworks */,
+				86E30021247172C300745745 /* nanopb.framework in Frameworks */,
+				86E3001B247172B900745745 /* FBLPromises.framework in Frameworks */,
+				114BD5072AFDCF28EBE8D03F /* Pods_Mr_PERFECT_mobile.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -349,6 +368,7 @@
 				5087E76917EB910900C73F5D /* OpenAL.framework in Frameworks */,
 				5087E76A17EB910900C73F5D /* AVFoundation.framework in Frameworks */,
 				5087E76B17EB910900C73F5D /* AudioToolbox.framework in Frameworks */,
+				FA1BB76B9FEA12366CE0A887 /* Pods_Mr_PERFECT_desktop.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -388,8 +408,8 @@
 				1AF87B5C1F6F77D6007BE51C /* Prefix.pch */,
 				1AF87B5D1F6F77D6007BE51C /* RootViewController.h */,
 				1AF87B5E1F6F77D6007BE51C /* RootViewController.mm */,
-				E92CE8782206A24900E123FD /* AdMobHelper.mm */,
 				E92CE87A2206A26700E123FD /* AdMobHelper.h */,
+				E92CE8782206A24900E123FD /* AdMobHelper.mm */,
 			);
 			path = ios;
 			sourceTree = "<group>";
@@ -397,7 +417,6 @@
 		29B97314FDCFA39411CA2CEA /* CustomTemplate */ = {
 			isa = PBXGroup;
 			children = (
-				E92CE8592206814400E123FD /* GoogleMobileAdsSdkiOS-7.38.0 */,
 				46880B8319C43A87006E1F66 /* Classes */,
 				46880B7519C43A67006E1F66 /* Resources */,
 				1AC6FAE5180E9839004C840B /* cocos2d_libs.xcodeproj */,
@@ -405,6 +424,7 @@
 				1AF87B461F6F77D6007BE51C /* ios */,
 				503AE10617EB990700D1A890 /* mac */,
 				19C28FACFE9D520D11CA2CBB /* Products */,
+				82E3E045BA80A3448559CD1D /* Pods */,
 			);
 			name = CustomTemplate;
 			sourceTree = "<group>";
@@ -412,6 +432,11 @@
 		29B97323FDCFA39411CA2CEA /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				86722643247173CC00CD26A3 /* MediaPlayer.framework */,
+				86722641247173BB00CD26A3 /* GameController.framework */,
+				86E30020247172C300745745 /* nanopb.framework */,
+				86E3001D247172BE00745745 /* GoogleUtilities.framework */,
+				86E3001A247172B900745745 /* FBLPromises.framework */,
 				E92CE84F22067BF600E123FD /* SystemConfiguration.framework */,
 				E92CE84D22067BE600E123FD /* StoreKit.framework */,
 				E92CE84B22067A1800E123FD /* MessageUI.framework */,
@@ -442,6 +467,8 @@
 				BF170DB012928DE900B8313A /* OpenGLES.framework */,
 				BF1C47EA1293683800B63C5D /* QuartzCore.framework */,
 				1DF5F4DF0D08C38300B7A737 /* UIKit.framework */,
+				44D81FBB1E126DD9A69C6002 /* Pods_Mr_PERFECT_desktop.framework */,
+				913C82215021138E36B907BD /* Pods_Mr_PERFECT_mobile.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -502,6 +529,17 @@
 				503AE10417EB98FF00D1A890 /* Prefix.pch */,
 			);
 			name = mac;
+			sourceTree = "<group>";
+		};
+		82E3E045BA80A3448559CD1D /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				6162DFCC56CAD643BCF5F316 /* Pods-Mr.PERFECT-desktop.debug.xcconfig */,
+				B9140E3BDAC799A69682FB83 /* Pods-Mr.PERFECT-desktop.release.xcconfig */,
+				95BDD216A05B79CBA644C60C /* Pods-Mr.PERFECT-mobile.debug.xcconfig */,
+				A1C4BAF2E1E46D22818F6EB4 /* Pods-Mr.PERFECT-mobile.release.xcconfig */,
+			);
+			path = Pods;
 			sourceTree = "<group>";
 		};
 		86114BE2240AB8E600864BEA /* Layer */ = {
@@ -612,15 +650,6 @@
 			path = Sprite;
 			sourceTree = "<group>";
 		};
-		E92CE8592206814400E123FD /* GoogleMobileAdsSdkiOS-7.38.0 */ = {
-			isa = PBXGroup;
-			children = (
-				E92CE85A2206814400E123FD /* GoogleMobileAds.framework */,
-				E92CE85B2206814400E123FD /* README.txt */,
-			);
-			path = "GoogleMobileAdsSdkiOS-7.38.0";
-			sourceTree = "<group>";
-		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -628,10 +657,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 1D6058960D05DD3E006BFB54 /* Build configuration list for PBXNativeTarget "Mr.PERFECT-mobile" */;
 			buildPhases = (
+				9190FFAA2E3934C60DDB3417 /* [CP] Check Pods Manifest.lock */,
 				1D60588D0D05DD3D006BFB54 /* Resources */,
 				1D60588E0D05DD3D006BFB54 /* Sources */,
 				1D60588F0D05DD3D006BFB54 /* Frameworks */,
 				E92CE85322067C5600E123FD /* Embed Frameworks */,
+				B1CB620B5EA535543B764C9F /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -647,6 +678,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 5087E76C17EB910900C73F5D /* Build configuration list for PBXNativeTarget "Mr.PERFECT-desktop" */;
 			buildPhases = (
+				44153285F5AE6BFA481CC810 /* [CP] Check Pods Manifest.lock */,
 				5087E74817EB910900C73F5D /* Resources */,
 				5087E75617EB910900C73F5D /* Sources */,
 				5087E75C17EB910900C73F5D /* Frameworks */,
@@ -686,6 +718,7 @@
 				German,
 			);
 			mainGroup = 29B97314FDCFA39411CA2CEA /* CustomTemplate */;
+			productRefGroup = 19C28FACFE9D520D11CA2CBB /* Products */;
 			projectDirPath = "";
 			projectReferences = (
 				{
@@ -731,7 +764,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				46880B8119C43A67006E1F66 /* HelloWorld.png in Resources */,
-				E92CE85D2206814400E123FD /* README.txt in Resources */,
 				1A88B2641FC3D9C9005C14AE /* Images.xcassets in Resources */,
 				46880B7D19C43A67006E1F66 /* CloseSelected.png in Resources */,
 				8610B906242725080013E21B /* splash.png in Resources */,
@@ -757,6 +789,75 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		44153285F5AE6BFA481CC810 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-Mr.PERFECT-desktop-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		9190FFAA2E3934C60DDB3417 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-Mr.PERFECT-mobile-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		B1CB620B5EA535543B764C9F /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-Mr.PERFECT-mobile/Pods-Mr.PERFECT-mobile-frameworks.sh",
+				"${BUILT_PRODUCTS_DIR}/GoogleUtilities/GoogleUtilities.framework",
+				"${BUILT_PRODUCTS_DIR}/PromisesObjC/FBLPromises.framework",
+				"${BUILT_PRODUCTS_DIR}/nanopb/nanopb.framework",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GoogleUtilities.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/FBLPromises.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/nanopb.framework",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Mr.PERFECT-mobile/Pods-Mr.PERFECT-mobile-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		1D60588E0D05DD3D006BFB54 /* Sources */ = {
@@ -839,18 +940,19 @@
 /* Begin XCBuildConfiguration section */
 		1D6058940D05DD3E006BFB54 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 95BDD216A05B79CBA644C60C /* Pods-Mr.PERFECT-mobile.debug.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				COMPRESS_PNG_FILES = NO;
-				CURRENT_PROJECT_VERSION = 1.0.2;
+				CURRENT_PROJECT_VERSION = 1.0.5;
 				DEVELOPMENT_TEAM = F7CS3J744B;
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(SRCROOT)",
-					"$(PROJECT_DIR)/GoogleMobileAdsSdkiOS-7.38.0",
+					"$(inherited)",
 				);
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_INLINES_ARE_PRIVATE_EXTERN = NO;
@@ -867,19 +969,20 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = "";
-				MARKETING_VERSION = 1.0.2;
+				MARKETING_VERSION = 1.0.5;
 				OTHER_LDFLAGS = (
 					"$(_COCOS_LIB_IOS_BEGIN)",
 					"$(_COCOS_LIB_IOS_END)",
 					"-framework",
 					StoreKit,
+					"$(inherited)",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "com.nonsuke.mr-perfect";
 				PRODUCT_NAME = Mr.PERFECT;
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SDKROOT = iphoneos;
 				STRIP_PNG_TEXT = NO;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 				USER_HEADER_SEARCH_PATHS = "$(_COCOS_HEADER_IOS_BEGIN) $(_COCOS_HEADER_IOS_END)";
 				VALID_ARCHS = "arm64 armv7";
 			};
@@ -887,18 +990,19 @@
 		};
 		1D6058950D05DD3E006BFB54 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = A1C4BAF2E1E46D22818F6EB4 /* Pods-Mr.PERFECT-mobile.release.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				COMPRESS_PNG_FILES = NO;
-				CURRENT_PROJECT_VERSION = 1.0.2;
+				CURRENT_PROJECT_VERSION = 1.0.5;
 				DEVELOPMENT_TEAM = F7CS3J744B;
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(SRCROOT)",
-					"$(PROJECT_DIR)/GoogleMobileAdsSdkiOS-7.38.0",
+					"$(inherited)",
 				);
 				GCC_INLINES_ARE_PRIVATE_EXTERN = NO;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
@@ -914,19 +1018,20 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = "";
-				MARKETING_VERSION = 1.0.2;
+				MARKETING_VERSION = 1.0.5;
 				OTHER_LDFLAGS = (
 					"$(_COCOS_LIB_IOS_BEGIN)",
 					"$(_COCOS_LIB_IOS_END)",
 					"-framework",
 					StoreKit,
+					"$(inherited)",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "com.nonsuke.mr-perfect";
 				PRODUCT_NAME = Mr.PERFECT;
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SDKROOT = iphoneos;
 				STRIP_PNG_TEXT = NO;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 				USER_HEADER_SEARCH_PATHS = "$(_COCOS_HEADER_IOS_BEGIN) $(_COCOS_HEADER_IOS_END)";
 				VALID_ARCHS = "arm64 armv7";
 			};
@@ -934,6 +1039,7 @@
 		};
 		5087E76D17EB910900C73F5D /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 6162DFCC56CAD643BCF5F316 /* Pods-Mr.PERFECT-desktop.debug.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = YES;
 				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
@@ -966,6 +1072,7 @@
 		};
 		5087E76E17EB910900C73F5D /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = B9140E3BDAC799A69682FB83 /* Pods-Mr.PERFECT-desktop.release.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = YES;
 				ARCHS = "$(ARCHS_STANDARD_64_BIT)";

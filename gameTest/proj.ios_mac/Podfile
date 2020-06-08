@@ -1,0 +1,18 @@
+# Uncomment the next line to define a global platform for your project
+# platform :ios, '9.0'
+
+target 'Mr.PERFECT-desktop' do
+  # Comment the next line if you don't want to use dynamic frameworks
+  use_frameworks!
+
+  # Pods for Mr.PERFECT-desktop
+
+end
+
+target 'Mr.PERFECT-mobile' do
+  # Comment the next line if you don't want to use dynamic frameworks
+  use_frameworks!
+
+  # Pods for Mr.PERFECT-mobile
+  pod 'Google-Mobile-Ads-SDK'
+end
